@@ -3,7 +3,6 @@ project:
 
 website:
   title: "Aswin van Woudenberg"
-  site-url: https://www.aswinvanwoudenberg.com
   favicon: favicon.png
   description: "Aswin's blog"
   navbar:

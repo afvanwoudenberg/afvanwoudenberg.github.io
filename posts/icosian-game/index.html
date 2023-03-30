@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.313">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Aswin van Woudenberg">
+<meta name="dcterms.date" content="2020-04-24">
+<meta name="description" content="A Prolog solver for the Icosian game.">
+
+<title>Aswin van Woudenberg - Icosian Game</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Aswin van Woudenberg</span>
+    </a>
+  </div>
+          <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/afvanwoudenberg"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://linkedin.com/in/afvanwoudenberg"><i class="bi bi-linkedin" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../index.xml"><i class="bi bi-rss" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Icosian Game</h1>
+                  <div>
+        <div class="description">
+          A Prolog solver for the Icosian game.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">programming</div>
+                <div class="quarto-category">prolog</div>
+                <div class="quarto-category">puzzles</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Aswin van Woudenberg </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">April 24, 2020</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#how-to-play-the-icosian-game" id="toc-how-to-play-the-icosian-game" class="nav-link active" data-scroll-target="#how-to-play-the-icosian-game">How to play the Icosian game</a></li>
+  <li><a href="#some-graph-theory" id="toc-some-graph-theory" class="nav-link" data-scroll-target="#some-graph-theory">Some graph theory</a></li>
+  <li><a href="#solving-this-game-using-prolog" id="toc-solving-this-game-using-prolog" class="nav-link" data-scroll-target="#solving-this-game-using-prolog">Solving this game using Prolog</a></li>
+  <li><a href="#how-to-use-this-code" id="toc-how-to-use-this-code" class="nav-link" data-scroll-target="#how-to-use-this-code">How to use this code</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p>The Irish mathematician <a href="https://en.wikipedia.org/wiki/William_Rowan_Hamilton">William Rowan Hamilton</a> is probably best known for discovering <a href="https://en.wikipedia.org/wiki/Quaternion">quaternions</a>. He is also the inventor of the <a href="https://en.wikipedia.org/wiki/Icosian_game">Icosian game</a>.</p>
+<p>In this blog post I’ll describe the game and show some Prolog code for solving it.</p>
+<section id="how-to-play-the-icosian-game" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-play-the-icosian-game">How to play the Icosian game</h2>
+<p>The game’s objective is to find a path around a <a href="https://en.wikipedia.org/wiki/Regular_dodecahedron">dodecahedron</a> such that every vertex is visited once, no edge is visited multiple times, and the path ends in de same vertex it started from. Instead of using a 3d dodecahedron, the game was distributed as a pegboard with holes at the vertices of the 2d dodecahedral graph.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="icosian.jpg" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">One of the few remaining copies (from the collection of <a href="https://www.puzzlemuseum.com/month/picm02/200207icosian.htm">the puzzle museum</a>)</figcaption><p></p>
+</figure>
+</div>
+<p>The game was meant to be played by two people. The first player would set up the challenge by placing the first five pegs in any five consecutive holes and then the second player would be required to place the remaining fifteen pegs consecutively in such a way that the succession would be cyclical.</p>
+</section>
+<section id="some-graph-theory" class="level2">
+<h2 class="anchored" data-anchor-id="some-graph-theory">Some graph theory</h2>
+<p>In graph theory, a path that visits every vertex of a graph once is now known as a Hamiltonian path. A path that visits every vertex once <em>and</em> that ends in the same vertex as it started off from is called a Hamiltonian cycle. So playing this game is essentially searching for a Hamiltonian cycle in the dodecahedral graph.</p>
+<p><img src="icosian_graph.png" class="img-fluid" width="500"></p>
+</section>
+<section id="solving-this-game-using-prolog" class="level2">
+<h2 class="anchored" data-anchor-id="solving-this-game-using-prolog">Solving this game using Prolog</h2>
+<p>The Icosian game was never a commercial success, probably because it’s too easy. I wrote some Prolog code to solve this game and explore possible solutions.</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>icosian.pl</strong></pre>
+</div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode prolog code-with-copy"><code class="sourceCode prolog"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">% A Prolog solver for the Icosian game</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">% https://en.wikipedia.org/wiki/Icosian_game</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>icosian_puzzle_edges([</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    (b<span class="kw">,</span>c), (b<span class="kw">,</span>g), (b<span class="kw">,</span>z), (c<span class="kw">,</span>d), (c<span class="kw">,</span>p), (d<span class="kw">,</span>f), (d<span class="kw">,</span>m), (f<span class="kw">,</span>g), (f<span class="kw">,</span>k), (g<span class="kw">,</span>h), </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    (h<span class="kw">,</span>j), (h<span class="kw">,</span>x), (j<span class="kw">,</span>k), (j<span class="kw">,</span>v), (k<span class="kw">,</span>l), (l<span class="kw">,</span>t), (l<span class="kw">,</span>m), (m<span class="kw">,</span>n), (n<span class="kw">,</span>p), (n<span class="kw">,</span>s), </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    (p<span class="kw">,</span>q), (q<span class="kw">,</span>z), (q<span class="kw">,</span>r), (r<span class="kw">,</span>s), (r<span class="kw">,</span>w), (s<span class="kw">,</span>t), (t<span class="kw">,</span>v), (v<span class="kw">,</span>w), (w<span class="kw">,</span>x), (x<span class="kw">,</span>z)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>])<span class="kw">.</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>connected(<span class="dt">Adj</span><span class="kw">,</span><span class="dt">P</span><span class="kw">,</span><span class="dt">Q</span>) <span class="kw">:-</span> member((<span class="dt">P</span><span class="kw">,</span><span class="dt">Q</span>)<span class="kw">,</span><span class="dt">Adj</span>)<span class="kw">;</span> member((<span class="dt">Q</span><span class="kw">,</span><span class="dt">P</span>)<span class="kw">,</span><span class="dt">Adj</span>)<span class="kw">.</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>graph_order(<span class="dt">Adj</span><span class="kw">,</span><span class="dt">N</span>) <span class="kw">:-</span> </span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    findall(<span class="dt">A</span><span class="kw">,</span>connected(<span class="dt">Adj</span><span class="kw">,</span><span class="dt">A</span><span class="kw">,</span><span class="dt">_</span>)<span class="kw">,</span><span class="dt">B0</span>)<span class="kw">,</span> </span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    sort(<span class="dt">B0</span><span class="kw">,</span><span class="dt">B</span>)<span class="kw">,</span> </span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    length(<span class="dt">B</span><span class="kw">,</span><span class="dt">N</span>)<span class="kw">.</span> </span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>hamiltonian_cycle(<span class="dt">Adj</span><span class="kw">,</span>[<span class="dt">Start</span><span class="fu">|</span><span class="dt">TourRest</span>]) <span class="kw">:-</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    graph_order(<span class="dt">Adj</span><span class="kw">,</span><span class="dt">N</span>)<span class="kw">,</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    append([[<span class="dt">Start</span>],<span class="dt">MidTour</span>,[<span class="dt">Start</span>]]<span class="kw">,</span>[<span class="dt">Start</span><span class="fu">|</span><span class="dt">TourRest</span>])<span class="kw">,</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    length([<span class="dt">Start</span><span class="fu">|</span><span class="dt">MidTour</span>]<span class="kw">,</span><span class="dt">N</span>)<span class="kw">,</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    hamiltonian_cycle(<span class="dt">Adj</span><span class="kw">,</span><span class="dt">Start</span><span class="kw">,</span><span class="dt">MidTour</span><span class="kw">,</span>[<span class="dt">Start</span>])<span class="kw">.</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>hamiltonian_cycle(<span class="dt">Adj</span><span class="kw">,</span><span class="dt">Start</span><span class="kw">,</span>[]<span class="kw">,</span>[<span class="dt">LastVisited</span><span class="fu">|</span><span class="dt">_</span>]) <span class="kw">:-</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    connected(<span class="dt">Adj</span><span class="kw">,</span><span class="dt">LastVisited</span><span class="kw">,</span><span class="dt">Start</span>)<span class="kw">.</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>hamiltonian_cycle(<span class="dt">Adj</span><span class="kw">,</span><span class="dt">Start</span><span class="kw">,</span>[<span class="dt">Head</span><span class="fu">|</span><span class="dt">Tail</span>]<span class="kw">,</span>[<span class="dt">VisitedHead</span><span class="fu">|</span><span class="dt">VisitedTail</span>]) <span class="kw">:-</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    connected(<span class="dt">Adj</span><span class="kw">,</span><span class="dt">VisitedHead</span><span class="kw">,</span><span class="dt">Head</span>)<span class="kw">,</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    not(member(<span class="dt">Head</span><span class="kw">,</span>[<span class="dt">VisitedHead</span><span class="fu">|</span><span class="dt">VisitedTail</span>]))<span class="kw">,</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    hamiltonian_cycle(<span class="dt">Adj</span><span class="kw">,</span><span class="dt">Start</span><span class="kw">,</span><span class="dt">Tail</span><span class="kw">,</span>[<span class="dt">Head</span>,<span class="dt">VisitedHead</span><span class="fu">|</span><span class="dt">VisitedTail</span>])<span class="kw">.</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>print_icosian_puzzle <span class="kw">:-</span> print_icosian_solution([])<span class="kw">.</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>edge_in_tour(<span class="dt">P</span><span class="kw">,</span><span class="dt">Q</span><span class="kw">,</span><span class="dt">Tour</span>) <span class="kw">:-</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    append([<span class="dt">_</span>,[<span class="dt">P</span>,<span class="dt">Q</span>],<span class="dt">_</span>]<span class="kw">,</span><span class="dt">Tour</span>)<span class="kw">;</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    append([<span class="dt">_</span>,[<span class="dt">Q</span>,<span class="dt">P</span>],<span class="dt">_</span>]<span class="kw">,</span><span class="dt">Tour</span>)<span class="kw">.</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>format_edge(<span class="dt">P</span><span class="kw">,</span><span class="dt">Q</span><span class="kw">,</span><span class="dt">Tour</span><span class="kw">,</span><span class="dt">Atom</span><span class="kw">,</span><span class="dt">Out</span>) <span class="kw">:-</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    edge_in_tour(<span class="dt">P</span><span class="kw">,</span><span class="dt">Q</span><span class="kw">,</span><span class="dt">Tour</span>)<span class="kw">,</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    format(<span class="dt">atom</span>(<span class="dt">Out</span>)<span class="kw">,</span><span class="st">'</span><span class="ch">\</span><span class="er">e</span><span class="st">[31m~</span><span class="er">w</span><span class="ch">\</span><span class="er">e</span><span class="st">[0m'</span><span class="kw">,</span>[<span class="dt">Atom</span>])<span class="kw">,</span> <span class="kw">!.</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>format_edge(<span class="dt">_P</span><span class="kw">,</span><span class="dt">_Q</span><span class="kw">,</span><span class="dt">_Tour</span><span class="kw">,</span><span class="dt">Atom</span><span class="kw">,</span><span class="dt">Atom</span>)<span class="kw">.</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>print_icosian_solution(<span class="dt">Tour</span>) <span class="kw">:-</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>    findall(<span class="dt">F</span><span class="kw">,</span>(member((<span class="dt">P</span><span class="kw">,</span><span class="dt">Q</span><span class="kw">,</span><span class="dt">A</span>)<span class="kw">,</span>[</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>        (b<span class="kw">,</span>c<span class="kw">,</span><span class="st">'-'</span>), (b<span class="kw">,</span>g<span class="kw">,</span><span class="st">'/'</span>), (b<span class="kw">,</span>z<span class="kw">,</span><span class="st">'</span><span class="ch">\\</span><span class="st">'</span>), (c<span class="kw">,</span>d<span class="kw">,</span><span class="st">'</span><span class="ch">\\</span><span class="st">'</span>), (c<span class="kw">,</span>p<span class="kw">,</span><span class="st">'/'</span>), </span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>        (d<span class="kw">,</span>f<span class="kw">,</span><span class="st">'/'</span>), (d<span class="kw">,</span>m<span class="kw">,</span><span class="st">'</span><span class="ch">\\</span><span class="st">'</span>), (f<span class="kw">,</span>g<span class="kw">,</span><span class="st">'</span><span class="ch">\\</span><span class="st">'</span>), (f<span class="kw">,</span>k<span class="kw">,</span><span class="st">'|'</span>), (g<span class="kw">,</span>h<span class="kw">,</span><span class="st">'/'</span>),</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>        (h<span class="kw">,</span>j<span class="kw">,</span><span class="st">'</span><span class="ch">\\</span><span class="st">'</span>), (h<span class="kw">,</span>x<span class="kw">,</span><span class="st">'</span><span class="ch">\\</span><span class="st">'</span>), (j<span class="kw">,</span>k<span class="kw">,</span><span class="st">'/'</span>), (j<span class="kw">,</span>v<span class="kw">,</span><span class="st">'/'</span>), (k<span class="kw">,</span>l<span class="kw">,</span><span class="st">'</span><span class="ch">\\</span><span class="st">'</span>),</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>        (l<span class="kw">,</span>t<span class="kw">,</span><span class="st">'</span><span class="ch">\\</span><span class="st">'</span>), (l<span class="kw">,</span>m<span class="kw">,</span><span class="st">'/'</span>), (m<span class="kw">,</span>n<span class="kw">,</span><span class="st">'/'</span>), (n<span class="kw">,</span>p<span class="kw">,</span><span class="st">'</span><span class="ch">\\</span><span class="st">'</span>), (n<span class="kw">,</span>s<span class="kw">,</span><span class="st">'---'</span>),</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>        (p<span class="kw">,</span>q<span class="kw">,</span><span class="st">'</span><span class="ch">\\</span><span class="st">'</span>), (q<span class="kw">,</span>z<span class="kw">,</span><span class="st">'/'</span>), (q<span class="kw">,</span>r<span class="kw">,</span><span class="st">'|'</span>), (r<span class="kw">,</span>s<span class="kw">,</span><span class="st">'</span><span class="ch">\\</span><span class="st">'</span>), (r<span class="kw">,</span>w<span class="kw">,</span><span class="st">'/'</span>),</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>        (s<span class="kw">,</span>t<span class="kw">,</span><span class="st">'/'</span>), (t<span class="kw">,</span>v<span class="kw">,</span><span class="st">'-------'</span>), (v<span class="kw">,</span>w<span class="kw">,</span><span class="st">'</span><span class="ch">\\</span><span class="st">'</span>), (w<span class="kw">,</span>x<span class="kw">,</span><span class="st">'---'</span>), (x<span class="kw">,</span>z<span class="kw">,</span><span class="st">'/'</span>)</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>    ])<span class="kw">,</span>format_edge(<span class="dt">P</span><span class="kw">,</span><span class="dt">Q</span><span class="kw">,</span><span class="dt">Tour</span><span class="kw">,</span><span class="dt">A</span><span class="kw">,</span><span class="dt">F</span>))<span class="kw">,</span>[<span class="dt">BC</span>,<span class="dt">BG</span>,<span class="dt">BZ</span>,<span class="dt">CD</span>,<span class="dt">CP</span>,<span class="dt">DF</span>,<span class="dt">DM</span>,<span class="dt">FG</span>,<span class="dt">FK</span>,<span class="dt">GH</span>,</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>        <span class="dt">HJ</span>,<span class="dt">HX</span>,<span class="dt">JK</span>,<span class="dt">JV</span>,<span class="dt">KL</span>,<span class="dt">LT</span>,<span class="dt">LM</span>,<span class="dt">MN</span>,<span class="dt">NP</span>,<span class="dt">NS</span>,<span class="dt">PQ</span>,<span class="dt">QZ</span>,<span class="dt">QR</span>,<span class="dt">RS</span>,<span class="dt">RW</span>,<span class="dt">ST</span>,<span class="dt">TV</span>,<span class="dt">VW</span>,<span class="dt">WX</span>,<span class="dt">XZ</span>])<span class="kw">,</span></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>    format(<span class="st">'</span><span class="er">            R</span><span class="st">'</span><span class="kw">,</span>[])<span class="kw">,</span> <span class="fu">nl</span><span class="kw">,</span></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>    format(<span class="st">'</span><span class="er">           </span><span class="st">~</span><span class="er">w</span><span class="st">~</span><span class="er">w</span><span class="st">~</span><span class="er">w</span><span class="st">'</span><span class="kw">,</span>[<span class="dt">RW</span>,<span class="dt">QR</span>,<span class="dt">RS</span>])<span class="kw">,</span> <span class="fu">nl</span><span class="kw">,</span></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>    format(<span class="st">'</span><span class="er">          </span><span class="st">~</span><span class="er">w </span><span class="st">~</span><span class="er">w </span><span class="st">~</span><span class="er">w</span><span class="st">'</span><span class="kw">,</span>[<span class="dt">RW</span>,<span class="dt">QR</span>,<span class="dt">RS</span>])<span class="kw">,</span> <span class="fu">nl</span><span class="kw">,</span></span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>    format(<span class="st">'</span><span class="er">         </span><span class="st">~</span><span class="er">w  </span><span class="st">~</span><span class="er">w  </span><span class="st">~</span><span class="er">w</span><span class="st">'</span><span class="kw">,</span>[<span class="dt">RW</span>,<span class="dt">QR</span>,<span class="dt">RS</span>])<span class="kw">,</span> <span class="fu">nl</span><span class="kw">,</span></span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>    format(<span class="st">'</span><span class="er">        </span><span class="st">~</span><span class="er">w   Q   </span><span class="st">~</span><span class="er">w</span><span class="st">'</span><span class="kw">,</span>[<span class="dt">RW</span>,<span class="dt">RS</span>])<span class="kw">,</span> <span class="fu">nl</span><span class="kw">,</span></span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>    format(<span class="st">'</span><span class="er">       </span><span class="st">~</span><span class="er">w   </span><span class="st">~</span><span class="er">w </span><span class="st">~</span><span class="er">w   </span><span class="st">~</span><span class="er">w</span><span class="st">'</span><span class="kw">,</span>[<span class="dt">RW</span>,<span class="dt">QZ</span>,<span class="dt">PQ</span>,<span class="dt">RS</span>])<span class="kw">,</span> <span class="fu">nl</span><span class="kw">,</span></span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>    format(<span class="st">'</span><span class="er">      </span><span class="st">~</span><span class="er">w   </span><span class="st">~</span><span class="er">w   </span><span class="st">~</span><span class="er">w   </span><span class="st">~</span><span class="er">w</span><span class="st">'</span><span class="kw">,</span>[<span class="dt">RW</span>,<span class="dt">QZ</span>,<span class="dt">PQ</span>,<span class="dt">RS</span>])<span class="kw">,</span> <span class="fu">nl</span><span class="kw">,</span></span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>    format(<span class="st">'</span><span class="er">     </span><span class="st">~</span><span class="er">w   Z     P   </span><span class="st">~</span><span class="er">w</span><span class="st">'</span><span class="kw">,</span>[<span class="dt">RW</span>,<span class="dt">RS</span>])<span class="kw">,</span> <span class="fu">nl</span><span class="kw">,</span></span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>    format(<span class="st">'</span><span class="er">    </span><span class="st">~</span><span class="er">w   </span><span class="st">~</span><span class="er">w </span><span class="st">~</span><span class="er">w   </span><span class="st">~</span><span class="er">w </span><span class="st">~</span><span class="er">w   </span><span class="st">~</span><span class="er">w</span><span class="st">'</span><span class="kw">,</span>[<span class="dt">RW</span>,<span class="dt">XZ</span>,<span class="dt">BZ</span>,<span class="dt">CP</span>,<span class="dt">NP</span>,<span class="dt">RS</span>])<span class="kw">,</span> <span class="fu">nl</span><span class="kw">,</span></span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>    format(<span class="st">'</span><span class="er">   </span><span class="st">~</span><span class="er">w   </span><span class="st">~</span><span class="er">w   B</span><span class="st">~</span><span class="er">wC   </span><span class="st">~</span><span class="er">w   </span><span class="st">~</span><span class="er">w</span><span class="st">'</span><span class="kw">,</span>[<span class="dt">RW</span>,<span class="dt">XZ</span>,<span class="dt">BC</span>,<span class="dt">NP</span>,<span class="dt">RS</span>])<span class="kw">,</span> <span class="fu">nl</span><span class="kw">,</span></span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>    format(<span class="st">'</span><span class="er">  </span><span class="st">~</span><span class="er">w   </span><span class="st">~</span><span class="er">w   </span><span class="st">~</span><span class="er">w   </span><span class="st">~</span><span class="er">w   </span><span class="st">~</span><span class="er">w   </span><span class="st">~</span><span class="er">w</span><span class="st">'</span><span class="kw">,</span>[<span class="dt">RW</span>,<span class="dt">XZ</span>,<span class="dt">BG</span>,<span class="dt">CD</span>,<span class="dt">NP</span>,<span class="dt">RS</span>])<span class="kw">,</span> <span class="fu">nl</span><span class="kw">,</span></span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>    format(<span class="st">'</span><span class="er"> </span><span class="st">~</span><span class="er">w   </span><span class="st">~</span><span class="er">w   G     D   </span><span class="st">~</span><span class="er">w   </span><span class="st">~</span><span class="er">w</span><span class="st">'</span><span class="kw">,</span>[<span class="dt">RW</span>,<span class="dt">XZ</span>,<span class="dt">NP</span>,<span class="dt">RS</span>])<span class="kw">,</span> <span class="fu">nl</span><span class="kw">,</span></span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>    format(<span class="st">'</span><span class="er">W</span><span class="st">~</span><span class="er">wX   </span><span class="st">~</span><span class="er">w </span><span class="st">~</span><span class="er">w   </span><span class="st">~</span><span class="er">w </span><span class="st">~</span><span class="er">w   N</span><span class="st">~</span><span class="er">wS</span><span class="st">'</span><span class="kw">,</span>[<span class="dt">WX</span>,<span class="dt">GH</span>,<span class="dt">FG</span>,<span class="dt">DF</span>,<span class="dt">DM</span>,<span class="dt">NS</span>])<span class="kw">,</span> <span class="fu">nl</span><span class="kw">,</span></span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>    format(<span class="st">'</span><span class="er"> </span><span class="st">~</span><span class="er">w   </span><span class="st">~</span><span class="er">w </span><span class="st">~</span><span class="er">w   </span><span class="st">~</span><span class="er">w </span><span class="st">~</span><span class="er">w   </span><span class="st">~</span><span class="er">w </span><span class="st">~</span><span class="er">w   </span><span class="st">~</span><span class="er">w</span><span class="st">'</span><span class="kw">,</span>[<span class="dt">VW</span>,<span class="dt">HX</span>,<span class="dt">GH</span>,<span class="dt">FG</span>,<span class="dt">DF</span>,<span class="dt">DM</span>,<span class="dt">MN</span>,<span class="dt">ST</span>])<span class="kw">,</span> <span class="fu">nl</span><span class="kw">,</span></span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>    format(<span class="st">'</span><span class="er">  </span><span class="st">~</span><span class="er">w   H     F     M   </span><span class="st">~</span><span class="er">w</span><span class="st">'</span><span class="kw">,</span>[<span class="dt">VW</span>,<span class="dt">ST</span>])<span class="kw">,</span> <span class="fu">nl</span><span class="kw">,</span></span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>    format(<span class="st">'</span><span class="er">   </span><span class="st">~</span><span class="er">w   </span><span class="st">~</span><span class="er">w    </span><span class="st">~</span><span class="er">w    </span><span class="st">~</span><span class="er">w   </span><span class="st">~</span><span class="er">w</span><span class="st">'</span><span class="kw">,</span>[<span class="dt">VW</span>,<span class="dt">HJ</span>,<span class="dt">FK</span>,<span class="dt">LM</span>,<span class="dt">ST</span>])<span class="kw">,</span> <span class="fu">nl</span><span class="kw">,</span></span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>    format(<span class="st">'</span><span class="er">    </span><span class="st">~</span><span class="er">w   </span><span class="st">~</span><span class="er">w   K   </span><span class="st">~</span><span class="er">w   </span><span class="st">~</span><span class="er">w</span><span class="st">'</span><span class="kw">,</span>[<span class="dt">VW</span>,<span class="dt">HJ</span>,<span class="dt">LM</span>,<span class="dt">ST</span>])<span class="kw">,</span> <span class="fu">nl</span><span class="kw">,</span></span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a>    format(<span class="st">'</span><span class="er">     </span><span class="st">~</span><span class="er">w   </span><span class="st">~</span><span class="er">w </span><span class="st">~</span><span class="er">w </span><span class="st">~</span><span class="er">w </span><span class="st">~</span><span class="er">w   </span><span class="st">~</span><span class="er">w</span><span class="st">'</span><span class="kw">,</span>[<span class="dt">VW</span>,<span class="dt">HJ</span>,<span class="dt">JK</span>,<span class="dt">KL</span>,<span class="dt">LM</span>,<span class="dt">ST</span>])<span class="kw">,</span> <span class="fu">nl</span><span class="kw">,</span></span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>    format(<span class="st">'</span><span class="er">      </span><span class="st">~</span><span class="er">w   J   L   </span><span class="st">~</span><span class="er">w</span><span class="st">'</span><span class="kw">,</span>[<span class="dt">VW</span>,<span class="dt">ST</span>])<span class="kw">,</span> <span class="fu">nl</span><span class="kw">,</span></span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>    format(<span class="st">'</span><span class="er">       </span><span class="st">~</span><span class="er">w </span><span class="st">~</span><span class="er">w     </span><span class="st">~</span><span class="er">w </span><span class="st">~</span><span class="er">w</span><span class="st">'</span><span class="kw">,</span>[<span class="dt">VW</span>,<span class="dt">JV</span>,<span class="dt">LT</span>,<span class="dt">ST</span>])<span class="kw">,</span> <span class="fu">nl</span><span class="kw">,</span></span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a>    format(<span class="st">'</span><span class="er">        V</span><span class="st">~</span><span class="er">wT</span><span class="st">'</span><span class="kw">,</span>[<span class="dt">TV</span>])<span class="kw">,</span> <span class="fu">nl</span><span class="kw">.</span></span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a>solve_icosian_puzzle <span class="kw">:-</span></span>
+<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a>    icosian_puzzle_edges(<span class="dt">Adj</span>)<span class="kw">,</span> </span>
+<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a>    hamiltonian_cycle(<span class="dt">Adj</span><span class="kw">,</span><span class="dt">Tour</span>)<span class="kw">,</span> </span>
+<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a>    print_icosian_solution(<span class="dt">Tour</span>)<span class="kw">.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The <code>icosian_puzzle_edges/1</code> predicate defines the graph by specifying a list of edges between vertices which is used by the <code>connected/3</code> predicate which checks whether there is an edge between two vertices.</p>
+<p>The <code>hamiltonian_cycle/2</code> predicate defines the main algorithm for finding a Hamiltonian cycle on the graph, given a starting vertex. After determining the number of vertices in the graph, it recursively tries to find a cycle that visits each vertex exactly once.</p>
+<p>The <code>print_icosian_solution/1</code> predicate prints out the solution to the Icosian game, highlighting the edges in the Hamiltonian cycle found by the <code>hamiltonian_cycle/2</code> predicate.</p>
+<p>You can find a copy of this code as a GitHub gist <a href="https://gist.github.com/afvanwoudenberg/06b7b3d115faa95a4332e32e5eb2988f">here</a>.</p>
+</section>
+<section id="how-to-use-this-code" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-use-this-code">How to use this code</h2>
+<p>To use this program, open the <code>icosian.pl</code> file in your preferred Prolog interpreter (I always use <a href="https://www.swi-prolog.org/">SWI-Prolog</a>). Entering <code>solve_icosian_puzzle.</code> and pressing ; repeatedly will yield possible solutions.</p>
+<p><img src="icosian.gif" class="img-fluid"></p>
+<p>Suppose you want to explore how the cycle that starts with the vertices Q, R, S, N, P could be continued, you would enter:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode prolog code-with-copy"><code class="sourceCode prolog"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>icosian_puzzle_edges(<span class="dt">Adj</span>)<span class="kw">,</span> <span class="dt">Tour</span> <span class="kw">=</span> [q,r,s,n,p<span class="fu">|</span><span class="dt">Rest</span>]<span class="kw">,</span> hamiltonian_cycle(<span class="dt">Adj</span><span class="kw">,</span><span class="dt">Tour</span>)<span class="kw">,</span> print_icosian_solution(<span class="dt">Tour</span>)<span class="kw">.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This game might remind you of the <a href="https://en.wikipedia.org/wiki/Travelling_salesman_problem">Travelling Salesman Problem</a> (TSP). Finding a Hamiltonian cycle can be considered a special case of the TSP, namely, one where each pair of vertices with an edge between them has distance 1, while vertex pairs without an edge between them are separated by a distance of infinity.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

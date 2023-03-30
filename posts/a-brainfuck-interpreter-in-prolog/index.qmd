@@ -1,0 +1,84 @@
+---
+title: "A Brainf*ck Interpreter in Prolog"
+description: "An esoteric programming language interpreter written in a slightly less esoteric programming language."
+author: "Aswin van Woudenberg"
+date: "2007-01-05"
+categories: [programming, esoteric, prolog]
+image: "image.jpg"
+toc: true
+---
+
+If you're a programmer then you must be a masochist. After all, what kind of person enjoys staring at a screen for hours on end, squinting at lines of code that seem to blend together like a modern art painting? What kind of person willingly submits themselves to the endless frustration of debugging, only to find that the solution was something as simple as a missing semicolon? 
+
+If this is you then you're going to love [Brainfuck](http://en.wikipedia.org/wiki/Brainfuck) - the programming language that's minimalistic to the point of absurdity. With only eight commands, Brainfuck is both challenging and frustrating for even the most experienced programmers.
+
+In this post I'll give a brief overview of the language and then describe how to use the Brainfuck interpreter I wrote.
+
+## How does Brainfuck work?
+
+Brainfuck programs operate on a memory tape consisting of an array of cells, each containing a single byte. With the tape initially set to zero, Brainfuck programs modify the values in the memory cells, move the pointer left and right along the tape, and perform input and output operations using its eight commands.
+
+## Commands
+
+Here's a breakdown of the available commands in Brainfuck:
+
+* `<`: Move the pointer one cell to the left.
+* `>`: Move the pointer one cell to the right.
+* `+`: Increment the value of the cell the pointer is pointing to by one.
+* `-`: Decrement the value of the cell the pointer is pointing to by one.
+* `.`: Output the value of the cell the pointer is pointing to.
+* `,`: Input a byte and store its value in the cell the pointer is pointing to.
+* `[`: If the value of the cell the pointer is pointing to is zero, jump forward to the corresponding `]` command.
+* `]`: If the value of the cell the pointer is pointing to is non-zero, jump back to the corresponding `[` command.
+
+Due to its minimalistic syntax, Brainfuck is used to challenge and amuse programmers. I'll be honest - programming in Brainfuck is an absolute nightmare. Writing an interpreter for it is easy though.
+
+## Using the interpreter
+
+You can download my Brainfuck interpreter [here](https://github.com/afvanwoudenberg/bf).
+
+The Prolog program provided, `bf.pl`, is the interpreter. It defines a number of Prolog predicates that can be used to interpret Brainfuck programs. The interpreter uses a list to represent the memory tape, and provides predicates for setting and getting the values of cells, as well as for incrementing and decrementing cell values. 
+
+The main predicate, `run(Prog)`, takes a list of Brainfuck commands as input and interprets the program. It uses a helper predicate, `sequence/4`, to recursively process each command in the program, updating the memory tape and pointer as necessary.
+
+My interpreter isn't the fastest, but it does have dynamic memory tape length. Most other interpreters have a fixed tape length of (usually) 30,000 cells.
+
+## Running Brainfuck programs
+
+I've included a couple of example programs taken from [The Brainfuck Archive](http://esoteric.sange.fi/brainfuck/), including a "Hello World!" program. To execute a Brainfuck program using the interpreter, you can use the `run_bf_program/1` predicate which in turn uses the `run/1` predicate. 
+
+For example, to run the "Hello World!" program, you first start the Prolog interpreter (I use [SWI-Prolog](https://www.swi-prolog.org/)) by opening up a terminal and typing:
+
+```bash
+swipl
+```
+
+This will start the Prolog interpreter. You can then load the Brainfuck interpreter by typing:
+
+```prolog
+[bf].
+```
+
+This loads the `bf.pl` file into the interpreter. You can then run a Brainfuck program using the `run_bf_program/1` predicate, like so:
+
+```prolog
+run_bf_program('hellobf.bf').
+```
+
+This will run the `hellobf.bf` program and output the famous "Hello World!" message to the console.
+
+Alternatively, you can execute these three steps at once by typing:
+
+```bash
+swipl -s bf.pl -g "run_bf_program('hellobf.bf'), halt."
+```
+
+Adding `halt` will make the Prolog interpreter exit after the Brainfuck `run_bf_program/1` predicate has finished.
+
+You can also run Brainfuck code directly like this:
+
+```bash
+swipl -s bf.pl -g "atom_chars('++++[++++>---<]>-.---[----->+<]>-.+++[->+++<]>++.++++++++.+++++.--------.---[->+++<]>+.-[--->+<]>.++++++++.',Chars), run(Chars), halt."
+```
+
+Happy coding and good luck with your sanity!

@@ -1,0 +1,136 @@
+---
+title: "Bridge and Torch Puzzle"
+description: "A Prolog solver for the 'Bridge and torch' puzzle."
+author: "Aswin van Woudenberg"
+date: "2009-07-03"
+categories: [programming, prolog, puzzles]
+toc: true
+---
+
+The [Bridge and torch puzzle](https://en.wikipedia.org/wiki/Bridge_and_torch_problem) goes like this:
+
+> Four people need to cross a bridge at night which only supports two people at the same time. Person A needs 1 minute to cross the bridge, B needs 2 minutes, C needs 5 minutes and D needs 10 minutes. When two people cross the bridge they move at the slowest person’s pace.  They have a torch which has battery left for only 17 minutes. They can’t cross the bridge without light. How can they manage to cross the bridge?
+
+In this blog post I give a solution and some code for finding all solutions in Prolog.
+
+## Solving the puzzle
+
+One might guess that an obvious solution would be to let the fastest person (A) shuttle each other person over the bridge and return alone with the torch. This would give the following schedule:
+
+|        |               |            |
+| :----- | :-----------: | :--------- |
+| A, B   | $\rightarrow$ | 2 minutes  |
+| A      | $\leftarrow$  | 1 minutes  |
+| A, C   | $\rightarrow$ | 5 minutes  |
+| A      | $\leftarrow$  | 1 minutes  |
+| A, D   | $\rightarrow$ | 10 minutes |
+
+The total duration of this schedule would be 19 minutes, so the torch would run out of battery while person A and D are still on the bridge.
+
+The optimal solution consists of letting the two slowest people (C and D) cross the bridge together, giving the following schedule:
+
+|        |               |            |
+| :----- | :-----------: | :--------- |
+| A, B   | $\rightarrow$ | 2 minutes  |
+| B      | $\leftarrow$  | 2 minutes  |
+| C, D   | $\rightarrow$ | 10 minutes |
+| A      | $\leftarrow$  | 1 minutes  |
+| A, B   | $\rightarrow$ | 2 minutes  |
+
+Which gives a total crossing time of exactly 17 minutes.
+
+## Prolog to the rescue 
+
+Prolog is quite suitable for solving these kinds of search problems.
+
+```{.prolog filename="bridge.pl"}
+% A Prolog solver for the bridge and torch puzzle
+% https://en.wikipedia.org/wiki/Bridge_and_torch_problem
+
+print_all_solutions :-
+    findall(_,print_solution,_).
+
+print_solution :-
+    init(State),
+    solve(State,Solution,EndState),
+    writeln('Start state:'),
+    writeln(State),
+    writeln('Solution:'),
+    writeln(Solution),
+    writeln('Final state:'),
+    writeln(EndState), nl.
+
+solve(State,[],State) :- goal(State).
+solve(State,[Move|Tail],EndState) :- s(State,Move,NewState), solve(NewState,Tail,EndState).
+
+goal(state([],right,[_,_,_,_],T)) :- T =< 17.
+
+init(state([a,b,c,d],left,[],0)).
+
+s(state(L1,left,L2,T),cross(L3),state(L4,right,L6,T2)) :-       
+    select_one_or_two(L1,L3,L4),
+    ord_union(L2,L3,L6),
+    min_time_needed(L3,Tn),
+    T2 is T + Tn, 
+    T2 =< 17.
+s(state(L1,right,L2,T),cross(L3),state(L4,left,L5,T2)) :-       
+    select_one_or_two(L2,L3,L5),
+    ord_union(L1,L3,L4),
+    min_time_needed(L3,Tn),
+    T2 is T + Tn, 
+    T2 =< 17.
+
+select_one_or_two(L,[Sel],L2) :- select(Sel,L,L2).
+select_one_or_two(L,[Sel1,Sel2],L2) :- select(Sel1,L,NewL), select(Sel2,NewL,L2), Sel1@<Sel2.
+
+min_time_needed([A],T) :- time_needed(A,T).
+min_time_needed([A,B],T) :- time_needed(A,T1), time_needed(B,T2), max_list([T1,T2],T).
+
+time_needed(a,1).
+time_needed(b,2).
+time_needed(c,5).
+time_needed(d,10).
+```
+
+The `init` predicate defines the initial state of the puzzle, which includes the positions of the four people and the torch, and the time taken so far. The `goal` predicate defines the goal state, which is when all four people are on the other side of the bridge in at most 17 minutes.
+
+The program finds a sequence of moves that will get all four people across the bridge in the shortest time. The `solve` predicate recursively searches for a sequence of moves that will lead to the goal state. The `s` predicate defines the possible moves that can be made from a given state. The `select_one_or_two` predicate selects one or two people from the group to cross the bridge. The `min_time_needed` predicate calculates the time needed for the selected people to cross the bridge.
+
+I chose to represent a state by keeping track of two lists, one for each side of the bridge. An alternative representation might be to use one list with the times it takes each person and a positive/negative sign that indicates on which side of the brige the person is. This list could look like this: `[1,2,-5,-10]` and would indicate that the persons with times 1 and 2 are on one side of the bridge and the others would be on the other side. We could add another number, say 1 (or -1), to indicate on which side the flashlight is. Finding a suitable representation is often half the battle and multiple alternatives might work equally well.
+
+You can find a copy of this code as a GitHub gist [here](https://gist.github.com/afvanwoudenberg/e7107f7b2b1e9e5a59f231ccdafd4ab1).
+
+## Running the solver
+
+To run the solver, you first start the Prolog interpreter (I use [SWI-Prolog](https://www.swi-prolog.org/)) by opening up a terminal and typing:
+
+```bash
+swipl
+```
+
+This will start the Prolog interpreter. You can then load the solver by typing:
+
+```prolog
+[bridge].
+```
+
+This loads the `bridge.pl` file. You can execute the solver which will output all solutions to the console:
+
+```prolog
+print_all_solutions.
+```
+```
+Start state:
+state([a,b,c,d],left,[],0)
+Solution:
+[cross([a,b]),cross([a]),cross([c,d]),cross([b]),cross([a,b])]
+Final state:
+state([],right,[a,b,c,d],17)
+
+Start state:
+state([a,b,c,d],left,[],0)
+Solution:
+[cross([a,b]),cross([b]),cross([c,d]),cross([a]),cross([a,b])]
+Final state:
+state([],right,[a,b,c,d],17)
+```

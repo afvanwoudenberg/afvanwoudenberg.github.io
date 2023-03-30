@@ -1,0 +1,163 @@
+---
+title: "Skyline Puzzle"
+description: "A Prolog solver for the 'Skyline' puzzle."
+author: "Aswin van Woudenberg"
+date: "2015-10-04"
+categories: [programming, prolog, puzzles]
+toc: true
+---
+
+A coworker of mine recently introduced me to this puzzle:
+
+![](pieces.jpg)
+
+The puzzle is called _Skyline_ and it's a packing puzzle. The objective is to place the metal rod in one of the holes in the base and place the nine wooden pieces around it. It was designed by [Jean Claude Constantin](http://www.constantin-jean-clau.de/). 
+
+When solved, the puzzle looks something like this:
+
+![](skyline.jpg)
+
+In this blog post I present some Prolog code to generate all solutions for each rod position.
+
+## Solving this puzzle using Prolog
+
+It's a breeze to program a Skyline solver using Prolog's built-in backtracking mechanism.
+
+```{.prolog filename='skyline.pl'}
+% A Prolog solver for the Skyline puzzle
+% http://www.constantin-jean-clau.de/
+
+print_solution(X,Y) :- solve(X,Y,Sol), print_board(Sol).
+
+pos(X,Y,_) :- member(X,[1,2,3,4,5,6,7]), member(Y,[1,2,3,4,5,6,7]).
+
+board(Board) :- findall(pos(X,Y,_),pos(X,Y,_),Board).
+
+solve(X,Y,Board) :- 
+    board(Board), 
+    member(pos(X,Y,' '),Board),
+    solve(1,1,Board,[]).
+
+solve(7,7,_,_) :- !.
+solve(8,Y,Board,Placed) :-
+    Yn is Y + 1,
+    solve(1,Yn,Board,Placed), !.
+solve(X,Y,Board,Placed) :-
+    member(pos(X,Y,V),Board),
+    nonvar(V),
+    Xn is X + 1,
+    solve(Xn,Y,Board,Placed).
+solve(X,Y,Board,Placed) :-
+    member(pos(X,Y,V),Board),
+    var(V),
+    member(Piece,[i,g,h,f,e,d,a,c,b]),
+    not(member(Piece,Placed)),
+    piece(Piece,Locs),
+    place_piece(Piece,X,Y,Locs,Board),
+    Xn is X + 1,
+    solve(Xn,Y,Board,[Piece|Placed]).
+
+print_board(Board) :- 
+    write('+-------+'), nl,
+    findall(_,(member(Y,[1,2,3,4,5,6,7]),print_line(Y,Board)),_),
+    write('+-------+'), nl.
+
+print_line(Y,Board) :- 
+    write('|'), 
+    findall(_,(member(X,[1,2,3,4,5,6,7]),print_piece(X,Y,Board)),_), 
+    write('|'),
+    nl.
+
+print_piece(X,Y,Board) :- 
+    member(pos(X,Y,P),Board), 
+    not(var(P)),
+    write(P), !.
+print_piece(_,_,_) :- 
+    write('_').
+
+place_piece(_,_,_,[],_).
+place_piece(Piece,X0,Y0,[(Xd,Yd)|Locs],Board) :-
+    X is X0 + Xd, X > 0, X =< 7, 
+    Y is Y0 + Yd, Y > 0, Y =< 7,
+    member(pos(X,Y,Piece),Board),
+    place_piece(Piece,X0,Y0,Locs,Board).
+
+piece(a,[(0,0),(0,1),(0,2),(0,3),(0,4)]).
+piece(a,[(0,0),(1,0),(2,0),(3,0),(4,0)]).
+
+piece(b,[(0,0),(1,0)]).
+piece(b,[(0,0),(0,1)]).
+
+piece(c,[(0,0),(-1,1),(0,1),(1,1)]).
+piece(c,[(0,0),(1,0),(1,1),(2,0)]).
+piece(c,[(0,0),(0,1),(-1,1),(0,2)]).
+piece(c,[(0,0),(0,1),(1,1),(0,2)]).
+
+piece(d,[(0,0),(0,1),(1,1),(1,2),(2,2)]).
+piece(d,[(0,0),(1,0),(-1,1),(0,1),(-1,2)]).
+piece(d,[(0,0),(1,0),(1,1),(2,1),(2,2)]). 
+piece(d,[(0,0),(-1,1),(0,1),(-2,2),(-1,2)]).
+
+piece(e,[(0,0),(0,1),(0,2),(0,3),(1,1)]).
+piece(e,[(0,0),(1,0),(2,0),(3,0),(2,1)]).
+piece(e,[(0,0),(0,1),(0,2),(0,3),(-1,2)]).
+piece(e,[(0,0),(-1,1),(0,1),(1,1),(2,1)]).
+
+piece(f,[(0,0),(-1,1),(0,1),(-2,2),(-1,2),(0,2)]).
+piece(f,[(0,0),(0,1),(1,1),(0,2),(1,2),(2,2)]).
+piece(f,[(0,0),(1,0),(2,0),(0,1),(1,1),(0,2)]).
+piece(f,[(0,0),(1,0),(2,0),(1,1),(2,1),(2,2)]).
+
+piece(g,[(0,0),(1,0),(0,1),(1,1),(2,1),(0,2),(1,2)]).
+piece(g,[(0,0),(1,0),(2,0),(0,1),(1,1),(2,1),(1,2)]).
+piece(g,[(0,0),(1,0),(-1,1),(0,1),(1,1),(0,2),(1,2)]).
+piece(g,[(0,0),(-1,1),(0,1),(1,1),(-1,2),(0,2),(1,2)]).
+
+piece(h,[(0,0),(0,1),(0,2),(0,3),(1,1),(1,2)]).
+piece(h,[(0,0),(1,0),(2,0),(3,0),(1,1),(2,1)]).
+piece(h,[(0,0),(-1,1),(0,1),(-1,2),(0,2),(0,3)]).
+piece(h,[(0,0),(1,0),(-1,1),(0,1),(1,1),(2,1)]).
+
+piece(i,[(0,0),(-2,1),(-1,1),(0,1),(-2,2),(-1,2),(0,2),(-1,3)]).
+piece(i,[(0,0),(1,0),(-1,1),(0,1),(1,1),(0,2),(1,2),(2,2)]).
+piece(i,[(0,0),(-1,1),(0,1),(1,1),(-1,2),(0,2),(1,2),(-1,3)]).
+piece(i,[(0,0),(1,0),(2,0),(1,1),(2,1),(3,1),(1,2),(2,2)]).
+```
+
+You can find a copy of this code as a GitHub gist [here](https://gist.github.com/afvanwoudenberg/d1f2c1721df7762c665af9252e72f1bb).
+
+The `solve/3` predicate is the main predicate that solves the puzzle. It takes as input the X and Y coordinates of the empty cell on the board and returns a solution, which is a list of `pos(X,Y,P)` terms representing the placement of the pieces on the board. The `solve/4` predicate is a helper predicate that recursively places the pieces on the board.
+
+The program also includes several other predicates that define the properties of the puzzle, such as the shape and size of each piece, and the rules for placing the pieces on the board. The `piece/2` predicate defines the shape of each piece, and the `place_piece/5` predicate checks whether a piece can be placed on a given location on the board.
+
+Finally, the `print_board/1` predicate is used to print the solution to the puzzle in a readable format.
+
+## How to use this solver
+
+To use this program, open the `skyline.pl` file in your preferred Prolog interpreter (I personally prefer [SWI-Prolog](https://www.swi-prolog.org/)). To find find a solution for when the metal rod is in position (4, 4), simply type the following:
+
+```prolog
+print_solution(4,4).
+```
+```
++-------+
+|ggeeeeh|
+|gggdehh|
+|ggiddhh|
+|iii ddh|
+|iiicfff|
+|bicccff|
+|baaaaaf|
++-------+
+true
+```
+
+The helper predicate `print_solution/2` calls the `solve/3` to solve and `print_board/1` to display the solution.
+
+You can press ; to find alternative solutions.
+
+If you want to see all solutions for a given rod position, you can type:
+
+```prolog
+findall(_,print_solution(4,4),_).
+```

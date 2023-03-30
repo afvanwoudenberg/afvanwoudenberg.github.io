@@ -1,0 +1,38 @@
+---
+sidebar: false
+toc: false
+listing:
+  contents: posts
+  sort: "date desc"
+  type: default
+  categories: true
+  sort-ui: false
+  filter-ui: false
+  feed: true
+  fields: [date, reading-time, categories, title, subtitle, description]
+  id: blog-listings
+page-layout: article
+title-block-banner: true
+format:
+  html:
+    anchor-sections: true
+---
+
+::: {layout="[21,79]"}
+
+![](profile.jpg){.profile-pic}
+
+Hello, I'm Aswin, a lecturer at NHL Stenden University of Applied Sciences and freelance data scientist. On this website, I share my professional and personal pursuits with a focus on machine learning, logic programming, and software development.
+
+:::
+
+## 💼 Work With Me
+
+I am open to consulting and advisory work. 
+
+Please contact me at [reachme@aswinvanwoudenberg.com](mailto: reachme@aswinvanwoudenberg.com) or connect with me on [LinkedIn](https://www.linkedin.com/in/afvanwoudenberg/) for potential projects that align with my expertise.
+
+## 📮 Posts
+
+::: {#blog-listings}
+:::

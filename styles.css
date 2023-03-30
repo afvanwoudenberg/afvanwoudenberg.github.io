@@ -1,0 +1,10 @@
+/* css styles */
+
+.profile-pic {
+    border-radius: 50%;
+    min-width: 143px;
+    min-height: 143px;
+    max-width: 143px;
+    max-height: 143px; 
+    margin-bottom: 18px;
+}

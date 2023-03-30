@@ -1,0 +1,130 @@
+---
+title: "Who Owns the Zebra"
+description: "A Prolog solver for the 'Zebra puzzle' a.k.a. 'Einstein's puzzle'."
+author: "Aswin van Woudenberg"
+date: "2007-10-26"
+categories: [programming, prolog, puzzles]
+toc: true
+---
+
+On December 17, 1962, [Life International magazine](https://www.paperworld.com.au/magazines/life-international.html) published the following puzzle:
+
+> 1. There are five houses.
+> 2. The Englishman lives in the red house.
+> 3. The Spaniard owns the dog.
+> 4. Coffee is drunk in the green house.
+> 5. The Ukrainian drinks tea.
+> 6. The green house is immediately to the right of the ivory house.
+> 7. The Old Gold smoker owns snails.
+> 8. Kools are smoked in the yellow house.
+> 9. Milk is drunk in the middle house.
+> 10. The Norwegian lives in the first house.
+> 11. The man who smokes Chesterfields lives in the house next to the man with the fox.
+> 12. Kools are smoked in the house next to the house where the horse is kept.
+> 13. The Lucky Strike smoker drinks orange juice.
+> 14. The Japanese smokes Parliaments.
+> 15. The Norwegian lives next to the blue house.
+> 
+> Now, who drinks water? Who owns the zebra?
+> 
+> In the interest of clarity, it must be added that each of the five houses is painted a different color, and their inhabitants are of different national extractions, own different pets, drink different beverages and smoke different brands of American cigarets. 
+> 
+> One other thing: In Statement 6, right means your right.
+
+This puzzle is said to be invented by Einstein and therefore sometimes referred to as _Einstein's puzzle_ or _Einstein's riddle_. Supposedly, he also claimed that only 2% of the world’s population would be smart enough to solve it. For neither claim is there any evidence.
+
+## Solving the puzzle using Prolog
+
+As an example of how to solve these kinds of logic puzzles using Prolog, I wrote this code:
+
+```{.prolog filename="einstein.pl"}
+% A Prolog solver for the Zebra puzzle a.k.a. Einstein's riddle.
+% https://en.wikipedia.org/wiki/Zebra_Puzzle
+
+einstein :-
+    einstein(Solution),
+    write_sol(Solution).
+
+einstein(Sol) :-
+    Sol = [ 
+        [1,N1,C1,P1,D1,S1],                             % There are five houses.
+        [2,N2,C2,P2,D2,S2],
+        [3,N3,C3,P3,D3,S3],
+        [4,N4,C4,P4,D4,S4],
+        [5,N5,C5,P5,D5,S5]],
+    member([_,englishman,red,_,_,_],Sol),               % The Englishman lives in the red house.
+    member([_,spaniard,_,dog,_,_],Sol),                 % The Spaniard owns the dog.
+    member([_,_,green,_,coffee,_],Sol),                 % Coffee is drunk in the green house.
+    member([_,ukrainian,_,_,tea,_],Sol),                % The Ukrainian drinks tea.
+    member([GH,_,green,_,_,_],Sol),                     % The green house is immediately to the right of the ivory house.
+    member([IH,_,ivory,_,_,_],Sol),
+    GH =:= IH + 1,
+    member([_,_,_,snails,_,old_gold],Sol),              % The Old Gold smoker owns snails.
+    member([_,_,yellow,_,_,kools],Sol),                 % Kools are smoked in the yellow house.
+    member([3,_,_,_,milk,_],Sol),                       % Milk is drunk in the middle house.
+    member([1,norwegian,_,_,_,_],Sol),                  % The Norwegian lives in the first house.
+    member([BH,_,_,_,_,chesterfields],Sol),             % The man who smokes Chesterfields lives in the house next to the man with the fox.
+    member([CH,_,_,fox,_,_],Sol),
+    next_to(BH,CH),
+    member([DH,_,_,_,_,kools],Sol),                     % Kools are smoked in the house next to the house where the horse is kept.
+    member([HH,_,_,horse,_,_],Sol),
+    next_to(DH,HH),
+    member([_,_,_,_,orange_juice,lucky_strike],Sol),    % The Lucky Strike smoker drinks organge juice.
+    member([_,japanese,_,_,_,parliaments],Sol),         % The Japanese smokes Parliaments
+    member([NH,norwegian,_,_,_,_],Sol),                 % The Norwegian lives next to the blue house.
+    member([BlH,_,blue,_,_,_],Sol),
+    next_to(NH,BlH),
+    permutation([englishman,spaniard,ukrainian,japanese,norwegian],[N1,N2,N3,N4,N5]),
+    permutation([green,ivory,yellow,blue,red],[C1,C2,C3,C4,C5]),
+    permutation([dog,snails,fox,horse,zebra],[P1,P2,P3,P4,P5]),
+    permutation([coffee,tea,milk,orange_juice,water],[D1,D2,D3,D4,D5]),
+    permutation([old_gold,kools,chesterfields,lucky_strike,parliaments],[S1,S2,S3,S4,S5]).
+
+next_to(A,B) :- A =:= B - 1.
+next_to(A,B) :- A =:= B + 1.
+
+write_sol(Solution) :-
+    write('+--+------------+------------+------------+-------------+--------------+'),nl,
+    maplist(writef('|%2L|%12L|%12L|%12L|%13L|%14L|\n'),Solution),
+    write('+--+------------+------------+------------+-------------+--------------+'),nl.
+```
+
+The program uses a list of lists to represent the houses and applies a set of constraints to determine the correct answer. 
+
+The `einstein/1` predicate defines the structure of the solution as a list of lists called `Sol`. Each sublist corresponds to a house and contains five variables representing the house number, nationality, color, pet, drink, and cigarette brand.
+
+The predicate then uses a set of `member/2` and `next_to/2` predicates to apply the given clues and constraints to the list of houses. For example, `member([_,englishman,red,_,_,_],Sol)` specifies that the Englishman lives in the red house, and the predicates `member([BH,_,_,_,_,chesterfields],Sol)`, `member([CH,_,_,fox,_,_],Sol)`, and `next_to(BH,CH)` specify that the man who smokes Chesterfields lives in the house next to the man with the fox. 
+
+Finally, `write_sol/1` outputs the solutions in a formatted table.
+
+You can find a copy of this code as a GitHub gist [here](https://gist.github.com/afvanwoudenberg/cf5d0c4e8f9c28f8cfef301969502a5c).
+
+## Running the solver
+
+To run the solver, you first start the Prolog interpreter (I use [SWI-Prolog](https://www.swi-prolog.org/)) by opening up a terminal and typing:
+
+```bash
+swipl
+```
+
+This will start the Prolog interpreter. You can then load the solver by typing:
+
+```prolog
+[einstein].
+```
+
+This loads the `einstein.pl` file. You can execute the solver which will output the solution to the console:
+
+```prolog
+einstein.
+```
+```
++--+------------+------------+------------+-------------+--------------+
+|1 |norwegian   |yellow      |fox         |water        |kools         |
+|2 |ukrainian   |blue        |horse       |tea          |chesterfields |
+|3 |englishman  |red         |snails      |milk         |old_gold      |
+|4 |spaniard    |ivory       |dog         |orange_juice |lucky_strike  |
+|5 |japanese    |green       |zebra       |coffee       |parliaments   |
++--+------------+------------+------------+-------------+--------------+
+```
+

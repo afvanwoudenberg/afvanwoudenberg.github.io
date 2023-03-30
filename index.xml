@@ -6,15 +6,15 @@
       version="2.0">
 <channel>
 <title>Aswin van Woudenberg</title>
-<link>https://www.aswinvanwoudenberg.com/index.html</link>
-<atom:link href="https://www.aswinvanwoudenberg.com/index.xml" rel="self" type="application/rss+xml"/>
+<link>https://afvanwoudenberg.github.io/index.html</link>
+<atom:link href="https://afvanwoudenberg.github.io/index.xml" rel="self" type="application/rss+xml"/>
 <description>Aswin&#39;s blog</description>
 <generator>quarto-1.2.313</generator>
 <lastBuildDate>Mon, 03 Jan 2022 23:00:00 GMT</lastBuildDate>
 <item>
   <title>How to Traverse a Decision Tree and Win at Guess Who?</title>
   <dc:creator>Aswin van Woudenberg</dc:creator>
-  <link>https://www.aswinvanwoudenberg.com/posts/how-to-traverse-a-decision-tree-and-win-at-guess-who/index.html</link>
+  <link>https://afvanwoudenberg.github.io/posts/how-to-traverse-a-decision-tree-and-win-at-guess-who/index.html</link>
   <description><![CDATA[ 
 
 
@@ -33,7 +33,7 @@
 <li>Is your person female?</li>
 </ul>
 <p>The player will then eliminate candidates (based on the opponent’s response) by flipping those images down until only one is left.</p>
-<p><img src="https://www.aswinvanwoudenberg.com/posts/how-to-traverse-a-decision-tree-and-win-at-guess-who/guess-who-board.png" class="img-fluid"></p>
+<p><img src="https://afvanwoudenberg.github.io/posts/how-to-traverse-a-decision-tree-and-win-at-guess-who/guess-who-board.png" class="img-fluid"></p>
 </section>
 <section id="importing-necessary-libraries-and-loading-the-data" class="level2">
 <h2 class="anchored" data-anchor-id="importing-necessary-libraries-and-loading-the-data">Importing necessary libraries and loading the data</h2>
@@ -157,7 +157,7 @@
 <div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1">graph <span class="op" style="color: #5E5E5E;">=</span> graphviz.Source(dot_data)</span>
 <span id="cb11-2">graph</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
-<p><img src="https://www.aswinvanwoudenberg.com/posts/how-to-traverse-a-decision-tree-and-win-at-guess-who/index_files/figure-html/cell-11-output-1.svg" class="img-fluid"></p>
+<p><img src="https://afvanwoudenberg.github.io/posts/how-to-traverse-a-decision-tree-and-win-at-guess-who/index_files/figure-html/cell-11-output-1.svg" class="img-fluid"></p>
 </div>
 </div>
 <p>We can see that most characters can be guessed in 4 or 5 moves. Only two characters need a 6th question.</p>
@@ -295,7 +295,7 @@
 </div>
 </div>
 <p>Use one of the following links to play with an interactive version:</p>
-<p><a target="_blank" href="https://mybinder.org/v2/gh/afvanwoudenberg/guess-who/main?urlpath=%2Fvoila%2Frender%2FGuess%20Who.ipynb"><img src="https://www.aswinvanwoudenberg.com/posts/how-to-traverse-a-decision-tree-and-win-at-guess-who/https:/mybinder.org/badge_logo.svg" class="img-fluid" alt="Binder"></a> <a target="_blank" href="https://kaggle.com/kernels/welcome?src=https://github.com/afvanwoudenberg/guess-who/blob/main/Guess%20Who.ipynb"><img src="https://www.aswinvanwoudenberg.com/posts/how-to-traverse-a-decision-tree-and-win-at-guess-who/https:/kaggle.com/static/images/open-in-kaggle.svg" class="img-fluid" alt="Kaggle"></a> <a target="_blank" href="https://colab.research.google.com/github/afvanwoudenberg/guess-who/blob/main/Guess%20Who.ipynb"><img src="https://www.aswinvanwoudenberg.com/posts/how-to-traverse-a-decision-tree-and-win-at-guess-who/https:/colab.research.google.com/assets/colab-badge.svg" class="img-fluid" alt="Colab"></a> <a target="_blank" href="https://github.com/afvanwoudenberg/guess-who"><img src="https://www.aswinvanwoudenberg.com/posts/how-to-traverse-a-decision-tree-and-win-at-guess-who/https:/shields.io/badge/-View%20on%20GitHub-grey.svg?logo=github&amp;style=flat&amp;logoColor=white&amp;labelColor=black" class="img-fluid" alt="GitHub"></a></p>
+<p><a target="_blank" href="https://mybinder.org/v2/gh/afvanwoudenberg/guess-who/main?urlpath=%2Fvoila%2Frender%2FGuess%20Who.ipynb"><img src="https://afvanwoudenberg.github.io/posts/how-to-traverse-a-decision-tree-and-win-at-guess-who/https:/mybinder.org/badge_logo.svg" class="img-fluid" alt="Binder"></a> <a target="_blank" href="https://kaggle.com/kernels/welcome?src=https://github.com/afvanwoudenberg/guess-who/blob/main/Guess%20Who.ipynb"><img src="https://afvanwoudenberg.github.io/posts/how-to-traverse-a-decision-tree-and-win-at-guess-who/https:/kaggle.com/static/images/open-in-kaggle.svg" class="img-fluid" alt="Kaggle"></a> <a target="_blank" href="https://colab.research.google.com/github/afvanwoudenberg/guess-who/blob/main/Guess%20Who.ipynb"><img src="https://afvanwoudenberg.github.io/posts/how-to-traverse-a-decision-tree-and-win-at-guess-who/https:/colab.research.google.com/assets/colab-badge.svg" class="img-fluid" alt="Colab"></a> <a target="_blank" href="https://github.com/afvanwoudenberg/guess-who"><img src="https://afvanwoudenberg.github.io/posts/how-to-traverse-a-decision-tree-and-win-at-guess-who/https:/shields.io/badge/-View%20on%20GitHub-grey.svg?logo=github&amp;style=flat&amp;logoColor=white&amp;labelColor=black" class="img-fluid" alt="GitHub"></a></p>
 </section>
 <section id="ok-cool-but-how-do-i-win-at-guess-who" class="level2">
 <h2 class="anchored" data-anchor-id="ok-cool-but-how-do-i-win-at-guess-who">OK, cool, but how do I win at Guess Who?</h2>
@@ -327,14 +327,14 @@
   <category>games</category>
   <category>python</category>
   <category>sklearn</category>
-  <guid>https://www.aswinvanwoudenberg.com/posts/how-to-traverse-a-decision-tree-and-win-at-guess-who/index.html</guid>
+  <guid>https://afvanwoudenberg.github.io/posts/how-to-traverse-a-decision-tree-and-win-at-guess-who/index.html</guid>
   <pubDate>Mon, 03 Jan 2022 23:00:00 GMT</pubDate>
-  <media:content url="https://www.aswinvanwoudenberg.com/posts/how-to-traverse-a-decision-tree-and-win-at-guess-who/guess-who.jpg" medium="image" type="image/jpeg"/>
+  <media:content url="https://afvanwoudenberg.github.io/posts/how-to-traverse-a-decision-tree-and-win-at-guess-who/guess-who.jpg" medium="image" type="image/jpeg"/>
 </item>
 <item>
   <title>Icosian Game</title>
   <dc:creator>Aswin van Woudenberg</dc:creator>
-  <link>https://www.aswinvanwoudenberg.com/posts/icosian-game/index.html</link>
+  <link>https://afvanwoudenberg.github.io/posts/icosian-game/index.html</link>
   <description><![CDATA[ 
 
 
@@ -347,7 +347,7 @@
 <p>The game’s objective is to find a path around a <a href="https://en.wikipedia.org/wiki/Regular_dodecahedron">dodecahedron</a> such that every vertex is visited once, no edge is visited multiple times, and the path ends in de same vertex it started from. Instead of using a 3d dodecahedron, the game was distributed as a pegboard with holes at the vertices of the 2d dodecahedral graph.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://www.aswinvanwoudenberg.com/posts/icosian-game/icosian.jpg" class="img-fluid figure-img"></p>
+<p><img src="https://afvanwoudenberg.github.io/posts/icosian-game/icosian.jpg" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">One of the few remaining copies (from the collection of <a href="https://www.puzzlemuseum.com/month/picm02/200207icosian.htm">the puzzle museum</a>)</figcaption><p></p>
 </figure>
 </div>
@@ -356,7 +356,7 @@
 <section id="some-graph-theory" class="level2">
 <h2 class="anchored" data-anchor-id="some-graph-theory">Some graph theory</h2>
 <p>In graph theory, a path that visits every vertex of a graph once is now known as a Hamiltonian path. A path that visits every vertex once <em>and</em> that ends in the same vertex as it started off from is called a Hamiltonian cycle. So playing this game is essentially searching for a Hamiltonian cycle in the dodecahedral graph.</p>
-<p><img src="https://www.aswinvanwoudenberg.com/posts/icosian-game/icosian_graph.png" class="img-fluid" width="500"></p>
+<p><img src="https://afvanwoudenberg.github.io/posts/icosian-game/icosian_graph.png" class="img-fluid" width="500"></p>
 </section>
 <section id="solving-this-game-using-prolog" class="level2">
 <h2 class="anchored" data-anchor-id="solving-this-game-using-prolog">Solving this game using Prolog</h2>
@@ -450,7 +450,7 @@
 <section id="how-to-use-this-code" class="level2">
 <h2 class="anchored" data-anchor-id="how-to-use-this-code">How to use this code</h2>
 <p>To use this program, open the <code>icosian.pl</code> file in your preferred Prolog interpreter (I always use <a href="https://www.swi-prolog.org/">SWI-Prolog</a>). Entering <code>solve_icosian_puzzle.</code> and pressing ; repeatedly will yield possible solutions.</p>
-<p><img src="https://www.aswinvanwoudenberg.com/posts/icosian-game/icosian.gif" class="img-fluid"></p>
+<p><img src="https://afvanwoudenberg.github.io/posts/icosian-game/icosian.gif" class="img-fluid"></p>
 <p>Suppose you want to explore how the cycle that starts with the vertices Q, R, S, N, P could be continued, you would enter:</p>
 <div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode prolog code-with-copy"><code class="sourceCode prolog"><span id="cb2-1">icosian_puzzle_edges(<span class="dt" style="color: #AD0000;">Adj</span>)<span class="kw" style="color: #003B4F;">,</span> <span class="dt" style="color: #AD0000;">Tour</span> <span class="kw" style="color: #003B4F;">=</span> [q,r,s,n,p<span class="fu" style="color: #4758AB;">|</span><span class="dt" style="color: #AD0000;">Rest</span>]<span class="kw" style="color: #003B4F;">,</span> hamiltonian_cycle(<span class="dt" style="color: #AD0000;">Adj</span><span class="kw" style="color: #003B4F;">,</span><span class="dt" style="color: #AD0000;">Tour</span>)<span class="kw" style="color: #003B4F;">,</span> print_icosian_solution(<span class="dt" style="color: #AD0000;">Tour</span>)<span class="kw" style="color: #003B4F;">.</span></span></code></pre></div>
 <p>This game might remind you of the <a href="https://en.wikipedia.org/wiki/Travelling_salesman_problem">Travelling Salesman Problem</a> (TSP). Finding a Hamiltonian cycle can be considered a special case of the TSP, namely, one where each pair of vertices with an edge between them has distance 1, while vertex pairs without an edge between them are separated by a distance of infinity.</p>
@@ -462,24 +462,24 @@
   <category>programming</category>
   <category>prolog</category>
   <category>puzzles</category>
-  <guid>https://www.aswinvanwoudenberg.com/posts/icosian-game/index.html</guid>
+  <guid>https://afvanwoudenberg.github.io/posts/icosian-game/index.html</guid>
   <pubDate>Thu, 23 Apr 2020 22:00:00 GMT</pubDate>
   <media:content url="https://www.puzzlemuseum.com/month/picm02/200207icosian.htm" medium="image"/>
 </item>
 <item>
   <title>Skyline Puzzle</title>
   <dc:creator>Aswin van Woudenberg</dc:creator>
-  <link>https://www.aswinvanwoudenberg.com/posts/skyline-puzzle/index.html</link>
+  <link>https://afvanwoudenberg.github.io/posts/skyline-puzzle/index.html</link>
   <description><![CDATA[ 
 
 
 
 
 <p>A coworker of mine recently introduced me to this puzzle:</p>
-<p><img src="https://www.aswinvanwoudenberg.com/posts/skyline-puzzle/pieces.jpg" class="img-fluid"></p>
+<p><img src="https://afvanwoudenberg.github.io/posts/skyline-puzzle/pieces.jpg" class="img-fluid"></p>
 <p>The puzzle is called <em>Skyline</em> and it’s a packing puzzle. The objective is to place the metal rod in one of the holes in the base and place the nine wooden pieces around it. It was designed by <a href="http://www.constantin-jean-clau.de/">Jean Claude Constantin</a>.</p>
 <p>When solved, the puzzle looks something like this:</p>
-<p><img src="https://www.aswinvanwoudenberg.com/posts/skyline-puzzle/skyline.jpg" class="img-fluid"></p>
+<p><img src="https://afvanwoudenberg.github.io/posts/skyline-puzzle/skyline.jpg" class="img-fluid"></p>
 <p>In this blog post I present some Prolog code to generate all solutions for each rod position.</p>
 <section id="solving-this-puzzle-using-prolog" class="level2">
 <h2 class="anchored" data-anchor-id="solving-this-puzzle-using-prolog">Solving this puzzle using Prolog</h2>
@@ -618,14 +618,14 @@ true</code></pre>
   <category>programming</category>
   <category>prolog</category>
   <category>puzzles</category>
-  <guid>https://www.aswinvanwoudenberg.com/posts/skyline-puzzle/index.html</guid>
+  <guid>https://afvanwoudenberg.github.io/posts/skyline-puzzle/index.html</guid>
   <pubDate>Sat, 03 Oct 2015 22:00:00 GMT</pubDate>
-  <media:content url="https://www.aswinvanwoudenberg.com/posts/skyline-puzzle/pieces.jpg" medium="image" type="image/jpeg"/>
+  <media:content url="https://afvanwoudenberg.github.io/posts/skyline-puzzle/pieces.jpg" medium="image" type="image/jpeg"/>
 </item>
 <item>
   <title>VBA IBAN Validator</title>
   <dc:creator>Aswin van Woudenberg</dc:creator>
-  <link>https://www.aswinvanwoudenberg.com/posts/vba-iban-validator/index.html</link>
+  <link>https://afvanwoudenberg.github.io/posts/vba-iban-validator/index.html</link>
   <description><![CDATA[ 
 
 
@@ -720,13 +720,13 @@ true</code></pre>
  ]]></description>
   <category>programming</category>
   <category>vba</category>
-  <guid>https://www.aswinvanwoudenberg.com/posts/vba-iban-validator/index.html</guid>
+  <guid>https://afvanwoudenberg.github.io/posts/vba-iban-validator/index.html</guid>
   <pubDate>Wed, 17 Jul 2013 22:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Bridge and Torch Puzzle</title>
   <dc:creator>Aswin van Woudenberg</dc:creator>
-  <link>https://www.aswinvanwoudenberg.com/posts/bridge-and-torch-puzzle/index.html</link>
+  <link>https://afvanwoudenberg.github.io/posts/bridge-and-torch-puzzle/index.html</link>
   <description><![CDATA[ 
 
 
@@ -890,13 +890,13 @@ state([],right,[a,b,c,d],17)</code></pre>
   <category>programming</category>
   <category>prolog</category>
   <category>puzzles</category>
-  <guid>https://www.aswinvanwoudenberg.com/posts/bridge-and-torch-puzzle/index.html</guid>
+  <guid>https://afvanwoudenberg.github.io/posts/bridge-and-torch-puzzle/index.html</guid>
   <pubDate>Thu, 02 Jul 2009 22:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Who Owns the Zebra</title>
   <dc:creator>Aswin van Woudenberg</dc:creator>
-  <link>https://www.aswinvanwoudenberg.com/posts/who-owns-the-zebra/index.html</link>
+  <link>https://afvanwoudenberg.github.io/posts/who-owns-the-zebra/index.html</link>
   <description><![CDATA[ 
 
 
@@ -1012,13 +1012,13 @@ state([],right,[a,b,c,d],17)</code></pre>
   <category>programming</category>
   <category>prolog</category>
   <category>puzzles</category>
-  <guid>https://www.aswinvanwoudenberg.com/posts/who-owns-the-zebra/index.html</guid>
+  <guid>https://afvanwoudenberg.github.io/posts/who-owns-the-zebra/index.html</guid>
   <pubDate>Thu, 25 Oct 2007 22:00:00 GMT</pubDate>
 </item>
 <item>
   <title>A Brainf*ck Interpreter in Prolog</title>
   <dc:creator>Aswin van Woudenberg</dc:creator>
-  <link>https://www.aswinvanwoudenberg.com/posts/a-brainfuck-interpreter-in-prolog/index.html</link>
+  <link>https://afvanwoudenberg.github.io/posts/a-brainfuck-interpreter-in-prolog/index.html</link>
   <description><![CDATA[ 
 
 
@@ -1077,9 +1077,9 @@ state([],right,[a,b,c,d],17)</code></pre>
   <category>programming</category>
   <category>esoteric</category>
   <category>prolog</category>
-  <guid>https://www.aswinvanwoudenberg.com/posts/a-brainfuck-interpreter-in-prolog/index.html</guid>
+  <guid>https://afvanwoudenberg.github.io/posts/a-brainfuck-interpreter-in-prolog/index.html</guid>
   <pubDate>Thu, 04 Jan 2007 23:00:00 GMT</pubDate>
-  <media:content url="https://www.aswinvanwoudenberg.com/posts/a-brainfuck-interpreter-in-prolog/image.jpg" medium="image" type="image/jpeg"/>
+  <media:content url="https://afvanwoudenberg.github.io/posts/a-brainfuck-interpreter-in-prolog/image.jpg" medium="image" type="image/jpeg"/>
 </item>
 </channel>
 </rss>

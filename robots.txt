@@ -1,1 +1,1 @@
-Sitemap: https://www.aswinvanwoudenberg.com/sitemap.xml
+Sitemap: https://afvanwoudenberg.github.io/sitemap.xml

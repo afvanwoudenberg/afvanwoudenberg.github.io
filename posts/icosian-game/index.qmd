@@ -9,7 +9,7 @@ toc: true
 
 The Irish mathematician [William Rowan Hamilton](https://en.wikipedia.org/wiki/William_Rowan_Hamilton) is probably best known for discovering [quaternions](https://en.wikipedia.org/wiki/Quaternion). He is also the inventor of the [Icosian game](https://en.wikipedia.org/wiki/Icosian_game).
 
-In this blog post I'll describe the game and show some Prolog code for solving it.
+In this blog post I'll describe the game and share some Prolog code for solving it.
 
 ## How to play the Icosian game
 
@@ -108,7 +108,7 @@ solve_icosian_puzzle :-
 	print_icosian_solution(Tour).
 ```
 
-The `icosian_puzzle_edges/1` predicate defines the graph by specifying a list of edges between vertices which is used by the `connected/3` predicate which checks whether there is an edge between two vertices.
+The `icosian_puzzle_edges/1` predicate defines the graph by specifying a list of edges between vertices. This list is used by the `connected/3` predicate which checks whether there is an edge between two vertices.
 
 The `hamiltonian_cycle/2` predicate defines the main algorithm for finding a Hamiltonian cycle on the graph, given a starting vertex. After determining the number of vertices in the graph, it recursively tries to find a cycle that visits each vertex exactly once.
 

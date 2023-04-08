@@ -1,0 +1,244 @@
+---
+title: "Making Sense of Sorting"
+description: "Easy algorithm visualization in Python."
+author: "Aswin van Woudenberg"
+date: "2022-09-18"
+categories: [programming, python, matplotlib, algorithms]
+toc: true
+---
+
+Sorting algorithms are a fundamental concept in computer science, but understanding how they work can be tricky. In this blog post, I'll demonstrate an easy way to visualize their inner workings. By the end, you'll not only be able to visualize sorting algorithms, but other list algorithms as well. Let's dive in!
+
+## Importing libraries
+
+We start by importing the necessary libraries.
+
+```{python}
+import matplotlib.pyplot as plt
+import matplotlib.animation
+import random
+
+from copy import copy
+from queue import Queue
+from IPython.display import HTML
+```
+
+## The sorting algorithms
+
+I will use the _Selection sort_ and _Quicksort_ algorithms as examples.
+
+### Selection sort
+
+Selection sort iterates through a list, selects the smallest element, and swaps it with the first element. It then repeats this process for the remaining unsorted portion of the list until it is fully sorted.
+
+Here's what it looks like in Python:
+
+```{python}
+def selection_sort(a):
+    n = len(a)
+    for i in range(0, n-1):
+        k = i
+        for j in range(i+1, n):
+            if a[j] < a[k]:
+                k = j
+        a[i], a[k] = a[k], a[i]
+```
+
+It's short but, with an $\mathcal{O}(n^2)$ time complexity, not very efficient.
+
+### Quicksort
+
+As the name suggests, Quicksort is much faster. The algorithm works by selecting a pivot element and partitioning the list into two sub-lists: one with elements less than the pivot and another with elements greater than the pivot. This process is repeated recursively on each sub-list until the entire list is sorted.
+
+```{python}
+def quick_sort(a, l=0, h=0):
+    if h == 0:
+        h = len(a) - 1
+    m = a[(l + h) // 2]
+    i = l
+    j = h
+    while i <= j:
+        while a[i] < m:
+            i += 1
+        while a[j] > m:
+            j -= 1
+        if i <= j:
+            a[i], a[j] = a[j], a[i]
+            i += 1
+            j -= 1
+    if l < j:
+        quick_sort(a, l, j)
+    if i < h:
+        quick_sort(a, i, h)
+```
+
+Quicksort has a time complexity of $\mathcal{O}(n\log{}n)$.
+
+## Subclassing list
+
+The approach I take here is to create a special type of list called `MonitoredList` that keeps track of when its items are being accessed or changed. It does this by recording all these actions into a queue.
+
+```{python}
+class MonitoredList(list):
+    def __init__(self, q, iterable):
+        super().__init__(iterable)
+        self.queue = q
+    
+    def __getitem__(self, index):
+        self.queue.put({
+            'method': '__getitem__',
+            'object': copy(self),
+            'args': [index]
+        })
+        return super().__getitem__(index)
+    
+    def __setitem__(self, index, value):
+        self.queue.put({
+            'method': '__setitem__',
+            'object': copy(self),
+            'args': [index, value]
+        })
+        super().__setitem__(index, value)
+    
+    def state_to_queue(self):
+        self.queue.put({
+            'method': 'state_to_queue',
+            'object': copy(self),
+            'args': []
+        })
+```
+
+Whenever an item in the list is read or modified, the `MonitoredList` class logs information about the operation (like what method was used and what the arguments were) into the queue.
+
+Additionally, the class has a method called `state_to_queue` which allows you to log the entire state of the list at any given time.
+
+To demonstrate how the `MonitoredList` class is used, take a look at the following code:
+
+```{python}
+l = [1, 2, 3, 4]
+
+q = Queue(-1)
+ml = MonitoredList(q, l)
+
+ml[0] = 5 # This calls __setitem__
+ml[2] = 4 # This calls __setitem__
+
+v = ml[3] # This calls __getitem__
+
+ml.state_to_queue()
+```
+
+We start by creating a list `l` with four elements: `[1, 2, 3, 4]` and a `Queue` object `q`.
+
+Next, we create a `MonitoredList` object `ml` by passing `q` and `l` as parameters.
+
+The next two lines of code modify `ml` by setting its first and third elements to 5 and 4 respectively. These modifications call the `__setitem__` method of the `MonitoredList` object which logs information about the operation into the `q` queue.
+
+The next line accesses the fourth element of `ml` and assigns its value to `v`. This access operation calls the `__getitem__` method of the `MonitoredList` object which also logs information about the operation into the `q` queue.
+
+Finally, the `state_to_queue` method of the `MonitoredList` object is called which logs the current state of the list into the `q` queue.
+
+We can get a record of all the operations that have been performed on the `MonitoredList` by reading the contents of the `q` queue.
+
+```{python}
+while not q.empty():
+    print(q.get())
+```
+
+If we apply a sorting algorithm on a `MonitoredList`, any direct access and modification operations performed on individual elements by the sorting algorithm will be logged into the queue. We can then use the contents of this queue to create an animation.
+
+## Animating list algorithms
+
+The `animate_algorithm` function below takes a sorting function and a list as input, and visualizes the sorting process by creating a Matplotlib animation that highlights the list elements being accessed and modified during the sorting process. It achieves this by creating a `MonitoredList` object to track all changes made to the list into a queue. The function then defines an animation function that extracts the elements from the queue and creates the visualization.
+
+```{python}
+def animate_algorithm(fun, inp):
+    global bars
+    
+    q = Queue(-1)
+    values = MonitoredList(q, inp)
+    
+    fun(values)
+    values.state_to_queue()
+    
+    def gen_func():
+        while not q.empty():
+            item = q.get()
+            if item['method'] in ['__getitem__', '__setitem__', 'state_to_queue']:
+                yield item
+    
+    def animate(elem):
+        global bars
+        bars.remove()
+        ax.clear()
+        ax.axis('off')
+        bars = ax.bar(x_pos, elem['object'], color='steelblue', width=1.0)
+        if elem['method'] == '__getitem__':
+            x = elem['args'][0]
+            ax.plot([x,x],[0,max(elem['object'])], color='green')
+        elif elem['method'] == '__setitem__':
+            x = elem['args'][0]
+            ax.plot([x,x],[0,max(elem['object'])], color='red')
+    
+    x_pos = list(range(len(values)))
+    plt.style.use('default')
+    fig, ax = plt.subplots()
+    ax.axis('off')
+    bars = ax.bar(x_pos, values, width=1.0)
+    plt.close()
+    
+    anim = matplotlib.animation.FuncAnimation(fig, animate, frames=gen_func, save_count=999999999999)
+    
+    return anim
+```
+
+The visualization was inspired by [this video](https://www.youtube.com/watch?v=kPRA0W1kECg). A bar chart is used to display the contents of the list. The visualization highlights the accessed and modified elements by adding a green line and a red line respectively to the chart.
+
+## Creating the animations
+
+Alright, let's generate some animations. We first have to create a randomized list that we can sort, so let's begin by doing that.
+
+```{python}
+values = list(range(30))
+random.shuffle(values)
+```
+
+### Selection sort
+
+Now, we're going to create an animation for the selection sort algorithm. To to so, we pass the function and the list of random values to the `animate_algorithm` function.
+
+```{python}
+anim = animate_algorithm(selection_sort, values)
+HTML(anim.to_jshtml(default_mode='once'))
+```
+
+### Quicksort
+
+We can do the same for quicksort.
+
+```{python}
+anim = animate_algorithm(quick_sort, values)
+HTML(anim.to_jshtml(default_mode='once'))
+```
+
+### Random shuffle
+
+In addition to sorting algorithms, we can animate other list-manipulating algorithms as well. For example, let's animate the `random.shuffle` function.
+
+```{python}
+anim = animate_algorithm(random.shuffle, list(range(30)))
+HTML(anim.to_jshtml(default_mode='once'))
+```
+
+It appears that `random.shuffle` implements the [Fisher-Yates shuffle](https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle).
+
+## Conclusion
+
+So there you have it! By following the steps laid out in this blog post, you can easily visualize sorting and other list algorithms. The provided code hopefully allows you to gain a deeper understanding of how these algorithms operate.
+
+If you want to animate other (sorting) algorithms, check out one of the following links:
+
+<a target="_blank" href="https://kaggle.com/kernels/welcome?src=https://gist.githubusercontent.com/afvanwoudenberg/c3e98fdc53c936844f9576dda59d8147/raw/d63b1ff3eb056bc96c38fea9bf288cdd08b392e9/algorithm_visualization.ipynb">![Kaggle](https://kaggle.com/static/images/open-in-kaggle.svg)</a> 
+<a target="_blank" href="http://colab.research.google.com/gist/afvanwoudenberg/c3e98fdc53c936844f9576dda59d8147/algorithm_visualization.ipynb">![Colab](https://colab.research.google.com/assets/colab-badge.svg)</a>
+<a target="_blank" href="https://gist.github.com/afvanwoudenberg/c3e98fdc53c936844f9576dda59d8147">![GitHub](https://shields.io/badge/-View%20as%20Gist-grey.svg?logo=github&style=flat&logoColor=white&labelColor=black)</a>
+

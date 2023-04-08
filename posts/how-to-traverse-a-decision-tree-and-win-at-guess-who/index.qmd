@@ -320,9 +320,9 @@ display(vbox)
 
 Use one of the following links to play with an interactive version:
 
-<a target="_blank" href="https://mybinder.org/v2/gh/afvanwoudenberg/guess-who/main?urlpath=%2Fvoila%2Frender%2FGuess%20Who.ipynb">![Binder](https://mybinder.org/badge_logo.svg)</a> 
-<a target="_blank" href="https://kaggle.com/kernels/welcome?src=https://github.com/afvanwoudenberg/guess-who/blob/main/Guess%20Who.ipynb">![Kaggle](https://kaggle.com/static/images/open-in-kaggle.svg)</a> 
-<a target="_blank" href="https://colab.research.google.com/github/afvanwoudenberg/guess-who/blob/main/Guess%20Who.ipynb">![Colab](https://colab.research.google.com/assets/colab-badge.svg)</a>
+<a target="_blank" href="https://mybinder.org/v2/gh/afvanwoudenberg/guess-who/main?urlpath=%2Fvoila%2Frender%2Fguess_who.ipynb">![Binder](https://mybinder.org/badge_logo.svg)</a> 
+<a target="_blank" href="https://kaggle.com/kernels/welcome?src=https://github.com/afvanwoudenberg/guess-who/blob/main/guess_who.ipynb">![Kaggle](https://kaggle.com/static/images/open-in-kaggle.svg)</a> 
+<a target="_blank" href="https://colab.research.google.com/github/afvanwoudenberg/guess-who/blob/main/guess_who.ipynb">![Colab](https://colab.research.google.com/assets/colab-badge.svg)</a>
 <a target="_blank" href="https://github.com/afvanwoudenberg/guess-who">![GitHub](https://shields.io/badge/-View%20on%20GitHub-grey.svg?logo=github&style=flat&logoColor=white&labelColor=black)</a>
 
 ## OK, cool, but how do I win at Guess Who?

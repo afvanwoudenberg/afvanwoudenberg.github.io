@@ -205,7 +205,7 @@ random.shuffle(values)
 
 ### Selection sort
 
-Now, we're going to create an animation for the selection sort algorithm. To to so, we pass the function and the list of random values to the `animate_algorithm` function.
+Now, we're going to create an animation for the selection sort algorithm. To do so, we pass the function and the list of random values to the `animate_algorithm` function.
 
 ```{python}
 anim = animate_algorithm(selection_sort, values)
@@ -223,7 +223,7 @@ HTML(anim.to_jshtml(default_mode='once'))
 
 ### Random shuffle
 
-In addition to sorting algorithms, we can animate other list-manipulating algorithms as well. For example, let's animate the `random.shuffle` function.
+In addition to sorting algorithms, we can animate other list manipulation algorithms as well. For example, let's animate the `random.shuffle` function.
 
 ```{python}
 anim = animate_algorithm(random.shuffle, list(range(30)))
@@ -234,7 +234,7 @@ It appears that `random.shuffle` implements the [Fisher-Yates shuffle](https://e
 
 ## Conclusion
 
-So there you have it! By following the steps laid out in this blog post, you can easily visualize sorting and other list algorithms. The provided code hopefully allows you to gain a deeper understanding of how these algorithms operate.
+So there you have it! By following the steps laid out in this post, you can easily visualize sorting and other list algorithms. The provided code hopefully allows you to gain a deeper understanding of how these algorithms work.
 
 If you want to animate other (sorting) algorithms, check out one of the following links:
 

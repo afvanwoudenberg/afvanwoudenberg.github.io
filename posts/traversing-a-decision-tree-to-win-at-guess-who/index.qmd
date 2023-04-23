@@ -1,6 +1,6 @@
 ---
-title: "How to Traverse a Decision Tree and Win at Guess Who?"
-description: "In this post I'll construct a decision tree for playing the game Guess Who and show how to traverse it iteratively."
+title: "Traversing a Decision Tree to Win at Guess Who?"
+description: "How to construct and traverse a decision tree for playing the game Guess Who?"
 author: "Aswin van Woudenberg"
 date: "2022-01-04"
 categories: [machine learning, decision trees, games, python, sklearn]

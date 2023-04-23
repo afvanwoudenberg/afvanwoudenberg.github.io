@@ -73,7 +73,7 @@ Add similar recipes for other weather conditions. Similarly one can make the bun
 One can also record a message on the Nabaztag by keeping the button on its head pressed. After the bunny beeps, you can speak into its microphone. On release, the recorded message is sent to the server. The server saves the message to a WAV file and sends the location of that file to the IFTTT platform where it can be caught using a webhook. The following recipe shows how this can be used to send an email every time a message is recorded.
 
 * Trigger: Webhooks, Receive a web request
-    * 0013d3123456_record_click
+    * _0013d3123456_\_record\_click
 * Action: Email, Send me an email
     * Subject: New message from your Nabaztag
     * Body: Dear owner,&lt;br>&lt;br>On {{OccurredAt}} a message was recorded on your Nabaztag. Click &lt;a href=”{{Value1}}”>here to download&lt;/a>.&lt;br>&lt;br>Sincerely,&lt;br>&lt;br>Your favourite bunny

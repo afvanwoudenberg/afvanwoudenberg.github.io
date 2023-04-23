@@ -1,0 +1,100 @@
+---
+title: "Pictionary Air Mouse"
+description: "Use the Pictionary Air Pen as an alternative input device."
+author: "Aswin van Woudenberg"
+date: "2020-12-13"
+categories: [programming, python, opencv]
+toc: true
+---
+
+_Pictionary Air_ is a modern take on the classic Pictionary game in which players draw in the air with an electronic pen instead of on paper. Using a special AR app on a smartphone or tablet teammates can see what is being drawn.
+
+![](pictionary_air.webp)
+
+I wanted to use the Pictionary Air pen with my laptop instead of my phone so I could play Pictionary on a larger screen, or use the pen as an alternative input device. 
+
+Read on to learn how I did this.
+
+## The general approach
+
+The Pictionary Air pen has a tip that can light up green or red. If you turn on the pen it lights up red. Pressing a button on the pen, turns the tip green, effectively putting it in _drawing_ mode. To detect the position and color of the tip, we can use the webcam to capture real-time video and process it with _OpenCV_. We can apply color masking to isolate the red and green colors used by the pen.
+
+To do color masking, we use the `cv2.inRange()` function to create a binary mask for each color we want to detect. The function takes a single frame and a range of colors we want to include in our mask. This range is specified as a lower and upper color threshold, which helps us include only pixels with values within a specified range. Pixels outside of this range are set to black in the mask, while pixels inside the range are set to white.
+
+For instance, to create a mask that match all green pixels, we would write:
+
+```{.python}
+# convert a frame to HSV color space
+hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+
+# setting the lower and upper range for mask_green
+lower_green = np.array([55, 40, 40])
+upper_green = np.array([95, 255, 255])
+mask_green = cv2.inRange(hsv, lower_green, upper_green)
+```
+
+Note that in this code, we first convert a camera frame (which is, by default, in BGR color space) to HSV color space. Using HSV color space makes creating a mask easier because HSV separates color information from brightness information.
+
+Once we have our masks, we use the `cv2.findContours()` function to detect any contours in the binary images. Contours are the boundaries of objects with similar color or intensity values, so we can use them to locate the tip of the Pictionary Air pen. The function returns a list of contours, and we use the `cv2.contourArea()` function to find the contour with the largest area, which is likely to be the pen's tip.
+
+```{.python}
+contours, _ = cv2.findContours(mask_green.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+# if the contours are formed
+if len(contours) > 0:
+    # find the largest contour 
+    contour = sorted(contours, key = cv2.contourArea, reverse = True)[0] 
+```
+
+After locating the pen's tip, we can calculate its position and move the mouse pointer to the corresponding location on the screen. Additionally, we simulate a left-click by pressing and releasing the left mouse button when a green tip is detected and lost, respectively.
+
+```{.python}
+    # get the radius and position of the enclosing circle
+    ((x, y), _) = cv2.minEnclosingCircle(contour)
+    x, y = int(x), int(y)
+
+    # move the mouse
+    mouse.position = (int(x * factor_x), int(y * factor_y))
+    # press the button is not pressed already
+    if not pressed:
+        pressed = True
+        mouse.press(Button.left)
+```
+
+## One slight hurdle
+
+Please take a look at the picture, taken through my webcam, of me holding a Pictionary Air pen:
+
+![](auto_exposure_time.jpg)
+
+Is there anything that stands out to you? Is it my handsome face, my wrinkled shirt, or my messy bookcase?
+
+Notice the tip of the pen. Can you tell its color? It's impossible to discern because every light source appears white through the webcam. Unfortunately, this creates an issue since we need to accurately detect whether the pen's tip is red or green.
+
+## A simple solution
+
+The solution is luckily quite simple. We just shorten the exposure time of the webcam. 
+
+For this, we can use the `v4l2-ctl` Linux command line tool.
+
+```bash
+v4l2-ctl -c auto_exposure=1 -c exposure_dynamic_framerate=0 -c exposure_time_absolute=30
+```
+
+The picture now looks like this:
+
+![](shorter_exposure_time_red.jpg)
+
+After adjusting the exposure time, we can clearly see the color of the tip of the pen. Pressing the button on the pen turns its tip green.
+
+![](shorter_exposure_time_green.jpg)
+
+Now we can easily detect the position and color of the pen using the approach explained above. Additionally, shortening the exposure time hides irrelevant objects, such as my red shirt, that could throw off the detection algorithm.
+
+## Conclusion
+
+For the complete program check out [this repository](https://github.com/afvanwoudenberg/pa-mouse). You don't need to first adjust the exposure time before running the program, the full Python program does that for you.
+
+This program runs fine on my laptop, but you likely need to adjust webcam settings to make it work for you. Also, you need to run Linux. If this program doesn't seem to work for you, try experimenting with the parameters in the calls that are made to the `v4l2-ctl` tool in the `set_short_exposure_time` and `restore_camera_settings` functions.
+
+Enter `v4l2-ctl --all` on the command line to see the available options.

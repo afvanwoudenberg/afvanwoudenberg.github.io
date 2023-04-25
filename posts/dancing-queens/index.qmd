@@ -9,7 +9,7 @@ toc: true
 
 The [n-queens problem](https://en.wikipedia.org/wiki/Eight_queens_puzzle) is a puzzle that involves placing n queens on an n x n chessboard such that no two queens threaten each other. A queen can threaten another queen if they are in the same row, column, or diagonal. The objective is to find all possible ways to place n queens on the chessboard without any of them threatening each other.
 
-In this post, we'll explore how to solve the n-queens problem using Python and visualize solutions using Matplotlib. We'll also show how to turn all solutions into an animation.
+In this post, we'll explore how to solve the n-queens problem using Python and visualize solutions using Matplotlib. We'll also see how to turn all solutions into an animation.
 
 ## Importing libraries
 

@@ -69,7 +69,7 @@ Please take a look at the picture, taken through my webcam, of me holding a Pict
 
 Is there anything that stands out to you? Is it my handsome face, my wrinkled shirt, or my messy bookcase?
 
-Notice the tip of the pen. Can you tell its color? It's impossible to discern because every light source appears white through the webcam. Unfortunately, this creates an issue since we need to accurately detect whether the pen's tip is red or green.
+Notice the tip of the pen. Can you tell its color? It's impossible to discern because bright light sources appear as white when seen through my laptop's webcam. Unfortunately, this creates an issue since we need to accurately detect whether the pen's tip is red or green.
 
 ## A simple solution
 

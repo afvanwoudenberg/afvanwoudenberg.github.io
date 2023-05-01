@@ -4,7 +4,7 @@ project:
 website:
   title: "Aswin van Woudenberg"
   favicon: favicon.png
-  description: "Aswin's blog"
+  description: "A blog on machine learning and coding"
   navbar:
     collapse: false
     right:

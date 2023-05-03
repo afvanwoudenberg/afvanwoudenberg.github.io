@@ -732,4 +732,10 @@ It's time to show the user interface.
 display(hbox, label)
 ```
 
-You can find the [gist here](https://gist.github.com/afvanwoudenberg/8a7c6599d7170c0134fa17bade510e4c).
+To play with an interactive version, you'll need to run it in Jupyter Notebook. Sadly, it won't work in JupyterLab. It does work in [Voilà](https://voila.readthedocs.io/en/stable/index.html) in case you wish to turn it into a web app. The corresponding [gist can be found here](https://gist.github.com/afvanwoudenberg/8a7c6599d7170c0134fa17bade510e4c).
+
+## Conclusion
+
+In this post, we saw how to create a custom widget in Jupyter Notebook. It's worth noting that the approach I presented here is more of a quick fix. Originally, I developed this code as part of a Sudoku programming assignment for my students, and I had control over the environment they were using (Jupyter Notebook and Voila).
+
+For creating Jupyter widgets, it is recommended to use [widget-cookiecutter](https://github.com/jupyter-widgets/widget-cookiecutter) (for JavaScript) or [widget-ts-cookiecutter](https://github.com/jupyter-widgets/widget-ts-cookiecutter) (for TypeScript). These tools offer a more robust and reliable approach to building widgets in Jupyter.

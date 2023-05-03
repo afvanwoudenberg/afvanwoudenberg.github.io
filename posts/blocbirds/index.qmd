@@ -4,9 +4,6 @@ description: "How Mondrian would have produced his art had he been into birds an
 author: "Aswin van Woudenberg"
 date: "2023-01-13"
 categories: [programming, python, sklearn, art]
-execute:
-  freeze: false
-  cache: false
 toc: true
 ---
 

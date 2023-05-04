@@ -13,12 +13,10 @@ A few years ago, I visited the [BLOCBIRDS](https://blocbirds.nl/) exhibition whi
 
 Each composition represents the colors and proportions of a bird's plumage. Take for example the composition based on the _Bluethroat_ bird species.
 
-[<br>[Luscinia svecica volgae](https://en.wikipedia.org/wiki/Bluethroat#/media/File:Luscinia_svecica_volgae.jpg) by [Bogomolov.PL](https://commons.wikimedia.org/wiki/User:Bogomolov.PL), used under [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0)]{.aside}
-
-::: {layout-ncol=2 layout-valign="center"}
+::: {layout-ncol=2 layout-valign="top"}
 ![](bluethroat_abstract.png)
 
-![](bluethroat.jpg)
+![[Luscinia svecica volgae](https://en.wikipedia.org/wiki/Bluethroat#/media/File:Luscinia_svecica_volgae.jpg) by [Bogomolov.PL](https://commons.wikimedia.org/wiki/User:Bogomolov.PL), used under [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0)](bluethroat.jpg)
 :::
 
 In this blog post, we'll explore how to use machine learning to create similar avian-inspired art. 
@@ -224,7 +222,7 @@ fig.savefig('spangled-continga-art.png')
 
 ## Some more examples
 
-The first few examples are all based on images I [from this site](https://www.birdspot.co.uk/bird-numbers/the-worlds-most-colourful-birds).
+The first few examples are all based on images I got [from this site](https://www.birdspot.co.uk/bird-numbers/the-worlds-most-colourful-birds).
 
 ### Golden pheasant
 

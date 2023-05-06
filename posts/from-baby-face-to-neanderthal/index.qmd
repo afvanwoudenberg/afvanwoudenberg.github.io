@@ -2,7 +2,7 @@
 title: "From Baby Face to Neanderthal"
 description: "How to turn a series of selfies into a time-lapse video using MediaPipe."
 author: "Aswin van Woudenberg"
-date: "2021-07-28"
+date: "2022-07-28"
 categories: [programming, python, mediapipe, opencv]
 toc: true
 ---

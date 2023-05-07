@@ -256,7 +256,7 @@ crop_top = 0
 crop_bottom = 0
 ```
 
-```.{python}
+```{.python}
 for _, row in df.iterrows():
     filename = row['file']
     shift_x = mean_x - row['nose_tip_x']

@@ -56,7 +56,7 @@ from collections import deque
 
 ## Getting the list of possible answers
 
-This following list was taken directly from the Wordle JavaScript source code. The source code actually contains two lists. One is the list of possible answers. The second is a list of valid 5-letter words. 
+The following list was taken directly from the Wordle JavaScript source code. The source code actually contains two lists. One is the list of possible answers. The second is a list of valid 5-letter words. 
 
 We'll only use the first list. This will still allow the decision tree to solve every possible puzzle reasonably efficiently. Tree induction will be much faster this way.
 
@@ -167,7 +167,7 @@ le.classes_[:10]
 
 Now we're ready to generate our tree.
 
-Several tree induction algorithms exist. They generally work top down and use some metric to determine what feature to split by at each node. The `sklearn` library provides [CART](https://scikit-learn.org/stable/modules/tree.html) (_Classification And Regression Trees_) that by default use the _Gini_ impurity as a metric. Nodes in CART, however, only support binary splits which would make our decision tree unnecessarily deep and large. An alternative candidate algorithm could be [ID3](https://en.wikipedia.org/wiki/ID3_algorithm) or [ID4.5](https://en.wikipedia.org/wiki/C4.5_algorithm). These algorithms use a concept known as [information gain](https://en.wikipedia.org/wiki/Information_gain_(decision_tree)) (the reduction in [entropy](https://en.wikipedia.org/wiki/Entropy_(information_theory)) after splitting by a variable) to determine what feature to split by, and they support non-binary nodes. A few Python libraries exist that implement ID3/ID4.5. We could use one of those. However, we need a bit more control over how we select the best feature, which is why we roll our own tree induction algorithm. 
+Several tree induction algorithms exist. They generally work top down and use some metric to determine what feature to split by at each node. The `sklearn` library provides [CART](https://scikit-learn.org/stable/modules/tree.html) (_Classification And Regression Trees_) that by default use the _Gini_ impurity as a metric. Nodes in CART, however, only support binary splits which would make our decision tree unnecessarily deep and large. An alternative candidate algorithm could be [ID3](https://en.wikipedia.org/wiki/ID3_algorithm) or [ID4.5](https://en.wikipedia.org/wiki/C4.5_algorithm). These algorithms use a concept known as [information gain](https://en.wikipedia.org/wiki/Information_gain_(decision_tree)) (the reduction in [entropy](https://en.wikipedia.org/wiki/Entropy_(information_theory)) after splitting by a variable) to determine what feature to split by, and they support non-binary nodes. A few Python libraries exist that implement ID3/ID4.5. We could use one of those. However, we require a bit more control over how we select the best feature, which is why we roll our own tree induction algorithm. 
 
 To determine what feature (word) to split by in each node, we use a metric called [mutual information](https://en.wikipedia.org/wiki/Mutual_information) which is the expected value of the information gain. This metric is commonly used for feature selection and is already provided by the `sklearn` library as `mutual_info_classif`. At each node multiple words might be equally good candidates; therefor, in addition to mutual information, we will also consider whether a feature could actually be the correct answer which will generally lead to slightly more optimal trees.
 
@@ -391,7 +391,7 @@ def set_word(row, word):
         vbox.children[row].children[c].description = word[c]
 ```
 
-We need to make sure the player can only press buttons in the currently active row. For this we create a function that can enable or disable a row.
+We want the player to only press buttons in the currently active row. For this we create a function that can enable or disable a row.
 
 ```{python}
 def enable_row(row,b):
@@ -416,7 +416,7 @@ def get_pattern(row):
     return ''.join(pattern)
 ```
 
-We also need a function that returns the word in a row.
+We also write a function that returns the word in a row.
 
 ```{python}
 def get_word(row):

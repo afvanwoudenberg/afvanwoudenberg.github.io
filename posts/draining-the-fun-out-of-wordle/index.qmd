@@ -123,7 +123,7 @@ for index, value in answers.items():
     df[value] = df["answer"].map(lambda v: match(value, v))
 ```
 
-Let's print the first ten lines to see how things turned out. 
+Let's print the first ten rows to see how things turned out. 
 
 ```{python}
 df.head(10)

@@ -8,7 +8,8 @@ listing:
   categories: true
   sort-ui: false
   filter-ui: false
-  feed: true
+  feed:
+    type: partial
   fields: [date, reading-time, categories, title, subtitle, description]
   id: blog-listings
 page-layout: article

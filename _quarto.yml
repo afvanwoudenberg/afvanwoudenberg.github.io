@@ -15,6 +15,9 @@ website:
         href: https://linkedin.com/in/afvanwoudenberg
       - icon: rss
         href: index.xml
+  google-analytics: 
+    tracking-id: G-PFRJFLTCBJ
+    storage: none
 format:
   html:
     theme: [simplex, theme.scss]

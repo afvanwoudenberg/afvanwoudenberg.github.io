@@ -28,13 +28,13 @@ Hello, I'm Aswin, a lecturer at NHL Stenden University of Applied Sciences and f
 
 :::
 
-## 💼 Work With Me
+## 💼 Work with Me
 
 I am open to consulting and advisory work. 
 
 Please contact me at [reachme@aswinvanwoudenberg.com](mailto: reachme@aswinvanwoudenberg.com) or connect with me on [LinkedIn](https://www.linkedin.com/in/afvanwoudenberg/) for potential projects that align with my expertise.
 
-## 📮 Posts
+## 📮 Recent Posts
 
 ::: {#blog-listings}
 :::

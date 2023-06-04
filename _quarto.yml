@@ -18,6 +18,8 @@ website:
   google-analytics: 
     tracking-id: G-PFRJFLTCBJ
     storage: none
+    anonymize-ip: false
+    version: 4
 format:
   html:
     theme: [simplex, theme.scss]

@@ -186,7 +186,7 @@ Bag = [abri, adze, ahoy, amok, ankh, aqua, arak, asci, auld|...],
 L = 62.
 ```
 
-We find that for 62 words there was no _successor_ found. This alone tells us that the graph is disconnected which means that for some pairs of words your can't make a word ladder. There are also smaller groups of word clusters that form their own little subgraph. For instance the words _ordo_, _orzo_, and _ouzo_ form their own little graph disconnected from any other words.
+We find that for 62 words there was no _successor_ found. This alone tells us that the graph is disconnected which means that for some pairs of words you can't make a word ladder. There are also smaller groups of word clusters that form their own little subgraph. For instance the words _ordo_, _orzo_, and _ouzo_ form their own little graph disconnected from any other words.
 
 ```{dot}
 graph {

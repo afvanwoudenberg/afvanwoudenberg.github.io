@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Aswin van Woudenberg">
+<meta name="dcterms.date" content="2023-06-03">
+<meta name="description" content="How to solve word ladders using the A* algorithm and Prolog.">
+
+<title>Aswin van Woudenberg - Solving Word Ladders with Prolog</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-WWJVHMJ');</script>
+<!-- End Google Tag Manager -->
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Aswin van Woudenberg</span>
+    </a>
+  </div>
+          <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/afvanwoudenberg" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://linkedin.com/in/afvanwoudenberg" rel="" target=""><i class="bi bi-linkedin" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../index.xml" rel="" target=""><i class="bi bi-rss" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+          <div class="quarto-navbar-tools">
+</div>
+            <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Solving Word Ladders with Prolog</h1>
+                  <div>
+        <div class="description">
+          How to solve word ladders using the A* algorithm and Prolog.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">programming</div>
+                <div class="quarto-category">puzzles</div>
+                <div class="quarto-category">prolog</div>
+                <div class="quarto-category">algorithms</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Aswin van Woudenberg </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">June 3, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#so-what-is-weaver" id="toc-so-what-is-weaver" class="nav-link active" data-scroll-target="#so-what-is-weaver">So what is Weaver?</a></li>
+  <li><a href="#getting-the-word-list" id="toc-getting-the-word-list" class="nav-link" data-scroll-target="#getting-the-word-list">Getting the word list</a></li>
+  <li><a href="#specifying-a-graph-structure" id="toc-specifying-a-graph-structure" class="nav-link" data-scroll-target="#specifying-a-graph-structure">Specifying a graph structure</a></li>
+  <li><a href="#the-a-search-algorithm" id="toc-the-a-search-algorithm" class="nav-link" data-scroll-target="#the-a-search-algorithm">The A* search algorithm</a></li>
+  <li><a href="#running-the-solver" id="toc-running-the-solver" class="nav-link" data-scroll-target="#running-the-solver">Running the solver</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WWJVHMJ" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+
+
+
+<p>A few weeks ago, a friend saw that I had created a <a href="../../posts/draining-the-fun-out-of-wordle/">Wordle solver</a> and he thought I might enjoy another word puzzle called <a href="https://wordwormdormdork.com/">Weaver</a>. However, he couldn’t have been more wrong! I actually hate puzzles, especially the ones involving words.</p>
+<p>When I can’t solve them quickly enough, frustration sets in. It’s followed by self-doubt, anger towards myself, and eventually, resentment towards the creators of these puzzles, the universe, and life itself. For me, the only way to escape this mental turmoil is to create a solver and be done with them once and for all.</p>
+<p>Read on to discover how I once again managed to avoid spiraling into an existential crisis.</p>
+<section id="so-what-is-weaver" class="level2">
+<h2 class="anchored" data-anchor-id="so-what-is-weaver">So what is Weaver?</h2>
+<p>Weaver is an online game where players are presented with word ladder puzzles. In these puzzles, players must transform a starting word into a target word by changing one letter at a time, while forming valid English words in each step.</p>
+<div class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="weaver_puzzle.png" class="img-fluid"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="weaver_solution.png" class="img-fluid"></p>
+</div>
+</div>
+</div>
+<p>The objective is to make the chain as short as possible. If you complete a puzzle you’ll get feedback on how close you were on getting a shortest solution. Weaver uses a dictionary to check if the words you enter are valid English words. The example above shows the puzzle on the left, and a (shortest) solution on the right.</p>
+<p>Word ladders are nothing new. Their origin can be traced back to <a href="https://en.wikipedia.org/wiki/Lewis_Carroll">Lewis Carroll</a>, who introduced them in the 19th century. He called them <a href="https://books.google.nl/books?id=JkQCAAAAQAAJ&amp;printsec=frontcover">Doublets</a>.</p>
+<p>Weaver uses four-letter words only, so that’s what I’ll do as well.</p>
+</section>
+<section id="getting-the-word-list" class="level2">
+<h2 class="anchored" data-anchor-id="getting-the-word-list">Getting the word list</h2>
+<p>I started by getting the word list from Weaver’s JavaScript source code. It currently consists of 4029 four-letter words. I put this word list in my Prolog source code as follows:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode prolog code-with-copy"><code class="sourceCode prolog"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>words([aahs, aals, abas, abba, abbe, abed, abet, able, ably<span class="fu">|</span>...])<span class="kw">.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In Weaver’s source code I also found a five-letter word list, but it doesn’t seem to be used. If you want to include five-letter words as well, you can just extend the list. Of course you can’t weave from a four to a five-letter word or vice versa.</p>
+</section>
+<section id="specifying-a-graph-structure" class="level2">
+<h2 class="anchored" data-anchor-id="specifying-a-graph-structure">Specifying a graph structure</h2>
+<p>To solve word ladders, we can start by representing the word list as a graph where each node represents a word, and there is an edge between two nodes if and only if the corresponding words differ by exactly one letter. A small subset of this graph would look like this:</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<div>
+<svg width="672" height="480" viewbox="0.00 0.00 1220.00 750.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 746)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-746 1216,-746 1216,4 -4,4"></polygon> <!-- PORT --> <g id="node1" class="node">
+<title>
+PORT
+</title>
+<ellipse fill="lightblue" stroke="black" cx="196.43" cy="-411.04" rx="35.94" ry="35.94"></ellipse> <text text-anchor="middle" x="196.43" y="-406.84" font-family="Times,serif" font-size="14.00">PORT</text> </g> <!-- SORT --> <g id="node2" class="node">
+<title>
+SORT
+</title>
+<ellipse fill="lightblue" stroke="black" cx="182.54" cy="-230.65" rx="35.94" ry="35.94"></ellipse> <text text-anchor="middle" x="182.54" y="-226.45" font-family="Times,serif" font-size="14.00">SORT</text> </g> <!-- PORT&#45;&#45;SORT --> <g id="edge1" class="edge">
+<title>
+PORT–SORT
+</title>
+<path fill="none" stroke="black" d="M193.69,-375.4C191.26,-343.88 187.74,-298.12 185.31,-266.53"></path> </g> <!-- MORT --> <g id="node3" class="node">
+<title>
+MORT
+</title>
+<ellipse fill="lightblue" stroke="black" cx="39.24" cy="-333.54" rx="38.87" ry="38.87"></ellipse> <text text-anchor="middle" x="39.24" y="-329.34" font-family="Times,serif" font-size="14.00">MORT</text> </g> <!-- PORT&#45;&#45;MORT --> <g id="edge2" class="edge">
+<title>
+PORT–MORT
+</title>
+<path fill="none" stroke="black" d="M164.24,-395.17C138.11,-382.29 101.3,-364.14 74.4,-350.87"></path> </g> <!-- BORT --> <g id="node4" class="node">
+<title>
+BORT
+</title>
+<ellipse fill="lightblue" stroke="black" cx="128.57" cy="-318.45" rx="36.58" ry="36.58"></ellipse> <text text-anchor="middle" x="128.57" y="-314.25" font-family="Times,serif" font-size="14.00">BORT</text> </g> <!-- PORT&#45;&#45;BORT --> <g id="edge3" class="edge">
+<title>
+PORT–BORT
+</title>
+<path fill="none" stroke="black" d="M175.15,-382C167.29,-371.29 158.39,-359.14 150.48,-348.35"></path> </g> <!-- FORT --> <g id="node5" class="node">
+<title>
+FORT
+</title>
+<ellipse fill="lightblue" stroke="black" cx="311.81" cy="-300.33" rx="35.94" ry="35.94"></ellipse> <text text-anchor="middle" x="311.81" y="-296.13" font-family="Times,serif" font-size="14.00">FORT</text> </g> <!-- PORT&#45;&#45;FORT --> <g id="edge4" class="edge">
+<title>
+PORT–FORT
+</title>
+<path fill="none" stroke="black" d="M222.33,-386.2C241.33,-367.96 267.02,-343.31 286.01,-325.09"></path> </g> <!-- SORT&#45;&#45;MORT --> <g id="edge5" class="edge">
+<title>
+SORT–MORT
+</title>
+<path fill="none" stroke="black" d="M153.2,-251.72C129.29,-268.89 95.59,-293.09 71.04,-310.71"></path> </g> <!-- SORT&#45;&#45;BORT --> <g id="edge6" class="edge">
+<title>
+SORT–BORT
+</title>
+<path fill="none" stroke="black" d="M163.67,-261.36C158.56,-269.67 153.02,-278.67 147.89,-287.02"></path> </g> <!-- SORT&#45;&#45;FORT --> <g id="edge7" class="edge">
+<title>
+SORT–FORT
+</title>
+<path fill="none" stroke="black" d="M214.17,-247.7C234.2,-258.49 260.01,-272.41 280.07,-283.22"></path> </g> <!-- SORD --> <g id="node6" class="node">
+<title>
+SORD
+</title>
+<ellipse fill="lightblue" stroke="black" cx="325.35" cy="-159.13" rx="36.59" ry="36.59"></ellipse> <text text-anchor="middle" x="325.35" y="-154.93" font-family="Times,serif" font-size="14.00">SORD</text> </g> <!-- SORT&#45;&#45;SORD --> <g id="edge8" class="edge">
+<title>
+SORT–SORD
+</title>
+<path fill="none" stroke="black" d="M214.59,-214.6C237.78,-202.99 269.03,-187.34 292.42,-175.62"></path> </g> <!-- MORT&#45;&#45;BORT --> <g id="edge9" class="edge">
+<title>
+MORT–BORT
+</title>
+<path fill="none" stroke="black" d="M77.64,-327.05C82.47,-326.24 87.39,-325.41 92.18,-324.6"></path> </g> <!-- BORT&#45;&#45;FORT --> <g id="edge10" class="edge">
+<title>
+BORT–FORT
+</title>
+<path fill="none" stroke="black" d="M165.21,-314.83C197.49,-311.64 244.2,-307.02 276.17,-303.85"></path> </g> <!-- CORD --> <g id="node7" class="node">
+<title>
+CORD
+</title>
+<ellipse fill="lightblue" stroke="black" cx="460.71" cy="-41.23" rx="37.73" ry="37.73"></ellipse> <text text-anchor="middle" x="460.71" y="-37.03" font-family="Times,serif" font-size="14.00">CORD</text> </g> <!-- SORD&#45;&#45;CORD --> <g id="edge11" class="edge">
+<title>
+SORD–CORD
+</title>
+<path fill="none" stroke="black" d="M353.4,-134.7C376.32,-114.74 408.6,-86.61 431.76,-66.44"></path> </g> <!-- FORD --> <g id="node8" class="node">
+<title>
+FORD
+</title>
+<ellipse fill="lightblue" stroke="black" cx="493.22" cy="-204.3" rx="36.59" ry="36.59"></ellipse> <text text-anchor="middle" x="493.22" y="-200.1" font-family="Times,serif" font-size="14.00">FORD</text> </g> <!-- SORD&#45;&#45;FORD --> <g id="edge12" class="edge">
+<title>
+SORD–FORD
+</title>
+<path fill="none" stroke="black" d="M360.95,-168.71C389.44,-176.38 429.2,-187.08 457.67,-194.74"></path> </g> <!-- LORD --> <g id="node9" class="node">
+<title>
+LORD
+</title>
+<ellipse fill="lightblue" stroke="black" cx="370.49" cy="-63.68" rx="37.15" ry="37.15"></ellipse> <text text-anchor="middle" x="370.49" y="-59.48" font-family="Times,serif" font-size="14.00">LORD</text> </g> <!-- SORD&#45;&#45;LORD --> <g id="edge13" class="edge">
+<title>
+SORD–LORD
+</title>
+<path fill="none" stroke="black" d="M341.14,-125.75C345.46,-116.61 350.15,-106.7 354.48,-97.53"></path> </g> <!-- CORD&#45;&#45;FORD --> <g id="edge15" class="edge">
+<title>
+CORD–FORD
+</title>
+<path fill="none" stroke="black" d="M468.17,-78.64C473.53,-105.53 480.72,-141.59 486.02,-168.19"></path> </g> <!-- CORD&#45;&#45;LORD --> <g id="edge14" class="edge">
+<title>
+CORD–LORD
+</title>
+<path fill="none" stroke="black" d="M423.75,-50.42C418.2,-51.81 412.49,-53.23 406.95,-54.61"></path> </g> <!-- FORD&#45;&#45;FORT --> <g id="edge17" class="edge">
+<title>
+FORD–FORT
+</title>
+<path fill="none" stroke="black" d="M460.37,-221.69C427.19,-239.26 376.27,-266.21 343.51,-283.55"></path> </g> <!-- FORD&#45;&#45;LORD --> <g id="edge16" class="edge">
+<title>
+FORD–LORD
+</title>
+<path fill="none" stroke="black" d="M468.97,-176.52C447.6,-152.03 416.59,-116.51 395.11,-91.89"></path> </g> <!-- FOLD --> <g id="node10" class="node">
+<title>
+FOLD
+</title>
+<ellipse fill="lightblue" stroke="black" cx="661.27" cy="-169.32" rx="36.01" ry="36.01"></ellipse> <text text-anchor="middle" x="661.27" y="-165.12" font-family="Times,serif" font-size="14.00">FOLD</text> </g> <!-- FORD&#45;&#45;FOLD --> <g id="edge18" class="edge">
+<title>
+FORD–FOLD
+</title>
+<path fill="none" stroke="black" d="M529.27,-196.8C557.72,-190.88 597.21,-182.66 625.57,-176.76"></path> </g> <!-- FARD --> <g id="node11" class="node">
+<title>
+FARD
+</title>
+<ellipse fill="lightblue" stroke="black" cx="573.67" cy="-36.44" rx="36.59" ry="36.59"></ellipse> <text text-anchor="middle" x="573.67" y="-32.24" font-family="Times,serif" font-size="14.00">FARD</text> </g> <!-- FORD&#45;&#45;FARD --> <g id="edge19" class="edge">
+<title>
+FORD–FARD
+</title>
+<path fill="none" stroke="black" d="M509.31,-170.74C523.39,-141.36 543.72,-98.93 557.75,-69.66"></path> </g> <!-- FOND --> <g id="node12" class="node">
+<title>
+FOND
+</title>
+<ellipse fill="lightblue" stroke="black" cx="706.62" cy="-328.99" rx="37.16" ry="37.16"></ellipse> <text text-anchor="middle" x="706.62" y="-324.79" font-family="Times,serif" font-size="14.00">FOND</text> </g> <!-- FORD&#45;&#45;FOND --> <g id="edge20" class="edge">
+<title>
+FORD–FOND
+</title>
+<path fill="none" stroke="black" d="M525.17,-222.97C565.28,-246.41 633.72,-286.4 674.1,-309.99"></path> </g> <!-- FOLD&#45;&#45;FOND --> <g id="edge21" class="edge">
+<title>
+FOLD–FOND
+</title>
+<path fill="none" stroke="black" d="M671.23,-204.36C678.68,-230.62 688.85,-266.43 696.38,-292.92"></path> </g> <!-- BOND --> <g id="node13" class="node">
+<title>
+BOND
+</title>
+<ellipse fill="lightblue" stroke="black" cx="875.46" cy="-271.45" rx="38.3" ry="38.3"></ellipse> <text text-anchor="middle" x="875.46" y="-267.25" font-family="Times,serif" font-size="14.00">BOND</text> </g> <!-- FOND&#45;&#45;BOND --> <g id="edge22" class="edge">
+<title>
+FOND–BOND
+</title>
+<path fill="none" stroke="black" d="M742.02,-316.92C770.45,-307.24 810.23,-293.68 838.95,-283.89"></path> </g> <!-- FIND --> <g id="node14" class="node">
+<title>
+FIND
+</title>
+<ellipse fill="lightblue" stroke="black" cx="875.89" cy="-463.75" rx="33.64" ry="33.64"></ellipse> <text text-anchor="middle" x="875.89" y="-459.55" font-family="Times,serif" font-size="14.00">FIND</text> </g> <!-- FOND&#45;&#45;FIND --> <g id="edge23" class="edge">
+<title>
+FOND–FIND
+</title>
+<path fill="none" stroke="black" d="M736.1,-352.46C768.12,-377.95 818.78,-418.28 849.52,-442.76"></path> </g> <!-- FEND --> <g id="node15" class="node">
+<title>
+FEND
+</title>
+<ellipse fill="lightblue" stroke="black" cx="719.63" cy="-493.96" rx="36.01" ry="36.01"></ellipse> <text text-anchor="middle" x="719.63" y="-489.76" font-family="Times,serif" font-size="14.00">FEND</text> </g> <!-- FOND&#45;&#45;FEND --> <g id="edge24" class="edge">
+<title>
+FOND–FEND
+</title>
+<path fill="none" stroke="black" d="M709.57,-366.42C711.73,-393.8 714.64,-430.74 716.78,-457.81"></path> </g> <!-- BIND --> <g id="node16" class="node">
+<title>
+BIND
+</title>
+<ellipse fill="lightblue" stroke="black" cx="996.94" cy="-377.96" rx="34.78" ry="34.78"></ellipse> <text text-anchor="middle" x="996.94" y="-373.76" font-family="Times,serif" font-size="14.00">BIND</text> </g> <!-- BOND&#45;&#45;BIND --> <g id="edge25" class="edge">
+<title>
+BOND–BIND
+</title>
+<path fill="none" stroke="black" d="M904.56,-296.96C924.64,-314.56 951.11,-337.77 970.57,-354.83"></path> </g> <!-- FIND&#45;&#45;BIND --> <g id="edge27" class="edge">
+<title>
+FIND–BIND
+</title>
+<path fill="none" stroke="black" d="M903.36,-444.28C922.75,-430.54 948.67,-412.16 968.32,-398.24"></path> </g> <!-- KIND --> <g id="node17" class="node">
+<title>
+KIND
+</title>
+<ellipse fill="lightblue" stroke="black" cx="1026.91" cy="-556.21" rx="35.35" ry="35.35"></ellipse> <text text-anchor="middle" x="1026.91" y="-552.01" font-family="Times,serif" font-size="14.00">KIND</text> </g> <!-- FIND&#45;&#45;KIND --> <g id="edge28" class="edge">
+<title>
+FIND–KIND
+</title>
+<path fill="none" stroke="black" d="M904.65,-481.36C931.01,-497.49 969.9,-521.3 996.7,-537.71"></path> </g> <!-- FINE --> <g id="node18" class="node">
+<title>
+FINE
+</title>
+<ellipse fill="lightblue" stroke="black" cx="924.07" cy="-626.54" rx="32.49" ry="32.49"></ellipse> <text text-anchor="middle" x="924.07" y="-622.34" font-family="Times,serif" font-size="14.00">FINE</text> </g> <!-- FIND&#45;&#45;FINE --> <g id="edge29" class="edge">
+<title>
+FIND–FINE
+</title>
+<path fill="none" stroke="black" d="M885.52,-496.3C894.04,-525.06 906.37,-566.74 914.78,-595.15"></path> </g> <!-- HIND --> <g id="node19" class="node">
+<title>
+HIND
+</title>
+<ellipse fill="lightblue" stroke="black" cx="1043.76" cy="-462.15" rx="35.35" ry="35.35"></ellipse> <text text-anchor="middle" x="1043.76" y="-457.95" font-family="Times,serif" font-size="14.00">HIND</text> </g> <!-- FIND&#45;&#45;HIND --> <g id="edge30" class="edge">
+<title>
+FIND–HIND
+</title>
+<path fill="none" stroke="black" d="M909.86,-463.42C938.5,-463.15 979.36,-462.76 1008.39,-462.48"></path> </g> <!-- FEND&#45;&#45;FIND --> <g id="edge26" class="edge">
+<title>
+FEND–FIND
+</title>
+<path fill="none" stroke="black" d="M755.48,-487.03C781.79,-481.94 817.25,-475.09 842.87,-470.13"></path> </g> <!-- BIND&#45;&#45;KIND --> <g id="edge31" class="edge">
+<title>
+BIND–KIND
+</title>
+<path fill="none" stroke="black" d="M1002.72,-412.33C1007.99,-443.69 1015.75,-489.82 1021.05,-521.33"></path> </g> <!-- BIND&#45;&#45;HIND --> <g id="edge32" class="edge">
+<title>
+BIND–HIND
+</title>
+<path fill="none" stroke="black" d="M1013.84,-408.35C1017.98,-415.79 1022.41,-423.76 1026.57,-431.23"></path> </g> <!-- KIND&#45;&#45;HIND --> <g id="edge33" class="edge">
+<title>
+KIND–HIND
+</title>
+<path fill="none" stroke="black" d="M1033.14,-521.45C1034.56,-513.49 1036.08,-505.04 1037.5,-497.07"></path> </g> <!-- KINE --> <g id="node20" class="node">
+<title>
+KINE
+</title>
+<ellipse fill="lightblue" stroke="black" cx="1053.51" cy="-707.72" rx="34.2" ry="34.2"></ellipse> <text text-anchor="middle" x="1053.51" y="-703.52" font-family="Times,serif" font-size="14.00">KINE</text> </g> <!-- KIND&#45;&#45;KINE --> <g id="edge34" class="edge">
+<title>
+KIND–KINE
+</title>
+<path fill="none" stroke="black" d="M1033.01,-590.97C1037.38,-615.87 1043.24,-649.22 1047.57,-673.9"></path> </g> <!-- KINA --> <g id="node21" class="node">
+<title>
+KINA
+</title>
+<ellipse fill="lightblue" stroke="black" cx="1177.02" cy="-636.94" rx="35.35" ry="35.35"></ellipse> <text text-anchor="middle" x="1177.02" y="-632.74" font-family="Times,serif" font-size="14.00">KINA</text> </g> <!-- KIND&#45;&#45;KINA --> <g id="edge35" class="edge">
+<title>
+KIND–KINA
+</title>
+<path fill="none" stroke="black" d="M1058.01,-572.93C1083.78,-586.79 1120.21,-606.39 1145.96,-620.24"></path> </g> <!-- FINE&#45;&#45;KINE --> <g id="edge36" class="edge">
+<title>
+FINE–KINE
+</title>
+<path fill="none" stroke="black" d="M951.84,-643.96C973.23,-657.37 1002.73,-675.87 1024.44,-689.49"></path> </g> <!-- KINE&#45;&#45;KINA --> <g id="edge37" class="edge">
+<title>
+KINE–KINA
+</title>
+<path fill="none" stroke="black" d="M1083.41,-690.59C1102.4,-679.71 1126.92,-665.65 1146.11,-654.66"></path> </g> </g>
+</svg>
+</div>
+</div>
+</div>
+</div>
+<p>Solving a word ladder would be the equivalent of finding the shortest path between two nodes in a graph.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<div>
+<svg width="672" height="480" viewbox="0.00 0.00 1152.00 722.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 718)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-718 1148,-718 1148,4 -4,4"></polygon> <!-- PORT --> <g id="node1" class="node">
+<title>
+PORT
+</title>
+<ellipse fill="lightblue" stroke="black" cx="186.57" cy="-396.5" rx="35.94" ry="35.94"></ellipse> <text text-anchor="middle" x="186.57" y="-392.3" font-family="Times,serif" font-size="14.00">PORT</text> </g> <!-- SORT --> <g id="node2" class="node">
+<title>
+SORT
+</title>
+<ellipse fill="lightgreen" stroke="black" stroke-width="5" cx="174.61" cy="-229.7" rx="35.94" ry="35.94"></ellipse> <text text-anchor="middle" x="174.61" y="-225.5" font-family="Times,serif" font-size="14.00">SORT</text> </g> <!-- PORT&#45;&#45;SORT --> <g id="edge1" class="edge">
+<title>
+PORT–SORT
+</title>
+<path fill="none" stroke="black" d="M184,-360.72C181.98,-332.58 179.19,-293.55 177.17,-265.42"></path> </g> <!-- MORT --> <g id="node3" class="node">
+<title>
+MORT
+</title>
+<ellipse fill="lightblue" stroke="black" cx="39.41" cy="-330.04" rx="38.87" ry="38.87"></ellipse> <text text-anchor="middle" x="39.41" y="-325.84" font-family="Times,serif" font-size="14.00">MORT</text> </g> <!-- PORT&#45;&#45;MORT --> <g id="edge2" class="edge">
+<title>
+PORT–MORT
+</title>
+<path fill="none" stroke="black" d="M153.91,-381.75C130.54,-371.2 99.1,-357 75.07,-346.15"></path> </g> <!-- BORT --> <g id="node4" class="node">
+<title>
+BORT
+</title>
+<ellipse fill="lightblue" stroke="black" cx="123.97" cy="-312.52" rx="36.58" ry="36.58"></ellipse> <text text-anchor="middle" x="123.97" y="-308.32" font-family="Times,serif" font-size="14.00">BORT</text> </g> <!-- PORT&#45;&#45;BORT --> <g id="edge3" class="edge">
+<title>
+PORT–BORT
+</title>
+<path fill="none" stroke="black" d="M165.03,-367.6C158.87,-359.34 152.16,-350.34 145.98,-342.05"></path> </g> <!-- FORT --> <g id="node5" class="node">
+<title>
+FORT
+</title>
+<ellipse fill="lightblue" stroke="black" cx="302.81" cy="-278.47" rx="35.94" ry="35.94"></ellipse> <text text-anchor="middle" x="302.81" y="-274.27" font-family="Times,serif" font-size="14.00">FORT</text> </g> <!-- PORT&#45;&#45;FORT --> <g id="edge4" class="edge">
+<title>
+PORT–FORT
+</title>
+<path fill="none" stroke="black" d="M211.79,-370.89C231.29,-351.09 258.15,-323.82 277.64,-304.03"></path> </g> <!-- SORT&#45;&#45;MORT --> <g id="edge5" class="edge">
+<title>
+SORT–MORT
+</title>
+<path fill="none" stroke="black" d="M145.6,-251.22C123.57,-267.58 93.31,-290.04 70.72,-306.8"></path> </g> <!-- SORT&#45;&#45;BORT --> <g id="edge6" class="edge">
+<title>
+SORT–BORT
+</title>
+<path fill="none" stroke="black" d="M155.75,-260.54C151.65,-267.25 147.3,-274.36 143.18,-281.1"></path> </g> <!-- SORT&#45;&#45;FORT --> <g id="edge7" class="edge">
+<title>
+SORT–FORT
+</title>
+<path fill="none" stroke="black" d="M208.29,-242.51C227.13,-249.68 250.54,-258.59 269.35,-265.74"></path> </g> <!-- SORD --> <g id="node6" class="node">
+<title>
+SORD
+</title>
+<ellipse fill="lightgreen" stroke="black" cx="317.69" cy="-145.65" rx="36.59" ry="36.59"></ellipse> <text text-anchor="middle" x="317.69" y="-141.45" font-family="Times,serif" font-size="14.00">SORD</text> </g> <!-- SORT&#45;&#45;SORD --> <g id="edge8" class="edge">
+<title>
+SORT–SORD
+</title>
+<path fill="none" stroke="black" stroke-width="5" d="M205.65,-211.46C229.32,-197.56 261.82,-178.47 285.71,-164.43"></path> </g> <!-- MORT&#45;&#45;BORT --> <g id="edge9" class="edge">
+<title>
+MORT–BORT
+</title>
+<path fill="none" stroke="black" d="M77.74,-322.1C81.06,-321.41 84.41,-320.72 87.71,-320.03"></path> </g> <!-- BORT&#45;&#45;FORT --> <g id="edge10" class="edge">
+<title>
+BORT–FORT
+</title>
+<path fill="none" stroke="black" d="M160.16,-305.63C191.5,-299.66 236.54,-291.09 267.59,-285.18"></path> </g> <!-- CORD --> <g id="node7" class="node">
+<title>
+CORD
+</title>
+<ellipse fill="lightblue" stroke="black" cx="449.88" cy="-38.18" rx="37.73" ry="37.73"></ellipse> <text text-anchor="middle" x="449.88" y="-33.98" font-family="Times,serif" font-size="14.00">CORD</text> </g> <!-- SORD&#45;&#45;CORD --> <g id="edge11" class="edge">
+<title>
+SORD–CORD
+</title>
+<path fill="none" stroke="black" d="M346.37,-122.33C368.24,-104.55 398.26,-80.15 420.34,-62.2"></path> </g> <!-- FORD --> <g id="node8" class="node">
+<title>
+FORD
+</title>
+<ellipse fill="lightgreen" stroke="black" cx="476.56" cy="-195.65" rx="36.59" ry="36.59"></ellipse> <text text-anchor="middle" x="476.56" y="-191.45" font-family="Times,serif" font-size="14.00">FORD</text> </g> <!-- SORD&#45;&#45;FORD --> <g id="edge12" class="edge">
+<title>
+SORD–FORD
+</title>
+<path fill="none" stroke="black" stroke-width="5" d="M352.95,-156.75C379.27,-165.03 415.09,-176.31 441.4,-184.59"></path> </g> <!-- LORD --> <g id="node9" class="node">
+<title>
+LORD
+</title>
+<ellipse fill="lightblue" stroke="black" cx="364.15" cy="-59.48" rx="37.15" ry="37.15"></ellipse> <text text-anchor="middle" x="364.15" y="-55.28" font-family="Times,serif" font-size="14.00">LORD</text> </g> <!-- SORD&#45;&#45;LORD --> <g id="edge13" class="edge">
+<title>
+SORD–LORD
+</title>
+<path fill="none" stroke="black" d="M335.25,-113.07C338.9,-106.31 342.75,-99.17 346.4,-92.39"></path> </g> <!-- CORD&#45;&#45;FORD --> <g id="edge15" class="edge">
+<title>
+CORD–FORD
+</title>
+<path fill="none" stroke="black" d="M456.27,-75.9C460.55,-101.19 466.17,-134.33 470.4,-159.33"></path> </g> <!-- CORD&#45;&#45;LORD --> <g id="edge14" class="edge">
+<title>
+CORD–LORD
+</title>
+<path fill="none" stroke="black" d="M413.02,-47.34C408.85,-48.38 404.59,-49.43 400.43,-50.47"></path> </g> <!-- FORD&#45;&#45;FORT --> <g id="edge17" class="edge">
+<title>
+FORD–FORT
+</title>
+<path fill="none" stroke="black" d="M443.06,-211.62C411.99,-226.43 366.07,-248.32 335.32,-262.97"></path> </g> <!-- FORD&#45;&#45;LORD --> <g id="edge16" class="edge">
+<title>
+FORD–LORD
+</title>
+<path fill="none" stroke="black" d="M452.99,-167.11C433.93,-144.02 407.22,-111.66 388.07,-88.46"></path> </g> <!-- FOLD --> <g id="node10" class="node">
+<title>
+FOLD
+</title>
+<ellipse fill="lightblue" stroke="black" cx="628.91" cy="-161.71" rx="36.01" ry="36.01"></ellipse> <text text-anchor="middle" x="628.91" y="-157.51" font-family="Times,serif" font-size="14.00">FOLD</text> </g> <!-- FORD&#45;&#45;FOLD --> <g id="edge18" class="edge">
+<title>
+FORD–FOLD
+</title>
+<path fill="none" stroke="black" d="M512.66,-187.61C537.04,-182.18 569.06,-175.05 593.33,-169.64"></path> </g> <!-- FARD --> <g id="node11" class="node">
+<title>
+FARD
+</title>
+<ellipse fill="lightblue" stroke="black" cx="546.26" cy="-38.34" rx="36.59" ry="36.59"></ellipse> <text text-anchor="middle" x="546.26" y="-34.14" font-family="Times,serif" font-size="14.00">FARD</text> </g> <!-- FORD&#45;&#45;FARD --> <g id="edge19" class="edge">
+<title>
+FORD–FARD
+</title>
+<path fill="none" stroke="black" d="M491.51,-161.91C503.27,-135.36 519.58,-98.56 531.33,-72.03"></path> </g> <!-- FOND --> <g id="node12" class="node">
+<title>
+FOND
+</title>
+<ellipse fill="lightgreen" stroke="black" cx="670.01" cy="-306.74" rx="37.16" ry="37.16"></ellipse> <text text-anchor="middle" x="670.01" y="-302.54" font-family="Times,serif" font-size="14.00">FOND</text> </g> <!-- FORD&#45;&#45;FOND --> <g id="edge20" class="edge">
+<title>
+FORD–FOND
+</title>
+<path fill="none" stroke="black" stroke-width="5" d="M508.5,-214C544.13,-234.46 601.46,-267.38 637.37,-288"></path> </g> <!-- FOLD&#45;&#45;FOND --> <g id="edge21" class="edge">
+<title>
+FOLD–FOND
+</title>
+<path fill="none" stroke="black" d="M638.86,-196.82C645.2,-219.2 653.4,-248.13 659.79,-270.69"></path> </g> <!-- BOND --> <g id="node13" class="node">
+<title>
+BOND
+</title>
+<ellipse fill="lightblue" stroke="black" cx="832.19" cy="-268.18" rx="38.3" ry="38.3"></ellipse> <text text-anchor="middle" x="832.19" y="-263.98" font-family="Times,serif" font-size="14.00">BOND</text> </g> <!-- FOND&#45;&#45;BOND --> <g id="edge22" class="edge">
+<title>
+FOND–BOND
+</title>
+<path fill="none" stroke="black" d="M706.4,-298.09C732.74,-291.82 768.23,-283.39 794.79,-277.07"></path> </g> <!-- FIND --> <g id="node14" class="node">
+<title>
+FIND
+</title>
+<ellipse fill="lightgreen" stroke="black" cx="827.85" cy="-433.17" rx="33.64" ry="33.64"></ellipse> <text text-anchor="middle" x="827.85" y="-428.97" font-family="Times,serif" font-size="14.00">FIND</text> </g> <!-- FOND&#45;&#45;FIND --> <g id="edge23" class="edge">
+<title>
+FOND–FIND
+</title>
+<path fill="none" stroke="black" stroke-width="5" d="M699.33,-330.22C728.66,-353.72 773.36,-389.52 801.57,-412.12"></path> </g> <!-- FEND --> <g id="node15" class="node">
+<title>
+FEND
+</title>
+<ellipse fill="lightblue" stroke="black" cx="689.91" cy="-457.28" rx="36.01" ry="36.01"></ellipse> <text text-anchor="middle" x="689.91" y="-453.08" font-family="Times,serif" font-size="14.00">FEND</text> </g> <!-- FOND&#45;&#45;FEND --> <g id="edge24" class="edge">
+<title>
+FOND–FEND
+</title>
+<path fill="none" stroke="black" d="M674.93,-343.95C678.05,-367.55 682.06,-397.92 685.15,-421.28"></path> </g> <!-- BIND --> <g id="node16" class="node">
+<title>
+BIND
+</title>
+<ellipse fill="lightblue" stroke="black" cx="952.71" cy="-373.7" rx="34.78" ry="34.78"></ellipse> <text text-anchor="middle" x="952.71" y="-369.5" font-family="Times,serif" font-size="14.00">BIND</text> </g> <!-- BOND&#45;&#45;BIND --> <g id="edge25" class="edge">
+<title>
+BOND–BIND
+</title>
+<path fill="none" stroke="black" d="M861.37,-293.73C881.15,-311.05 907.09,-333.76 926.27,-350.56"></path> </g> <!-- FIND&#45;&#45;BIND --> <g id="edge27" class="edge">
+<title>
+FIND–BIND
+</title>
+<path fill="none" stroke="black" d="M858.39,-418.62C877.45,-409.54 901.93,-397.89 921.18,-388.72"></path> </g> <!-- KIND --> <g id="node17" class="node">
+<title>
+KIND
+</title>
+<ellipse fill="lightgreen" stroke="black" stroke-width="5" cx="970.98" cy="-536.92" rx="35.35" ry="35.35"></ellipse> <text text-anchor="middle" x="970.98" y="-532.72" font-family="Times,serif" font-size="14.00">KIND</text> </g> <!-- FIND&#45;&#45;KIND --> <g id="edge28" class="edge">
+<title>
+FIND–KIND
+</title>
+<path fill="none" stroke="black" stroke-width="5" d="M855.1,-452.92C880.09,-471.03 916.95,-497.75 942.35,-516.17"></path> </g> <!-- FINE --> <g id="node18" class="node">
+<title>
+FINE
+</title>
+<ellipse fill="lightblue" stroke="black" cx="880.6" cy="-594.91" rx="32.49" ry="32.49"></ellipse> <text text-anchor="middle" x="880.6" y="-590.71" font-family="Times,serif" font-size="14.00">FINE</text> </g> <!-- FIND&#45;&#45;FINE --> <g id="edge29" class="edge">
+<title>
+FIND–FINE
+</title>
+<path fill="none" stroke="black" d="M838.27,-465.12C847.61,-493.75 861.22,-535.49 870.47,-563.84"></path> </g> <!-- HIND --> <g id="node19" class="node">
+<title>
+HIND
+</title>
+<ellipse fill="lightblue" stroke="black" cx="1002.13" cy="-451.81" rx="35.35" ry="35.35"></ellipse> <text text-anchor="middle" x="1002.13" y="-447.61" font-family="Times,serif" font-size="14.00">HIND</text> </g> <!-- FIND&#45;&#45;HIND --> <g id="edge30" class="edge">
+<title>
+FIND–HIND
+</title>
+<path fill="none" stroke="black" d="M861.45,-436.76C891.82,-440.01 936.35,-444.77 967.14,-448.07"></path> </g> <!-- FEND&#45;&#45;FIND --> <g id="edge26" class="edge">
+<title>
+FEND–FIND
+</title>
+<path fill="none" stroke="black" d="M725.79,-451.01C747.02,-447.3 773.74,-442.63 794.51,-438.99"></path> </g> <!-- BIND&#45;&#45;KIND --> <g id="edge31" class="edge">
+<title>
+BIND–KIND
+</title>
+<path fill="none" stroke="black" d="M956.58,-408.32C959.66,-435.83 963.95,-474.15 967.05,-501.79"></path> </g> <!-- BIND&#45;&#45;HIND --> <g id="edge32" class="edge">
+<title>
+BIND–HIND
+</title>
+<path fill="none" stroke="black" d="M971.39,-403.23C975.28,-409.37 979.37,-415.83 983.26,-421.98"></path> </g> <!-- KIND&#45;&#45;HIND --> <g id="edge33" class="edge">
+<title>
+KIND–HIND
+</title>
+<path fill="none" stroke="black" d="M983.11,-503.77C985.37,-497.61 987.73,-491.17 989.98,-485.01"></path> </g> <!-- KINE --> <g id="node20" class="node">
+<title>
+KINE
+</title>
+<ellipse fill="lightblue" stroke="black" cx="992.08" cy="-679.53" rx="34.2" ry="34.2"></ellipse> <text text-anchor="middle" x="992.08" y="-675.33" font-family="Times,serif" font-size="14.00">KINE</text> </g> <!-- KIND&#45;&#45;KINE --> <g id="edge34" class="edge">
+<title>
+KIND–KINE
+</title>
+<path fill="none" stroke="black" d="M976.14,-571.8C979.46,-594.23 983.75,-623.23 987.04,-645.49"></path> </g> <!-- KINA --> <g id="node21" class="node">
+<title>
+KINA
+</title>
+<ellipse fill="lightblue" stroke="black" cx="1109.15" cy="-624.14" rx="35.35" ry="35.35"></ellipse> <text text-anchor="middle" x="1109.15" y="-619.94" font-family="Times,serif" font-size="14.00">KINA</text> </g> <!-- KIND&#45;&#45;KINA --> <g id="edge35" class="edge">
+<title>
+KIND–KINA
+</title>
+<path fill="none" stroke="black" d="M1000.96,-555.84C1024.14,-570.47 1056.07,-590.63 1079.23,-605.25"></path> </g> <!-- FINE&#45;&#45;KINE --> <g id="edge36" class="edge">
+<title>
+FINE–KINE
+</title>
+<path fill="none" stroke="black" d="M906.74,-614.75C924.11,-627.94 946.89,-645.23 964.55,-658.63"></path> </g> <!-- KINE&#45;&#45;KINA --> <g id="edge37" class="edge">
+<title>
+KINE–KINA
+</title>
+<path fill="none" stroke="black" d="M1023.14,-664.83C1039.81,-656.95 1060.31,-647.24 1077.12,-639.29"></path> </g> </g>
+</svg>
+</div>
+</div>
+</div>
+</div>
+<p>Here we marked the shortest path between the words <em>sort</em> and <em>kind</em>, which is the answer to the puzzle we saw <a href="#so-what-is-weaver">above</a>.</p>
+<p>I defined the following predicates that specify the connectivity of the graph.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode prolog code-with-copy"><code class="sourceCode prolog"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">% Helper predicates</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>count_different_elements([]<span class="kw">,</span> []<span class="kw">,</span> <span class="dv">0</span>)<span class="kw">.</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>count_different_elements([<span class="dt">X</span><span class="fu">|</span><span class="dt">Xs</span>]<span class="kw">,</span> [<span class="dt">Y</span><span class="fu">|</span><span class="dt">Ys</span>]<span class="kw">,</span> <span class="dt">N</span>) <span class="kw">:-</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">X</span> <span class="kw">\=</span> <span class="dt">Y</span><span class="kw">,</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    count_different_elements(<span class="dt">Xs</span><span class="kw">,</span> <span class="dt">Ys</span><span class="kw">,</span> <span class="dt">M</span>)<span class="kw">,</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">N</span> <span class="dt">is</span> <span class="dt">M</span> <span class="dt">+</span> <span class="dv">1</span><span class="kw">.</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>count_different_elements([<span class="dt">X</span><span class="fu">|</span><span class="dt">Xs</span>]<span class="kw">,</span> [<span class="dt">X</span><span class="fu">|</span><span class="dt">Ys</span>]<span class="kw">,</span> <span class="dt">N</span>) <span class="kw">:-</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    count_different_elements(<span class="dt">Xs</span><span class="kw">,</span> <span class="dt">Ys</span><span class="kw">,</span> <span class="dt">N</span>)<span class="kw">.</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>count_different_characters(<span class="dt">A</span><span class="kw">,</span> <span class="dt">B</span><span class="kw">,</span> <span class="dt">N</span>) <span class="kw">:-</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">atom_chars</span>(<span class="dt">A</span><span class="kw">,</span> <span class="dt">L1</span>)<span class="kw">,</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">atom_chars</span>(<span class="dt">B</span><span class="kw">,</span> <span class="dt">L2</span>)<span class="kw">,</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    count_different_elements(<span class="dt">L1</span><span class="kw">,</span> <span class="dt">L2</span><span class="kw">,</span> <span class="dt">N</span>)<span class="kw">.</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">% The successor predicate</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>s(<span class="dt">N</span><span class="kw">,</span> <span class="dt">M</span><span class="kw">,</span> <span class="dv">1</span>) <span class="kw">:-</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    words(<span class="dt">Words</span>)<span class="kw">,</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    member(<span class="dt">M</span><span class="kw">,</span><span class="dt">Words</span>)<span class="kw">,</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    count_different_characters(<span class="dt">N</span><span class="kw">,</span> <span class="dt">M</span><span class="kw">,</span> <span class="dv">1</span>)<span class="kw">.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The predicates <code>count_different_elements/3</code> and <code>count_different_characters/3</code> are helper predicates that handle the counting of different characters between two words. They are used to determine the cost or distance between two words in terms of the number of character differences.</p>
+<p>The <code>s/3</code> predicate defines a <em>successor</em> relation between words. It establishes that a successor word M is connected to an initial word N if they have exactly one different character. We assume all transitions have a cost of 1.</p>
+<p>One question that might arise is whether the full graph that contains all words is a connected graph. In other words, if there is always a path between two arbitrary nodes.</p>
+<p>Let’s find out how many (if any) words are not connected to any other word by entering the following query:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode prolog code-with-copy"><code class="sourceCode prolog"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>words(<span class="dt">W</span>)<span class="kw">,</span> bagof(<span class="dt">M</span><span class="kw">,</span>(member(<span class="dt">M</span><span class="kw">,</span><span class="dt">W</span>)<span class="kw">,</span> not(s(<span class="dt">M</span><span class="kw">,</span><span class="dt">_</span><span class="kw">,</span><span class="dt">_</span>)))<span class="kw">,</span><span class="dt">Bag</span>)<span class="kw">,</span> length(<span class="dt">Bag</span><span class="kw">,</span><span class="dt">L</span>)<span class="kw">.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>W = [aahs, aals, abas, abba, abbe, abed, abet, able, ably|...],
+Bag = [abri, adze, ahoy, amok, ankh, aqua, arak, asci, auld|...],
+L = 62.</code></pre>
+<p>We find that for 62 words there was no <em>successor</em> found. This alone tells us that the graph is disconnected which means that for some pairs of words you can’t make a word ladder. There are also smaller groups of word clusters that form their own little subgraph. For instance the words <em>ordo</em>, <em>orzo</em>, and <em>ouzo</em> form their own little graph disconnected from any other words.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<div>
+<svg width="672" height="480" viewbox="0.00 0.00 174.00 212.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 208)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-208 170,-208 170,4 -4,4"></polygon> <!-- ORDO --> <g id="node1" class="node">
+<title>
+ORDO
+</title>
+<ellipse fill="lightblue" stroke="black" cx="38.17" cy="-165.89" rx="38.3" ry="38.3"></ellipse> <text text-anchor="middle" x="38.17" y="-161.69" font-family="Times,serif" font-size="14.00">ORDO</text> </g> <!-- ORZO --> <g id="node2" class="node">
+<title>
+ORZO
+</title>
+<ellipse fill="lightblue" stroke="black" cx="128.2" cy="-127.8" rx="37.15" ry="37.15"></ellipse> <text text-anchor="middle" x="128.2" y="-123.6" font-family="Times,serif" font-size="14.00">ORZO</text> </g> <!-- ORDO&#45;&#45;ORZO --> <g id="edge1" class="edge">
+<title>
+ORDO–ORZO
+</title>
+<path fill="none" stroke="black" d="M73.75,-150.84C80.34,-148.05 87.2,-145.14 93.76,-142.37"></path> </g> <!-- OUZO --> <g id="node3" class="node">
+<title>
+OUZO
+</title>
+<ellipse fill="lightblue" stroke="black" cx="114.72" cy="-38.24" rx="37.71" ry="37.71"></ellipse> <text text-anchor="middle" x="114.72" y="-34.04" font-family="Times,serif" font-size="14.00">OUZO</text> </g> <!-- ORZO&#45;&#45;OUZO --> <g id="edge2" class="edge">
+<title>
+ORZO–OUZO
+</title>
+<path fill="none" stroke="black" d="M122.64,-90.86C121.88,-85.85 121.11,-80.7 120.35,-75.68"></path> </g> </g>
+</svg>
+</div>
+</div>
+</div>
+</div>
+<p>Such a cute little graph. Imagine the psychological torment you’d cause by asking the biggest Weaver afficionado to create a word ladder going from <em>beer</em> to <em>ouzo</em>. Just kidding, don’t be evil.</p>
+</section>
+<section id="the-a-search-algorithm" class="level2">
+<h2 class="anchored" data-anchor-id="the-a-search-algorithm">The A* search algorithm</h2>
+<p>The <a href="https://en.wikipedia.org/wiki/A*_search_algorithm">A* algorithm</a> is a popular pathfinding algorithm used for finding the shortest path between a start node and a goal node in a weighted graph. It uses a combination of the actual cost (path cost from the start node) and the heuristic cost (estimated cost from the current node to the goal) to guide the search towards the goal while exploring the graph efficiently.</p>
+<p>Because this algorithm works on weighted graphs only, we set the weight of all edges equal to 1. You can find many implementations of A* for a variety of programming languages online. I adapted one <a href="https://www.cs.toronto.edu/~sheila/384/w14/Assignments/A1/astarCC.pl">from here</a> for use in the solver.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode prolog code-with-copy"><code class="sourceCode prolog"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">% A* with cycle checking</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>a_star(<span class="dt">Start</span><span class="kw">,</span> <span class="dt">Answer</span>) <span class="kw">:-</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    h(<span class="dt">Start</span><span class="kw">,</span> <span class="dt">H</span>)<span class="kw">,</span> <span class="kw">!,</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    a_star([[(<span class="dv">0</span><span class="kw">,</span> <span class="dt">H</span>), <span class="dt">Start</span>]]<span class="kw">,</span> []<span class="kw">,</span> <span class="dt">Answer</span><span class="kw">,</span> <span class="dv">0</span>)<span class="kw">.</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>a_star([ [<span class="dt">_</span>, <span class="dt">FinalState</span> <span class="fu">|</span> <span class="dt">Path</span> ] <span class="fu">|</span> <span class="dt">_</span>]<span class="kw">,</span> <span class="dt">_</span><span class="kw">,</span> <span class="dt">Answer</span><span class="kw">,</span> <span class="dt">_</span>) <span class="kw">:-</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    goal(<span class="dt">FinalState</span>)<span class="kw">,</span> <span class="kw">!,</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    reverse([<span class="dt">FinalState</span> <span class="fu">|</span> <span class="dt">Path</span>]<span class="kw">,</span> <span class="dt">Answer</span>)<span class="kw">.</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>a_star([ [(<span class="dt">Gval</span><span class="kw">,</span><span class="dt">_</span>),  <span class="dt">FinalState</span> <span class="fu">|</span> <span class="dt">Path</span> ]<span class="fu">|</span> <span class="dt">OtherPaths</span>]<span class="kw">,</span> <span class="dt">OldStates</span><span class="kw">,</span> <span class="dt">Answer</span><span class="kw">,</span> <span class="dt">NumExpanded</span>) <span class="kw">:-</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    cycle_check(<span class="dt">FinalState</span><span class="kw">,</span> <span class="dt">Gval</span><span class="kw">,</span> <span class="dt">OldStates</span>)<span class="kw">,</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    bagof((<span class="dt">C</span><span class="kw">,</span> <span class="dt">N</span>)<span class="kw">,</span> s(<span class="dt">FinalState</span><span class="kw">,</span> <span class="dt">N</span><span class="kw">,</span> <span class="dt">C</span>)<span class="kw">,</span> <span class="dt">Neighbours</span>)<span class="kw">,</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    expand(<span class="dt">Gval</span><span class="kw">,</span> <span class="dt">FinalState</span> <span class="kw">,</span> <span class="dt">Path</span><span class="kw">,</span> <span class="dt">Neighbours</span><span class="kw">,</span>  <span class="dt">NewPaths</span>)<span class="kw">,</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    prune(<span class="dt">NewPaths</span><span class="kw">,</span><span class="dt">PrunedPaths</span><span class="kw">,</span> <span class="dt">OldStates</span>)<span class="kw">,</span> </span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    combine(<span class="dt">PrunedPaths</span><span class="kw">,</span> <span class="dt">OtherPaths</span><span class="kw">,</span> <span class="dt">NewFrontier</span>)<span class="kw">,</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="dt">N</span> <span class="dt">is</span> <span class="dt">NumExpanded</span> <span class="dt">+</span> <span class="dv">1</span><span class="kw">,</span> <span class="kw">!,</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    (<span class="dt">N</span> <span class="dt">=&lt;</span> <span class="dv">9999</span> <span class="kw">-&gt;</span> a_star(<span class="dt">NewFrontier</span><span class="kw">,</span> [(<span class="dt">FinalState</span><span class="kw">,</span> <span class="dt">Gval</span>)<span class="fu">|</span><span class="dt">OldStates</span>]<span class="kw">,</span> <span class="dt">Answer</span><span class="kw">,</span><span class="dt">N</span>) <span class="kw">;</span> <span class="kw">!,</span> <span class="kw">fail</span>)<span class="kw">.</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>a_star([ <span class="dt">_</span> <span class="fu">|</span> <span class="dt">OtherPaths</span>]<span class="kw">,</span> <span class="dt">OldStates</span><span class="kw">,</span> <span class="dt">Answer</span><span class="kw">,</span><span class="dt">NumExpanded</span>) <span class="kw">:-</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    <span class="kw">!,</span> a_star(<span class="dt">OtherPaths</span><span class="kw">,</span> <span class="dt">OldStates</span><span class="kw">,</span> <span class="dt">Answer</span><span class="kw">,</span><span class="dt">NumExpanded</span>)<span class="kw">.</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>expand(<span class="dt">_</span><span class="kw">,</span> <span class="dt">_</span><span class="kw">,</span> <span class="dt">_</span><span class="kw">,</span> []<span class="kw">,</span> [])<span class="kw">.</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>expand(<span class="dt">Gval</span><span class="kw">,</span> <span class="dt">State</span><span class="kw">,</span> <span class="dt">Path</span><span class="kw">,</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    [(<span class="dt">Cost</span><span class="kw">,</span><span class="dt">NewState</span>) <span class="fu">|</span> <span class="dt">RestNeigh</span>]<span class="kw">,</span> [[(<span class="dt">NGval</span><span class="kw">,</span> <span class="dt">NHval</span>), <span class="dt">NewState</span>, <span class="dt">State</span> <span class="fu">|</span> <span class="dt">Path</span>] <span class="fu">|</span> <span class="dt">RestNewPaths</span>]) <span class="kw">:-</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    <span class="dt">NGval</span> <span class="dt">is</span> <span class="dt">Gval</span> <span class="dt">+</span> <span class="dt">Cost</span><span class="kw">,</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    h(<span class="dt">NewState</span><span class="kw">,</span> <span class="dt">NHval</span>)<span class="kw">,</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    expand(<span class="dt">Gval</span><span class="kw">,</span> <span class="dt">State</span><span class="kw">,</span> <span class="dt">Path</span><span class="kw">,</span> <span class="dt">RestNeigh</span><span class="kw">,</span> <span class="dt">RestNewPaths</span>)<span class="kw">.</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>cycle_check(<span class="dt">_</span><span class="kw">,</span> <span class="dt">_</span><span class="kw">,</span> [])<span class="kw">.</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>cycle_check(<span class="dt">State</span><span class="kw">,</span> <span class="dt">Gval</span><span class="kw">,</span> [(<span class="dt">State</span><span class="kw">,</span> <span class="dt">OldGval</span>) <span class="fu">|</span> <span class="dt">Rest</span>]) <span class="kw">:-</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Gval</span> <span class="dt">&lt;</span> <span class="dt">OldGval</span><span class="kw">,</span> <span class="kw">!,</span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>    cycle_check(<span class="dt">State</span><span class="kw">,</span> <span class="dt">Gval</span><span class="kw">,</span> <span class="dt">Rest</span>)<span class="kw">.</span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>cycle_check(<span class="dt">State</span><span class="kw">,</span> <span class="dt">Gval</span><span class="kw">,</span> [(<span class="dt">OldState</span><span class="kw">,</span> <span class="dt">_</span>) <span class="fu">|</span> <span class="dt">Rest</span>]) <span class="kw">:-</span></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    <span class="dt">State</span> <span class="fu">\==</span> <span class="dt">OldState</span><span class="kw">,</span> <span class="kw">!,</span></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>    cycle_check(<span class="dt">State</span><span class="kw">,</span> <span class="dt">Gval</span><span class="kw">,</span> <span class="dt">Rest</span>)<span class="kw">.</span></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>prune([ <span class="dt">NewPath</span> <span class="fu">|</span> <span class="dt">RestNPaths</span>]<span class="kw">,</span> <span class="dt">PrunedPaths</span><span class="kw">,</span> <span class="dt">OldStates</span>) <span class="kw">:-</span></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>    <span class="dt">NewPath</span> <span class="kw">=</span> [(<span class="dt">Gval</span><span class="kw">,</span> <span class="dt">_</span>), <span class="dt">FinalState</span> <span class="fu">|</span> <span class="dt">_</span>]<span class="kw">,</span></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>    cycle_check(<span class="dt">FinalState</span><span class="kw">,</span> <span class="dt">Gval</span><span class="kw">,</span> <span class="dt">OldStates</span>)<span class="kw">,</span> <span class="kw">!,</span></span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>    prune(<span class="dt">RestNPaths</span><span class="kw">,</span> <span class="dt">RestPruned</span><span class="kw">,</span> <span class="dt">OldStates</span>)<span class="kw">,</span></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>    <span class="dt">PrunedPaths</span> <span class="kw">=</span> [<span class="dt">NewPath</span> <span class="fu">|</span> <span class="dt">RestPruned</span>]<span class="kw">.</span></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>prune([ <span class="dt">_</span> <span class="fu">|</span> <span class="dt">RestNPaths</span>]<span class="kw">,</span> <span class="dt">PrunedPaths</span><span class="kw">,</span> <span class="dt">OldStates</span>) <span class="kw">:-</span></span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>    prune(<span class="dt">RestNPaths</span><span class="kw">,</span> <span class="dt">PrunedPaths</span><span class="kw">,</span> <span class="dt">OldStates</span>)<span class="kw">.</span></span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>prune([]<span class="kw">,</span> []<span class="kw">,</span> <span class="dt">_</span>)<span class="kw">.</span></span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>combine([<span class="dt">NewState</span><span class="fu">|</span><span class="dt">RestNewStates</span>]<span class="kw">,</span> <span class="dt">OldStates</span><span class="kw">,</span> <span class="dt">NewFrontier</span>) <span class="kw">:-</span></span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>    insert(<span class="dt">NewState</span><span class="kw">,</span> <span class="dt">OldStates</span><span class="kw">,</span> <span class="dt">New</span>)<span class="kw">,</span></span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>    combine(<span class="dt">RestNewStates</span><span class="kw">,</span> <span class="dt">New</span><span class="kw">,</span> <span class="dt">NewFrontier</span>)<span class="kw">.</span></span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>combine([]<span class="kw">,</span> <span class="dt">AllAdded</span><span class="kw">,</span> <span class="dt">AllAdded</span>) <span class="kw">:-</span> <span class="kw">!.</span></span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>insert_list([<span class="dt">NewState</span><span class="fu">|</span><span class="dt">RestNewStates</span>]<span class="kw">,</span> <span class="dt">OldStates</span><span class="kw">,</span> <span class="dt">NewFrontier</span>) <span class="kw">:-</span></span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>    insert(<span class="dt">NewState</span><span class="kw">,</span> <span class="dt">OldStates</span><span class="kw">,</span> <span class="dt">New</span>)<span class="kw">,</span></span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>    insert_list(<span class="dt">RestNewStates</span><span class="kw">,</span> <span class="dt">New</span><span class="kw">,</span> <span class="dt">NewFrontier</span>)<span class="kw">.</span></span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>insert_list([]<span class="kw">,</span> <span class="dt">AllAdded</span><span class="kw">,</span> <span class="dt">AllAdded</span>) <span class="kw">:-</span> <span class="kw">!.</span></span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>insert(<span class="dt">NewState</span><span class="kw">,</span> [<span class="dt">OldState</span><span class="fu">|</span><span class="dt">RestOld</span>]<span class="kw">,</span> </span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>    [<span class="dt">NewState</span>, <span class="dt">OldState</span><span class="fu">|</span><span class="dt">RestOld</span>]) <span class="kw">:-</span></span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>    lower_or_equal_f_value(<span class="dt">NewState</span><span class="kw">,</span> <span class="dt">OldState</span>)<span class="kw">,</span> <span class="kw">!.</span></span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a>insert(<span class="dt">NewState</span><span class="kw">,</span> [<span class="dt">OldState</span><span class="fu">|</span><span class="dt">RestOld</span>]<span class="kw">,</span> </span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a>    [<span class="dt">OldState</span><span class="fu">|</span><span class="dt">InsertedIntoRest</span>]) <span class="kw">:-</span></span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a>    greater_f_value(<span class="dt">NewState</span><span class="kw">,</span> <span class="dt">OldState</span>)<span class="kw">,</span></span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a>    insert(<span class="dt">NewState</span><span class="kw">,</span> <span class="dt">RestOld</span><span class="kw">,</span> <span class="dt">InsertedIntoRest</span>)<span class="kw">,</span> <span class="kw">!.</span></span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a>insert(<span class="dt">NewState</span><span class="kw">,</span> []<span class="kw">,</span> [<span class="dt">NewState</span>])<span class="kw">.</span></span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a>lower_or_equal_f_value([(<span class="dt">G1</span><span class="kw">,</span><span class="dt">H1</span>) <span class="fu">|</span> <span class="dt">_</span>]<span class="kw">,</span> [(<span class="dt">G2</span><span class="kw">,</span> <span class="dt">H2</span>) <span class="fu">|</span> <span class="dt">_</span>]) <span class="kw">:-</span></span>
+<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a>    <span class="dt">X</span> <span class="dt">is</span> <span class="dt">G1</span> <span class="dt">+</span> <span class="dt">H1</span><span class="kw">,</span> <span class="dt">Y</span> <span class="dt">is</span> <span class="dt">G2</span> <span class="dt">+</span> <span class="dt">H2</span><span class="kw">,</span> <span class="dt">X</span> <span class="dt">=&lt;</span> <span class="dt">Y</span><span class="kw">,</span> <span class="kw">!.</span></span>
+<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a>greater_f_value([(<span class="dt">G1</span><span class="kw">,</span><span class="dt">H1</span>) <span class="fu">|</span> <span class="dt">_</span>]<span class="kw">,</span> [(<span class="dt">G2</span><span class="kw">,</span> <span class="dt">H2</span>) <span class="fu">|</span> <span class="dt">_</span>]) <span class="kw">:-</span></span>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a>    <span class="dt">X</span> <span class="dt">is</span> <span class="dt">G1</span> <span class="dt">+</span> <span class="dt">H1</span><span class="kw">,</span> <span class="dt">Y</span> <span class="dt">is</span> <span class="dt">G2</span> <span class="dt">+</span> <span class="dt">H2</span><span class="kw">,</span> <span class="dt">X</span> <span class="dt">&gt;</span> <span class="dt">Y</span><span class="kw">,</span> <span class="kw">!.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>It assumes a successor predicate <code>s/3</code> that we’ve defined above. Furthermore, it expects a predicate <code>h/2</code> that defines a heuristic to guide the search and a <code>goal/1</code> predicate that gets satisfied once the search has reached the final node.</p>
+<p>The heuristic I used is the number of letters that are different from the target word. The closer we are to the final node, the more letters are expected to be correct.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode prolog code-with-copy"><code class="sourceCode prolog"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">% The heuristic</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>h(<span class="dt">N</span><span class="kw">,</span> <span class="dt">H</span>) <span class="kw">:-</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    goal(<span class="dt">M</span>)<span class="kw">,</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    count_different_characters(<span class="dt">N</span><span class="kw">,</span> <span class="dt">M</span><span class="kw">,</span> <span class="dt">H</span>)<span class="kw">.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The A* search algorithm is guarenteed to find the shortest path if the heuristic we choose is <em>admissible</em>. A heuristic is said to be <em>admissible</em> if it never overestimates the cost of reaching the goal. In our case we know it never overestimates the cost, because if <em>n</em> letters are different from the target word, we need at least <em>n</em> more steps.</p>
+<p>The <code>goal/1</code> predicate is dynamically added to the Prolog database before we commence our search. The <code>weaver/3</code> predicate is the top-level predicate that you call when you want to solve a puzzle.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode prolog code-with-copy"><code class="sourceCode prolog"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">:-</span> <span class="kw">dynamic</span> goal<span class="fu">/</span><span class="dv">1</span><span class="kw">.</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>weaver(<span class="dt">Start</span><span class="kw">,</span> <span class="dt">Goal</span><span class="kw">,</span> <span class="dt">Solution</span>) <span class="kw">:-</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">retractall</span>(goal(<span class="dt">_</span>))<span class="kw">,</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    assert(goal(<span class="dt">Goal</span>))<span class="kw">,</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    a_star(<span class="dt">Start</span><span class="kw">,</span> <span class="dt">Solution</span>)<span class="kw">.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You can find a copy of this code as a GitHub gist <a href="https://gist.github.com/afvanwoudenberg/9bc4db382a477098574278fc06641cc4">here</a>.</p>
+</section>
+<section id="running-the-solver" class="level2">
+<h2 class="anchored" data-anchor-id="running-the-solver">Running the solver</h2>
+<p>To run the solver, you first start the Prolog interpreter (I use <a href="https://www.swi-prolog.org/">SWI-Prolog</a>) by opening up a terminal and typing:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">swipl</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This will start the Prolog interpreter. You can then load the solver by typing:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode prolog code-with-copy"><code class="sourceCode prolog"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>[weaver]<span class="kw">.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This loads the <code>weaver.pl</code> file. To solve a word ladder going from <em>sort</em> to <em>kind</em>, you’d enter:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode prolog code-with-copy"><code class="sourceCode prolog"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>weaver(sort<span class="kw">,</span> kind<span class="kw">,</span> <span class="dt">Solution</span>)<span class="kw">.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>Solution = [sort, sord, ford, fond, find, kind].</code></pre>
+<p>There you have it! No more emotional distress over not being able to solve word ladders.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="afvanwoudenberg/afvanwoudenberg.github.io" data-repo-id="R_kgDOIvCGfg" data-category="General" data-category-id="DIC_kwDOIvCGfs4CWx2r" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

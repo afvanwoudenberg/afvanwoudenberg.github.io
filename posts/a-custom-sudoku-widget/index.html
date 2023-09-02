@@ -1,0 +1,1564 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Aswin van Woudenberg">
+<meta name="dcterms.date" content="2021-02-26">
+<meta name="description" content="Creating a custom Jupyter widget for editing and displaying Sudoku puzzles.">
+
+<title>Aswin van Woudenberg - A Custom Sudoku Widget</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-WWJVHMJ');</script>
+<!-- End Google Tag Manager -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+<script src="https://unpkg.com/@jupyter-widgets/html-manager@*/dist/embed-amd.js" crossorigin="anonymous"></script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Aswin van Woudenberg</span>
+    </a>
+  </div>
+          <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/afvanwoudenberg" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://linkedin.com/in/afvanwoudenberg" rel="" target=""><i class="bi bi-linkedin" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../index.xml" rel="" target=""><i class="bi bi-rss" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+          <div class="quarto-navbar-tools">
+</div>
+            <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">A Custom Sudoku Widget</h1>
+                  <div>
+        <div class="description">
+          Creating a custom Jupyter widget for editing and displaying Sudoku puzzles.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">programming</div>
+                <div class="quarto-category">python</div>
+                <div class="quarto-category">puzzles</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Aswin van Woudenberg </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">February 26, 2021</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#how-to-play-sudoku" id="toc-how-to-play-sudoku" class="nav-link active" data-scroll-target="#how-to-play-sudoku">How to play Sudoku</a></li>
+  <li><a href="#creating-the-widget" id="toc-creating-the-widget" class="nav-link" data-scroll-target="#creating-the-widget">Creating the widget</a>
+  <ul class="collapse">
+  <li><a href="#the-python-back-end" id="toc-the-python-back-end" class="nav-link" data-scroll-target="#the-python-back-end">The Python back-end</a></li>
+  <li><a href="#the-javascript-front-end" id="toc-the-javascript-front-end" class="nav-link" data-scroll-target="#the-javascript-front-end">The JavaScript front-end</a></li>
+  </ul></li>
+  <li><a href="#how-to-use-this-widget" id="toc-how-to-use-this-widget" class="nav-link" data-scroll-target="#how-to-use-this-widget">How to use this widget</a></li>
+  <li><a href="#creating-a-sudoku-solver" id="toc-creating-a-sudoku-solver" class="nav-link" data-scroll-target="#creating-a-sudoku-solver">Creating a Sudoku solver</a>
+  <ul class="collapse">
+  <li><a href="#building-the-user-interface" id="toc-building-the-user-interface" class="nav-link" data-scroll-target="#building-the-user-interface">Building the user interface</a></li>
+  <li><a href="#writing-the-event-handlers" id="toc-writing-the-event-handlers" class="nav-link" data-scroll-target="#writing-the-event-handlers">Writing the event handlers</a></li>
+  <li><a href="#the-solver" id="toc-the-solver" class="nav-link" data-scroll-target="#the-solver">The solver</a></li>
+  <li><a href="#displaying-the-user-interface" id="toc-displaying-the-user-interface" class="nav-link" data-scroll-target="#displaying-the-user-interface">Displaying the user interface</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WWJVHMJ" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+
+
+
+<p>In this post I’ll demonstrate how to build a custom Jupyter widget for displaying and editing Sudoku puzzles. I’ll also show how to create a Sudoku solver that uses this widget.</p>
+<section id="how-to-play-sudoku" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-play-sudoku">How to play Sudoku</h2>
+<p>Only read this if you’ve been living under a rock, otherwise skip to <a href="#creating-the-widget">the good stuff</a>.</p>
+<p>In Sudoku, the objective is to fill a 9x9 grid with digits so that each column, each row, and each of the nine 3x3 blocks that compose the grid contain all of the digits from 1 to 9.</p>
+<p>An example Sudoku puzzle:</p>
+
+<table style="border-collapse: collapse; margin-left: 0;">
+<colgroup style="border: solid medium;">
+<col style="border: solid thin; width: 2em;">
+<col style="border: solid thin; width: 2em;">
+<col style="border: solid thin; width: 2em;">
+</colgroup>
+<colgroup style="border: solid medium;">
+<col style="border: solid thin; width: 2em;">
+<col style="border: solid thin; width: 2em;">
+<col style="border: solid thin; width: 2em;">
+</colgroup>
+<colgroup style="border: solid medium;">
+<col style="border: solid thin; width: 2em;">
+<col style="border: solid thin; width: 2em;">
+<col style="border: solid thin; width: 2em;">
+</colgroup>
+<tbody style="border: solid medium;">
+<tr style="height: 2em; border: solid thin;">
+<td>
+</td>
+<td style="text-align: center;">
+<b>8</b>
+</td>
+<td style="text-align: center;">
+<b>5</b>
+</td>
+<td>
+</td>
+<td style="text-align: center;">
+<b>6</b>
+</td>
+<td style="text-align: center;">
+<b>1</b>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr style="height: 2em; border: solid thin;">
+<td style="text-align: center;">
+<b>9</b>
+</td>
+<td>
+</td>
+<td style="text-align: center;">
+<b>4</b>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr style="height: 2em; border: solid thin;">
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td style="text-align: center;">
+<b>2</b>
+</td>
+<td style="text-align: center;">
+<b>3</b>
+</td>
+<td>
+</td>
+<td style="text-align: center;">
+<b>8</b>
+</td>
+</tr>
+</tbody>
+<tbody style="border: solid medium;">
+<tr style="height: 2em; border: solid thin;">
+<td>
+</td>
+<td style="text-align: center;">
+<b>4</b>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td style="text-align: center;">
+<b>2</b>
+</td>
+</tr>
+<tr style="height: 2em; border: solid thin;">
+<td style="text-align: center;">
+<b>7</b>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td style="text-align: center;">
+<b>9</b>
+</td>
+<td>
+</td>
+<td style="text-align: center;">
+<b>5</b>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr style="height: 2em; border: solid thin;">
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td style="text-align: center;">
+<b>3</b>
+</td>
+<td>
+</td>
+<td style="text-align: center;">
+<b>8</b>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+<tbody style="border: solid medium;">
+<tr style="height: 2em; border: solid thin;">
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td style="text-align: center;">
+<b>5</b>
+</td>
+<td style="text-align: center;">
+<b>8</b>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr style="height: 2em; border: solid thin;">
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td style="text-align: center;">
+<b>7</b>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td style="text-align: center;">
+<b>1</b>
+</td>
+<td>
+</td>
+</tr>
+<tr style="height: 2em; border: solid thin;">
+<td style="text-align: center;">
+<b>6</b>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td style="text-align: center;">
+<b>4</b>
+</td>
+</tr>
+</tbody>
+
+</table>
+<p>The solution to this puzzle looks like this:</p>
+
+<table style="border-collapse: collapse; margin-left: 0;">
+<colgroup style="border: solid medium;">
+<col style="border: solid thin; width: 2em;">
+<col style="border: solid thin; width: 2em;">
+<col style="border: solid thin; width: 2em;">
+</colgroup>
+<colgroup style="border: solid medium;">
+<col style="border: solid thin; width: 2em;">
+<col style="border: solid thin; width: 2em;">
+<col style="border: solid thin; width: 2em;">
+</colgroup>
+<colgroup style="border: solid medium;">
+<col style="border: solid thin; width: 2em;">
+<col style="border: solid thin; width: 2em;">
+<col style="border: solid thin; width: 2em;">
+</colgroup>
+<tbody style="border: solid medium;">
+<tr style="height: 2em; border: solid thin;">
+<td style="text-align: center;">
+3
+</td>
+<td style="text-align: center;">
+<b>8</b>
+</td>
+<td style="text-align: center;">
+<b>5</b>
+</td>
+<td style="text-align: center;">
+9
+</td>
+<td style="text-align: center;">
+<b>6</b>
+</td>
+<td style="text-align: center;">
+<b>1</b>
+</td>
+<td style="text-align: center;">
+4
+</td>
+<td style="text-align: center;">
+2
+</td>
+<td style="text-align: center;">
+7
+</td>
+</tr>
+<tr style="height: 2em; border: solid thin;">
+<td style="text-align: center;">
+<b>9</b>
+</td>
+<td style="text-align: center;">
+2
+</td>
+<td style="text-align: center;">
+<b>4</b>
+</td>
+<td style="text-align: center;">
+8
+</td>
+<td style="text-align: center;">
+7
+</td>
+<td style="text-align: center;">
+3
+</td>
+<td style="text-align: center;">
+1
+</td>
+<td style="text-align: center;">
+5
+</td>
+<td style="text-align: center;">
+6
+</td>
+</tr>
+<tr style="height: 2em; border: solid thin;">
+<td style="text-align: center;">
+1
+</td>
+<td style="text-align: center;">
+6
+</td>
+<td style="text-align: center;">
+7
+</td>
+<td style="text-align: center;">
+5
+</td>
+<td style="text-align: center;">
+4
+</td>
+<td style="text-align: center;">
+<b>2</b>
+</td>
+<td style="text-align: center;">
+<b>3</b>
+</td>
+<td style="text-align: center;">
+9
+</td>
+<td style="text-align: center;">
+<b>8</b>
+</td>
+</tr>
+</tbody>
+<tbody style="border: solid medium;">
+<tr style="height: 2em; border: solid thin;">
+<td style="text-align: center;">
+5
+</td>
+<td style="text-align: center;">
+<b>4</b>
+</td>
+<td style="text-align: center;">
+3
+</td>
+<td style="text-align: center;">
+1
+</td>
+<td style="text-align: center;">
+8
+</td>
+<td style="text-align: center;">
+7
+</td>
+<td style="text-align: center;">
+9
+</td>
+<td style="text-align: center;">
+6
+</td>
+<td style="text-align: center;">
+<b>2</b>
+</td>
+</tr>
+<tr style="height: 2em; border: solid thin;">
+<td style="text-align: center;">
+<b>7</b>
+</td>
+<td style="text-align: center;">
+1
+</td>
+<td style="text-align: center;">
+8
+</td>
+<td style="text-align: center;">
+2
+</td>
+<td style="text-align: center;">
+<b>9</b>
+</td>
+<td style="text-align: center;">
+6
+</td>
+<td style="text-align: center;">
+<b>5</b>
+</td>
+<td style="text-align: center;">
+4
+</td>
+<td style="text-align: center;">
+3
+</td>
+</tr>
+<tr style="height: 2em; border: solid thin;">
+<td style="text-align: center;">
+2
+</td>
+<td style="text-align: center;">
+9
+</td>
+<td style="text-align: center;">
+6
+</td>
+<td style="text-align: center;">
+4
+</td>
+<td style="text-align: center;">
+<b>3</b>
+</td>
+<td style="text-align: center;">
+5
+</td>
+<td style="text-align: center;">
+<b>8</b>
+</td>
+<td style="text-align: center;">
+7
+</td>
+<td style="text-align: center;">
+1
+</td>
+</tr>
+</tbody>
+<tbody style="border: solid medium;">
+<tr style="height: 2em; border: solid thin;">
+<td style="text-align: center;">
+4
+</td>
+<td style="text-align: center;">
+7
+</td>
+<td style="text-align: center;">
+1
+</td>
+<td style="text-align: center;">
+6
+</td>
+<td style="text-align: center;">
+<b>5</b>
+</td>
+<td style="text-align: center;">
+<b>8</b>
+</td>
+<td style="text-align: center;">
+2
+</td>
+<td style="text-align: center;">
+3
+</td>
+<td style="text-align: center;">
+9
+</td>
+</tr>
+<tr style="height: 2em; border: solid thin;">
+<td style="text-align: center;">
+8
+</td>
+<td style="text-align: center;">
+3
+</td>
+<td style="text-align: center;">
+9
+</td>
+<td style="text-align: center;">
+<b>7</b>
+</td>
+<td style="text-align: center;">
+2
+</td>
+<td style="text-align: center;">
+4
+</td>
+<td style="text-align: center;">
+6
+</td>
+<td style="text-align: center;">
+<b>1</b>
+</td>
+<td style="text-align: center;">
+5
+</td>
+</tr>
+<tr style="height: 2em; border: solid thin;">
+<td style="text-align: center;">
+<b>6</b>
+</td>
+<td style="text-align: center;">
+5
+</td>
+<td style="text-align: center;">
+2
+</td>
+<td style="text-align: center;">
+3
+</td>
+<td style="text-align: center;">
+1
+</td>
+<td style="text-align: center;">
+<b>9</b>
+</td>
+<td style="text-align: center;">
+7
+</td>
+<td style="text-align: center;">
+8
+</td>
+<td style="text-align: center;">
+<b>4</b>
+</td>
+</tr>
+</tbody>
+
+</table>
+<p>The first row (3 8 5 9 6 1 4 2 7) contains all digits from 1 to 9. Also the first column (3 9 1 5 7 2 4 8 6) contains all digits from 1 to 9, as does the first subblock (3 8 5 - 9 2 4 - 1 6 7) and all the other ones.</p>
+</section>
+<section id="creating-the-widget" class="level2">
+<h2 class="anchored" data-anchor-id="creating-the-widget">Creating the widget</h2>
+<p>There are two ways to create Jupyter widgets - an easy way and a more complicated way. For this post, we will be using the easy way, which involves creating two cells in a Jupyter notebook. The first cell contains the Python code for the back-end of the widget, while the second cell contains the JavaScript for the front-end.</p>
+<p>If you want to create a proper Python package that can be installed with <code>pip install</code>, you can follow the more complicated way. A good resource is <a href="https://ipywidgets.readthedocs.io/en/8.0.5/examples/Widget%20Custom.html">this tutorial</a>.</p>
+<p>For this post, we’ll stick with the easy way.</p>
+<section id="the-python-back-end" class="level3">
+<h3 class="anchored" data-anchor-id="the-python-back-end">The Python back-end</h3>
+<p>The following code defines a Python class named <code>Sudoku</code> that extends the <code>DOMWidget</code> class from the <code>ipywidgets</code> library.</p>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> traitlets <span class="im">import</span> Unicode, Bool, Int, List, validate, observe, TraitError, All</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ipywidgets <span class="im">import</span> DOMWidget, register</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> copy</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="at">@register</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Sudoku(DOMWidget):</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    _view_name <span class="op">=</span> Unicode(<span class="st">'SudokuView'</span>).tag(sync<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    _view_module <span class="op">=</span> Unicode(<span class="st">'sudoku_widget'</span>).tag(sync<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    _view_module_version <span class="op">=</span> Unicode(<span class="st">'0.1.0'</span>).tag(sync<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Attributes</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    fixed <span class="op">=</span> List(trait<span class="op">=</span>Bool(), default_value<span class="op">=</span>[<span class="va">False</span>] <span class="op">*</span> <span class="dv">81</span>, minlen<span class="op">=</span><span class="dv">81</span>, maxlen<span class="op">=</span><span class="dv">81</span>, <span class="bu">help</span><span class="op">=</span><span class="st">"A list of booleans that indicate whether a value is part of the puzzle."</span>).tag(sync<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    _value <span class="op">=</span> List(trait<span class="op">=</span>Int(), default_value<span class="op">=</span>[<span class="dv">0</span>] <span class="op">*</span> <span class="dv">81</span>, minlen<span class="op">=</span><span class="dv">81</span>, maxlen<span class="op">=</span><span class="dv">81</span>, <span class="bu">help</span><span class="op">=</span><span class="st">"A list of integers for each cell."</span>).tag(sync<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    disabled <span class="op">=</span> Bool(<span class="va">False</span>, <span class="bu">help</span><span class="op">=</span><span class="st">"Enable or disable user changes."</span>).tag(sync<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Basic validator for value</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">@validate</span>(<span class="st">'_value'</span>)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> _valid_value(<span class="va">self</span>, proposal):</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i <span class="kw">in</span> proposal[<span class="st">'value'</span>]:</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> i <span class="op">&lt;</span> <span class="dv">0</span> <span class="kw">or</span> i <span class="op">&gt;</span> <span class="dv">9</span>:</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>                <span class="cf">raise</span> TraitError(<span class="st">'Invalid value: all elements must be numbers from 0 to 9'</span>)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> proposal[<span class="st">'value'</span>]</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">@property</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> value(<span class="va">self</span>):</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> copy.deepcopy(<span class="va">self</span>._value)</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">@value.setter</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> value(<span class="va">self</span>, v):</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>._value <span class="op">=</span> v</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>,<span class="op">*</span>args,<span class="op">**</span>kwargs):</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>        kwargs[<span class="st">'_value'</span>] <span class="op">=</span> kwargs.pop(<span class="st">'value'</span>, [<span class="dv">0</span>]<span class="op">*</span><span class="dv">81</span>)</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>        DOMWidget.<span class="fu">__init__</span>(<span class="va">self</span>,<span class="op">*</span>args,<span class="op">**</span>kwargs)</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__getitem__</span>(<span class="va">self</span>,index):</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>._value[index]</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__setitem__</span>(<span class="va">self</span>,index,val):</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>        vals <span class="op">=</span> <span class="va">self</span>.value</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>        vals[index] <span class="op">=</span> val</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>._value <span class="op">=</span> vals</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This Sudoku class has the following attributes:</p>
+<ul>
+<li><code>value</code>: A list of integers that represents the current state of the puzzle.</li>
+<li><code>fixed</code>: A list of booleans that indicates whether a value is part of the original puzzle and cannot be changed by the user.</li>
+<li><code>disabled</code>: A boolean that enables or disables user changes to the puzzle.</li>
+</ul>
+<p>The <code>fixed</code> and <code>value</code> attributes are defined using the <code>List</code> trait from the <code>traitlets</code> library. The <code>validate</code> decorator is used to define a validator for the <code>value</code> attribute that checks that all elements are numbers from 0 to 9.</p>
+<p>The <code>__getitem__</code> and <code>__setitem__</code> methods are implemented to allow indexing and assignment of elements in the <code>value</code> attribute.</p>
+<p>The <code>@register</code> decorator registers the <code>Sudoku</code> class as an <code>ipywidget</code>, which allows it to be displayed and interacted with in a Jupyter environment.</p>
+</section>
+<section id="the-javascript-front-end" class="level3">
+<h3 class="anchored" data-anchor-id="the-javascript-front-end">The JavaScript front-end</h3>
+<p>The front-end contains a bit more code.</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>javascript</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>require.undef(<span class="st">'sudoku_widget'</span>)<span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>define(<span class="st">'sudoku_widget'</span>, [<span class="st">"@jupyter-widgets/base"</span>], function(widgets) {</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">//</span> Define the SudokuView</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">class</span> SudokuView extends widgets.DOMWidgetView {</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        <span class="op">//</span> Render the view.</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        render() {</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>            this.sudoku_table <span class="op">=</span> document.createElement(<span class="st">'table'</span>)<span class="op">;</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>            this.sudoku_table.style.borderCollapse <span class="op">=</span> <span class="st">'collapse'</span><span class="op">;</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>            this.sudoku_table.style.marginLeft <span class="op">=</span> <span class="st">'0'</span><span class="op">;</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> (let i<span class="op">=</span><span class="dv">0</span><span class="op">;</span> i<span class="op">&lt;</span><span class="dv">3</span><span class="op">;</span> i<span class="op">++</span>) {</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>                let colgroup <span class="op">=</span> document.createElement(<span class="st">'colgroup'</span>)<span class="op">;</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>                colgroup.style.border <span class="op">=</span> <span class="st">'solid medium'</span><span class="op">;</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>                <span class="cf">for</span> (let j<span class="op">=</span><span class="dv">0</span><span class="op">;</span> j<span class="op">&lt;</span><span class="dv">3</span><span class="op">;</span> j<span class="op">++</span>) {</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>                    let col <span class="op">=</span> document.createElement(<span class="st">'col'</span>)<span class="op">;</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>                    col.style.border <span class="op">=</span> <span class="st">'solid thin'</span><span class="op">;</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>                    col.style.width <span class="op">=</span> <span class="st">'2em'</span><span class="op">;</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>                    colgroup.appendChild(col)<span class="op">;</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>                }</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>                this.sudoku_table.appendChild(colgroup)<span class="op">;</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> (let t<span class="op">=</span><span class="dv">0</span><span class="op">;</span> t<span class="op">&lt;</span><span class="dv">3</span><span class="op">;</span> t<span class="op">++</span>) {</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>                let tbody <span class="op">=</span> document.createElement(<span class="st">'tbody'</span>)<span class="op">;</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>                tbody.style.border <span class="op">=</span> <span class="st">'solid medium'</span><span class="op">;</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>                <span class="cf">for</span> (let r<span class="op">=</span><span class="dv">0</span><span class="op">;</span> r<span class="op">&lt;</span><span class="dv">3</span><span class="op">;</span> r<span class="op">++</span>) {</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>                    let tr <span class="op">=</span> document.createElement(<span class="st">'tr'</span>)<span class="op">;</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>                    tr.style.height <span class="op">=</span> <span class="st">'2em'</span><span class="op">;</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>                    tr.style.border <span class="op">=</span> <span class="st">'solid thin'</span><span class="op">;</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">for</span> (let c<span class="op">=</span><span class="dv">0</span><span class="op">;</span> c<span class="op">&lt;</span><span class="dv">9</span><span class="op">;</span> c<span class="op">++</span>) {</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>                        let td <span class="op">=</span> document.createElement(<span class="st">'td'</span>)<span class="op">;</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>                        tr.appendChild(td)<span class="op">;</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>                    }</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>                    tbody.appendChild(tr)<span class="op">;</span></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>                }</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>                this.sudoku_table.appendChild(tbody)<span class="op">;</span></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>            this.el.appendChild(this.sudoku_table)<span class="op">;</span></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>            this.model_changed()<span class="op">;</span></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>            <span class="op">//</span> Python <span class="op">-&gt;</span> JavaScript update</span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>            this.model.on(<span class="st">'change'</span>, this.model_changed, this)<span class="op">;</span></span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>        model_changed() {</span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>            let tds <span class="op">=</span> this.sudoku_table.getElementsByTagName(<span class="st">'td'</span>)<span class="op">;</span></span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>            let disabled <span class="op">=</span> this.model.get(<span class="st">'disabled'</span>)<span class="op">;</span></span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>                        </span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> (let i<span class="op">=</span><span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">81</span><span class="op">;</span> i<span class="op">++</span>) {</span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>                let td <span class="op">=</span> tds[i]<span class="op">;</span></span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>                td.innerText <span class="op">=</span> <span class="st">''</span><span class="op">;</span> <span class="op">//</span> Delete td contents</span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>                td.style.textAlign <span class="op">=</span> <span class="st">'center'</span><span class="op">;</span></span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>                td.style.height <span class="op">=</span> <span class="st">'2em'</span><span class="op">;</span></span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>                let value <span class="op">=</span> this.model.get(<span class="st">'_value'</span>)[i]<span class="op">;</span></span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>                let fixed <span class="op">=</span> this.model.get(<span class="st">'fixed'</span>)[i]<span class="op">;</span></span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> (fixed <span class="op">&amp;&amp;</span> value <span class="op">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>                    let b <span class="op">=</span> document.createElement(<span class="st">'b'</span>)<span class="op">;</span></span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>                    b.innerText <span class="op">=</span> value<span class="op">;</span></span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>                    td.appendChild(b)<span class="op">;</span></span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>                } <span class="cf">else</span> <span class="cf">if</span> (disabled <span class="op">&amp;&amp;</span> value <span class="op">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>                    td.innerText <span class="op">=</span> value<span class="op">;</span></span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>                } <span class="cf">else</span> <span class="cf">if</span> (<span class="op">!</span>disabled <span class="op">&amp;&amp;</span> <span class="op">!</span>fixed) {</span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>                    let <span class="bu">input</span> <span class="op">=</span> document.createElement(<span class="st">'input'</span>)<span class="op">;</span></span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>                    <span class="bu">input</span>.<span class="bu">type</span> <span class="op">=</span> <span class="st">'text'</span><span class="op">;</span></span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>                    <span class="bu">input</span>.maxLength <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>                    <span class="bu">input</span>.style.top <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>                    <span class="bu">input</span>.style.left <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>                    <span class="bu">input</span>.style.margin <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a>                    <span class="bu">input</span>.style.height <span class="op">=</span> <span class="st">'100%'</span><span class="op">;</span></span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a>                    <span class="bu">input</span>.style.width <span class="op">=</span> <span class="st">'100%'</span><span class="op">;</span></span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a>                    <span class="bu">input</span>.style.border <span class="op">=</span> <span class="st">'none'</span><span class="op">;</span></span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a>                    <span class="bu">input</span>.style.textAlign <span class="op">=</span> <span class="st">'center'</span><span class="op">;</span></span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a>                    <span class="bu">input</span>.style.marginTop <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a>                    <span class="bu">input</span>.style.padding <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a>                    <span class="bu">input</span>.value <span class="op">=</span> (value <span class="op">&gt;</span> <span class="dv">0</span> ? value : <span class="st">''</span>)<span class="op">;</span></span>
+<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a>                    <span class="bu">input</span>.oninput <span class="op">=</span> this.input_input.bind(this, i)<span class="op">;</span></span>
+<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a>                    <span class="bu">input</span>.onchange <span class="op">=</span> this.input_changed.bind(this, i)<span class="op">;</span> <span class="op">//</span> JavaScript <span class="op">-&gt;</span> Python update</span>
+<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a>                    td.appendChild(<span class="bu">input</span>)<span class="op">;</span></span>
+<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a>                }</span>
+<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a>        input_input(i) {</span>
+<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a>            this.sudoku_table.getElementsByTagName(<span class="st">'td'</span>)[i].getElementsByTagName(<span class="st">'input'</span>)[<span class="dv">0</span>].value <span class="op">=</span> </span>
+<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a>                this.sudoku_table.getElementsByTagName(<span class="st">'td'</span>)[i].</span>
+<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a>                    getElementsByTagName(<span class="st">'input'</span>)[<span class="dv">0</span>].value.replace(<span class="op">/</span>[<span class="op">^</span><span class="dv">1</span><span class="op">-</span><span class="dv">9</span>]<span class="op">/</span>g,<span class="st">''</span>)<span class="op">;</span></span>
+<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a>        input_changed(i) {</span>
+<span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a>            this.sudoku_table.getElementsByTagName(<span class="st">'td'</span>)[i].getElementsByTagName(<span class="st">'input'</span>)[<span class="dv">0</span>].value <span class="op">=</span> </span>
+<span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a>                this.sudoku_table.getElementsByTagName(<span class="st">'td'</span>)[i].</span>
+<span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a>                    getElementsByTagName(<span class="st">'input'</span>)[<span class="dv">0</span>].value.replace(<span class="op">/</span>[<span class="op">^</span><span class="dv">1</span><span class="op">-</span><span class="dv">9</span>]<span class="op">/</span>g,<span class="st">''</span>)<span class="op">;</span></span>
+<span id="cb2-101"><a href="#cb2-101" aria-hidden="true" tabindex="-1"></a>            let v <span class="op">=</span> parseInt(this.sudoku_table.getElementsByTagName(<span class="st">'td'</span>)[i].getElementsByTagName(<span class="st">'input'</span>)[<span class="dv">0</span>].value) <span class="op">||</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-102"><a href="#cb2-102" aria-hidden="true" tabindex="-1"></a>            let value <span class="op">=</span> this.model.get(<span class="st">'_value'</span>).<span class="bu">slice</span>()<span class="op">;</span></span>
+<span id="cb2-103"><a href="#cb2-103" aria-hidden="true" tabindex="-1"></a>            value[i] <span class="op">=</span> v<span class="op">;</span></span>
+<span id="cb2-104"><a href="#cb2-104" aria-hidden="true" tabindex="-1"></a>            this.model.<span class="bu">set</span>(<span class="st">'_value'</span>, value)<span class="op">;</span></span>
+<span id="cb2-105"><a href="#cb2-105" aria-hidden="true" tabindex="-1"></a>            this.model.save_changes()<span class="op">;</span></span>
+<span id="cb2-106"><a href="#cb2-106" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb2-107"><a href="#cb2-107" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb2-108"><a href="#cb2-108" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-109"><a href="#cb2-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-110"><a href="#cb2-110" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
+<span id="cb2-111"><a href="#cb2-111" aria-hidden="true" tabindex="-1"></a>        SudokuView: SudokuView</span>
+<span id="cb2-112"><a href="#cb2-112" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-113"><a href="#cb2-113" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-114"><a href="#cb2-114" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+
+<script type="application/javascript">
+require.undef('sudoku_widget');
+
+define('sudoku_widget', ["@jupyter-widgets/base"], function(widgets) {
+    
+    // Define the SudokuView
+    class SudokuView extends widgets.DOMWidgetView {
+        
+        // Render the view.
+        render() {
+            this.sudoku_table = document.createElement('table');
+            this.sudoku_table.style.borderCollapse = 'collapse';
+            this.sudoku_table.style.marginLeft = '0';
+            
+            for (let i=0; i<3; i++) {
+                let colgroup = document.createElement('colgroup');
+                colgroup.style.border = 'solid medium';
+                for (let j=0; j<3; j++) {
+                    let col = document.createElement('col');
+                    col.style.border = 'solid thin';
+                    col.style.width = '2em';
+                    colgroup.appendChild(col);
+                }
+                this.sudoku_table.appendChild(colgroup);
+            }
+            
+            for (let t=0; t<3; t++) {
+                let tbody = document.createElement('tbody');
+                tbody.style.border = 'solid medium';
+                for (let r=0; r<3; r++) {
+                    let tr = document.createElement('tr');
+                    tr.style.height = '2em';
+                    tr.style.border = 'solid thin';
+                    for (let c=0; c<9; c++) {
+                        let td = document.createElement('td');
+                        tr.appendChild(td);
+                    }
+                    tbody.appendChild(tr);
+                }
+                this.sudoku_table.appendChild(tbody);
+            }
+            
+            this.el.appendChild(this.sudoku_table);
+            
+            this.model_changed();
+        
+            // Python -> JavaScript update
+            this.model.on('change', this.model_changed, this);
+        }
+
+        model_changed() {
+            let tds = this.sudoku_table.getElementsByTagName('td');
+            let disabled = this.model.get('disabled');
+                        
+            for (let i=0; i < 81; i++) {
+                let td = tds[i];
+                td.innerText = ''; // Delete td contents
+                td.style.textAlign = 'center';
+                td.style.height = '2em';
+                let value = this.model.get('_value')[i];
+                let fixed = this.model.get('fixed')[i];
+
+                if (fixed && value > 0) {
+                    let b = document.createElement('b');
+                    b.innerText = value;
+                    td.appendChild(b);
+                } else if (disabled && value > 0) {
+                    td.innerText = value;
+                } else if (!disabled && !fixed) {
+                    let input = document.createElement('input');
+                    input.type = 'text';
+                    input.maxLength = 1;
+                    input.style.top = 0;
+                    input.style.left = 0;
+                    input.style.margin = 0;
+                    input.style.height = '100%';
+                    input.style.width = '100%';
+                    input.style.border = 'none';
+                    input.style.textAlign = 'center';
+                    input.style.marginTop = 0;
+                    input.style.padding = 0;
+                    input.value = (value > 0 ? value : '');
+                    input.oninput = this.input_input.bind(this, i);
+                    input.onchange = this.input_changed.bind(this, i); // JavaScript -> Python update
+                    td.appendChild(input);
+                }
+            }
+            
+        }
+        
+        input_input(i) {
+            this.sudoku_table.getElementsByTagName('td')[i].getElementsByTagName('input')[0].value = 
+                this.sudoku_table.getElementsByTagName('td')[i].
+                    getElementsByTagName('input')[0].value.replace(/[^1-9]/g,'');
+        }
+        
+        input_changed(i) {
+            this.sudoku_table.getElementsByTagName('td')[i].getElementsByTagName('input')[0].value = 
+                this.sudoku_table.getElementsByTagName('td')[i].
+                    getElementsByTagName('input')[0].value.replace(/[^1-9]/g,'');
+            let v = parseInt(this.sudoku_table.getElementsByTagName('td')[i].getElementsByTagName('input')[0].value) || 0;
+            let value = this.model.get('_value').slice();
+            value[i] = v;
+            this.model.set('_value', value);
+            this.model.save_changes();
+        }
+        
+    }
+
+    return {
+        SudokuView: SudokuView
+    }
+    
+});
+
+</script>
+</div>
+</div>
+<p>The <code>define</code> function defines the <code>sudoku_widget</code> module, which depends on the <code>@jupyter-widgets/base</code> module. It creates a <code>SudokuView</code> class that extends the base class <code>widgets.DOMWidgetView</code>, which is responsible for rendering and updating the widget.</p>
+<p>The <code>render</code> method of the <code>SudokuView</code> class creates a table element with 9 rows and 9 columns, representing the Sudoku game board. It adds the table to the widget’s HTML element, and registers a listener for model changes. The <code>model_changed</code> method is called when the model changes, and it updates the widget’s HTML to reflect the new model state.</p>
+<p>The <code>input_input</code> and <code>input_changed</code> methods are event handlers that respond to user input on the Sudoku board. They update the model and the widget’s HTML to reflect the new user input.</p>
+</section>
+</section>
+<section id="how-to-use-this-widget" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-use-this-widget">How to use this widget</h2>
+<p>Once we have executed these two cells, we’re good to use our widget.</p>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ipywidgets <span class="im">as</span> widgets</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>puzzle <span class="op">=</span> [</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>,<span class="dv">8</span>,<span class="dv">5</span>, <span class="dv">0</span>,<span class="dv">6</span>,<span class="dv">1</span>, <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="dv">9</span>,<span class="dv">0</span>,<span class="dv">4</span>, <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>, <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>, <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">2</span>, <span class="dv">3</span>,<span class="dv">0</span>,<span class="dv">8</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>,<span class="dv">4</span>,<span class="dv">0</span>, <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>, <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">2</span>,</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="dv">7</span>,<span class="dv">0</span>,<span class="dv">0</span>, <span class="dv">0</span>,<span class="dv">9</span>,<span class="dv">0</span>, <span class="dv">5</span>,<span class="dv">0</span>,<span class="dv">0</span>,</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>, <span class="dv">0</span>,<span class="dv">3</span>,<span class="dv">0</span>, <span class="dv">8</span>,<span class="dv">0</span>,<span class="dv">0</span>,</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>, <span class="dv">0</span>,<span class="dv">5</span>,<span class="dv">8</span>, <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>, <span class="dv">7</span>,<span class="dv">0</span>,<span class="dv">0</span>, <span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="dv">6</span>,<span class="dv">0</span>,<span class="dv">0</span>, <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>, <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">4</span>]</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>fixed_digits <span class="op">=</span> [v <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">for</span> v <span class="kw">in</span> puzzle]</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>sudoku <span class="op">=</span> Sudoku(value<span class="op">=</span>puzzle, fixed<span class="op">=</span>fixed_digits, disabled<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>display(sudoku)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"8074f1c150e34803af141aa2c5b3a713","version_major":2,"version_minor":0}
+</script>
+</div>
+</div>
+<p>The widget accepts three parameters: <code>value</code>, <code>fixed</code> and <code>disabled</code>. The parameter <code>value</code> is a list of digits. A digit of 0 means empty. The parameter <code>fixed</code> is a list of boolean values, where <code>True</code> means a digit can’t be edited and will be printed in bold. The boolean <code>disabled</code> indicates whether a user can edit digits.</p>
+<p>One can read the values in a grid like this:</p>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sudoku.value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[0, 8, 5, 0, 6, 1, 0, 0, 0, 9, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 0, 8, 0, 4, 0, 0, 0, 0, 0, 0, 2, 7, 0, 0, 0, 9, 0, 5, 0, 0, 0, 0, 0, 0, 3, 0, 8, 0, 0, 0, 0, 0, 0, 5, 8, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 1, 0, 6, 0, 0, 0, 0, 0, 0, 0, 4]</code></pre>
+</div>
+</div>
+<p>Running the next cell would show the solution by updating the widget.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>solution <span class="op">=</span> [</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="dv">3</span>,<span class="dv">8</span>,<span class="dv">5</span>, <span class="dv">9</span>,<span class="dv">6</span>,<span class="dv">1</span>, <span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">7</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="dv">9</span>,<span class="dv">2</span>,<span class="dv">4</span>, <span class="dv">8</span>,<span class="dv">7</span>,<span class="dv">3</span>, <span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">6</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span>,<span class="dv">6</span>,<span class="dv">7</span>, <span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">2</span>, <span class="dv">3</span>,<span class="dv">9</span>,<span class="dv">8</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">3</span>, <span class="dv">1</span>,<span class="dv">8</span>,<span class="dv">7</span>, <span class="dv">9</span>,<span class="dv">6</span>,<span class="dv">2</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="dv">7</span>,<span class="dv">1</span>,<span class="dv">8</span>, <span class="dv">2</span>,<span class="dv">9</span>,<span class="dv">6</span>, <span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">3</span>,</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="dv">2</span>,<span class="dv">9</span>,<span class="dv">6</span>, <span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">5</span>, <span class="dv">8</span>,<span class="dv">7</span>,<span class="dv">1</span>,</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="dv">4</span>,<span class="dv">7</span>,<span class="dv">1</span>, <span class="dv">6</span>,<span class="dv">5</span>,<span class="dv">8</span>, <span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">9</span>,</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="dv">8</span>,<span class="dv">3</span>,<span class="dv">9</span>, <span class="dv">7</span>,<span class="dv">2</span>,<span class="dv">4</span>, <span class="dv">6</span>,<span class="dv">1</span>,<span class="dv">5</span>,</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="dv">6</span>,<span class="dv">5</span>,<span class="dv">2</span>, <span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">9</span>, <span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">4</span>]</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>sudoku.value <span class="op">=</span> solution</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="creating-a-sudoku-solver" class="level2">
+<h2 class="anchored" data-anchor-id="creating-a-sudoku-solver">Creating a Sudoku solver</h2>
+<p>Now that we have this widget to our disposal, we’ll create a Sudoku solver.</p>
+<section id="building-the-user-interface" class="level3">
+<h3 class="anchored" data-anchor-id="building-the-user-interface">Building the user interface</h3>
+<p>First, let’s tackle the easy part: creating the user interface for our Sudoku solver. We’ll use the Sudoku widget along with some other widgets to make it easy for the user to select from pre-made puzzles or enter their own.</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>puzzle1 <span class="op">=</span> [</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>,<span class="dv">8</span>,<span class="dv">5</span>, <span class="dv">0</span>,<span class="dv">6</span>,<span class="dv">1</span>, <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="dv">9</span>,<span class="dv">0</span>,<span class="dv">4</span>, <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>, <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>, <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">2</span>, <span class="dv">3</span>,<span class="dv">0</span>,<span class="dv">8</span>,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>,<span class="dv">4</span>,<span class="dv">0</span>, <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>, <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">2</span>,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="dv">7</span>,<span class="dv">0</span>,<span class="dv">0</span>, <span class="dv">0</span>,<span class="dv">9</span>,<span class="dv">0</span>, <span class="dv">5</span>,<span class="dv">0</span>,<span class="dv">0</span>,</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>, <span class="dv">0</span>,<span class="dv">3</span>,<span class="dv">0</span>, <span class="dv">8</span>,<span class="dv">0</span>,<span class="dv">0</span>,</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>, <span class="dv">0</span>,<span class="dv">5</span>,<span class="dv">8</span>, <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>, <span class="dv">7</span>,<span class="dv">0</span>,<span class="dv">0</span>, <span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="dv">6</span>,<span class="dv">0</span>,<span class="dv">0</span>, <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>, <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">4</span>]</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>puzzle2 <span class="op">=</span> [</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    <span class="dv">3</span>,<span class="dv">6</span>,<span class="dv">0</span>, <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>, <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">5</span>,</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>, <span class="dv">0</span>,<span class="dv">9</span>,<span class="dv">0</span>, <span class="dv">2</span>,<span class="dv">0</span>,<span class="dv">8</span>,</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>,<span class="dv">5</span>,<span class="dv">0</span>, <span class="dv">1</span>,<span class="dv">8</span>,<span class="dv">0</span>, <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">7</span>,</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    <span class="dv">5</span>,<span class="dv">0</span>,<span class="dv">0</span>, <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">6</span>, <span class="dv">4</span>,<span class="dv">0</span>,<span class="dv">0</span>,</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    <span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">6</span>, <span class="dv">0</span>,<span class="dv">5</span>,<span class="dv">0</span>, <span class="dv">7</span>,<span class="dv">0</span>,<span class="dv">0</span>,</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>, <span class="dv">0</span>,<span class="dv">7</span>,<span class="dv">0</span>, <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>, <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">7</span>, <span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">3</span>,</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">3</span>, <span class="dv">9</span>,<span class="dv">4</span>,<span class="dv">0</span>, <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>, <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>, <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>]</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>puzzle3 <span class="op">=</span> [</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">0</span>, <span class="dv">0</span>,<span class="dv">4</span>,<span class="dv">0</span>, <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">5</span>,</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>,<span class="dv">5</span>,<span class="dv">8</span>, <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>, <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>, <span class="dv">8</span>,<span class="dv">0</span>,<span class="dv">0</span>, <span class="dv">4</span>,<span class="dv">0</span>,<span class="dv">0</span>,</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>    <span class="dv">7</span>,<span class="dv">0</span>,<span class="dv">0</span>, <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">8</span>, <span class="dv">0</span>,<span class="dv">4</span>,<span class="dv">0</span>,</span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>, <span class="dv">9</span>,<span class="dv">0</span>,<span class="dv">5</span>, <span class="dv">7</span>,<span class="dv">0</span>,<span class="dv">0</span>,</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>,<span class="dv">3</span>,<span class="dv">0</span>, <span class="dv">7</span>,<span class="dv">0</span>,<span class="dv">0</span>, <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">2</span>,</span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">4</span>, <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">3</span>, <span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,</span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>, <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>, <span class="dv">9</span>,<span class="dv">6</span>,<span class="dv">0</span>,</span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>    <span class="dv">2</span>,<span class="dv">0</span>,<span class="dv">0</span>, <span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>, <span class="dv">0</span>,<span class="dv">5</span>,<span class="dv">0</span></span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>sudoku <span class="op">=</span> Sudoku(value<span class="op">=</span>puzzle1, fixed<span class="op">=</span>[v <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">for</span> v <span class="kw">in</span> puzzle1], disabled<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>example_dropdown <span class="op">=</span> widgets.Dropdown(</span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>    options<span class="op">=</span>[(<span class="st">'Empty'</span>, [<span class="dv">0</span>] <span class="op">*</span> <span class="dv">81</span>), (<span class="st">'Example 1'</span>, puzzle1), (<span class="st">'Example 2'</span>, puzzle2), (<span class="st">'Example 3'</span>, puzzle3)], </span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>    value<span class="op">=</span>puzzle1,</span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a>    layout<span class="op">=</span>widgets.Layout(margin<span class="op">=</span><span class="st">'10px 0px 0px 20px'</span>, width<span class="op">=</span><span class="st">'150px'</span>)</span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>solve_button <span class="op">=</span> widgets.Button(</span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a>    description<span class="op">=</span><span class="st">"Solve"</span>, </span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a>    layout<span class="op">=</span>widgets.Layout(margin<span class="op">=</span><span class="st">'20px 0px 0px 20px'</span>, width<span class="op">=</span><span class="st">'150px'</span>)</span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a>next_button <span class="op">=</span> widgets.Button(</span>
+<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a>    description<span class="op">=</span><span class="st">"Next"</span>, </span>
+<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a>    layout<span class="op">=</span>widgets.Layout(margin<span class="op">=</span><span class="st">'20px 0px 0px 20px'</span>, width<span class="op">=</span><span class="st">'150px'</span>, display<span class="op">=</span><span class="st">'none'</span>)</span>
+<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a>vbox <span class="op">=</span> widgets.VBox([example_dropdown, solve_button, next_button])</span>
+<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a>hbox <span class="op">=</span> widgets.HBox([sudoku, vbox])</span>
+<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a>label <span class="op">=</span> widgets.Label()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The <code>Sudoku</code> widget displays a Sudoku board.</p>
+<p>There is also a <code>Dropdown</code> widget for selecting pre-made puzzles or an empty board, and two <code>Button</code> widgets for solving the puzzle and showing the next solution (if there are multiple solutions).</p>
+<p>Finally, there is a <code>Label</code> widget that can be used to display messages to the user. All of these widgets are arranged in a layout using <code>VBox</code> and <code>HBox</code> widgets.</p>
+</section>
+<section id="writing-the-event-handlers" class="level3">
+<h3 class="anchored" data-anchor-id="writing-the-event-handlers">Writing the event handlers</h3>
+<p>The widgets are not functional on their own; we need to write code to make them responsive to user input.</p>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># global variables</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>gen <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>solution <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> on_example_dropdown_change(change):</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> change[<span class="st">'type'</span>] <span class="op">==</span> <span class="st">'change'</span> <span class="kw">and</span> change[<span class="st">'name'</span>] <span class="op">==</span> <span class="st">'value'</span>:</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>        value <span class="op">=</span> change[<span class="st">'new'</span>]</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>        fixed <span class="op">=</span> [v <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">for</span> v <span class="kw">in</span> value]</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>        sudoku.value <span class="op">=</span> value</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>        sudoku.fixed <span class="op">=</span> fixed</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>        label.value <span class="op">=</span> <span class="st">""</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>        solve_button.layout.display <span class="op">=</span> <span class="st">'inline-block'</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>        next_button.layout.display <span class="op">=</span> <span class="st">'none'</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>example_dropdown.observe(on_example_dropdown_change)</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> on_solve_button_clicked(b):</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    <span class="kw">global</span> gen</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">global</span> solution</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>    val <span class="op">=</span> sudoku.value.copy()</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>    sudoku.fixed <span class="op">=</span> [v <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">for</span> v <span class="kw">in</span> val]</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>    gen <span class="op">=</span> solve_sudoku(val)</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>        solution <span class="op">=</span> <span class="bu">next</span>(gen)</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>        sudoku.value <span class="op">=</span> solution</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">StopIteration</span>:</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>        label.value <span class="op">=</span> <span class="st">"This sudoku has no solution."</span></span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>        sudoku.fixed <span class="op">=</span> [<span class="va">False</span>] <span class="op">*</span> <span class="dv">81</span></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span></span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>        solution <span class="op">=</span> <span class="bu">next</span>(gen).copy()</span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>        label.value <span class="op">=</span> <span class="st">"This sudoku has multiple solutions."</span></span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>        solve_button.layout.display <span class="op">=</span> <span class="st">'none'</span></span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>        next_button.layout.display <span class="op">=</span> <span class="st">'inline-block'</span></span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">StopIteration</span>:</span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>        label.value <span class="op">=</span> <span class="st">""</span></span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>        solve_button.layout.display <span class="op">=</span> <span class="st">'none'</span></span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>solve_button.on_click(on_solve_button_clicked)</span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> on_next_button_clicked(b):</span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>    <span class="kw">global</span> gen</span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>    <span class="kw">global</span> solution</span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a>    sudoku.value <span class="op">=</span> solution</span>
+<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a>        solution <span class="op">=</span> <span class="bu">next</span>(gen)</span>
+<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">StopIteration</span>:</span>
+<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a>        label.value <span class="op">=</span> <span class="st">""</span></span>
+<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a>        next_button.layout.display <span class="op">=</span> <span class="st">'none'</span></span>
+<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a>next_button.on_click(on_next_button_clicked)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The <code>on_example_dropdown_change</code> function is called when the user selects an example puzzle from a dropdown menu, and it sets up the Sudoku grid with the selected puzzle and clears any previous solutions.</p>
+<p>The <code>on_solve_button_clicked</code> function is called when the user clicks a button to solve the puzzle, and it generates a Sudoku solver object and attempts to find a solution to the puzzle. If a solution is found, it updates the Sudoku grid with the solution and enables a button to find the next solution if there are multiple solutions. If no solution is found, it displays an error message.</p>
+<p>The <code>on_next_button_clicked</code> function is called when the user clicks the “next” button to find the next solution to a puzzle with multiple solutions, and it updates the Sudoku grid with the next solution if there is one, or disables the “next” button if there are no more solutions.</p>
+<p>The <code>gen</code> and <code>solution</code> variables are used to keep track of the state of the Sudoku solver object and the next solution.</p>
+</section>
+<section id="the-solver" class="level3">
+<h3 class="anchored" data-anchor-id="the-solver">The solver</h3>
+<p>We can easily solve puzzles using backtracking. The <code>solve_sudoku</code> function utilizes recursion to generate solutions. It is called by the <code>on_solve_button_clicked</code> function above.</p>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> solve_sudoku(puzzle, index<span class="op">=</span><span class="dv">0</span>):</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> index <span class="op">==</span> <span class="dv">81</span>:</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Solution found</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">yield</span> puzzle</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> puzzle[index] <span class="op">&gt;</span> <span class="dv">0</span>:</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Already filled</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">yield</span> <span class="cf">from</span> solve_sudoku(puzzle, index <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> v <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>,<span class="dv">10</span>):</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Fill in a digit and check constraints</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>            puzzle[index] <span class="op">=</span> v</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> is_valid_square(puzzle, index):</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>                <span class="cf">yield</span> <span class="cf">from</span> solve_sudoku(puzzle, index <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>            puzzle[index] <span class="op">=</span> <span class="dv">0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The <code>solve_sudoku</code> function takes in a puzzle parameter which is a list of length 81, representing the 9x9 Sudoku grid with empty squares represented as 0s. The function yields solutions as they are found.</p>
+<p>The following functions are used to check the constraints.</p>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_column(puzzle, k):</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    column <span class="op">=</span> []</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">9</span>):</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>        column.append(puzzle[i<span class="op">*</span><span class="dv">9</span> <span class="op">+</span> k])</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> column</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_row(puzzle, r):</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> puzzle[r<span class="op">*</span><span class="dv">9</span>:(r<span class="op">+</span><span class="dv">1</span>)<span class="op">*</span><span class="dv">9</span>]</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_block(puzzle, b):</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    block <span class="op">=</span> []</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> r <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3</span>):</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3</span>):</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>            block.append(puzzle[[<span class="dv">0</span>,<span class="dv">3</span>,<span class="dv">6</span>,<span class="dv">27</span>,<span class="dv">30</span>,<span class="dv">33</span>,<span class="dv">54</span>,<span class="dv">57</span>,<span class="dv">60</span>][b]<span class="op">+</span><span class="dv">9</span><span class="op">*</span>r<span class="op">+</span>k])</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> block</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> is_valid(l):</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Check for duplicate values</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>    digits <span class="op">=</span> [v <span class="cf">for</span> v <span class="kw">in</span> l <span class="cf">if</span> v <span class="op">&gt;</span> <span class="dv">0</span>]</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>    s <span class="op">=</span> <span class="bu">set</span>(digits)</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">len</span>(digits) <span class="op">==</span> <span class="bu">len</span>(s)</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> is_valid_square(puzzle, i):</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>    k <span class="op">=</span> i <span class="op">%</span> <span class="dv">9</span></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>    r <span class="op">=</span> <span class="bu">int</span>(i <span class="op">/</span> <span class="dv">9</span>)</span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>    b <span class="op">=</span> <span class="bu">int</span>(r <span class="op">/</span> <span class="dv">3</span>) <span class="op">*</span> <span class="dv">3</span> <span class="op">+</span> <span class="bu">int</span>(k <span class="op">/</span> <span class="dv">3</span>)</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> is_valid(get_row(puzzle, r)) <span class="kw">and</span> is_valid(get_column(puzzle, k)) <span class="kw">and</span> is_valid(get_block(puzzle, b))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The <code>get_column</code>, <code>get_row</code>, and <code>get_block</code> functions are used to retrieve the values in the columns, rows, and 3x3 blocks that a given index belongs to.</p>
+<p>The <code>is_valid</code> function checks if a list of values contains duplicate values. It returns <code>True</code> if the list contains no duplicates (excluding 0s) and <code>False</code> otherwise.</p>
+<p>The <code>is_valid_square</code> function checks if a value can be placed in a given square of the Sudoku grid without violating the rules of the game. It uses the <code>get_row</code>, <code>get_column</code>, <code>get_block</code>, and <code>is_valid</code> functions.</p>
+</section>
+<section id="displaying-the-user-interface" class="level3">
+<h3 class="anchored" data-anchor-id="displaying-the-user-interface">Displaying the user interface</h3>
+<p>It’s time to show the user interface.</p>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>display(hbox, label)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"7a0ef03efb1f40c6ac7a52ec0c9f3b25","version_major":2,"version_minor":0}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"3415fd48034b4ed9812eb5c74ed9982b","version_major":2,"version_minor":0}
+</script>
+</div>
+</div>
+<p>To play with an interactive version, you’ll need to run it in Jupyter Notebook. Sadly, it won’t work in JupyterLab. It does work in <a href="https://voila.readthedocs.io/en/stable/index.html">Voilà</a> in case you wish to turn it into a web app. The corresponding <a href="https://gist.github.com/afvanwoudenberg/8a7c6599d7170c0134fa17bade510e4c">gist can be found here</a>.</p>
+</section>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>In this post, we saw how to create a custom widget in Jupyter Notebook. It’s worth noting that the approach I presented here is more of a quick fix. Originally, I developed this code as part of a Sudoku programming assignment for my students, and I had control over the environment they were using (Jupyter Notebook and Voila).</p>
+<p>For creating Jupyter widgets, it is recommended to use <a href="https://github.com/jupyter-widgets/widget-cookiecutter">widget-cookiecutter</a> (for JavaScript) or <a href="https://github.com/jupyter-widgets/widget-ts-cookiecutter">widget-ts-cookiecutter</a> (for TypeScript). These tools offer a more robust and reliable approach to building widgets in Jupyter.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script type="application/vnd.jupyter.widget-state+json">
+{"state":{"00d1e07094554b218b87b33f46212a7a":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"LabelStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"LabelStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","background":null,"description_width":"","font_family":null,"font_size":null,"font_style":null,"font_variant":null,"font_weight":null,"text_color":null,"text_decoration":null}},"0910958b3a1c4cce974aa61a5459fdd6":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"DropdownModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"DropdownModel","_options_labels":["Empty","Example 1","Example 2","Example 3"],"_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"DropdownView","description":"","description_allow_html":false,"disabled":false,"index":1,"layout":"IPY_MODEL_798113b3813f4a1a81cef21cceb108da","style":"IPY_MODEL_f6cf29b8396e45128ff0f0353efeae0b","tabbable":null,"tooltip":null}},"0ef45b7559184ae18aa4995a00ef29fa":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"135eaab0beaf49b2846487f04ba9d97d":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"ButtonStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"ButtonStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","button_color":null,"font_family":null,"font_size":null,"font_style":null,"font_variant":null,"font_weight":null,"text_color":null,"text_decoration":null}},"1599584969f0459ca38985d12a513f2e":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"1828203c28c44f53b8df27a5f05eb6de":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"241703a9ba23492d9deae8d1ba7ccd8f":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"DOMWidgetModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"DOMWidgetModel","_value":[0,8,5,0,6,1,0,0,0,9,0,4,0,0,0,0,0,0,0,0,0,0,0,2,3,0,8,0,4,0,0,0,0,0,0,2,7,0,0,0,9,0,5,0,0,0,0,0,0,3,0,8,0,0,0,0,0,0,5,8,0,0,0,0,0,0,7,0,0,0,1,0,6,0,0,0,0,0,0,0,4],"_view_count":null,"_view_module":"sudoku_widget","_view_module_version":"0.1.0","_view_name":"SudokuView","disabled":false,"fixed":[false,true,true,false,true,true,false,false,false,true,false,true,false,false,false,false,false,false,false,false,false,false,false,true,true,false,true,false,true,false,false,false,false,false,false,true,true,false,false,false,true,false,true,false,false,false,false,false,false,true,false,true,false,false,false,false,false,false,true,true,false,false,false,false,false,false,true,false,false,false,true,false,true,false,false,false,false,false,false,false,true],"layout":"IPY_MODEL_253a51f161f84300b2772377c9961d0a","tabbable":null,"tooltip":null}},"253a51f161f84300b2772377c9961d0a":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"253ef8584762487ea4c91a80a69e895b":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"DropdownModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"DropdownModel","_options_labels":["Empty","Example 1","Example 2","Example 3"],"_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"DropdownView","description":"","description_allow_html":false,"disabled":false,"index":1,"layout":"IPY_MODEL_798113b3813f4a1a81cef21cceb108da","style":"IPY_MODEL_f6cf29b8396e45128ff0f0353efeae0b","tabbable":null,"tooltip":null}},"2f502bfd92794b91b574abeb299bf0f8":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"3415fd48034b4ed9812eb5c74ed9982b":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"LabelModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"LabelModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"LabelView","description":"","description_allow_html":false,"layout":"IPY_MODEL_0ef45b7559184ae18aa4995a00ef29fa","placeholder":"​","style":"IPY_MODEL_00d1e07094554b218b87b33f46212a7a","tabbable":null,"tooltip":null,"value":""}},"377fd65bd619454685a6fa4cc5bc7171":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"398452188e7b4c1fb880aaa0a0692301":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"ButtonModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"ButtonModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"ButtonView","button_style":"","description":"Next","disabled":false,"icon":"","layout":"IPY_MODEL_c48022426ae6414abfb0d0ea9860681e","style":"IPY_MODEL_8ad30074c6e943228d63458f92f0899c","tabbable":null,"tooltip":null}},"403013c898884d10b83df9c45ba26c13":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"DescriptionStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"DescriptionStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","description_width":""}},"490bc7c82d704afdb78904b9ea4d7fac":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":"20px 0px 0px 20px","max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":"150px"}},"4b9d93877e2e40b38fed8b0dc52043ab":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"DOMWidgetModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"DOMWidgetModel","_value":[0,8,5,0,6,1,0,0,0,9,0,4,0,0,0,0,0,0,0,0,0,0,0,2,3,0,8,0,4,0,0,0,0,0,0,2,7,0,0,0,9,0,5,0,0,0,0,0,0,3,0,8,0,0,0,0,0,0,5,8,0,0,0,0,0,0,7,0,0,0,1,0,6,0,0,0,0,0,0,0,4],"_view_count":null,"_view_module":"sudoku_widget","_view_module_version":"0.1.0","_view_name":"SudokuView","disabled":false,"fixed":[false,true,true,false,true,true,false,false,false,true,false,true,false,false,false,false,false,false,false,false,false,false,false,true,true,false,true,false,true,false,false,false,false,false,false,true,true,false,false,false,true,false,true,false,false,false,false,false,false,true,false,true,false,false,false,false,false,false,true,true,false,false,false,false,false,false,true,false,false,false,true,false,true,false,false,false,false,false,false,false,true],"layout":"IPY_MODEL_795cd91454a04ce0aa02fb8f378f2209","tabbable":null,"tooltip":null}},"5ac8cbc05c9c4e939c8a050b069014c4":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"LabelModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"LabelModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"LabelView","description":"","description_allow_html":false,"layout":"IPY_MODEL_0ef45b7559184ae18aa4995a00ef29fa","placeholder":"​","style":"IPY_MODEL_00d1e07094554b218b87b33f46212a7a","tabbable":null,"tooltip":null,"value":""}},"5c50d6867a1444aa84b3eace93440d2a":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":"10px 0px 0px 20px","max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":"150px"}},"5ffe8322f5004f33b242a213730107ff":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":"none","flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":"20px 0px 0px 20px","max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":"150px"}},"64999fdb0bb64427a7e0b526ea82138a":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"ButtonStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"ButtonStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","button_color":null,"font_family":null,"font_size":null,"font_style":null,"font_variant":null,"font_weight":null,"text_color":null,"text_decoration":null}},"6cba81e56214437ba7fc0533d5714d63":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"76c25413061e48bd87550edc017b99bb":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":"20px 0px 0px 20px","max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":"150px"}},"795cd91454a04ce0aa02fb8f378f2209":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"798113b3813f4a1a81cef21cceb108da":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":"10px 0px 0px 20px","max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":"150px"}},"7a0ef03efb1f40c6ac7a52ec0c9f3b25":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"HBoxModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"HBoxModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"HBoxView","box_style":"","children":["IPY_MODEL_9280e5a3416c44bf88d1d5657661b6ac","IPY_MODEL_cf3cf8b593dc4553954338a1af3db394"],"layout":"IPY_MODEL_1599584969f0459ca38985d12a513f2e","tabbable":null,"tooltip":null}},"8074f1c150e34803af141aa2c5b3a713":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"DOMWidgetModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"DOMWidgetModel","_value":[0,8,5,0,6,1,0,0,0,9,0,4,0,0,0,0,0,0,0,0,0,0,0,2,3,0,8,0,4,0,0,0,0,0,0,2,7,0,0,0,9,0,5,0,0,0,0,0,0,3,0,8,0,0,0,0,0,0,5,8,0,0,0,0,0,0,7,0,0,0,1,0,6,0,0,0,0,0,0,0,4],"_view_count":null,"_view_module":"sudoku_widget","_view_module_version":"0.1.0","_view_name":"SudokuView","disabled":false,"fixed":[false,true,true,false,true,true,false,false,false,true,false,true,false,false,false,false,false,false,false,false,false,false,false,true,true,false,true,false,true,false,false,false,false,false,false,true,true,false,false,false,true,false,true,false,false,false,false,false,false,true,false,true,false,false,false,false,false,false,true,true,false,false,false,false,false,false,true,false,false,false,true,false,true,false,false,false,false,false,false,false,true],"layout":"IPY_MODEL_253a51f161f84300b2772377c9961d0a","tabbable":null,"tooltip":null}},"87e4fbaa2aff440dbfcaa19f9d7eb985":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"ButtonStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"ButtonStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","button_color":null,"font_family":null,"font_size":null,"font_style":null,"font_variant":null,"font_weight":null,"text_color":null,"text_decoration":null}},"8ad30074c6e943228d63458f92f0899c":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"ButtonStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"ButtonStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","button_color":null,"font_family":null,"font_size":null,"font_style":null,"font_variant":null,"font_weight":null,"text_color":null,"text_decoration":null}},"8b8696d99bde4935bbda30052eff911d":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"ButtonModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"ButtonModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"ButtonView","button_style":"","description":"Solve","disabled":false,"icon":"","layout":"IPY_MODEL_76c25413061e48bd87550edc017b99bb","style":"IPY_MODEL_135eaab0beaf49b2846487f04ba9d97d","tabbable":null,"tooltip":null}},"90f70f27e0fd45c3b4c6e3b7e6bc50f9":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"VBoxModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"VBoxModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"VBoxView","box_style":"","children":["IPY_MODEL_253ef8584762487ea4c91a80a69e895b","IPY_MODEL_e58189acabbe40449eb34d5fa3ebbf69","IPY_MODEL_ef5c53b1ca0042a58ccc27073e0a2887"],"layout":"IPY_MODEL_1828203c28c44f53b8df27a5f05eb6de","tabbable":null,"tooltip":null}},"9280e5a3416c44bf88d1d5657661b6ac":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"DOMWidgetModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"DOMWidgetModel","_value":[0,8,5,0,6,1,0,0,0,9,0,4,0,0,0,0,0,0,0,0,0,0,0,2,3,0,8,0,4,0,0,0,0,0,0,2,7,0,0,0,9,0,5,0,0,0,0,0,0,3,0,8,0,0,0,0,0,0,5,8,0,0,0,0,0,0,7,0,0,0,1,0,6,0,0,0,0,0,0,0,4],"_view_count":null,"_view_module":"sudoku_widget","_view_module_version":"0.1.0","_view_name":"SudokuView","disabled":false,"fixed":[false,true,true,false,true,true,false,false,false,true,false,true,false,false,false,false,false,false,false,false,false,false,false,true,true,false,true,false,true,false,false,false,false,false,false,true,true,false,false,false,true,false,true,false,false,false,false,false,false,true,false,true,false,false,false,false,false,false,true,true,false,false,false,false,false,false,true,false,false,false,true,false,true,false,false,false,false,false,false,false,true],"layout":"IPY_MODEL_795cd91454a04ce0aa02fb8f378f2209","tabbable":null,"tooltip":null}},"b10a95400e6b49dba8304190c7a9afba":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"b79778192e7d4cb386e3e3dc69c86b09":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"LabelStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"LabelStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","background":null,"description_width":"","font_family":null,"font_size":null,"font_style":null,"font_variant":null,"font_weight":null,"text_color":null,"text_decoration":null}},"c48022426ae6414abfb0d0ea9860681e":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":"none","flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":"20px 0px 0px 20px","max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":"150px"}},"cf3cf8b593dc4553954338a1af3db394":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"VBoxModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"VBoxModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"VBoxView","box_style":"","children":["IPY_MODEL_253ef8584762487ea4c91a80a69e895b","IPY_MODEL_e58189acabbe40449eb34d5fa3ebbf69","IPY_MODEL_ef5c53b1ca0042a58ccc27073e0a2887"],"layout":"IPY_MODEL_1828203c28c44f53b8df27a5f05eb6de","tabbable":null,"tooltip":null}},"d71d4c695d2046ad8624c5486d9f0c12":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"HBoxModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"HBoxModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"HBoxView","box_style":"","children":["IPY_MODEL_9280e5a3416c44bf88d1d5657661b6ac","IPY_MODEL_cf3cf8b593dc4553954338a1af3db394"],"layout":"IPY_MODEL_1599584969f0459ca38985d12a513f2e","tabbable":null,"tooltip":null}},"e58189acabbe40449eb34d5fa3ebbf69":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"ButtonModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"ButtonModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"ButtonView","button_style":"","description":"Solve","disabled":false,"icon":"","layout":"IPY_MODEL_76c25413061e48bd87550edc017b99bb","style":"IPY_MODEL_135eaab0beaf49b2846487f04ba9d97d","tabbable":null,"tooltip":null}},"ef5c53b1ca0042a58ccc27073e0a2887":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"ButtonModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"ButtonModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"ButtonView","button_style":"","description":"Next","disabled":false,"icon":"","layout":"IPY_MODEL_c48022426ae6414abfb0d0ea9860681e","style":"IPY_MODEL_8ad30074c6e943228d63458f92f0899c","tabbable":null,"tooltip":null}},"f568c3d8c422460fad0fe8d50d1bc19d":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"f6cf29b8396e45128ff0f0353efeae0b":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"DescriptionStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"DescriptionStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","description_width":""}}},"version_major":2,"version_minor":0}
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="afvanwoudenberg/afvanwoudenberg.github.io" data-repo-id="R_kgDOIvCGfg" data-category="General" data-category-id="DIC_kwDOIvCGfs4CWx2r" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

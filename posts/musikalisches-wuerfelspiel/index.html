@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Aswin van Woudenberg">
+<meta name="dcterms.date" content="2023-07-26">
+<meta name="description" content="A Python implementation of Mozart’s musical dice game to automatically generate compositions and play them over MIDI.">
+
+<title>Aswin van Woudenberg - Musikalisches Würfelspiel</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-WWJVHMJ');</script>
+<!-- End Google Tag Manager -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+<script src="https://unpkg.com/@jupyter-widgets/html-manager@*/dist/embed-amd.js" crossorigin="anonymous"></script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Aswin van Woudenberg</span>
+    </a>
+  </div>
+          <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/afvanwoudenberg" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://linkedin.com/in/afvanwoudenberg" rel="" target=""><i class="bi bi-linkedin" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../index.xml" rel="" target=""><i class="bi bi-rss" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+          <div class="quarto-navbar-tools">
+</div>
+            <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Musikalisches Würfelspiel</h1>
+                  <div>
+        <div class="description">
+          A Python implementation of Mozart’s musical dice game to automatically generate compositions and play them over MIDI.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">programming</div>
+                <div class="quarto-category">python</div>
+                <div class="quarto-category">music</div>
+                <div class="quarto-category">art</div>
+                <div class="quarto-category">games</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Aswin van Woudenberg </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">July 26, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#from-rolling-dice-to-a-musical-composition" id="toc-from-rolling-dice-to-a-musical-composition" class="nav-link active" data-scroll-target="#from-rolling-dice-to-a-musical-composition">From rolling dice to a musical composition</a></li>
+  <li><a href="#whats-midi" id="toc-whats-midi" class="nav-link" data-scroll-target="#whats-midi">What’s MIDI?</a></li>
+  <li><a href="#importing-libraries" id="toc-importing-libraries" class="nav-link" data-scroll-target="#importing-libraries">Importing libraries</a></li>
+  <li><a href="#reference-chart-and-dice-rolls" id="toc-reference-chart-and-dice-rolls" class="nav-link" data-scroll-target="#reference-chart-and-dice-rolls">Reference chart and dice rolls</a></li>
+  <li><a href="#music-fragments" id="toc-music-fragments" class="nav-link" data-scroll-target="#music-fragments">Music fragments</a></li>
+  <li><a href="#building-a-gui" id="toc-building-a-gui" class="nav-link" data-scroll-target="#building-a-gui">Building a GUI</a></li>
+  <li><a href="#sending-midi-messages-to-a-daw" id="toc-sending-midi-messages-to-a-daw" class="nav-link" data-scroll-target="#sending-midi-messages-to-a-daw">Sending MIDI messages to a DAW</a></li>
+  <li><a href="#a-piano-performance" id="toc-a-piano-performance" class="nav-link" data-scroll-target="#a-piano-performance">A piano performance</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WWJVHMJ" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+
+
+
+<p>In generative AI, music composition is one of the areas in which there has been remarkable progress. Models like <a href="https://magenta.tensorflow.org/music-transformer">Magenta’s Music Transformer</a>, <a href="https://openai.com/research/musenet">MuseNet</a>, <a href="https://www.aiva.ai/">AIVA</a>, and <a href="https://www.riffusion.com/">Riffusion</a> are able to create musical pieces, further blurring the line between human and machine creativity.</p>
+<p>Perhaps surprisingly, the idea of using algorithms for composing music can be traced back to as early as the second half of the 18th century. During this period, the <a href="https://en.wikipedia.org/wiki/Musikalisches_W%C3%BCrfelspiel">musical dice game</a>, or “Musikalisches Würfelspiel”, gained popularity in Western Europe. This game allowed anyone, regardless of musical expertise, to compose by rolling dice and consulting charts to pick musical elements and craft original compositions.</p>
+<p>While various musical dice games were published during this period, one of the most famous instances is <a href="musikalisches_wuerfelspiel_scanned.pdf">attributed to Wolfgang Amadeus Mozart</a>. It is unclear whether it was Mozart whom actually created this particular version, as it was released by his publisher posthumously. It’s for the sake of convenience that I’ll refer to this version as <em>Mozart’s musical dice game</em>, even though it’s uncertain whether he was the actual creator.</p>
+<p>In this blog post, we’ll explore Mozart’s musical dice game and I’ll present a Python implementation. Using this implementation, we’ll be able to generate MIDI messages for playback in digital audio workstations or with MIDI instruments.</p>
+<section id="from-rolling-dice-to-a-musical-composition" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="from-rolling-dice-to-a-musical-composition">From rolling dice to a musical composition</h2>
+<p>To play Mozart’s musical dice game, we’d need the following:</p>
+<ul>
+<li>two six-sided dice</li>
+<li>a two-part reference chart (<em>Zahlentafel</em> / <em>Table de Chiffres</em>)</li>
+<li>176 music fragments (<em>Table de Musique</em> of which only the first page is shown below)</li>
+</ul>
+<div class="column-screen-inset quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="reference_chart.png" class="img-fluid"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="sheet_music_first_page.png" class="img-fluid"></p>
+</div>
+</div>
+</div>
+<p>The numbers in the reference chart (the first image) refer to the music fragments (in the second image). Only the first page containing the first 48 music fragments is shown. You can find the full document containing both the reference chart and all 176 music fragments <a href="musikalisches_wuerfelspiel_scanned.pdf">here</a>.</p>
+<p>The steps involved in creating a composition are as follows:</p>
+<p><strong>Step 1: Roll a pair of dice 16 times</strong></p>
+<p>For each roll, note the sum (ranging from 2 to 12) obtained from the two six-sided dice.</p>
+<p><strong>Step 2: Select the corresponding measures from the reference chart and assemble the musical composition.</strong></p>
+<p>Using the reference chart and the 176 musical fragments, look up the pre-composed music fragment associated with each of your 16 rolls. Each of these fragments becomes a measure in your composition.</p>
+<p>The first 8 measures will need to be played twice. For this reason you can add the repeat sign 𝄇 to the 8th measure. The music fragments under column H (30, 81, 24, 100, 107, 91, 127, 94, 123, 33, and 5) all contain a second variation that needs to be played the second time. For instance, music fragment 30 looks like this:</p>
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="music_fragment_30.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+<p>You can see that the left hand staff for this fragment contains two variations. Variation 1 is played the first time, variation 2 the second time. A cleaner way to represent this is by using volta brackets.</p>
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="music_fragment_30_voltas.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+<p>The last 8 measures aren’t repeated so you can add the final barline symbol 𝄂 to the last measure.</p>
+<p>Congratulations! You are now a composer.</p>
+<p>Throwing dice and looking up fragments repeatedly is boring. However, before automating this with Python, there’s one more thing left to explain.</p>
+</section>
+<section id="whats-midi" class="level2">
+<h2 class="anchored" data-anchor-id="whats-midi">What’s MIDI?</h2>
+<p><a href="https://en.wikipedia.org/wiki/MIDI">MIDI</a> stands for “Musical Instrument Digital Interface”. It’s both a file format and a protocol used to communicate with and control various musical instruments, computers, and other electronic devices. MIDI data does not contain actual audio; instead, it consists of instructions that tell devices what sound to produce.</p>
+<p>MIDI messages include information such as note-on and note-off commands, which indicate when a musical note should start and stop playing, as well as data for controlling parameters like pitch, velocity, tempo, and volume.</p>
+<p>We’ll use MIDI to play back Mozart’s musical dice game compositions on a digital piano and a digital audio workstation (DAW). The <a href="https://mido.readthedocs.io/en/stable/">mido</a> library is used to work with MIDI data in Python.</p>
+<p>Fun fact: The first version of the MIDI specification was published in August, 1983, which means the standard will be 40 years old next month!</p>
+</section>
+<section id="importing-libraries" class="level2">
+<h2 class="anchored" data-anchor-id="importing-libraries">Importing libraries</h2>
+<p>We’re now ready to implement Mozart’s musical dice game using Python. Let’s start by importing the necessary modules:</p>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib.colors <span class="im">import</span> ListedColormap</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> display</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ipywidgets <span class="im">as</span> widgets</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> mido</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Note how we import the aforementioned <code>mido</code> module.</p>
+</section>
+<section id="reference-chart-and-dice-rolls" class="level2">
+<h2 class="anchored" data-anchor-id="reference-chart-and-dice-rolls">Reference chart and dice rolls</h2>
+<p>The two part reference chart is represented by a 11x16 numpy array. The numbers in the array indicate the music fragment to be played for each combination of dice rolls.</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>number_table <span class="op">=</span> np.array([</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    [ <span class="dv">96</span>,  <span class="dv">22</span>, <span class="dv">141</span>,  <span class="dv">41</span>, <span class="dv">105</span>, <span class="dv">122</span>,  <span class="dv">11</span>,  <span class="dv">30</span>,  <span class="dv">70</span>, <span class="dv">121</span>,  <span class="dv">26</span>,   <span class="dv">9</span>, <span class="dv">112</span>,  <span class="dv">49</span>, <span class="dv">109</span>,  <span class="dv">14</span>],</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    [ <span class="dv">32</span>,   <span class="dv">6</span>, <span class="dv">128</span>,  <span class="dv">63</span>, <span class="dv">146</span>,  <span class="dv">46</span>, <span class="dv">134</span>,  <span class="dv">81</span>, <span class="dv">117</span>,  <span class="dv">39</span>, <span class="dv">126</span>,  <span class="dv">56</span>, <span class="dv">174</span>,  <span class="dv">18</span>, <span class="dv">116</span>,  <span class="dv">83</span>],</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    [ <span class="dv">69</span>,  <span class="dv">95</span>, <span class="dv">158</span>,  <span class="dv">13</span>, <span class="dv">153</span>,  <span class="dv">55</span>, <span class="dv">110</span>,  <span class="dv">24</span>,  <span class="dv">66</span>, <span class="dv">139</span>,  <span class="dv">15</span>, <span class="dv">132</span>,  <span class="dv">73</span>,  <span class="dv">58</span>, <span class="dv">145</span>,  <span class="dv">79</span>],</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    [ <span class="dv">40</span>,  <span class="dv">17</span>, <span class="dv">113</span>,  <span class="dv">85</span>, <span class="dv">161</span>,   <span class="dv">2</span>, <span class="dv">159</span>, <span class="dv">100</span>,  <span class="dv">90</span>, <span class="dv">176</span>,   <span class="dv">7</span>,  <span class="dv">34</span>,  <span class="dv">67</span>, <span class="dv">160</span>,  <span class="dv">52</span>, <span class="dv">170</span>],</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">148</span>,  <span class="dv">74</span>, <span class="dv">163</span>,  <span class="dv">45</span>,  <span class="dv">80</span>,  <span class="dv">97</span>,  <span class="dv">36</span>, <span class="dv">107</span>,  <span class="dv">25</span>, <span class="dv">143</span>,  <span class="dv">64</span>, <span class="dv">125</span>,  <span class="dv">76</span>, <span class="dv">136</span>,   <span class="dv">1</span>,  <span class="dv">93</span>],</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">104</span>, <span class="dv">157</span>,  <span class="dv">27</span>, <span class="dv">167</span>, <span class="dv">154</span>,  <span class="dv">68</span>, <span class="dv">118</span>,  <span class="dv">91</span>, <span class="dv">138</span>,  <span class="dv">71</span>, <span class="dv">150</span>,  <span class="dv">29</span>, <span class="dv">101</span>, <span class="dv">162</span>,  <span class="dv">23</span>, <span class="dv">151</span>],</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">152</span>,  <span class="dv">60</span>, <span class="dv">171</span>,  <span class="dv">53</span>,  <span class="dv">99</span>, <span class="dv">133</span>,  <span class="dv">21</span>, <span class="dv">127</span>,  <span class="dv">16</span>, <span class="dv">155</span>,  <span class="dv">57</span>, <span class="dv">175</span>,  <span class="dv">43</span>, <span class="dv">168</span>,  <span class="dv">89</span>, <span class="dv">172</span>],</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">119</span>,  <span class="dv">84</span>, <span class="dv">114</span>,  <span class="dv">50</span>, <span class="dv">140</span>,  <span class="dv">86</span>, <span class="dv">169</span>,  <span class="dv">94</span>, <span class="dv">120</span>,  <span class="dv">88</span>,  <span class="dv">48</span>, <span class="dv">166</span>,  <span class="dv">51</span>, <span class="dv">115</span>,  <span class="dv">72</span>, <span class="dv">111</span>],</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    [ <span class="dv">98</span>, <span class="dv">142</span>,  <span class="dv">42</span>, <span class="dv">156</span>,  <span class="dv">75</span>, <span class="dv">129</span>,  <span class="dv">62</span>, <span class="dv">123</span>,  <span class="dv">65</span>,  <span class="dv">77</span>,  <span class="dv">19</span>,  <span class="dv">82</span>, <span class="dv">137</span>,  <span class="dv">38</span>, <span class="dv">149</span>,   <span class="dv">8</span>],</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    [  <span class="dv">3</span>,  <span class="dv">87</span>, <span class="dv">165</span>,  <span class="dv">61</span>, <span class="dv">135</span>,  <span class="dv">47</span>, <span class="dv">147</span>,  <span class="dv">33</span>, <span class="dv">102</span>,   <span class="dv">4</span>,  <span class="dv">31</span>, <span class="dv">164</span>, <span class="dv">144</span>,  <span class="dv">59</span>, <span class="dv">173</span>,  <span class="dv">78</span>],</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    [ <span class="dv">54</span>, <span class="dv">130</span>,  <span class="dv">10</span>, <span class="dv">103</span>,  <span class="dv">28</span>,  <span class="dv">37</span>, <span class="dv">106</span>,   <span class="dv">5</span>,  <span class="dv">35</span>,  <span class="dv">20</span>, <span class="dv">108</span>,  <span class="dv">92</span>,  <span class="dv">12</span>, <span class="dv">124</span>,  <span class="dv">44</span>, <span class="dv">131</span>]</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s now define a function that displays the reference chart and dice rolls.</p>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_number_table(number_table, dice_rolls<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    highlight <span class="op">=</span> np.zeros((<span class="dv">11</span>, <span class="dv">16</span>))</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> dice_rolls <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        row_indices <span class="op">=</span> dice_rolls <span class="op">-</span> <span class="dv">2</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        column_indices <span class="op">=</span> np.arange(<span class="dv">16</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        highlight[row_indices, column_indices] <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    plt.figure(<span class="st">"Musikalisches Würfelspiel"</span>, figsize<span class="op">=</span>(<span class="fl">9.6</span>, <span class="fl">7.2</span>))</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    plt.imshow(highlight, cmap<span class="op">=</span>ListedColormap([<span class="st">"white"</span>, <span class="st">"lightseagreen"</span>]))</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> y <span class="kw">in</span> <span class="bu">range</span>(number_table.shape[<span class="dv">0</span>]):</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> x <span class="kw">in</span> <span class="bu">range</span>(number_table.shape[<span class="dv">1</span>]):</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>            plt.text(x, y, <span class="st">'</span><span class="sc">%d</span><span class="st">'</span> <span class="op">%</span> number_table[y, x], fontsize<span class="op">=</span><span class="dv">14</span>, </span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>                horizontalalignment<span class="op">=</span><span class="st">'center'</span>, verticalalignment<span class="op">=</span><span class="st">'center'</span>)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    plt.xticks(<span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">0</span>,<span class="dv">16</span>)), <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">17</span>)))</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    plt.yticks(<span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">0</span>,<span class="dv">11</span>)), <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">2</span>, <span class="dv">13</span>)))</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    plt.xlabel(<span class="st">"Measure"</span>)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    plt.ylabel(<span class="st">"Dice roll"</span>)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This function takes two parameters: the reference chart and the dice rolls. If the dice rolls are not provided, the reference chart is displayed without highlighting any cells.</p>
+<p>Before calling this function, let’s simulate rolling two dice 16 times. We do that using the following code:</p>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Throw two dice 16 times</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>dice_rolls <span class="op">=</span> np.<span class="bu">sum</span>(np.random.randint(<span class="dv">1</span>, <span class="dv">7</span>, size<span class="op">=</span>(<span class="dv">2</span>, <span class="dv">16</span>)), axis<span class="op">=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>You might be wondering why we don’t simply write:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>dice_rolls <span class="op">=</span> np.random.randint(<span class="dv">2</span>, <span class="dv">13</span>, size<span class="op">=</span>(<span class="dv">1</span>, <span class="dv">16</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The reason is that this would result in values being drawn from a <a href="https://en.wikipedia.org/wiki/Discrete_uniform_distribution">discrete uniform distribution</a>. The sum of a roll of two dice however isn’t uniformly distributed. The probability distribution of the sum of two dice is instead given by:</p>
+<p><span class="math display">\[p(x) = \begin{cases}
+  \frac{x - 1}{36} &amp; \text{if $x \in \{2, 3, 4, 5, 6, 7\}$}\\
+  \frac{13 - x}{36} &amp; \text{if $x \in \{7, 8, 9, 10, 11, 12\}$}\\
+  0 &amp; \text{otherwise}
+  \end{cases}
+\]</span></p>
+<p>This may be called a discrete <a href="https://en.wikipedia.org/wiki/Triangular_distribution">triangular distribution</a>. It’s perfectly fine to draw from either distribution, but the triangular distribution is more akin to rolling actual dice.</p>
+<p>Let’s now display the reference chart and the dice rolls.</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>plot_number_table(number_table, dice_rolls)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-6-output-1.png" width="778" height="551"></p>
+</div>
+</div>
+</section>
+<section id="music-fragments" class="level2">
+<h2 class="anchored" data-anchor-id="music-fragments">Music fragments</h2>
+<p>I used <a href="https://musescore.org/en">MuseScore</a> to digitize all music fragments into <a href="musikalisches_wuerfelspiel.mid">one MIDI file</a>. Each fragment consists of one measure, except fragments 30, 81, 24, 100, 107, 91, 127, 94, 123, 33, and 5. They contain a second variation which has been put into a separate measure immediately following the measure that contain the first variation. This gives us a total of 187 measures. Let’s now read in this MIDI file.</p>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>midi_file <span class="op">=</span> mido.MidiFile(<span class="st">'musikalisches_wuerfelspiel.mid'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>As described above, a MIDI file consists of MIDI messages. The following function extracts the MIDI messages between two time stamps. It is used to extract the MIDI messages corresponding to a single measure. There are different kinds of messages, but we are only interested in the note_on and note_off messages.</p>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_fragment(midi_file, time_start, time_end):</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    proc_time <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> msg <span class="kw">in</span> midi_file:</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> <span class="bu">isinstance</span>(msg, mido.MetaMessage) <span class="kw">and</span> msg.<span class="bu">type</span> <span class="op">!=</span> <span class="st">'control_change'</span>:</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>            proc_time <span class="op">+=</span> msg.time</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> proc_time <span class="op">&gt;=</span> time_start <span class="kw">and</span> proc_time <span class="op">&lt;=</span> time_end:</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>                <span class="cf">yield</span> msg                </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We use MIDI control change messages to initialize the receiving instrument or DAW. The following function extracts them from our MIDI file.</p>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_control_change_messages(midi_file):</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> msg <span class="kw">in</span> midi_file:</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> <span class="bu">isinstance</span>(msg, mido.MetaMessage) <span class="kw">and</span> msg.<span class="bu">type</span> <span class="op">==</span> <span class="st">'control_change'</span>:</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>            <span class="cf">yield</span> msg</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The following helper function returns the index of the measure that contains a given fragment. Because some fragments are split into two measures (the ones with a variation, the 8th dice roll), the fragments that come after these all shift one up.</p>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_measure_index(number_table, number):</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    eighth_column <span class="op">=</span> number_table[:, <span class="dv">7</span>]  <span class="co"># 7 represents the 8th column</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    count <span class="op">=</span> np.<span class="bu">sum</span>(eighth_column <span class="op">&lt;</span> number)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> number <span class="op">+</span> count</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The following function first generates the control change messages, and then the MIDI messages for the fragments corresponding to each dice roll.</p>
+<p>It starts by calculating the duration of one measure and uses this to determine the time stamps for the start and end of each measure. It then extracts the MIDI messages for each fragment and yields them.</p>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_dice_roll_fragments(midi_file, number_table, dice_rolls):</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    measure_duration <span class="op">=</span> <span class="bu">sum</span>([msg.time <span class="cf">for</span> msg <span class="kw">in</span> midi_file <span class="cf">if</span> <span class="kw">not</span> <span class="bu">isinstance</span>(msg, mido.MetaMessage)]) <span class="op">/</span> (number_table.shape[<span class="dv">0</span>] <span class="op">*</span> (number_table.shape[<span class="dv">1</span>]<span class="op">+</span><span class="dv">1</span>))</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    measures <span class="op">=</span> number_table[dice_rolls <span class="op">-</span> <span class="dv">2</span>, np.arange(<span class="dv">16</span>)]</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">yield</span> <span class="cf">from</span> get_control_change_messages(midi_file)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">2</span>): <span class="co"># repeat measures 1 to 8</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, <span class="dv">8</span>):</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>            index <span class="op">=</span> get_measure_index(number_table, measures[j]) <span class="op">+</span> (i <span class="cf">if</span> j <span class="op">==</span> <span class="dv">7</span> <span class="cf">else</span> <span class="dv">0</span>)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>            <span class="cf">yield</span> <span class="cf">from</span> get_fragment(midi_file, measure_duration <span class="op">*</span> (index<span class="op">-</span><span class="dv">1</span>), measure_duration <span class="op">*</span> index)</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">8</span>, <span class="dv">16</span>):</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>        index <span class="op">=</span> get_measure_index(number_table, measures[j])</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">yield</span> <span class="cf">from</span> get_fragment(midi_file, measure_duration <span class="op">*</span> (index<span class="op">-</span><span class="dv">1</span>), measure_duration <span class="op">*</span> index)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The next function calculates the time stamps for the start of each MIDI message. It then waits until the current time is equal to or greater than the time stamp for the next MIDI message before yielding it. We use this function to play the MIDI messages at the correct speed to a MIDI output port.</p>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> play_dice_roll_fragments(midi_file, number_table, dice_rolls):</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># generate all MIDI messages in advance</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    messages <span class="op">=</span> <span class="bu">list</span>(get_dice_roll_fragments(midi_file, number_table, dice_rolls))</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    start_time <span class="op">=</span> time.time()</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    input_time <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> msg <span class="kw">in</span> messages:</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>        input_time <span class="op">+=</span> msg.time</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>        playback_time <span class="op">=</span> time.time() <span class="op">-</span> start_time</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>        duration_to_next_event <span class="op">=</span> input_time <span class="op">-</span> playback_time</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> duration_to_next_event <span class="op">&gt;</span> <span class="fl">0.0</span>:</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>            time.sleep(duration_to_next_event)</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">yield</span> msg</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="building-a-gui" class="level2">
+<h2 class="anchored" data-anchor-id="building-a-gui">Building a GUI</h2>
+<p>Finally, we can create a simple GUI that allows us to generate compositions and send the MIDI messages to a DAW or MIDI instrument.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>output_dropdown <span class="op">=</span> widgets.Dropdown(</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    options<span class="op">=</span>np.unique(mido.get_output_names()),</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    description<span class="op">=</span><span class="st">'MIDI output:'</span>,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    disabled<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>randomize_button <span class="op">=</span> widgets.Button(icon<span class="op">=</span><span class="st">'dice'</span>, description<span class="op">=</span><span class="st">'Throw dice'</span>)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>play_button <span class="op">=</span> widgets.Button(icon<span class="op">=</span><span class="st">'play'</span>, description<span class="op">=</span><span class="st">'Play'</span>)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>output <span class="op">=</span> widgets.Output()</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>hbox <span class="op">=</span> widgets.HBox([randomize_button, play_button])</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>vbox <span class="op">=</span> widgets.VBox([output_dropdown, hbox, output])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>One button is to roll the dice and the other is to play the composition. The output is a plot of the dice rolls. We use a dropdown to select which MIDI output port to use.</p>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> randomize_button_clicked(b<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">global</span> dice_rolls</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    dice_rolls <span class="op">=</span> np.<span class="bu">sum</span>(np.random.randint(<span class="dv">1</span>, <span class="dv">7</span>, size<span class="op">=</span>(<span class="dv">2</span>, <span class="dv">16</span>)), axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> output:</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>        output.clear_output(wait<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>        plot_number_table(number_table, dice_rolls)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>randomize_button.on_click(randomize_button_clicked)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> play_button_clicked(b):    </span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    midi_output <span class="op">=</span> mido.open_output(output_dropdown.value)</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> msg <span class="kw">in</span> play_dice_roll_fragments(midi_file, number_table, dice_rolls):</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>        midi_output.send(msg)</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>play_button.on_click(play_button_clicked)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Finally we display the GUI.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>randomize_button_clicked()</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>display(vbox)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="14">
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"09ac9ea3f3664ab99338a7e814137f70","version_major":2,"version_minor":0}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-15-output-2.png" width="778" height="551"></p>
+</div>
+</div>
+</section>
+<section id="sending-midi-messages-to-a-daw" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="sending-midi-messages-to-a-daw">Sending MIDI messages to a DAW</h2>
+<p>Now we can send the MIDI messages to a DAW to play (and optionally record) our masterpieces. I’m using the free DAW <a href="https://lmms.io/">LMMS</a> here but any DAW should work.</p>
+<div class="column-screen-inset">
+<p><img src="musikalisches_wuerfelspiel.png" class="img-fluid"></p>
+</div>
+<p>If you record the MIDI messages, make sure you set the tempo to 80 BPM and the time signature to 3/8 so the notes get quantized correctly.</p>
+<p>Just listen to this gem!</p>
+<audio controls="" src="musikalisches_wuerfelspiel.mp3">
+</audio>
+<p>Beautiful, wouldn’t you agree?!</p>
+</section>
+<section id="a-piano-performance" class="level2">
+<h2 class="anchored" data-anchor-id="a-piano-performance">A piano performance</h2>
+<p>Let me perform a composition for you on my piano.</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/sDprLKE9Cf8" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<p>Not only am I a composer, I’m a performer too. Carnegie Hall, here I come! (Don’t mind the MIDI cable running from my laptop to the piano.)</p>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>Whether or not the pieces created using this method can be called original is a matter of perspective.</p>
+<p>Despite the random assembly, the musical dice game was designed in such a way that the chord progressions and harmonic structure would remain consistent throughout the pieces. This ensures that the musical phrases fit together harmoniously, creating a sense of coherence and musical flow. Furthermore, Mozart (or the actual composer) likely incorporated musical rules and guidelines while creating the precomposed measures. These rules would ensure that the resulting compositions maintain a certain level of musical quality and avoid dissonance or jarring transitions.</p>
+<p>The resulting compositions may sound pretty good, but after a while they start to become repetitive. Nonetheless, Mozart’s Musikalisches Würfelspiel and similar musical dice games remain a fascinating historical example of how composers experimented with generative techniques long before the advent of computers and sophisticated software.</p>
+<p>If you want to create your own pieces, you can find the code in the following GitHub repository:</p>
+<p><a target="_blank" href="https://github.com/afvanwoudenberg/musical-dice-game"><img src="https://shields.io/badge/-View%20on%20GitHub-grey.svg?logo=github&amp;style=flat&amp;logoColor=white&amp;labelColor=black" class="img-fluid" alt="GitHub"></a></p>
+<p>Happy “composing”!</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script type="application/vnd.jupyter.widget-state+json">
+{"state":{"09ac9ea3f3664ab99338a7e814137f70":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"VBoxModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"VBoxModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"VBoxView","box_style":"","children":["IPY_MODEL_1e9a56a3b2a8425486ff6c29ae1454e4","IPY_MODEL_16877912a5974779aa5905895bea5e47"],"layout":"IPY_MODEL_a6f0ff9eb8f545afb4f3219758eb9140","tabbable":null,"tooltip":null}},"16877912a5974779aa5905895bea5e47":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"HBoxModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"HBoxModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"HBoxView","box_style":"","children":["IPY_MODEL_44e527b7306a4c2888d2d1cf4cbb6b9b","IPY_MODEL_839d2fe7208a48418ccf7cba1fd66e5b"],"layout":"IPY_MODEL_8681db22f78c4fb782ccda6b0620acf4","tabbable":null,"tooltip":null}},"1e9a56a3b2a8425486ff6c29ae1454e4":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"DropdownModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"DropdownModel","_options_labels":["Midi Through:Midi Through Port-0 14:0"],"_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"DropdownView","description":"MIDI output:","description_allow_html":false,"disabled":false,"index":0,"layout":"IPY_MODEL_371eb70b25ae46728ffefaf0818b5a2e","style":"IPY_MODEL_a86b0492ca4d43e58a13bc16420c12c2","tabbable":null,"tooltip":null}},"200072350145485c8e3840c42e7d9b00":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"ButtonStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"ButtonStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","button_color":null,"font_family":null,"font_size":null,"font_style":null,"font_variant":null,"font_weight":null,"text_color":null,"text_decoration":null}},"371eb70b25ae46728ffefaf0818b5a2e":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"44e527b7306a4c2888d2d1cf4cbb6b9b":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"ButtonModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"ButtonModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"ButtonView","button_style":"","description":"Throw dice","disabled":false,"icon":"","layout":"IPY_MODEL_b2df0de8a1ab4243b309b45bf690e2d0","style":"IPY_MODEL_200072350145485c8e3840c42e7d9b00","tabbable":null,"tooltip":null}},"46a5d95b6e194fc7833d3b995bfa805d":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"ButtonStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"ButtonStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","button_color":null,"font_family":null,"font_size":null,"font_style":null,"font_variant":null,"font_weight":null,"text_color":null,"text_decoration":null}},"839d2fe7208a48418ccf7cba1fd66e5b":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"ButtonModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"ButtonModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"ButtonView","button_style":"","description":"Play","disabled":false,"icon":"","layout":"IPY_MODEL_ef99e615edeb44c0a107e7ad39200bc8","style":"IPY_MODEL_46a5d95b6e194fc7833d3b995bfa805d","tabbable":null,"tooltip":null}},"8681db22f78c4fb782ccda6b0620acf4":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"91b2f510d11e4ccc894738ac8219d53d":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"a6f0ff9eb8f545afb4f3219758eb9140":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"a86b0492ca4d43e58a13bc16420c12c2":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"DescriptionStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"DescriptionStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","description_width":""}},"b2df0de8a1ab4243b309b45bf690e2d0":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"c06141ac3eea4bb19a4b59213812dcff":{"model_module":"@jupyter-widgets/output","model_module_version":"1.0.0","model_name":"OutputModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/output","_model_module_version":"1.0.0","_model_name":"OutputModel","_view_count":null,"_view_module":"@jupyter-widgets/output","_view_module_version":"1.0.0","_view_name":"OutputView","layout":"IPY_MODEL_91b2f510d11e4ccc894738ac8219d53d","msg_id":"","outputs":[],"tabbable":null,"tooltip":null}},"c200c63ec75548eaba983ff22d428143":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"VBoxModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"VBoxModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"VBoxView","box_style":"","children":["IPY_MODEL_1e9a56a3b2a8425486ff6c29ae1454e4","IPY_MODEL_16877912a5974779aa5905895bea5e47","IPY_MODEL_c06141ac3eea4bb19a4b59213812dcff"],"layout":"IPY_MODEL_d69e23c3fa3540538108bedb178926ff","tabbable":null,"tooltip":null}},"d69e23c3fa3540538108bedb178926ff":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"ef99e615edeb44c0a107e7ad39200bc8":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}}},"version_major":2,"version_minor":0}
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="afvanwoudenberg/afvanwoudenberg.github.io" data-repo-id="R_kgDOIvCGfg" data-category="General" data-category-id="DIC_kwDOIvCGfs4CWx2r" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

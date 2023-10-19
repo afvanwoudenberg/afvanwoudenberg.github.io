@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/soma-cube/index.html",
       "/posts/from-procrastination-to-productivity/index.html",
       "/posts/musikalisches-wuerfelspiel/index.html",
       "/posts/solving-word-ladders-with-prolog/index.html",

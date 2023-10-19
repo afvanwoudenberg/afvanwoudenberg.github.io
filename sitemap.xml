@@ -1,87 +1,91 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://www.aswinvanwoudenberg.com/posts/from-procrastination-to-productivity/index.html</loc>
-    <lastmod>2023-09-02T17:11:56.404Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.aswinvanwoudenberg.com/posts/making-sense-of-sorting/index.html</loc>
-    <lastmod>2023-09-02T17:11:53.956Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.aswinvanwoudenberg.com/posts/vba-iban-validator/index.html</loc>
-    <lastmod>2023-09-02T17:11:47.132Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.aswinvanwoudenberg.com/posts/thinking-inside-the-matchbox/index.html</loc>
-    <lastmod>2023-09-02T17:11:45.492Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.aswinvanwoudenberg.com/posts/pictionary-air-mouse/index.html</loc>
-    <lastmod>2023-09-02T17:11:28.556Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.aswinvanwoudenberg.com/posts/a-custom-sudoku-widget/index.html</loc>
-    <lastmod>2023-09-02T17:11:23.184Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.aswinvanwoudenberg.com/posts/icosian-game/index.html</loc>
-    <lastmod>2023-09-02T17:11:20.744Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.aswinvanwoudenberg.com/posts/dancing-queens/index.html</loc>
-    <lastmod>2023-09-02T17:11:18.876Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.aswinvanwoudenberg.com/posts/traversing-a-decision-tree-to-win-at-guess-who/index.html</loc>
-    <lastmod>2023-09-02T17:11:14.260Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.aswinvanwoudenberg.com/posts/a-brainfuck-interpreter-in-prolog/index.html</loc>
-    <lastmod>2023-09-02T17:11:11.700Z</lastmod>
-  </url>
-  <url>
     <loc>https://www.aswinvanwoudenberg.com/index.html</loc>
-    <lastmod>2023-09-02T17:11:09.240Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.aswinvanwoudenberg.com/posts/from-baby-face-to-neanderthal/index.html</loc>
-    <lastmod>2023-09-02T17:11:10.748Z</lastmod>
+    <lastmod>2023-10-19T21:38:10.537Z</lastmod>
   </url>
   <url>
     <loc>https://www.aswinvanwoudenberg.com/posts/musikalisches-wuerfelspiel/index.html</loc>
-    <lastmod>2023-09-02T17:11:12.972Z</lastmod>
+    <lastmod>2023-10-19T21:38:06.872Z</lastmod>
   </url>
   <url>
     <loc>https://www.aswinvanwoudenberg.com/posts/call-me-maybe/index.html</loc>
-    <lastmod>2023-09-02T17:11:15.404Z</lastmod>
+    <lastmod>2023-10-19T21:38:04.048Z</lastmod>
   </url>
   <url>
-    <loc>https://www.aswinvanwoudenberg.com/posts/blocbirds/index.html</loc>
-    <lastmod>2023-09-02T17:11:19.900Z</lastmod>
+    <loc>https://www.aswinvanwoudenberg.com/posts/dancing-queens/index.html</loc>
+    <lastmod>2023-10-19T21:37:39.779Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.aswinvanwoudenberg.com/posts/making-sense-of-sorting/index.html</loc>
+    <lastmod>2023-10-19T21:37:32.858Z</lastmod>
   </url>
   <url>
     <loc>https://www.aswinvanwoudenberg.com/posts/supercharging-the-nabaztag/index.html</loc>
-    <lastmod>2023-09-02T17:11:21.640Z</lastmod>
+    <lastmod>2023-10-19T21:37:25.985Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.aswinvanwoudenberg.com/posts/from-procrastination-to-productivity/index.html</loc>
+    <lastmod>2023-10-19T21:37:23.513Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.aswinvanwoudenberg.com/posts/a-brainfuck-interpreter-in-prolog/index.html</loc>
+    <lastmod>2023-10-19T21:37:20.489Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.aswinvanwoudenberg.com/posts/pictionary-air-mouse/index.html</loc>
+    <lastmod>2023-10-19T21:37:17.373Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.aswinvanwoudenberg.com/posts/traversing-a-decision-tree-to-win-at-guess-who/index.html</loc>
+    <lastmod>2023-10-19T21:37:14.725Z</lastmod>
   </url>
   <url>
     <loc>https://www.aswinvanwoudenberg.com/posts/draining-the-fun-out-of-wordle/index.html</loc>
-    <lastmod>2023-09-02T17:11:27.740Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.aswinvanwoudenberg.com/posts/bridge-and-torch-puzzle/index.html</loc>
-    <lastmod>2023-09-02T17:11:29.428Z</lastmod>
+    <lastmod>2023-10-19T21:37:08.988Z</lastmod>
   </url>
   <url>
     <loc>https://www.aswinvanwoudenberg.com/posts/skyline-puzzle/index.html</loc>
-    <lastmod>2023-09-02T17:11:46.364Z</lastmod>
+    <lastmod>2023-10-19T21:37:02.208Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.aswinvanwoudenberg.com/posts/soma-cube/index.html</loc>
+    <lastmod>2023-10-19T21:37:12.945Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.aswinvanwoudenberg.com/posts/from-baby-face-to-neanderthal/index.html</loc>
+    <lastmod>2023-10-19T21:37:16.025Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.aswinvanwoudenberg.com/posts/a-custom-sudoku-widget/index.html</loc>
+    <lastmod>2023-10-19T21:37:19.461Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.aswinvanwoudenberg.com/posts/vba-iban-validator/index.html</loc>
+    <lastmod>2023-10-19T21:37:21.477Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.aswinvanwoudenberg.com/posts/bridge-and-torch-puzzle/index.html</loc>
+    <lastmod>2023-10-19T21:37:24.881Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.aswinvanwoudenberg.com/posts/blocbirds/index.html</loc>
+    <lastmod>2023-10-19T21:37:27.330Z</lastmod>
   </url>
   <url>
     <loc>https://www.aswinvanwoudenberg.com/posts/solving-word-ladders-with-prolog/index.html</loc>
-    <lastmod>2023-09-02T17:11:49.352Z</lastmod>
+    <lastmod>2023-10-19T21:37:35.702Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.aswinvanwoudenberg.com/posts/thinking-inside-the-matchbox/index.html</loc>
+    <lastmod>2023-10-19T21:38:01.040Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.aswinvanwoudenberg.com/posts/icosian-game/index.html</loc>
+    <lastmod>2023-10-19T21:38:05.184Z</lastmod>
   </url>
   <url>
     <loc>https://www.aswinvanwoudenberg.com/posts/who-owns-the-zebra/index.html</loc>
-    <lastmod>2023-09-02T17:11:54.884Z</lastmod>
+    <lastmod>2023-10-19T21:38:07.985Z</lastmod>
   </url>
 </urlset>

@@ -195,9 +195,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#soma-cube" id="toc-soma-cube" class="nav-link active" data-scroll-target="#soma-cube">Soma cube</a>
-  <ul class="collapse">
-  <li><a href="#the-soma-puzzle-pieces" id="toc-the-soma-puzzle-pieces" class="nav-link" data-scroll-target="#the-soma-puzzle-pieces">The Soma puzzle pieces</a></li>
+  <li><a href="#the-soma-puzzle-pieces" id="toc-the-soma-puzzle-pieces" class="nav-link active" data-scroll-target="#the-soma-puzzle-pieces">The Soma puzzle pieces</a></li>
   <li><a href="#importing-libraries" id="toc-importing-libraries" class="nav-link" data-scroll-target="#importing-libraries">Importing libraries</a></li>
   <li><a href="#representing-the-pieces" id="toc-representing-the-pieces" class="nav-link" data-scroll-target="#representing-the-pieces">Representing the pieces</a></li>
   <li><a href="#visualizing-the-pieces-and-solution" id="toc-visualizing-the-pieces-and-solution" class="nav-link" data-scroll-target="#visualizing-the-pieces-and-solution">Visualizing the pieces and solution</a></li>
@@ -209,7 +207,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#creating-other-figures" id="toc-creating-other-figures" class="nav-link" data-scroll-target="#creating-other-figures">Creating other figures</a></li>
   <li><a href="#showing-solutions-one-by-one" id="toc-showing-solutions-one-by-one" class="nav-link" data-scroll-target="#showing-solutions-one-by-one">Showing solutions one by one</a></li>
   <li><a href="#solving-your-own-soma-puzzles" id="toc-solving-your-own-soma-puzzles" class="nav-link" data-scroll-target="#solving-your-own-soma-puzzles">Solving your own Soma puzzles</a></li>
-  </ul></li>
   </ul>
 </nav>
     </div>
@@ -222,8 +219,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="soma-cube" class="level1 page-columns page-full">
-<h1>Soma cube</h1>
 <p>The <a href="https://en.wikipedia.org/wiki/Soma_cube">Soma cube</a> is the brainchild of Danish mathematician, inventor, designer, writer and poet <a href="https://en.wikipedia.org/wiki/Piet_Hein_(scientist)">Piet Hein</a>. The puzzle consists of seven pieces and the goal is to assemble these pieces into a 3x3x3 cube or other shapes.</p>
 <p>Piet Hein came up with this puzzle during a lecture on quantum physics by <a href="https://en.wikipedia.org/wiki/Werner_Heisenberg">Werner Heisenberg</a>. Instead of paying attention to the renowned theoretical physicist, Piet prefered idling away his time by thinking up frivolous brainteasers. Such a waste, not to mention rude! What’s even worse is that people seemed to actually enjoy his puzzle. This meant that Piet Hein’s invention wasn’t just a time-waster for him but for everyone who got hooked on it.</p>
 <p>Initially, the Soma cube was mostly known in Scandinavian countries, but things took a dark turn when <a href="https://en.wikipedia.org/wiki/Martin_Gardner">Martin Gardner</a> featured it in his <a href="https://bobson.ludost.net/copycrime/mgardner/gardner02.pdf#page=64">Mathematical Games column</a> in Scientific American in September 1958. Suddenly, the whole world got introduced to this time-waster.</p>
@@ -295,7 +290,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Each element in this array is initialized to <code>None</code>.</p>
 <div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>voxels</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="108">
+<div class="cell-output cell-output-display" data-execution_count="6">
 <pre><code>array([[[None, None, None],
         [None, None, None],
         [None, None, None]],
@@ -393,7 +388,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>anim <span class="op">=</span> animate_solution(voxels)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>HTML(anim.to_jshtml(default_mode<span class="op">=</span><span class="st">'once'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="115">
+<div class="cell-output cell-output-display" data-execution_count="13">
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 <script language="javascript">
@@ -578,36 +573,36 @@ input[type=range].anim-slider {
 </style>
 
 <div class="animation">
-  <img id="_anim_img3c465a37710b4d2b846ede0e53ab540e">
+  <img id="_anim_img2175f9ae1e2a40a8ba5e05a2afe5a2c6">
   <div class="anim-controls">
-    <input id="_anim_slider3c465a37710b4d2b846ede0e53ab540e" type="range" class="anim-slider" name="points" min="0" max="1" step="1" value="0" oninput="anim3c465a37710b4d2b846ede0e53ab540e.set_frame(parseInt(this.value));">
+    <input id="_anim_slider2175f9ae1e2a40a8ba5e05a2afe5a2c6" type="range" class="anim-slider" name="points" min="0" max="1" step="1" value="0" oninput="anim2175f9ae1e2a40a8ba5e05a2afe5a2c6.set_frame(parseInt(this.value));">
     <div class="anim-buttons">
-      <button title="Decrease speed" aria-label="Decrease speed" onclick="anim3c465a37710b4d2b846ede0e53ab540e.slower()">
+      <button title="Decrease speed" aria-label="Decrease speed" onclick="anim2175f9ae1e2a40a8ba5e05a2afe5a2c6.slower()">
           <i class="fa fa-minus"></i></button>
-      <button title="First frame" aria-label="First frame" onclick="anim3c465a37710b4d2b846ede0e53ab540e.first_frame()">
+      <button title="First frame" aria-label="First frame" onclick="anim2175f9ae1e2a40a8ba5e05a2afe5a2c6.first_frame()">
         <i class="fa fa-fast-backward"></i></button>
-      <button title="Previous frame" aria-label="Previous frame" onclick="anim3c465a37710b4d2b846ede0e53ab540e.previous_frame()">
+      <button title="Previous frame" aria-label="Previous frame" onclick="anim2175f9ae1e2a40a8ba5e05a2afe5a2c6.previous_frame()">
           <i class="fa fa-step-backward"></i></button>
-      <button title="Play backwards" aria-label="Play backwards" onclick="anim3c465a37710b4d2b846ede0e53ab540e.reverse_animation()">
+      <button title="Play backwards" aria-label="Play backwards" onclick="anim2175f9ae1e2a40a8ba5e05a2afe5a2c6.reverse_animation()">
           <i class="fa fa-play fa-flip-horizontal"></i></button>
-      <button title="Pause" aria-label="Pause" onclick="anim3c465a37710b4d2b846ede0e53ab540e.pause_animation()">
+      <button title="Pause" aria-label="Pause" onclick="anim2175f9ae1e2a40a8ba5e05a2afe5a2c6.pause_animation()">
           <i class="fa fa-pause"></i></button>
-      <button title="Play" aria-label="Play" onclick="anim3c465a37710b4d2b846ede0e53ab540e.play_animation()">
+      <button title="Play" aria-label="Play" onclick="anim2175f9ae1e2a40a8ba5e05a2afe5a2c6.play_animation()">
           <i class="fa fa-play"></i></button>
-      <button title="Next frame" aria-label="Next frame" onclick="anim3c465a37710b4d2b846ede0e53ab540e.next_frame()">
+      <button title="Next frame" aria-label="Next frame" onclick="anim2175f9ae1e2a40a8ba5e05a2afe5a2c6.next_frame()">
           <i class="fa fa-step-forward"></i></button>
-      <button title="Last frame" aria-label="Last frame" onclick="anim3c465a37710b4d2b846ede0e53ab540e.last_frame()">
+      <button title="Last frame" aria-label="Last frame" onclick="anim2175f9ae1e2a40a8ba5e05a2afe5a2c6.last_frame()">
           <i class="fa fa-fast-forward"></i></button>
-      <button title="Increase speed" aria-label="Increase speed" onclick="anim3c465a37710b4d2b846ede0e53ab540e.faster()">
+      <button title="Increase speed" aria-label="Increase speed" onclick="anim2175f9ae1e2a40a8ba5e05a2afe5a2c6.faster()">
           <i class="fa fa-plus"></i></button>
     </div>
-    <form title="Repetition mode" aria-label="Repetition mode" action="#n" name="_anim_loop_select3c465a37710b4d2b846ede0e53ab540e" class="anim-state">
-      <input type="radio" name="state" value="once" id="_anim_radio1_3c465a37710b4d2b846ede0e53ab540e" checked="">
-      <label for="_anim_radio1_3c465a37710b4d2b846ede0e53ab540e">Once</label>
-      <input type="radio" name="state" value="loop" id="_anim_radio2_3c465a37710b4d2b846ede0e53ab540e">
-      <label for="_anim_radio2_3c465a37710b4d2b846ede0e53ab540e">Loop</label>
-      <input type="radio" name="state" value="reflect" id="_anim_radio3_3c465a37710b4d2b846ede0e53ab540e">
-      <label for="_anim_radio3_3c465a37710b4d2b846ede0e53ab540e">Reflect</label>
+    <form title="Repetition mode" aria-label="Repetition mode" action="#n" name="_anim_loop_select2175f9ae1e2a40a8ba5e05a2afe5a2c6" class="anim-state">
+      <input type="radio" name="state" value="once" id="_anim_radio1_2175f9ae1e2a40a8ba5e05a2afe5a2c6" checked="">
+      <label for="_anim_radio1_2175f9ae1e2a40a8ba5e05a2afe5a2c6">Once</label>
+      <input type="radio" name="state" value="loop" id="_anim_radio2_2175f9ae1e2a40a8ba5e05a2afe5a2c6">
+      <label for="_anim_radio2_2175f9ae1e2a40a8ba5e05a2afe5a2c6">Loop</label>
+      <input type="radio" name="state" value="reflect" id="_anim_radio3_2175f9ae1e2a40a8ba5e05a2afe5a2c6">
+      <label for="_anim_radio3_2175f9ae1e2a40a8ba5e05a2afe5a2c6">Reflect</label>
     </form>
   </div>
 </div>
@@ -617,9 +612,9 @@ input[type=range].anim-slider {
   /* Instantiate the Animation class. */
   /* The IDs given should match those used in the template above. */
   (function() {
-    var img_id = "_anim_img3c465a37710b4d2b846ede0e53ab540e";
-    var slider_id = "_anim_slider3c465a37710b4d2b846ede0e53ab540e";
-    var loop_select_id = "_anim_loop_select3c465a37710b4d2b846ede0e53ab540e";
+    var img_id = "_anim_img2175f9ae1e2a40a8ba5e05a2afe5a2c6";
+    var slider_id = "_anim_slider2175f9ae1e2a40a8ba5e05a2afe5a2c6";
+    var loop_select_id = "_anim_loop_select2175f9ae1e2a40a8ba5e05a2afe5a2c6";
     var frames = new Array(7);
     
   frames[0] = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAqAAAAHgCAYAAAB6jN80AAAAOXRFWHRTb2Z0d2FyZQBNYXRwbG90\
@@ -2388,7 +2383,7 @@ hIoACgAAgFARQAEAABAqAigAAABCRQAFAABAqP5/hBSc6fLpZB0AAAAASUVORK5CYII=\
     /* set a timeout to make sure all the above elements are created before
        the object is initialized. */
     setTimeout(function() {
-        anim3c465a37710b4d2b846ede0e53ab540e = new Animation(frames, img_id, slider_id, 1000.0,
+        anim2175f9ae1e2a40a8ba5e05a2afe5a2c6 = new Animation(frames, img_id, slider_id, 1000.0,
                                  loop_select_id);
     }, 0);
   })()
@@ -2409,7 +2404,7 @@ hIoACgAAgFARQAEAABAqAigAAABCRQAFAABAqP5/hBSc6fLpZB0AAAAASUVORK5CYII=\
 <p>For instance, to rotate piece <code>z</code> around the x-axis we can make use of <code>rotate_x</code>.</p>
 <div class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>rotate_x(z)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="117">
+<div class="cell-output cell-output-display" data-execution_count="15">
 <pre><code>[(0, 0, 0), (1, 0, 0), (1, 0, -1), (2, 0, -1)]</code></pre>
 </div>
 </div>
@@ -2422,7 +2417,7 @@ hIoACgAAgFARQAEAABAqAigAAABCRQAFAABAqP5/hBSc6fLpZB0AAAAASUVORK5CYII=\
 <p>Now we can do the same rotation as above but end up with coordinates that are all positive.</p>
 <div class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>translate(rotate_x(z))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="119">
+<div class="cell-output cell-output-display" data-execution_count="17">
 <pre><code>[(0, 0, 1), (1, 0, 1), (1, 0, 0), (2, 0, 0)]</code></pre>
 </div>
 </div>
@@ -2450,7 +2445,7 @@ hIoACgAAgFARQAEAABAqAigAAABCRQAFAABAqP5/hBSc6fLpZB0AAAAASUVORK5CYII=\
 <p>We can call this function for one piece.</p>
 <div class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>generate_rotations(z)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="121">
+<div class="cell-output cell-output-display" data-execution_count="19">
 <pre><code>[[(0, 0, 0), (1, 0, 0), (1, 1, 0), (2, 1, 0)],
  [(0, 0, 0), (1, 0, -1), (1, 0, 0), (2, 0, -1)],
  [(0, 0, 0), (0, 0, 1), (0, 1, -1), (0, 1, 0)],
@@ -2506,7 +2501,7 @@ hIoACgAAgFARQAEAABAqAigAAABCRQAFAABAqP5/hBSc6fLpZB0AAAAASUVORK5CYII=\
 </div>
 <div class="cell" data-execution_count="23">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>cube_coordinates</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="125">
+<div class="cell-output cell-output-display" data-execution_count="23">
 <pre><code>[(0, 0, 0),
  (0, 0, 1),
  (0, 0, 2),
@@ -2819,36 +2814,36 @@ input[type=range].anim-slider {
 </style>
 
 <div class="animation">
-  <img id="_anim_img19f1d5d0059a477dbd9be5acdf8cc2d9">
+  <img id="_anim_imgc12a7df0a46b462fa97bfc9a2ce7cccd">
   <div class="anim-controls">
-    <input id="_anim_slider19f1d5d0059a477dbd9be5acdf8cc2d9" type="range" class="anim-slider" name="points" min="0" max="1" step="1" value="0" oninput="anim19f1d5d0059a477dbd9be5acdf8cc2d9.set_frame(parseInt(this.value));">
+    <input id="_anim_sliderc12a7df0a46b462fa97bfc9a2ce7cccd" type="range" class="anim-slider" name="points" min="0" max="1" step="1" value="0" oninput="animc12a7df0a46b462fa97bfc9a2ce7cccd.set_frame(parseInt(this.value));">
     <div class="anim-buttons">
-      <button title="Decrease speed" aria-label="Decrease speed" onclick="anim19f1d5d0059a477dbd9be5acdf8cc2d9.slower()">
+      <button title="Decrease speed" aria-label="Decrease speed" onclick="animc12a7df0a46b462fa97bfc9a2ce7cccd.slower()">
           <i class="fa fa-minus"></i></button>
-      <button title="First frame" aria-label="First frame" onclick="anim19f1d5d0059a477dbd9be5acdf8cc2d9.first_frame()">
+      <button title="First frame" aria-label="First frame" onclick="animc12a7df0a46b462fa97bfc9a2ce7cccd.first_frame()">
         <i class="fa fa-fast-backward"></i></button>
-      <button title="Previous frame" aria-label="Previous frame" onclick="anim19f1d5d0059a477dbd9be5acdf8cc2d9.previous_frame()">
+      <button title="Previous frame" aria-label="Previous frame" onclick="animc12a7df0a46b462fa97bfc9a2ce7cccd.previous_frame()">
           <i class="fa fa-step-backward"></i></button>
-      <button title="Play backwards" aria-label="Play backwards" onclick="anim19f1d5d0059a477dbd9be5acdf8cc2d9.reverse_animation()">
+      <button title="Play backwards" aria-label="Play backwards" onclick="animc12a7df0a46b462fa97bfc9a2ce7cccd.reverse_animation()">
           <i class="fa fa-play fa-flip-horizontal"></i></button>
-      <button title="Pause" aria-label="Pause" onclick="anim19f1d5d0059a477dbd9be5acdf8cc2d9.pause_animation()">
+      <button title="Pause" aria-label="Pause" onclick="animc12a7df0a46b462fa97bfc9a2ce7cccd.pause_animation()">
           <i class="fa fa-pause"></i></button>
-      <button title="Play" aria-label="Play" onclick="anim19f1d5d0059a477dbd9be5acdf8cc2d9.play_animation()">
+      <button title="Play" aria-label="Play" onclick="animc12a7df0a46b462fa97bfc9a2ce7cccd.play_animation()">
           <i class="fa fa-play"></i></button>
-      <button title="Next frame" aria-label="Next frame" onclick="anim19f1d5d0059a477dbd9be5acdf8cc2d9.next_frame()">
+      <button title="Next frame" aria-label="Next frame" onclick="animc12a7df0a46b462fa97bfc9a2ce7cccd.next_frame()">
           <i class="fa fa-step-forward"></i></button>
-      <button title="Last frame" aria-label="Last frame" onclick="anim19f1d5d0059a477dbd9be5acdf8cc2d9.last_frame()">
+      <button title="Last frame" aria-label="Last frame" onclick="animc12a7df0a46b462fa97bfc9a2ce7cccd.last_frame()">
           <i class="fa fa-fast-forward"></i></button>
-      <button title="Increase speed" aria-label="Increase speed" onclick="anim19f1d5d0059a477dbd9be5acdf8cc2d9.faster()">
+      <button title="Increase speed" aria-label="Increase speed" onclick="animc12a7df0a46b462fa97bfc9a2ce7cccd.faster()">
           <i class="fa fa-plus"></i></button>
     </div>
-    <form title="Repetition mode" aria-label="Repetition mode" action="#n" name="_anim_loop_select19f1d5d0059a477dbd9be5acdf8cc2d9" class="anim-state">
-      <input type="radio" name="state" value="once" id="_anim_radio1_19f1d5d0059a477dbd9be5acdf8cc2d9" checked="">
-      <label for="_anim_radio1_19f1d5d0059a477dbd9be5acdf8cc2d9">Once</label>
-      <input type="radio" name="state" value="loop" id="_anim_radio2_19f1d5d0059a477dbd9be5acdf8cc2d9">
-      <label for="_anim_radio2_19f1d5d0059a477dbd9be5acdf8cc2d9">Loop</label>
-      <input type="radio" name="state" value="reflect" id="_anim_radio3_19f1d5d0059a477dbd9be5acdf8cc2d9">
-      <label for="_anim_radio3_19f1d5d0059a477dbd9be5acdf8cc2d9">Reflect</label>
+    <form title="Repetition mode" aria-label="Repetition mode" action="#n" name="_anim_loop_selectc12a7df0a46b462fa97bfc9a2ce7cccd" class="anim-state">
+      <input type="radio" name="state" value="once" id="_anim_radio1_c12a7df0a46b462fa97bfc9a2ce7cccd" checked="">
+      <label for="_anim_radio1_c12a7df0a46b462fa97bfc9a2ce7cccd">Once</label>
+      <input type="radio" name="state" value="loop" id="_anim_radio2_c12a7df0a46b462fa97bfc9a2ce7cccd">
+      <label for="_anim_radio2_c12a7df0a46b462fa97bfc9a2ce7cccd">Loop</label>
+      <input type="radio" name="state" value="reflect" id="_anim_radio3_c12a7df0a46b462fa97bfc9a2ce7cccd">
+      <label for="_anim_radio3_c12a7df0a46b462fa97bfc9a2ce7cccd">Reflect</label>
     </form>
   </div>
 </div>
@@ -2858,9 +2853,9 @@ input[type=range].anim-slider {
   /* Instantiate the Animation class. */
   /* The IDs given should match those used in the template above. */
   (function() {
-    var img_id = "_anim_img19f1d5d0059a477dbd9be5acdf8cc2d9";
-    var slider_id = "_anim_slider19f1d5d0059a477dbd9be5acdf8cc2d9";
-    var loop_select_id = "_anim_loop_select19f1d5d0059a477dbd9be5acdf8cc2d9";
+    var img_id = "_anim_imgc12a7df0a46b462fa97bfc9a2ce7cccd";
+    var slider_id = "_anim_sliderc12a7df0a46b462fa97bfc9a2ce7cccd";
+    var loop_select_id = "_anim_loop_selectc12a7df0a46b462fa97bfc9a2ce7cccd";
     var frames = new Array(7);
     
   frames[0] = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAqAAAAHgCAYAAAB6jN80AAAAOXRFWHRTb2Z0d2FyZQBNYXRwbG90\
@@ -4855,7 +4850,7 @@ AAAASUVORK5CYII=\
     /* set a timeout to make sure all the above elements are created before
        the object is initialized. */
     setTimeout(function() {
-        anim19f1d5d0059a477dbd9be5acdf8cc2d9 = new Animation(frames, img_id, slider_id, 1000.0,
+        animc12a7df0a46b462fa97bfc9a2ce7cccd = new Animation(frames, img_id, slider_id, 1000.0,
                                  loop_select_id);
     }, 0);
   })()
@@ -5019,7 +5014,7 @@ AAAASUVORK5CYII=\
 </section>
 <section id="showing-solutions-one-by-one" class="level2">
 <h2 class="anchored" data-anchor-id="showing-solutions-one-by-one">Showing solutions one by one</h2>
-<p>Most figures can be assembled in multiple ways. Using some widgets we can put together a simple GUI that lets us select a figure, solve it and iterate over the solutions.</p>
+<p>Most figures can be assembled in more than one way. Using some widgets we can put together a simple GUI that lets us select a figure, solve it and iterate over the solutions.</p>
 <p>We’ll use a dropdown menu, a button, an output widget, and a label widget. The solutions are shown as an animation we can step through.</p>
 <div class="sourceCode" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>figure_dropdown <span class="op">=</span> widgets.Dropdown(options<span class="op">=</span><span class="bu">zip</span>(figure_names, figure_coordinates), value<span class="op">=</span>cube_coordinates, description<span class="op">=</span><span class="st">"Figure: "</span>)</span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>next_button <span class="op">=</span> widgets.Button(description<span class="op">=</span><span class="st">"Next"</span>)</span>
@@ -5031,10 +5026,10 @@ AAAASUVORK5CYII=\
 <div class="cell" data-execution_count="34">
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"09cfd155f2c242828a5a643a023b3cd6","version_major":2,"version_minor":0}
+{"model_id":"9efa0f85e92849d88f4c0c433acd599f","version_major":2,"version_minor":0}
 </script>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="136">
+<div class="cell-output cell-output-display" data-execution_count="34">
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 <script language="javascript">
@@ -5219,36 +5214,36 @@ input[type=range].anim-slider {
 </style>
 
 <div class="animation">
-  <img id="_anim_imgcb65d51bcba04e55a5995250ddc77d70">
+  <img id="_anim_imga76a32dad8174730909dde7ba7ce5723">
   <div class="anim-controls">
-    <input id="_anim_slidercb65d51bcba04e55a5995250ddc77d70" type="range" class="anim-slider" name="points" min="0" max="1" step="1" value="0" oninput="animcb65d51bcba04e55a5995250ddc77d70.set_frame(parseInt(this.value));">
+    <input id="_anim_slidera76a32dad8174730909dde7ba7ce5723" type="range" class="anim-slider" name="points" min="0" max="1" step="1" value="0" oninput="anima76a32dad8174730909dde7ba7ce5723.set_frame(parseInt(this.value));">
     <div class="anim-buttons">
-      <button title="Decrease speed" aria-label="Decrease speed" onclick="animcb65d51bcba04e55a5995250ddc77d70.slower()">
+      <button title="Decrease speed" aria-label="Decrease speed" onclick="anima76a32dad8174730909dde7ba7ce5723.slower()">
           <i class="fa fa-minus"></i></button>
-      <button title="First frame" aria-label="First frame" onclick="animcb65d51bcba04e55a5995250ddc77d70.first_frame()">
+      <button title="First frame" aria-label="First frame" onclick="anima76a32dad8174730909dde7ba7ce5723.first_frame()">
         <i class="fa fa-fast-backward"></i></button>
-      <button title="Previous frame" aria-label="Previous frame" onclick="animcb65d51bcba04e55a5995250ddc77d70.previous_frame()">
+      <button title="Previous frame" aria-label="Previous frame" onclick="anima76a32dad8174730909dde7ba7ce5723.previous_frame()">
           <i class="fa fa-step-backward"></i></button>
-      <button title="Play backwards" aria-label="Play backwards" onclick="animcb65d51bcba04e55a5995250ddc77d70.reverse_animation()">
+      <button title="Play backwards" aria-label="Play backwards" onclick="anima76a32dad8174730909dde7ba7ce5723.reverse_animation()">
           <i class="fa fa-play fa-flip-horizontal"></i></button>
-      <button title="Pause" aria-label="Pause" onclick="animcb65d51bcba04e55a5995250ddc77d70.pause_animation()">
+      <button title="Pause" aria-label="Pause" onclick="anima76a32dad8174730909dde7ba7ce5723.pause_animation()">
           <i class="fa fa-pause"></i></button>
-      <button title="Play" aria-label="Play" onclick="animcb65d51bcba04e55a5995250ddc77d70.play_animation()">
+      <button title="Play" aria-label="Play" onclick="anima76a32dad8174730909dde7ba7ce5723.play_animation()">
           <i class="fa fa-play"></i></button>
-      <button title="Next frame" aria-label="Next frame" onclick="animcb65d51bcba04e55a5995250ddc77d70.next_frame()">
+      <button title="Next frame" aria-label="Next frame" onclick="anima76a32dad8174730909dde7ba7ce5723.next_frame()">
           <i class="fa fa-step-forward"></i></button>
-      <button title="Last frame" aria-label="Last frame" onclick="animcb65d51bcba04e55a5995250ddc77d70.last_frame()">
+      <button title="Last frame" aria-label="Last frame" onclick="anima76a32dad8174730909dde7ba7ce5723.last_frame()">
           <i class="fa fa-fast-forward"></i></button>
-      <button title="Increase speed" aria-label="Increase speed" onclick="animcb65d51bcba04e55a5995250ddc77d70.faster()">
+      <button title="Increase speed" aria-label="Increase speed" onclick="anima76a32dad8174730909dde7ba7ce5723.faster()">
           <i class="fa fa-plus"></i></button>
     </div>
-    <form title="Repetition mode" aria-label="Repetition mode" action="#n" name="_anim_loop_selectcb65d51bcba04e55a5995250ddc77d70" class="anim-state">
-      <input type="radio" name="state" value="once" id="_anim_radio1_cb65d51bcba04e55a5995250ddc77d70" checked="">
-      <label for="_anim_radio1_cb65d51bcba04e55a5995250ddc77d70">Once</label>
-      <input type="radio" name="state" value="loop" id="_anim_radio2_cb65d51bcba04e55a5995250ddc77d70">
-      <label for="_anim_radio2_cb65d51bcba04e55a5995250ddc77d70">Loop</label>
-      <input type="radio" name="state" value="reflect" id="_anim_radio3_cb65d51bcba04e55a5995250ddc77d70">
-      <label for="_anim_radio3_cb65d51bcba04e55a5995250ddc77d70">Reflect</label>
+    <form title="Repetition mode" aria-label="Repetition mode" action="#n" name="_anim_loop_selecta76a32dad8174730909dde7ba7ce5723" class="anim-state">
+      <input type="radio" name="state" value="once" id="_anim_radio1_a76a32dad8174730909dde7ba7ce5723" checked="">
+      <label for="_anim_radio1_a76a32dad8174730909dde7ba7ce5723">Once</label>
+      <input type="radio" name="state" value="loop" id="_anim_radio2_a76a32dad8174730909dde7ba7ce5723">
+      <label for="_anim_radio2_a76a32dad8174730909dde7ba7ce5723">Loop</label>
+      <input type="radio" name="state" value="reflect" id="_anim_radio3_a76a32dad8174730909dde7ba7ce5723">
+      <label for="_anim_radio3_a76a32dad8174730909dde7ba7ce5723">Reflect</label>
     </form>
   </div>
 </div>
@@ -5258,9 +5253,9 @@ input[type=range].anim-slider {
   /* Instantiate the Animation class. */
   /* The IDs given should match those used in the template above. */
   (function() {
-    var img_id = "_anim_imgcb65d51bcba04e55a5995250ddc77d70";
-    var slider_id = "_anim_slidercb65d51bcba04e55a5995250ddc77d70";
-    var loop_select_id = "_anim_loop_selectcb65d51bcba04e55a5995250ddc77d70";
+    var img_id = "_anim_imga76a32dad8174730909dde7ba7ce5723";
+    var slider_id = "_anim_slidera76a32dad8174730909dde7ba7ce5723";
+    var loop_select_id = "_anim_loop_selecta76a32dad8174730909dde7ba7ce5723";
     var frames = new Array(7);
     
   frames[0] = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAqAAAAHgCAYAAAB6jN80AAAAOXRFWHRTb2Z0d2FyZQBNYXRwbG90\
@@ -7029,7 +7024,7 @@ hIoACgAAgFARQAEAABAqAigAAABCRQAFAABAqP5/hBSc6fLpZB0AAAAASUVORK5CYII=\
     /* set a timeout to make sure all the above elements are created before
        the object is initialized. */
     setTimeout(function() {
-        animcb65d51bcba04e55a5995250ddc77d70 = new Animation(frames, img_id, slider_id, 1000.0,
+        anima76a32dad8174730909dde7ba7ce5723 = new Animation(frames, img_id, slider_id, 1000.0,
                                  loop_select_id);
     }, 0);
   })()
@@ -7113,11 +7108,10 @@ hIoACgAAgFARQAEAABAqAigAAABCRQAFAABAqP5/hBSc6fLpZB0AAAAASUVORK5CYII=\
 
 
 </section>
-</section>
 
 </main> <!-- /main -->
 <script type="application/vnd.jupyter.widget-state+json">
-{"state":{"02754bc85b424d0b8c161d046a4c4fdb":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"ButtonModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"ButtonModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"ButtonView","button_style":"","description":"Next","disabled":false,"icon":"","layout":"IPY_MODEL_8fe51d937a7e48cea5088012bee7fb33","style":"IPY_MODEL_b88a645ff55346ac9eeb4fa8e3ca062f","tabbable":null,"tooltip":null}},"04380fa27711485abee4d0d3809cfcd7":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"DescriptionStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"DescriptionStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","description_width":""}},"048bd8b6413a4d94a34656e3b1c79da3":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"ButtonModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"ButtonModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"ButtonView","button_style":"","description":"Next","disabled":false,"icon":"","layout":"IPY_MODEL_d31f218dbe6949c0a719cac74600a70b","style":"IPY_MODEL_77a805e50ecd4d239dfb229b17c206c9","tabbable":null,"tooltip":null}},"0777d045ee14437c924b023949256d20":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"DescriptionStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"DescriptionStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","description_width":""}},"09cfd155f2c242828a5a643a023b3cd6":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"HBoxModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"HBoxModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"HBoxView","box_style":"","children":["IPY_MODEL_c5d768ff2978441a92db9531531e5336","IPY_MODEL_048bd8b6413a4d94a34656e3b1c79da3"],"layout":"IPY_MODEL_a18c0f596d254e04b1941404a81bfa72","tabbable":null,"tooltip":null}},"129b7ad410584bb9a5fbe2831b9da025":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"DescriptionStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"DescriptionStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","description_width":""}},"16ada8a8905f4ad7b36044abbe3b74e4":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"1b0b23c9023b4bac8e0a851c7e8f5af4":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"1d9a0187bd9440f09e314347b52be019":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"5d0c1dc4f9cf453a85e0f42f6a36076d":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"ButtonModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"ButtonModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"ButtonView","button_style":"","description":"Next","disabled":false,"icon":"","layout":"IPY_MODEL_a8bb91833c614a67845a2a955bc89f1e","style":"IPY_MODEL_ef28fda43f4c45b18f4de5d95f1af3f0","tabbable":null,"tooltip":null}},"6b4ebf84635e4014a343dd938b0f39b8":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"77a805e50ecd4d239dfb229b17c206c9":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"ButtonStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"ButtonStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","button_color":null,"font_family":null,"font_size":null,"font_style":null,"font_variant":null,"font_weight":null,"text_color":null,"text_decoration":null}},"8fe51d937a7e48cea5088012bee7fb33":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"9073bb26711444dea03ee1896cc6e97c":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"9595f7e8ab784e8ca5f51cb44c622d4d":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"DropdownModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"DropdownModel","_options_labels":["Cube","Pyramid","Turtle","Tower","Bear","Tunnel","Tub","Airplane","Bench","Duck","Cascade","Chair","Castle","Dog","Cross","Elephant","Stairs","Snake","Skyscraper","Wall"],"_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"DropdownView","description":"Figure: ","description_allow_html":false,"disabled":false,"index":0,"layout":"IPY_MODEL_ab8d93d793da41eabac6bf268ec79f3b","style":"IPY_MODEL_129b7ad410584bb9a5fbe2831b9da025","tabbable":null,"tooltip":null}},"9b4309034a684ca9a2baf25ede5cf4dd":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"DropdownModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"DropdownModel","_options_labels":["Cube","Pyramid","Turtle","Tower","Bear","Tunnel","Tub","Airplane","Bench","Duck","Cascade","Chair","Castle","Dog","Cross","Elephant","Stairs","Snake","Skyscraper","Wall"],"_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"DropdownView","description":"Figure: ","description_allow_html":false,"disabled":false,"index":0,"layout":"IPY_MODEL_6b4ebf84635e4014a343dd938b0f39b8","style":"IPY_MODEL_0777d045ee14437c924b023949256d20","tabbable":null,"tooltip":null}},"a18c0f596d254e04b1941404a81bfa72":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"a8bb91833c614a67845a2a955bc89f1e":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"ab8d93d793da41eabac6bf268ec79f3b":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"b3222d886e2c4018bf0457375f2288e2":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"b60b38527995425da453e2df0bcdcbab":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"ButtonStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"ButtonStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","button_color":null,"font_family":null,"font_size":null,"font_style":null,"font_variant":null,"font_weight":null,"text_color":null,"text_decoration":null}},"b88a645ff55346ac9eeb4fa8e3ca062f":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"ButtonStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"ButtonStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","button_color":null,"font_family":null,"font_size":null,"font_style":null,"font_variant":null,"font_weight":null,"text_color":null,"text_decoration":null}},"ba078bd0109d4a73bf7f85b177967ce2":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"HBoxModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"HBoxModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"HBoxView","box_style":"","children":["IPY_MODEL_eaeba17eab854c88ad31b801f0025e55","IPY_MODEL_d6f4c02336ad4fd4accbf7cb7a290916"],"layout":"IPY_MODEL_16ada8a8905f4ad7b36044abbe3b74e4","tabbable":null,"tooltip":null}},"bec90de7b95344729a41d86be1d4a49c":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"c5d768ff2978441a92db9531531e5336":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"DropdownModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"DropdownModel","_options_labels":["Cube","Pyramid","Turtle","Tower","Bear","Tunnel","Tub","Airplane","Bench","Duck","Cascade","Chair","Castle","Dog","Cross","Elephant","Stairs","Snake","Skyscraper","Wall"],"_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"DropdownView","description":"Figure: ","description_allow_html":false,"disabled":false,"index":0,"layout":"IPY_MODEL_1d9a0187bd9440f09e314347b52be019","style":"IPY_MODEL_04380fa27711485abee4d0d3809cfcd7","tabbable":null,"tooltip":null}},"d31f218dbe6949c0a719cac74600a70b":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"d6f4c02336ad4fd4accbf7cb7a290916":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"ButtonModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"ButtonModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"ButtonView","button_style":"","description":"Next","disabled":false,"icon":"","layout":"IPY_MODEL_b3222d886e2c4018bf0457375f2288e2","style":"IPY_MODEL_b60b38527995425da453e2df0bcdcbab","tabbable":null,"tooltip":null}},"e538eb9662344d44b040bf9be5fc2088":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"DescriptionStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"DescriptionStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","description_width":""}},"eaeba17eab854c88ad31b801f0025e55":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"DropdownModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"DropdownModel","_options_labels":["Cube","Pyramid","Turtle","Tower","Bear","Tunnel","Tub","Airplane","Bench","Duck","Cascade","Chair","Castle","Dog","Cross","Elephant","Stairs","Snake","Skyscraper","Wall"],"_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"DropdownView","description":"Figure: ","description_allow_html":false,"disabled":false,"index":0,"layout":"IPY_MODEL_9073bb26711444dea03ee1896cc6e97c","style":"IPY_MODEL_e538eb9662344d44b040bf9be5fc2088","tabbable":null,"tooltip":null}},"ef28fda43f4c45b18f4de5d95f1af3f0":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"ButtonStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"ButtonStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","button_color":null,"font_family":null,"font_size":null,"font_style":null,"font_variant":null,"font_weight":null,"text_color":null,"text_decoration":null}},"fa5fbda0d0fb47a2ab7e2d12fa7a6cfe":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"HBoxModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"HBoxModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"HBoxView","box_style":"","children":["IPY_MODEL_9595f7e8ab784e8ca5f51cb44c622d4d","IPY_MODEL_02754bc85b424d0b8c161d046a4c4fdb"],"layout":"IPY_MODEL_bec90de7b95344729a41d86be1d4a49c","tabbable":null,"tooltip":null}},"fcfdd9444b714c2897009e179e6e9cf2":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"HBoxModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"HBoxModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"HBoxView","box_style":"","children":["IPY_MODEL_9b4309034a684ca9a2baf25ede5cf4dd","IPY_MODEL_5d0c1dc4f9cf453a85e0f42f6a36076d"],"layout":"IPY_MODEL_1b0b23c9023b4bac8e0a851c7e8f5af4","tabbable":null,"tooltip":null}}},"version_major":2,"version_minor":0}
+{"state":{"532055e9c4b941ff9b779a74a3ba4f00":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"62616bcc2c7e42ca92e66327c841fefa":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"DropdownModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"DropdownModel","_options_labels":["Cube","Pyramid","Turtle","Tower","Bear","Tunnel","Tub","Airplane","Bench","Duck","Cascade","Chair","Castle","Dog","Cross","Elephant","Stairs","Snake","Skyscraper","Wall"],"_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"DropdownView","description":"Figure: ","description_allow_html":false,"disabled":false,"index":0,"layout":"IPY_MODEL_f7a9f55239654ee9aa79f372bd2dedb4","style":"IPY_MODEL_9535a0e6f8074291878f036ffaa87692","tabbable":null,"tooltip":null}},"9535a0e6f8074291878f036ffaa87692":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"DescriptionStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"DescriptionStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","description_width":""}},"9efa0f85e92849d88f4c0c433acd599f":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"HBoxModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"HBoxModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"HBoxView","box_style":"","children":["IPY_MODEL_62616bcc2c7e42ca92e66327c841fefa","IPY_MODEL_e730b4c227c944c4889fab144f46856f"],"layout":"IPY_MODEL_c81098da8882410fa5a1e7a38b60ed43","tabbable":null,"tooltip":null}},"c81098da8882410fa5a1e7a38b60ed43":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"d9a2046b07d94e97bd1dfb43a2e2b05d":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"ButtonStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"ButtonStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","button_color":null,"font_family":null,"font_size":null,"font_style":null,"font_variant":null,"font_weight":null,"text_color":null,"text_decoration":null}},"e730b4c227c944c4889fab144f46856f":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"ButtonModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"ButtonModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"ButtonView","button_style":"","description":"Next","disabled":false,"icon":"","layout":"IPY_MODEL_532055e9c4b941ff9b779a74a3ba4f00","style":"IPY_MODEL_d9a2046b07d94e97bd1dfb43a2e2b05d","tabbable":null,"tooltip":null}},"f7a9f55239654ee9aa79f372bd2dedb4":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}}},"version_major":2,"version_minor":0}
 </script>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {

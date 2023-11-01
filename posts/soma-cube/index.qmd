@@ -7,8 +7,6 @@ categories: [programming, python, matplotlib, puzzles]
 toc: true
 ---
 
-# Soma cube
-
 The [Soma cube](https://en.wikipedia.org/wiki/Soma_cube) is the brainchild of Danish mathematician, inventor, designer, writer and poet [Piet Hein](https://en.wikipedia.org/wiki/Piet_Hein_(scientist)). The puzzle consists of seven pieces and the goal is to assemble these pieces into a 3x3x3 cube or other shapes.
 
 Piet Hein came up with this puzzle during a lecture on quantum physics by [Werner Heisenberg](https://en.wikipedia.org/wiki/Werner_Heisenberg). Instead of paying attention to the renowned theoretical physicist, Piet prefered idling away his time by thinking up frivolous brainteasers. Such a waste, not to mention rude! What's even worse is that people seemed to actually enjoy his puzzle. This meant that Piet Hein's invention wasn't just a time-waster for him but for everyone who got hooked on it.

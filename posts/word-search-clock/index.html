@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Aswin van Woudenberg">
+<meta name="dcterms.date" content="2023-11-26">
+<meta name="description" content="How I created a clock using an old digital photo frame and some Python code.">
+
+<title>Aswin van Woudenberg - Word Search Clock</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-WWJVHMJ');</script>
+<!-- End Google Tag Manager -->
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Aswin van Woudenberg</span>
+    </a>
+  </div>
+          <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/afvanwoudenberg" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://linkedin.com/in/afvanwoudenberg" rel="" target=""><i class="bi bi-linkedin" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../index.xml" rel="" target=""><i class="bi bi-rss" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+          <div class="quarto-navbar-tools">
+</div>
+            <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Word Search Clock</h1>
+                  <div>
+        <div class="description">
+          How I created a clock using an old digital photo frame and some Python code.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">programming</div>
+                <div class="quarto-category">python</div>
+                <div class="quarto-category">matplotlib</div>
+                <div class="quarto-category">algorithms</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Aswin van Woudenberg </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">November 26, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#design-decisions" id="toc-design-decisions" class="nav-link active" data-scroll-target="#design-decisions">Design decisions</a>
+  <ul class="collapse">
+  <li><a href="#arranging-words-in-a-grid" id="toc-arranging-words-in-a-grid" class="nav-link" data-scroll-target="#arranging-words-in-a-grid">Arranging words in a grid</a></li>
+  <li><a href="#telling-time-in-english" id="toc-telling-time-in-english" class="nav-link" data-scroll-target="#telling-time-in-english">Telling time in English</a></li>
+  <li><a href="#language-nuances" id="toc-language-nuances" class="nav-link" data-scroll-target="#language-nuances">Language nuances</a></li>
+  <li><a href="#simplifications" id="toc-simplifications" class="nav-link" data-scroll-target="#simplifications">Simplifications</a></li>
+  </ul></li>
+  <li><a href="#importing-libraries" id="toc-importing-libraries" class="nav-link" data-scroll-target="#importing-libraries">Importing libraries</a></li>
+  <li><a href="#specifying-the-word-order" id="toc-specifying-the-word-order" class="nav-link" data-scroll-target="#specifying-the-word-order">Specifying the word order</a></li>
+  <li><a href="#filling-the-grid" id="toc-filling-the-grid" class="nav-link" data-scroll-target="#filling-the-grid">Filling the grid</a></li>
+  <li><a href="#occupying-vacant-spaces-in-the-grid" id="toc-occupying-vacant-spaces-in-the-grid" class="nav-link" data-scroll-target="#occupying-vacant-spaces-in-the-grid">Occupying vacant spaces in the grid</a></li>
+  <li><a href="#plotting-the-grid" id="toc-plotting-the-grid" class="nav-link" data-scroll-target="#plotting-the-grid">Plotting the grid</a></li>
+  <li><a href="#saving-images-to-file" id="toc-saving-images-to-file" class="nav-link" data-scroll-target="#saving-images-to-file">Saving images to file</a></li>
+  <li><a href="#reflecting-on-the-outcome" id="toc-reflecting-on-the-outcome" class="nav-link" data-scroll-target="#reflecting-on-the-outcome">Reflecting on the outcome</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WWJVHMJ" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+
+
+
+<p>A few weeks ago, my clock stopped working, and I wasn’t inclined to invest in a replacement. After futile attempts to revive it, I decided to get crafty. I had an unused photo frame collecting dust and realized it could be turned into a clock by making it display images that show the time of the day. I’d need one image for every minute of the day and display each of them for 60 seconds before transitioning to the next one.</p>
+<p>Using pictures that show a digital clock seemed too mundane. Analog faces felt a bit lackluster. Then it hit me—why not combine the charm of <a href="https://www.timeanddate.com/wordclock/">word clocks</a> with the visuals of a <a href="https://en.wikipedia.org/wiki/Word_search">word search puzzle</a>? The outcome: a word clock that shows words not just horizontally but also vertically and diagonally. Brilliant, if I may say so myself.</p>
+<p><img src="word_search_clock.jpg" class="img-fluid"></p>
+<p>Every minute, the photo frame displays an image featuring a different set of highlighted words that indicate the current time.</p>
+<p>Curious about how I generated these images? Dive into the details below.</p>
+<section id="design-decisions" class="level2">
+<h2 class="anchored" data-anchor-id="design-decisions">Design decisions</h2>
+<section id="arranging-words-in-a-grid" class="level3">
+<h3 class="anchored" data-anchor-id="arranging-words-in-a-grid">Arranging words in a grid</h3>
+<p>My intention was to position words both horizontally, vertically, and diagonally, similar to word search puzzles, allowing for occasional partial overlaps. To ensure a singular way of reading the time, I established the following criteria:</p>
+<ol type="1">
+<li>Each letter can only be the first letter in a word once.</li>
+<li>Words should follow a specific order.</li>
+<li>Due to varying word orientations, the first letter in each word dictates the reading sequence.</li>
+</ol>
+<p>In simpler terms, by scanning the grid left to right and top to bottom and identifying whether each letter marks the beginning of a word, one can deduce the time. Applying this method to the image above reveals the time as “It is twenty-four minutes past four.”</p>
+</section>
+<section id="telling-time-in-english" class="level3">
+<h3 class="anchored" data-anchor-id="telling-time-in-english">Telling time in English</h3>
+<p>For time expression, I adopted the following format:</p>
+<ol type="1">
+<li>Top of the hour:
+<ul>
+<li>“It is [number] o’clock.”
+<ul>
+<li>Example: “It is two o’clock.”</li>
+</ul></li>
+</ul></li>
+<li>Times after the top of the hour:
+<ul>
+<li>“It is [minutes] past [number].”
+<ul>
+<li>Example: “It is eleven minutes past three.”</li>
+</ul></li>
+</ul></li>
+<li>Times before the top of the hour:
+<ul>
+<li>“It is [minutes] to [next hour].”
+<ul>
+<li>Example: “It is twenty-three minutes to five.”</li>
+</ul></li>
+</ul></li>
+</ol>
+<p>(Note: We use “half” for thirty minutes and “a quarter” for fifteen minutes.)</p>
+</section>
+<section id="language-nuances" class="level3">
+<h3 class="anchored" data-anchor-id="language-nuances">Language nuances</h3>
+<p>According to the <a href="https://dictionary.cambridge.org/grammar/british-grammar/time">Cambridge dictionary</a>, for multiplies of five, the word “minutes” can be omitted. This might be a British-English specific convention but I decided to follow it anyways.</p>
+<p>While Americans might use “after” instead of “past,” and many English speakers tend to omit the word “minutes” in everyday speech, I opted for “past” and excluded “minutes” only for multiples of five.</p>
+</section>
+<section id="simplifications" class="level3">
+<h3 class="anchored" data-anchor-id="simplifications">Simplifications</h3>
+<p>I decided against adding phrases like “in the morning” or “in the afternoon”, limiting the generation to only 720 images (12 hours * 60 minutes).</p>
+<p>The word “fourteen” contains “four,” and likewise, “sixteen” encompasses “six.” By positioning “fourteen,” “sixteen,” “seventeen,” “eighteen,” and “nineteen,” we inherently include “four,” “six,” “seven,” “eight,” and “nine.” This ensures the grid remains compact.</p>
+</section>
+</section>
+<section id="importing-libraries" class="level2">
+<h2 class="anchored" data-anchor-id="importing-libraries">Importing libraries</h2>
+<p>We’ll start by importing libraries. We use matplotlib to draw the images.</p>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> string</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="specifying-the-word-order" class="level2">
+<h2 class="anchored" data-anchor-id="specifying-the-word-order">Specifying the word order</h2>
+<p>The following graph specifies the order in which words must be placed on the grid.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<div>
+<svg width="672" height="480" viewbox="0.00 0.00 1228.70 876.71" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 872.71)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-872.71 1224.7,-872.71 1224.7,4 -4,4"></polygon> <!-- n0 --> <g id="node1" class="node">
+<title>
+n0
+</title>
+<polygon fill="transparent" stroke="transparent" points="489.65,-868.71 435.65,-868.71 435.65,-832.71 489.65,-832.71 489.65,-868.71"></polygon> </g> <!-- it --> <g id="node2" class="node">
+<title>
+it
+</title>
+<ellipse fill="lightblue" stroke="black" cx="462.65" cy="-778.71" rx="18" ry="18"></ellipse> <text text-anchor="middle" x="462.65" y="-774.51" font-family="Times,serif" font-size="14.00">it</text> </g> <!-- n0&#45;&gt;it --> <g id="edge1" class="edge">
+<title>
+n0-&gt;it
+</title>
+<path fill="none" stroke="black" d="M460.65,-832.41C460.65,-824.7 460.65,-815.43 460.65,-806.83"></path> <path fill="none" stroke="transparent" d="M462.65,-832.41C462.65,-824.7 462.65,-815.43 462.65,-806.83"></path> <path fill="none" stroke="black" d="M464.65,-832.41C464.65,-824.7 464.65,-815.43 464.65,-806.83"></path> <polygon fill="black" stroke="black" points="466.15,-806.82 462.65,-796.82 459.15,-806.82 466.15,-806.82"></polygon> </g> <!-- is --> <g id="node3" class="node">
+<title>
+is
+</title>
+<ellipse fill="lightblue" stroke="black" cx="462.65" cy="-706.71" rx="18" ry="18"></ellipse> <text text-anchor="middle" x="462.65" y="-702.51" font-family="Times,serif" font-size="14.00">is</text> </g> <!-- it&#45;&gt;is --> <g id="edge2" class="edge">
+<title>
+it-&gt;is
+</title>
+<path fill="none" stroke="black" d="M462.65,-760.41C462.65,-752.7 462.65,-743.43 462.65,-734.83"></path> <polygon fill="black" stroke="black" points="466.15,-734.82 462.65,-724.82 459.15,-734.82 466.15,-734.82"></polygon> </g> <!-- twenty --> <g id="node4" class="node">
+<title>
+twenty
+</title>
+<ellipse fill="lightblue" stroke="black" cx="755.65" cy="-603.61" rx="37.14" ry="37.14"></ellipse> <text text-anchor="middle" x="755.65" y="-599.41" font-family="Times,serif" font-size="14.00">twenty</text> </g> <!-- is&#45;&gt;twenty --> <g id="edge3" class="edge">
+<title>
+is-&gt;twenty
+</title>
+<path fill="none" stroke="black" d="M480.79,-704.58C521.69,-701.41 623.43,-690.07 698.65,-652.71 706.91,-648.61 714.98,-643.07 722.34,-637.2"></path> <polygon fill="black" stroke="black" points="724.6,-639.87 730.01,-630.76 720.1,-634.51 724.6,-639.87"></polygon> </g> <!-- half --> <g id="node5" class="node">
+<title>
+half
+</title>
+<ellipse fill="lightblue" stroke="black" cx="32.65" cy="-474.75" rx="26.1" ry="26.1"></ellipse> <text text-anchor="middle" x="32.65" y="-470.55" font-family="Times,serif" font-size="14.00">half</text> </g> <!-- is&#45;&gt;half --> <g id="edge4" class="edge">
+<title>
+is-&gt;half
+</title>
+<path fill="none" stroke="black" d="M444.47,-704.93C364.82,-701.31 49.31,-685.02 20.65,-652.71 -14.4,-613.22 2.89,-547.24 18.12,-507.97"></path> <polygon fill="black" stroke="black" points="21.41,-509.18 21.92,-498.6 14.92,-506.55 21.41,-509.18"></polygon> </g> <!-- ten --> <g id="node6" class="node">
+<title>
+ten
+</title>
+<ellipse fill="lightblue" stroke="black" cx="901.65" cy="-353.39" rx="22.67" ry="22.67"></ellipse> <text text-anchor="middle" x="901.65" y="-349.19" font-family="Times,serif" font-size="14.00">ten</text> </g> <!-- is&#45;&gt;ten --> <g id="edge5" class="edge">
+<title>
+is-&gt;ten
+</title>
+<path fill="none" stroke="black" d="M480.7,-704.92C559.81,-701.26 873.19,-684.81 901.65,-652.71 968.55,-577.24 933.67,-443.97 913.14,-384.5"></path> <polygon fill="black" stroke="black" points="916.39,-383.2 909.75,-374.95 909.8,-385.54 916.39,-383.2"></polygon> </g> <!-- eleven --> <g id="node7" class="node">
+<title>
+eleven
+</title>
+<ellipse fill="lightblue" stroke="black" cx="65.65" cy="-603.61" rx="36.47" ry="36.47"></ellipse> <text text-anchor="middle" x="65.65" y="-599.41" font-family="Times,serif" font-size="14.00">eleven</text> </g> <!-- is&#45;&gt;eleven --> <g id="edge6" class="edge">
+<title>
+is-&gt;eleven
+</title>
+<path fill="none" stroke="black" d="M444.76,-704.57C381.65,-700.3 169.99,-683.92 110.65,-652.71 104.59,-649.53 98.91,-645.21 93.76,-640.46"></path> <polygon fill="black" stroke="black" points="96.14,-637.89 86.61,-633.26 91.18,-642.82 96.14,-637.89"></polygon> </g> <!-- twelve --> <g id="node8" class="node">
+<title>
+twelve
+</title>
+<ellipse fill="lightblue" stroke="black" cx="156.65" cy="-603.61" rx="36.56" ry="36.56"></ellipse> <text text-anchor="middle" x="156.65" y="-599.41" font-family="Times,serif" font-size="14.00">twelve</text> </g> <!-- is&#45;&gt;twelve --> <g id="edge7" class="edge">
+<title>
+is-&gt;twelve
+</title>
+<path fill="none" stroke="black" d="M444.58,-705.73C400.26,-705.03 283.79,-698.61 201.65,-652.71 195.95,-649.53 190.55,-645.37 185.61,-640.83"></path> <polygon fill="black" stroke="black" points="187.78,-638.06 178.23,-633.48 182.84,-643.02 187.78,-638.06"></polygon> </g> <!-- thirteen --> <g id="node9" class="node">
+<title>
+thirteen
+</title>
+<ellipse fill="lightblue" stroke="black" cx="251.65" cy="-603.61" rx="40.56" ry="40.56"></ellipse> <text text-anchor="middle" x="251.65" y="-599.41" font-family="Times,serif" font-size="14.00">thirteen</text> </g> <!-- is&#45;&gt;thirteen --> <g id="edge8" class="edge">
+<title>
+is-&gt;thirteen
+</title>
+<path fill="none" stroke="black" d="M444.63,-702.52C413.65,-696.46 349.04,-681.25 301.65,-652.71 296.23,-649.45 290.93,-645.5 285.93,-641.29"></path> <polygon fill="black" stroke="black" points="288.13,-638.56 278.34,-634.51 283.47,-643.78 288.13,-638.56"></polygon> </g> <!-- fourteen --> <g id="node10" class="node">
+<title>
+fourteen
+</title>
+<ellipse fill="lightblue" stroke="black" cx="353.65" cy="-603.61" rx="43.42" ry="43.42"></ellipse> <text text-anchor="middle" x="353.65" y="-599.41" font-family="Times,serif" font-size="14.00">fourteen</text> </g> <!-- is&#45;&gt;fourteen --> <g id="edge9" class="edge">
+<title>
+is-&gt;fourteen
+</title>
+<path fill="none" stroke="black" d="M449.71,-693.72C435.71,-680.73 412.7,-659.38 392.71,-640.84"></path> <polygon fill="black" stroke="black" points="394.93,-638.13 385.22,-633.89 390.17,-643.26 394.93,-638.13"></polygon> </g> <!-- sixteen --> <g id="node11" class="node">
+<title>
+sixteen
+</title>
+<ellipse fill="lightblue" stroke="black" cx="349.65" cy="-474.75" rx="38.28" ry="38.28"></ellipse> <text text-anchor="middle" x="349.65" y="-470.55" font-family="Times,serif" font-size="14.00">sixteen</text> </g> <!-- is&#45;&gt;sixteen --> <g id="edge10" class="edge">
+<title>
+is-&gt;sixteen
+</title>
+<path fill="none" stroke="black" d="M456.8,-689.5C443.63,-653.06 412.27,-566.94 405.65,-554.5 398.21,-540.54 388.66,-526.19 379.56,-513.62"></path> <polygon fill="black" stroke="black" points="382.12,-511.2 373.37,-505.23 376.49,-515.36 382.12,-511.2"></polygon> </g> <!-- seventeen --> <g id="node12" class="node">
+<title>
+seventeen
+</title>
+<ellipse fill="lightblue" stroke="black" cx="501.65" cy="-603.61" rx="49.22" ry="49.22"></ellipse> <text text-anchor="middle" x="501.65" y="-599.41" font-family="Times,serif" font-size="14.00">seventeen</text> </g> <!-- is&#45;&gt;seventeen --> <g id="edge11" class="edge">
+<title>
+is-&gt;seventeen
+</title>
+<path fill="none" stroke="black" d="M468.91,-689.47C472.18,-681.01 476.37,-670.12 480.67,-658.98"></path> <polygon fill="black" stroke="black" points="483.95,-660.21 484.28,-649.62 477.42,-657.69 483.95,-660.21"></polygon> </g> <!-- eighteen --> <g id="node13" class="node">
+<title>
+eighteen
+</title>
+<ellipse fill="lightblue" stroke="black" cx="612.65" cy="-603.61" rx="43.99" ry="43.99"></ellipse> <text text-anchor="middle" x="612.65" y="-599.41" font-family="Times,serif" font-size="14.00">eighteen</text> </g> <!-- is&#45;&gt;eighteen --> <g id="edge12" class="edge">
+<title>
+is-&gt;eighteen
+</title>
+<path fill="none" stroke="black" d="M478.78,-698.36C498.61,-689 532.91,-671.74 559.65,-652.71 564.45,-649.3 569.28,-645.5 573.98,-641.57"></path> <polygon fill="black" stroke="black" points="576.44,-644.07 581.73,-634.89 571.87,-638.77 576.44,-644.07"></polygon> </g> <!-- nineteen --> <g id="node14" class="node">
+<title>
+nineteen
+</title>
+<ellipse fill="lightblue" stroke="black" cx="525.65" cy="-474.75" rx="43.99" ry="43.99"></ellipse> <text text-anchor="middle" x="525.65" y="-470.55" font-family="Times,serif" font-size="14.00">nineteen</text> </g> <!-- is&#45;&gt;nineteen --> <g id="edge13" class="edge">
+<title>
+is-&gt;nineteen
+</title>
+<path fill="none" stroke="black" d="M480.56,-703.8C525.81,-698.55 642.77,-682.33 665.65,-652.71 692.33,-618.17 689.9,-590.79 665.65,-554.5 642.39,-519.71 614.63,-539.85 578.65,-518.5 574.54,-516.06 570.41,-513.33 566.37,-510.46"></path> <polygon fill="black" stroke="black" points="568.34,-507.57 558.23,-504.42 564.17,-513.19 568.34,-507.57"></polygon> </g> <!-- a --> <g id="node15" class="node">
+<title>
+a
+</title>
+<ellipse fill="lightblue" stroke="black" cx="874.65" cy="-603.61" rx="18" ry="18"></ellipse> <text text-anchor="middle" x="874.65" y="-599.41" font-family="Times,serif" font-size="14.00">a</text> </g> <!-- is&#45;&gt;a --> <g id="edge14" class="edge">
+<title>
+is-&gt;a
+</title>
+<path fill="none" stroke="black" d="M480.62,-705.56C532.33,-704.56 685.24,-697.71 801.65,-652.71 820.52,-645.42 839.54,-632.67 853.43,-622.13"></path> <polygon fill="black" stroke="black" points="855.64,-624.84 861.36,-615.92 851.33,-619.33 855.64,-624.84"></polygon> </g> <!-- one --> <g id="node17" class="node">
+<title>
+one
+</title>
+<ellipse fill="lightblue" stroke="black" cx="612.65" cy="-474.75" rx="24.96" ry="24.96"></ellipse> <text text-anchor="middle" x="612.65" y="-470.55" font-family="Times,serif" font-size="14.00">one</text> </g> <!-- twenty&#45;&gt;one --> <g id="edge16" class="edge">
+<title>
+twenty-&gt;one
+</title>
+<path fill="none" stroke="black" d="M727.96,-578.33C718.78,-570.53 708.41,-561.97 698.65,-554.5 676.32,-537.41 667.17,-537.7 646.65,-518.5 641.92,-514.08 637.3,-508.97 633.06,-503.87"></path> <polygon fill="black" stroke="black" points="635.72,-501.59 626.76,-495.94 630.24,-505.94 635.72,-501.59"></polygon> </g> <!-- two --> <g id="node18" class="node">
+<title>
+two
+</title>
+<ellipse fill="lightblue" stroke="black" cx="681.65" cy="-474.75" rx="25.54" ry="25.54"></ellipse> <text text-anchor="middle" x="681.65" y="-470.55" font-family="Times,serif" font-size="14.00">two</text> </g> <!-- twenty&#45;&gt;two --> <g id="edge17" class="edge">
+<title>
+twenty-&gt;two
+</title>
+<path fill="none" stroke="black" d="M737.16,-570.92C725.56,-551.03 710.68,-525.52 699.25,-505.92"></path> <polygon fill="black" stroke="black" points="702.16,-503.98 694.1,-497.1 696.12,-507.5 702.16,-503.98"></polygon> </g> <!-- three --> <g id="node19" class="node">
+<title>
+three
+</title>
+<ellipse fill="lightblue" stroke="black" cx="755.65" cy="-474.75" rx="30.17" ry="30.17"></ellipse> <text text-anchor="middle" x="755.65" y="-470.55" font-family="Times,serif" font-size="14.00">three</text> </g> <!-- twenty&#45;&gt;three --> <g id="edge18" class="edge">
+<title>
+twenty-&gt;three
+</title>
+<path fill="none" stroke="black" d="M755.65,-566.25C755.65,-550.4 755.65,-531.76 755.65,-515.54"></path> <polygon fill="black" stroke="black" points="759.15,-515.28 755.65,-505.28 752.15,-515.28 759.15,-515.28"></polygon> </g> <!-- five --> <g id="node20" class="node">
+<title>
+five
+</title>
+<ellipse fill="lightblue" stroke="black" cx="740.65" cy="-353.39" rx="26.1" ry="26.1"></ellipse> <text text-anchor="middle" x="740.65" y="-349.19" font-family="Times,serif" font-size="14.00">five</text> </g> <!-- twenty&#45;&gt;five --> <g id="edge19" class="edge">
+<title>
+twenty-&gt;five
+</title>
+<path fill="none" stroke="black" d="M784.14,-578.92C800.27,-563.59 818.92,-542.12 827.65,-518.5 841.13,-482.02 845.69,-465.45 827.65,-431 814.6,-406.11 796.54,-413.8 775.65,-395 771.41,-391.19 767.19,-386.88 763.23,-382.52"></path> <polygon fill="black" stroke="black" points="765.65,-379.97 756.44,-374.73 760.38,-384.57 765.65,-379.97"></polygon> </g> <!-- past --> <g id="node22" class="node">
+<title>
+past
+</title>
+<ellipse fill="lightblue" stroke="black" cx="738.65" cy="-249.18" rx="26.68" ry="26.68"></ellipse> <text text-anchor="middle" x="738.65" y="-244.98" font-family="Times,serif" font-size="14.00">past</text> </g> <!-- twenty&#45;&gt;past --> <g id="edge35" class="edge">
+<title>
+twenty-&gt;past
+</title>
+<path fill="none" stroke="black" d="M775.72,-572.1C796.96,-535.61 823.68,-474.07 794.65,-431 770.79,-395.63 729.5,-430.38 705.65,-395 682.29,-360.36 701.71,-311.57 719.12,-280.41"></path> <polygon fill="black" stroke="black" points="722.17,-282.13 724.18,-271.72 716.12,-278.6 722.17,-282.13"></polygon> </g> <!-- to --> <g id="node23" class="node">
+<title>
+to
+</title>
+<ellipse fill="lightblue" stroke="black" cx="822.65" cy="-249.18" rx="18.6" ry="18.6"></ellipse> <text text-anchor="middle" x="822.65" y="-244.98" font-family="Times,serif" font-size="14.00">to</text> </g> <!-- twenty&#45;&gt;to --> <g id="edge41" class="edge">
+<title>
+twenty-&gt;to
+</title>
+<path fill="none" stroke="black" d="M785.48,-580.96C829.02,-547.17 907.62,-477.15 933.65,-395 944.82,-359.74 952.41,-343.65 933.65,-311.77 915.88,-281.59 877.4,-265.15 850.77,-257.02"></path> <polygon fill="black" stroke="black" points="851.44,-253.57 840.86,-254.21 849.53,-260.3 851.44,-253.57"></polygon> </g> <!-- half&#45;&gt;past --> <g id="edge36" class="edge">
+<title>
+half-&gt;past
+</title>
+<path fill="none" stroke="black" d="M54.54,-460.24C69.28,-451.4 89.3,-439.89 107.65,-431 234.92,-369.36 266.84,-351.22 402.65,-311.77 509.24,-280.81 639.58,-262.2 701.96,-254.43"></path> <polygon fill="black" stroke="black" points="702.58,-257.88 712.08,-253.19 701.73,-250.93 702.58,-257.88"></polygon> </g> <!-- ten&#45;&gt;past --> <g id="edge33" class="edge">
+<title>
+ten-&gt;past
+</title>
+<path fill="none" stroke="black" d="M889.84,-333.82C884.37,-326.28 877.38,-317.92 869.65,-311.77 865.48,-308.46 809.49,-282.58 772.07,-265.43"></path> <polygon fill="black" stroke="black" points="773.08,-262.05 762.53,-261.07 770.17,-268.41 773.08,-262.05"></polygon> </g> <!-- ten&#45;&gt;to --> <g id="edge39" class="edge">
+<title>
+ten-&gt;to
+</title>
+<path fill="none" stroke="black" d="M887.88,-334.59C874.54,-317.33 854.27,-291.09 839.86,-272.45"></path> <polygon fill="black" stroke="black" points="842.59,-270.26 833.7,-264.49 837.05,-274.54 842.59,-270.26"></polygon> </g> <!-- minutes --> <g id="node21" class="node">
+<title>
+minutes
+</title>
+<ellipse fill="lightblue" stroke="black" cx="453.65" cy="-353.39" rx="41.73" ry="41.73"></ellipse> <text text-anchor="middle" x="453.65" y="-349.19" font-family="Times,serif" font-size="14.00">minutes</text> </g> <!-- eleven&#45;&gt;minutes --> <g id="edge28" class="edge">
+<title>
+eleven-&gt;minutes
+</title>
+<path fill="none" stroke="black" d="M79.97,-570.01C98.71,-531.16 135.18,-466.99 185.65,-431 251.06,-384.35 344.35,-365.99 401.85,-358.84"></path> <polygon fill="black" stroke="black" points="402.28,-362.31 411.8,-357.67 401.46,-355.36 402.28,-362.31"></polygon> </g> <!-- twelve&#45;&gt;minutes --> <g id="edge29" class="edge">
+<title>
+twelve-&gt;minutes
+</title>
+<path fill="none" stroke="black" d="M167.3,-568.29C180.87,-529.9 207.82,-468.21 250.65,-431 294.18,-393.19 358.23,-373.2 402.7,-363.25"></path> <polygon fill="black" stroke="black" points="403.67,-366.62 412.72,-361.1 402.2,-359.77 403.67,-366.62"></polygon> </g> <!-- thirteen&#45;&gt;minutes --> <g id="edge30" class="edge">
+<title>
+thirteen-&gt;minutes
+</title>
+<path fill="none" stroke="black" d="M250.54,-562.95C251.54,-525.17 258.58,-468.62 288.65,-431 317.15,-395.33 366.09,-375.52 403.29,-365.02"></path> <polygon fill="black" stroke="black" points="404.2,-368.4 412.95,-362.43 402.39,-361.64 404.2,-368.4"></polygon> </g> <!-- fourteen&#45;&gt;minutes --> <g id="edge23" class="edge">
+<title>
+fourteen-&gt;minutes
+</title>
+<path fill="none" stroke="black" d="M328.07,-568.55C304.23,-532.3 276.06,-474.31 302.65,-431 324.34,-395.66 367.98,-376.01 402.79,-365.48"></path> <polygon fill="black" stroke="black" points="404.16,-368.73 412.81,-362.62 402.24,-362 404.16,-368.73"></polygon> </g> <!-- sixteen&#45;&gt;minutes --> <g id="edge24" class="edge">
+<title>
+sixteen-&gt;minutes
+</title>
+<path fill="none" stroke="black" d="M374.56,-445.16C388.21,-429.49 405.32,-409.85 420.13,-392.86"></path> <polygon fill="black" stroke="black" points="422.82,-395.09 426.75,-385.26 417.54,-390.5 422.82,-395.09"></polygon> </g> <!-- seventeen&#45;&gt;minutes --> <g id="edge25" class="edge">
+<title>
+seventeen-&gt;minutes
+</title>
+<path fill="none" stroke="black" d="M467.93,-567.41C456.66,-553.33 445.48,-536.25 439.65,-518.5 427.39,-481.2 432.3,-436.71 439.5,-403.46"></path> <polygon fill="black" stroke="black" points="442.95,-404.06 441.79,-393.53 436.13,-402.49 442.95,-404.06"></polygon> </g> <!-- eighteen&#45;&gt;minutes --> <g id="edge26" class="edge">
+<title>
+eighteen-&gt;minutes
+</title>
+<path fill="none" stroke="black" d="M582.43,-571.95C575.33,-565.68 567.52,-559.49 559.65,-554.5 524.3,-532.1 497.87,-551.89 472.65,-518.5 448.34,-486.31 445,-439.97 446.93,-404.74"></path> <polygon fill="black" stroke="black" points="450.43,-404.87 447.64,-394.65 443.45,-404.38 450.43,-404.87"></polygon> </g> <!-- nineteen&#45;&gt;minutes --> <g id="edge27" class="edge">
+<title>
+nineteen-&gt;minutes
+</title>
+<path fill="none" stroke="black" d="M503.46,-436.96C496.07,-424.72 487.77,-410.96 480.09,-398.24"></path> <polygon fill="black" stroke="black" points="483.06,-396.38 474.9,-389.62 477.07,-399.99 483.06,-396.38"></polygon> </g> <!-- quarter --> <g id="node16" class="node">
+<title>
+quarter
+</title>
+<ellipse fill="lightblue" stroke="black" cx="822.65" cy="-353.39" rx="38.26" ry="38.26"></ellipse> <text text-anchor="middle" x="822.65" y="-349.19" font-family="Times,serif" font-size="14.00">quarter</text> </g> <!-- a&#45;&gt;quarter --> <g id="edge15" class="edge">
+<title>
+a-&gt;quarter
+</title>
+<path fill="none" stroke="black" d="M872.66,-585.4C868.89,-554.31 859.87,-486.81 846.65,-431 844.21,-420.73 841.11,-409.82 837.96,-399.56"></path> <polygon fill="black" stroke="black" points="841.28,-398.45 834.94,-389.96 834.6,-400.55 841.28,-398.45"></polygon> </g> <!-- quarter&#45;&gt;past --> <g id="edge34" class="edge">
+<title>
+quarter-&gt;past
+</title>
+<path fill="none" stroke="black" d="M798.57,-323.1C786.98,-309 773.15,-292.17 761.7,-278.23"></path> <polygon fill="black" stroke="black" points="764.32,-275.9 755.26,-270.4 758.91,-280.35 764.32,-275.9"></polygon> </g> <!-- quarter&#45;&gt;to --> <g id="edge40" class="edge">
+<title>
+quarter-&gt;to
+</title>
+<path fill="none" stroke="black" d="M822.65,-314.91C822.65,-302.74 822.65,-289.45 822.65,-278.1"></path> <polygon fill="black" stroke="black" points="826.15,-277.91 822.65,-267.91 819.15,-277.91 826.15,-277.91"></polygon> </g> <!-- one&#45;&gt;minutes --> <g id="edge20" class="edge">
+<title>
+one-&gt;minutes
+</title>
+<path fill="none" stroke="black" d="M599.06,-453.78C593.3,-446.14 586.17,-437.67 578.65,-431 554.79,-409.9 524.39,-391.12 499.54,-377.44"></path> <polygon fill="black" stroke="black" points="501.12,-374.31 490.66,-372.63 497.79,-380.47 501.12,-374.31"></polygon> </g> <!-- two&#45;&gt;minutes --> <g id="edge21" class="edge">
+<title>
+two-&gt;minutes
+</title>
+<path fill="none" stroke="black" d="M667.8,-452.66C661.98,-445.05 654.7,-436.89 646.65,-431 603.23,-399.26 544.86,-378.49 503.72,-366.69"></path> <polygon fill="black" stroke="black" points="504.49,-363.27 493.91,-363.95 502.6,-370.01 504.49,-363.27"></polygon> </g> <!-- three&#45;&gt;minutes --> <g id="edge22" class="edge">
+<title>
+three-&gt;minutes
+</title>
+<path fill="none" stroke="black" d="M737.79,-449.62C731.73,-442.79 724.49,-435.89 716.65,-431 650.34,-389.68 560.84,-369.84 505.21,-360.93"></path> <polygon fill="black" stroke="black" points="505.64,-357.46 495.23,-359.39 504.58,-364.38 505.64,-357.46"></polygon> </g> <!-- five&#45;&gt;past --> <g id="edge32" class="edge">
+<title>
+five-&gt;past
+</title>
+<path fill="none" stroke="black" d="M740.15,-327.12C739.91,-314.69 739.61,-299.48 739.34,-285.88"></path> <polygon fill="black" stroke="black" points="742.84,-285.8 739.15,-275.87 735.84,-285.93 742.84,-285.8"></polygon> </g> <!-- five&#45;&gt;to --> <g id="edge38" class="edge">
+<title>
+five-&gt;to
+</title>
+<path fill="none" stroke="black" d="M756.46,-332.68C770.29,-315.43 790.38,-290.39 804.8,-272.43"></path> <polygon fill="black" stroke="black" points="807.83,-274.24 811.36,-264.25 802.37,-269.86 807.83,-274.24"></polygon> </g> <!-- minutes&#45;&gt;past --> <g id="edge31" class="edge">
+<title>
+minutes-&gt;past
+</title>
+<path fill="none" stroke="black" d="M492.68,-338.39C548.68,-318.31 650.93,-281.64 704.24,-262.52"></path> <polygon fill="black" stroke="black" points="705.68,-265.72 713.91,-259.05 703.32,-259.13 705.68,-265.72"></polygon> </g> <!-- minutes&#45;&gt;to --> <g id="edge37" class="edge">
+<title>
+minutes-&gt;to
+</title>
+<path fill="none" stroke="black" d="M494.67,-346.06C556.69,-335.72 677.4,-312.61 774.65,-275.77 782.59,-272.76 790.89,-268.71 798.3,-264.71"></path> <polygon fill="black" stroke="black" points="800.11,-267.71 807.12,-259.77 796.69,-261.6 800.11,-267.71"></polygon> </g> <!-- onehour --> <g id="node24" class="node">
+<title>
+onehour
+</title>
+<ellipse fill="lightblue" stroke="black" cx="905.65" cy="-149.81" rx="24.96" ry="24.96"></ellipse> <text text-anchor="middle" x="905.65" y="-145.61" font-family="Times,serif" font-size="14.00">one</text> </g> <!-- past&#45;&gt;onehour --> <g id="edge42" class="edge">
+<title>
+past-&gt;onehour
+</title>
+<path fill="none" stroke="black" d="M762.5,-237.27C800.12,-220.05 869.24,-188.31 871.65,-186.59 875.61,-183.74 879.5,-180.39 883.15,-176.9"></path> <polygon fill="black" stroke="black" points="885.74,-179.25 890.24,-169.65 880.74,-174.35 885.74,-179.25"></polygon> </g> <!-- twohour --> <g id="node25" class="node">
+<title>
+twohour
+</title>
+<ellipse fill="lightblue" stroke="black" cx="974.65" cy="-149.81" rx="25.54" ry="25.54"></ellipse> <text text-anchor="middle" x="974.65" y="-145.61" font-family="Times,serif" font-size="14.00">two</text> </g> <!-- past&#45;&gt;twohour --> <g id="edge44" class="edge">
+<title>
+past-&gt;twohour
+</title>
+<path fill="none" stroke="black" d="M761.95,-236.36C771.86,-231.64 783.65,-226.43 794.65,-222.59 857.33,-200.7 882.02,-219.58 939.65,-186.59 943.94,-184.13 948.06,-180.99 951.87,-177.6"></path> <polygon fill="black" stroke="black" points="954.51,-179.91 959.2,-170.41 949.61,-174.91 954.51,-179.91"></polygon> </g> <!-- threehour --> <g id="node26" class="node">
+<title>
+threehour
+</title>
+<ellipse fill="lightblue" stroke="black" cx="1048.65" cy="-149.81" rx="30.17" ry="30.17"></ellipse> <text text-anchor="middle" x="1048.65" y="-145.61" font-family="Times,serif" font-size="14.00">three</text> </g> <!-- past&#45;&gt;threehour --> <g id="edge46" class="edge">
+<title>
+past-&gt;threehour
+</title>
+<path fill="none" stroke="black" d="M761.81,-235.93C771.7,-231.15 783.51,-226 794.65,-222.59 887.28,-194.21 922.58,-229.09 1009.65,-186.59 1013.55,-184.68 1017.34,-182.26 1020.92,-179.58"></path> <polygon fill="black" stroke="black" points="1023.42,-182.06 1028.88,-172.98 1018.95,-176.67 1023.42,-182.06"></polygon> </g> <!-- fourhour --> <g id="node27" class="node">
+<title>
+fourhour
+</title>
+<ellipse fill="lightblue" stroke="black" cx="1123.65" cy="-149.81" rx="27.25" ry="27.25"></ellipse> <text text-anchor="middle" x="1123.65" y="-145.61" font-family="Times,serif" font-size="14.00">four</text> </g> <!-- past&#45;&gt;fourhour --> <g id="edge48" class="edge">
+<title>
+past-&gt;fourhour
+</title>
+<path fill="none" stroke="black" d="M761.74,-235.69C771.62,-230.87 783.43,-225.76 794.65,-222.59 920.9,-186.9 969.64,-243.93 1087.65,-186.59 1091.98,-184.49 1096.1,-181.65 1099.9,-178.49"></path> <polygon fill="black" stroke="black" points="1102.28,-181.06 1107.23,-171.69 1097.52,-175.93 1102.28,-181.06"></polygon> </g> <!-- fivehour --> <g id="node28" class="node">
+<title>
+fivehour
+</title>
+<ellipse fill="lightblue" stroke="black" cx="1194.65" cy="-149.81" rx="26.1" ry="26.1"></ellipse> <text text-anchor="middle" x="1194.65" y="-145.61" font-family="Times,serif" font-size="14.00">five</text> </g> <!-- past&#45;&gt;fivehour --> <g id="edge50" class="edge">
+<title>
+past-&gt;fivehour
+</title>
+<path fill="none" stroke="black" d="M761.71,-235.56C771.57,-230.71 783.4,-225.62 794.65,-222.59 952.03,-180.13 1012.68,-257.1 1159.65,-186.59 1164.11,-184.45 1168.32,-181.48 1172.17,-178.17"></path> <polygon fill="black" stroke="black" points="1174.79,-180.51 1179.53,-171.04 1169.92,-175.49 1174.79,-180.51"></polygon> </g> <!-- sixhour --> <g id="node29" class="node">
+<title>
+sixhour
+</title>
+<ellipse fill="lightblue" stroke="black" cx="359.65" cy="-149.81" rx="22.11" ry="22.11"></ellipse> <text text-anchor="middle" x="359.65" y="-145.61" font-family="Times,serif" font-size="14.00">six</text> </g> <!-- past&#45;&gt;sixhour --> <g id="edge52" class="edge">
+<title>
+past-&gt;sixhour
+</title>
+<path fill="none" stroke="black" d="M712.13,-245.79C640.72,-239.01 446.08,-218.04 390.65,-186.59 386.03,-183.97 381.77,-180.39 377.98,-176.51"></path> <polygon fill="black" stroke="black" points="380.5,-174.08 371.3,-168.84 375.22,-178.68 380.5,-174.08"></polygon> </g> <!-- sevenhour --> <g id="node30" class="node">
+<title>
+sevenhour
+</title>
+<ellipse fill="lightblue" stroke="black" cx="432.65" cy="-149.81" rx="33.05" ry="33.05"></ellipse> <text text-anchor="middle" x="432.65" y="-145.61" font-family="Times,serif" font-size="14.00">seven</text> </g> <!-- past&#45;&gt;sevenhour --> <g id="edge54" class="edge">
+<title>
+past-&gt;sevenhour
+</title>
+<path fill="none" stroke="black" d="M712.14,-246.16C662.92,-241.52 555.11,-227.2 474.65,-186.59 470.89,-184.7 467.19,-182.4 463.64,-179.9"></path> <polygon fill="black" stroke="black" points="465.71,-177.08 455.65,-173.77 461.45,-182.63 465.71,-177.08"></polygon> </g> <!-- eighthour --> <g id="node31" class="node">
+<title>
+eighthour
+</title>
+<ellipse fill="lightblue" stroke="black" cx="513.65" cy="-149.81" rx="30.19" ry="30.19"></ellipse> <text text-anchor="middle" x="513.65" y="-145.61" font-family="Times,serif" font-size="14.00">eight</text> </g> <!-- past&#45;&gt;eighthour --> <g id="edge56" class="edge">
+<title>
+past-&gt;eighthour
+</title>
+<path fill="none" stroke="black" d="M712.54,-243.19C675.17,-235.25 605.15,-217.43 552.65,-186.59 548.99,-184.44 545.39,-181.91 541.94,-179.2"></path> <polygon fill="black" stroke="black" points="544.09,-176.44 534.2,-172.64 539.57,-181.78 544.09,-176.44"></polygon> </g> <!-- ninehour --> <g id="node32" class="node">
+<title>
+ninehour
+</title>
+<ellipse fill="lightblue" stroke="black" cx="589.65" cy="-149.81" rx="27.83" ry="27.83"></ellipse> <text text-anchor="middle" x="589.65" y="-145.61" font-family="Times,serif" font-size="14.00">nine</text> </g> <!-- past&#45;&gt;ninehour --> <g id="edge58" class="edge">
+<title>
+past-&gt;ninehour
+</title>
+<path fill="none" stroke="black" d="M714.54,-237.5C690.82,-226.44 654.13,-207.82 625.65,-186.59 622.05,-183.91 618.46,-180.88 615.02,-177.75"></path> <polygon fill="black" stroke="black" points="617.42,-175.2 607.78,-170.82 612.59,-180.26 617.42,-175.2"></polygon> </g> <!-- tenhour --> <g id="node33" class="node">
+<title>
+tenhour
+</title>
+<ellipse fill="lightblue" stroke="black" cx="657.65" cy="-149.81" rx="22.67" ry="22.67"></ellipse> <text text-anchor="middle" x="657.65" y="-145.61" font-family="Times,serif" font-size="14.00">ten</text> </g> <!-- past&#45;&gt;tenhour --> <g id="edge60" class="edge">
+<title>
+past-&gt;tenhour
+</title>
+<path fill="none" stroke="black" d="M721.86,-228.01C709.31,-212.92 692.08,-192.2 678.62,-176.02"></path> <polygon fill="black" stroke="black" points="681.06,-173.48 671.97,-168.03 675.68,-177.96 681.06,-173.48"></polygon> </g> <!-- elevenhour --> <g id="node34" class="node">
+<title>
+elevenhour
+</title>
+<ellipse fill="lightblue" stroke="black" cx="734.65" cy="-149.81" rx="36.47" ry="36.47"></ellipse> <text text-anchor="middle" x="734.65" y="-145.61" font-family="Times,serif" font-size="14.00">eleven</text> </g> <!-- past&#45;&gt;elevenhour --> <g id="edge62" class="edge">
+<title>
+past-&gt;elevenhour
+</title>
+<path fill="none" stroke="black" d="M737.59,-222.6C737.26,-214.49 736.88,-205.27 736.51,-196.21"></path> <polygon fill="black" stroke="black" points="740,-195.95 736.1,-186.11 733.01,-196.24 740,-195.95"></polygon> </g> <!-- twelvehour --> <g id="node35" class="node">
+<title>
+twelvehour
+</title>
+<ellipse fill="lightblue" stroke="black" cx="825.65" cy="-149.81" rx="36.56" ry="36.56"></ellipse> <text text-anchor="middle" x="825.65" y="-145.61" font-family="Times,serif" font-size="14.00">twelve</text> </g> <!-- past&#45;&gt;twelvehour --> <g id="edge64" class="edge">
+<title>
+past-&gt;twelvehour
+</title>
+<path fill="none" stroke="black" d="M756.25,-228.48C767.23,-216.19 781.66,-200.04 794.52,-185.65"></path> <polygon fill="black" stroke="black" points="797.42,-187.66 801.47,-177.87 792.2,-182.99 797.42,-187.66"></polygon> </g> <!-- to&#45;&gt;onehour --> <g id="edge43" class="edge">
+<title>
+to-&gt;onehour
+</title>
+<path fill="none" stroke="black" d="M834.19,-234.64C846.76,-219.89 867.18,-195.93 882.98,-177.4"></path> <polygon fill="black" stroke="black" points="885.83,-179.45 889.65,-169.57 880.5,-174.91 885.83,-179.45"></polygon> </g> <!-- to&#45;&gt;twohour --> <g id="edge45" class="edge">
+<title>
+to-&gt;twohour
+</title>
+<path fill="none" stroke="black" d="M839.49,-241.31C863.12,-231.25 906.88,-211.01 939.65,-186.59 943.53,-183.69 947.39,-180.36 951.04,-176.91"></path> <polygon fill="black" stroke="black" points="953.58,-179.33 958.2,-169.8 948.64,-174.36 953.58,-179.33"></polygon> </g> <!-- to&#45;&gt;threehour --> <g id="edge47" class="edge">
+<title>
+to-&gt;threehour
+</title>
+<path fill="none" stroke="black" d="M840.71,-244.89C875.35,-238.02 952.74,-219.95 1009.65,-186.59 1013.3,-184.45 1016.91,-181.91 1020.36,-179.2"></path> <polygon fill="black" stroke="black" points="1022.73,-181.78 1028.09,-172.65 1018.2,-176.44 1022.73,-181.78"></polygon> </g> <!-- to&#45;&gt;fourhour --> <g id="edge49" class="edge">
+<title>
+to-&gt;fourhour
+</title>
+<path fill="none" stroke="black" d="M841.23,-247.32C886.27,-244.54 1003.75,-233.01 1087.65,-186.59 1091.66,-184.37 1095.53,-181.57 1099.14,-178.53"></path> <polygon fill="black" stroke="black" points="1101.67,-180.96 1106.62,-171.59 1096.91,-175.83 1101.67,-180.96"></polygon> </g> <!-- to&#45;&gt;fivehour --> <g id="edge51" class="edge">
+<title>
+to-&gt;fivehour
+</title>
+<path fill="none" stroke="black" d="M841.45,-248.62C894.73,-249.07 1049.88,-244.93 1159.65,-186.59 1163.93,-184.31 1168.01,-181.33 1171.77,-178.05"></path> <polygon fill="black" stroke="black" points="1174.25,-180.52 1179,-171.05 1169.38,-175.49 1174.25,-180.52"></polygon> </g> <!-- to&#45;&gt;sixhour --> <g id="edge53" class="edge">
+<title>
+to-&gt;sixhour
+</title>
+<path fill="none" stroke="black" d="M807.33,-237.99C798.22,-232.46 786.22,-226.07 774.65,-222.59 610.47,-173.3 543.07,-265.01 390.65,-186.59 385.93,-184.16 381.61,-180.68 377.8,-176.83"></path> <polygon fill="black" stroke="black" points="380.33,-174.4 371.12,-169.16 375.05,-179 380.33,-174.4"></polygon> </g> <!-- to&#45;&gt;sevenhour --> <g id="edge55" class="edge">
+<title>
+to-&gt;sevenhour
+</title>
+<path fill="none" stroke="black" d="M807.29,-238.1C798.18,-232.61 786.18,-226.22 774.65,-222.59 646.54,-182.31 597.67,-240.43 474.65,-186.59 470.8,-184.9 467.03,-182.75 463.44,-180.33"></path> <polygon fill="black" stroke="black" points="465.5,-177.5 455.4,-174.3 461.3,-183.1 465.5,-177.5"></polygon> </g> <!-- to&#45;&gt;eighthour --> <g id="edge57" class="edge">
+<title>
+to-&gt;eighthour
+</title>
+<path fill="none" stroke="black" d="M807.24,-238.28C798.1,-232.85 786.1,-226.45 774.65,-222.59 679.93,-190.64 642.58,-230.21 552.65,-186.59 548.74,-184.69 544.95,-182.28 541.36,-179.6"></path> <polygon fill="black" stroke="black" points="543.33,-176.69 533.4,-173 538.86,-182.08 543.33,-176.69"></polygon> </g> <!-- to&#45;&gt;ninehour --> <g id="edge59" class="edge">
+<title>
+to-&gt;ninehour
+</title>
+<path fill="none" stroke="black" d="M807.12,-238.61C797.94,-233.28 785.94,-226.89 774.65,-222.59 710.97,-198.37 685.11,-219.83 625.65,-186.59 621.84,-184.46 618.16,-181.82 614.7,-178.94"></path> <polygon fill="black" stroke="black" points="616.79,-176.11 607.06,-171.93 612.06,-181.27 616.79,-176.11"></polygon> </g> <!-- to&#45;&gt;tenhour --> <g id="edge61" class="edge">
+<title>
+to-&gt;tenhour
+</title>
+<path fill="none" stroke="black" d="M806.83,-239.29C797.56,-234.19 785.56,-227.8 774.65,-222.59 737.62,-204.92 723.02,-210.46 689.65,-186.59 685.54,-183.65 681.59,-180.1 677.94,-176.4"></path> <polygon fill="black" stroke="black" points="680.27,-173.75 670.95,-168.71 675.09,-178.46 680.27,-173.75"></polygon> </g> <!-- to&#45;&gt;elevenhour --> <g id="edge63" class="edge">
+<title>
+to-&gt;elevenhour
+</title>
+<path fill="none" stroke="black" d="M810.41,-234.64C798.86,-221.86 781.06,-202.17 765.61,-185.08"></path> <polygon fill="black" stroke="black" points="768.02,-182.52 758.71,-177.44 762.82,-187.21 768.02,-182.52"></polygon> </g> <!-- to&#45;&gt;twelvehour --> <g id="edge65" class="edge">
+<title>
+to-&gt;twelvehour
+</title>
+<path fill="none" stroke="black" d="M823.2,-230.32C823.49,-220.9 823.86,-208.85 824.22,-197"></path> <polygon fill="black" stroke="black" points="827.73,-196.81 824.54,-186.71 820.73,-196.6 827.73,-196.81"></polygon> </g> <!-- oclock --> <g id="node36" class="node">
+<title>
+oclock
+</title>
+<ellipse fill="lightblue" stroke="black" cx="779.65" cy="-38.52" rx="38.53" ry="38.53"></ellipse> <text text-anchor="middle" x="779.65" y="-34.32" font-family="Times,serif" font-size="14.00">o’clock</text> </g> <!-- onehour&#45;&gt;oclock --> <g id="edge66" class="edge">
+<title>
+onehour-&gt;oclock
+</title>
+<path fill="none" stroke="black" d="M889.16,-130.51C883.74,-124.75 877.58,-118.48 871.65,-113.03 854.82,-97.59 835.16,-81.62 818.34,-68.53"></path> <polygon fill="black" stroke="black" points="820.39,-65.7 810.34,-62.35 816.11,-71.24 820.39,-65.7"></polygon> </g> <!-- twohour&#45;&gt;oclock --> <g id="edge67" class="edge">
+<title>
+twohour-&gt;oclock
+</title>
+<path fill="none" stroke="black" d="M958.36,-129.61C952.82,-123.81 946.32,-117.74 939.65,-113.03 904.16,-88.04 858.82,-68.16 825.47,-55.4"></path> <polygon fill="black" stroke="black" points="826.56,-52.07 815.97,-51.84 824.1,-58.63 826.56,-52.07"></polygon> </g> <!-- threehour&#45;&gt;oclock --> <g id="edge68" class="edge">
+<title>
+threehour-&gt;oclock
+</title>
+<path fill="none" stroke="black" d="M1028.12,-126.94C1022.51,-121.85 1016.16,-116.82 1009.65,-113.03 951.42,-79.25 875.75,-58.92 827.42,-48.46"></path> <polygon fill="black" stroke="black" points="828.05,-45.02 817.54,-46.38 826.6,-51.87 828.05,-45.02"></polygon> </g> <!-- fourhour&#45;&gt;oclock --> <g id="edge69" class="edge">
+<title>
+fourhour-&gt;oclock
+</title>
+<path fill="none" stroke="black" d="M1106.6,-128.06C1101.08,-122.46 1094.57,-116.89 1087.65,-113.03 1003.94,-66.4 891.44,-49.19 828.16,-42.95"></path> <polygon fill="black" stroke="black" points="828.34,-39.45 818.06,-42.01 827.69,-46.42 828.34,-39.45"></polygon> </g> <!-- fivehour&#45;&gt;oclock --> <g id="edge70" class="edge">
+<title>
+fivehour-&gt;oclock
+</title>
+<path fill="none" stroke="black" d="M1178.98,-128.61C1173.47,-122.76 1166.84,-116.91 1159.65,-113.03 1051.43,-54.79 903.88,-42.24 828.43,-39.83"></path> <polygon fill="black" stroke="black" points="828.37,-36.33 818.28,-39.55 828.18,-43.32 828.37,-36.33"></polygon> </g> <!-- sixhour&#45;&gt;oclock --> <g id="edge71" class="edge">
+<title>
+sixhour-&gt;oclock
+</title>
+<path fill="none" stroke="black" d="M371.62,-130.46C376.73,-124 383.24,-117.3 390.65,-113.03 500.19,-50.05 653.03,-39.61 730.47,-38.74"></path> <polygon fill="black" stroke="black" points="730.91,-42.23 740.89,-38.67 730.87,-35.23 730.91,-42.23"></polygon> </g> <!-- sevenhour&#45;&gt;oclock --> <g id="edge72" class="edge">
+<title>
+sevenhour-&gt;oclock
+</title>
+<path fill="none" stroke="black" d="M455.67,-125.89C461.49,-121.07 467.99,-116.43 474.65,-113.03 558.78,-70.19 668.82,-51.66 731.11,-44.16"></path> <polygon fill="black" stroke="black" points="731.52,-47.63 741.05,-43.01 730.72,-40.68 731.52,-47.63"></polygon> </g> <!-- eighthour&#45;&gt;oclock --> <g id="edge73" class="edge">
+<title>
+eighthour-&gt;oclock
+</title>
+<path fill="none" stroke="black" d="M534.18,-126.95C539.8,-121.86 546.14,-116.83 552.65,-113.03 609.83,-79.7 684.06,-59.34 731.78,-48.74"></path> <polygon fill="black" stroke="black" points="732.8,-52.1 741.84,-46.56 731.32,-45.26 732.8,-52.1"></polygon> </g> <!-- ninehour&#45;&gt;oclock --> <g id="edge74" class="edge">
+<title>
+ninehour-&gt;oclock
+</title>
+<path fill="none" stroke="black" d="M607.62,-128.58C613.07,-123.12 619.31,-117.5 625.65,-113.03 659.44,-89.22 702.16,-69.52 734.03,-56.53"></path> <polygon fill="black" stroke="black" points="735.57,-59.68 743.55,-52.71 732.96,-53.18 735.57,-59.68"></polygon> </g> <!-- tenhour&#45;&gt;oclock --> <g id="edge75" class="edge">
+<title>
+tenhour-&gt;oclock
+</title>
+<path fill="none" stroke="black" d="M672.1,-131.56C677.42,-125.51 683.62,-118.79 689.65,-113.03 705.66,-97.72 724.51,-82.01 740.8,-69.07"></path> <polygon fill="black" stroke="black" points="743.37,-71.5 749.06,-62.57 739.04,-66 743.37,-71.5"></polygon> </g> <!-- elevenhour&#45;&gt;oclock --> <g id="edge76" class="edge">
+<title>
+elevenhour-&gt;oclock
+</title>
+<path fill="none" stroke="black" d="M748.15,-116.02C752.31,-105.9 756.97,-94.59 761.4,-83.84"></path> <polygon fill="black" stroke="black" points="764.64,-85.15 765.21,-74.57 758.17,-82.48 764.64,-85.15"></polygon> </g> <!-- twelvehour&#45;&gt;oclock --> <g id="edge77" class="edge">
+<title>
+twelvehour-&gt;oclock
+</title>
+<path fill="none" stroke="black" d="M811.72,-115.72C807.47,-105.62 802.72,-94.34 798.21,-83.62"></path> <polygon fill="black" stroke="black" points="801.43,-82.25 794.32,-74.39 794.98,-84.96 801.43,-82.25"></polygon> </g> </g>
+</svg>
+</div>
+</div>
+</div>
+</div>
+<p>In code this can be specified as follows:</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Words to fill. Each tuple is (ID, word, preceding)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>words <span class="op">=</span> [</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">0</span>, <span class="st">"it"</span>, []), </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span>, <span class="st">"is"</span>, [<span class="dv">0</span>]),</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2</span>, <span class="st">"twenty"</span>, [<span class="dv">1</span>]),</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3</span>, <span class="st">"half"</span>, [<span class="dv">1</span>]),</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">4</span>, <span class="st">"ten"</span>, [<span class="dv">1</span>]),</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">5</span>, <span class="st">"eleven"</span>, [<span class="dv">1</span>]),</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">6</span>, <span class="st">"twelve"</span>, [<span class="dv">1</span>]),</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">7</span>, <span class="st">"thirteen"</span>, [<span class="dv">1</span>]),</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">8</span>, <span class="st">"fourteen"</span>, [<span class="dv">2</span>]),</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">9</span>, <span class="st">"sixteen"</span>, [<span class="dv">2</span>]),</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">10</span>, <span class="st">"seventeen"</span>, [<span class="dv">2</span>]),</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">11</span>, <span class="st">"eighteen"</span>, [<span class="dv">2</span>]),</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">12</span>, <span class="st">"nineteen"</span>, [<span class="dv">2</span>]),</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">13</span>, <span class="st">"a"</span>, [<span class="dv">1</span>]),</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">14</span>, <span class="st">"quarter"</span>, [<span class="dv">13</span>]),</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">15</span>, <span class="st">"one"</span>, [<span class="dv">2</span>]),</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">16</span>, <span class="st">"two"</span>, [<span class="dv">2</span>]),</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">17</span>, <span class="st">"three"</span>, [<span class="dv">2</span>]),</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">18</span>, <span class="st">"five"</span>, [<span class="dv">2</span>]),</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">19</span>, <span class="st">"minutes"</span>, [<span class="dv">15</span>, <span class="dv">16</span>, <span class="dv">17</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">10</span>, <span class="dv">11</span>, <span class="dv">12</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>]),</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">20</span>, <span class="st">"past"</span>, [<span class="dv">19</span>, <span class="dv">18</span>, <span class="dv">4</span>, <span class="dv">14</span>, <span class="dv">2</span>, <span class="dv">3</span>]),</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">21</span>, <span class="st">"to"</span>, [<span class="dv">19</span>, <span class="dv">18</span>, <span class="dv">4</span>, <span class="dv">14</span>, <span class="dv">2</span>]),</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">22</span>, <span class="st">"one"</span>, [<span class="dv">20</span>, <span class="dv">21</span>]),</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">23</span>, <span class="st">"two"</span>, [<span class="dv">20</span>, <span class="dv">21</span>]),</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">24</span>, <span class="st">"three"</span>, [<span class="dv">20</span>, <span class="dv">21</span>]),</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">25</span>, <span class="st">"four"</span>, [<span class="dv">20</span>, <span class="dv">21</span>]),</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">26</span>, <span class="st">"five"</span>, [<span class="dv">20</span>, <span class="dv">21</span>]),</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">27</span>, <span class="st">"six"</span>, [<span class="dv">20</span>, <span class="dv">21</span>]),</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">28</span>, <span class="st">"seven"</span>, [<span class="dv">20</span>, <span class="dv">21</span>]),</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">29</span>, <span class="st">"eight"</span>, [<span class="dv">20</span>, <span class="dv">21</span>]),</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">30</span>, <span class="st">"nine"</span>, [<span class="dv">20</span>, <span class="dv">21</span>]),</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">31</span>, <span class="st">"ten"</span>, [<span class="dv">20</span>, <span class="dv">21</span>]),</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">32</span>, <span class="st">"eleven"</span>, [<span class="dv">20</span>, <span class="dv">21</span>]),</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">33</span>, <span class="st">"twelve"</span>, [<span class="dv">20</span>, <span class="dv">21</span>]),</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">34</span>, <span class="st">"oclock"</span>, [<span class="dv">22</span>, <span class="dv">23</span>, <span class="dv">24</span>, <span class="dv">25</span>, <span class="dv">26</span>, <span class="dv">27</span>, <span class="dv">28</span>, <span class="dv">29</span>, <span class="dv">30</span>, <span class="dv">31</span>, <span class="dv">32</span>, <span class="dv">33</span>])</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Each word is specified by a tuple of the form <code>(id, word, preceding)</code>. The <code>id</code> is an integer that uniquely identifies the word. The <code>word</code> is the word to be placed. The <code>preceding</code> is a list of integers that specify which words must be placed before this word.</p>
+</section>
+<section id="filling-the-grid" class="level2">
+<h2 class="anchored" data-anchor-id="filling-the-grid">Filling the grid</h2>
+<p>We ensure that each word is readable in either a left-to-right or top-down direction, never in reverse.</p>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>directions <span class="op">=</span> [(<span class="dv">1</span>, <span class="dv">0</span>), (<span class="dv">0</span>, <span class="dv">1</span>), (<span class="dv">1</span>, <span class="dv">1</span>), (<span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The following function returns a list of identifiers of words that are ready to be placed in the grid. This is done by checking if all preceding words are placed in the grid. If so, the word is ready to be placed. At first, the only word that can be placed is the word <em>it</em> because its list of preceding words is empty.</p>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> placeable_word_ids(words):</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    unplaced_word_ids <span class="op">=</span> [<span class="bu">id</span> <span class="cf">for</span> (<span class="bu">id</span>, _, loc, _, _) <span class="kw">in</span> words <span class="cf">if</span> loc <span class="kw">is</span> <span class="va">None</span>]</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [<span class="bu">id</span> <span class="cf">for</span> (<span class="bu">id</span>, _, loc, _, prec) <span class="kw">in</span> words <span class="cf">if</span> <span class="kw">not</span> <span class="bu">any</span>(prec_id <span class="kw">in</span> unplaced_word_ids <span class="cf">for</span> prec_id <span class="kw">in</span> prec) <span class="kw">and</span> loc <span class="kw">is</span> <span class="va">None</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The following function checks is a word can be placed in the grid in a given direction and location.</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> can_place_word(word, grid, <span class="bu">dir</span>, r, c):</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    height <span class="op">=</span> <span class="bu">len</span>(grid)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    width <span class="op">=</span> <span class="bu">len</span>(grid[<span class="dv">0</span>])</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    d_x, d_y <span class="op">=</span> <span class="bu">dir</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> c <span class="op">+</span> <span class="bu">len</span>(word) <span class="op">*</span> d_x <span class="op">&gt;</span> width <span class="kw">or</span> r <span class="op">+</span> <span class="bu">len</span>(word) <span class="op">*</span> d_y <span class="op">&gt;</span> height <span class="kw">or</span> c <span class="op">+</span> <span class="bu">len</span>(word) <span class="op">*</span> d_x <span class="op">&lt;</span> <span class="dv">0</span> <span class="kw">or</span> r <span class="op">+</span> <span class="bu">len</span>(word) <span class="op">*</span> d_y <span class="op">&lt;</span> <span class="dv">0</span>:</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">False</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i, ch <span class="kw">in</span> <span class="bu">enumerate</span>(word):</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> grid[r <span class="op">+</span> i <span class="op">*</span> d_y][c <span class="op">+</span> i <span class="op">*</span> d_x] <span class="kw">not</span> <span class="kw">in</span> [<span class="st">'?'</span>, ch]: </span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="va">False</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">True</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>If a word can be placed, we call the following function to place it. The original content is returned so we can backtrack later.</p>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> replace_characters(word, grid, <span class="bu">dir</span>, r, c):</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    height <span class="op">=</span> <span class="bu">len</span>(grid)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    width <span class="op">=</span> <span class="bu">len</span>(grid[<span class="dv">0</span>])</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    previous <span class="op">=</span> <span class="st">""</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    d_x, d_y <span class="op">=</span> <span class="bu">dir</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i, ch <span class="kw">in</span> <span class="bu">enumerate</span>(word):</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        previous <span class="op">+=</span> grid[r <span class="op">+</span> i <span class="op">*</span> d_y][c <span class="op">+</span> i <span class="op">*</span> d_x]</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        grid[r <span class="op">+</span> i <span class="op">*</span> d_y][c <span class="op">+</span> i <span class="op">*</span> d_x] <span class="op">=</span> ch</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> previous</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>A recursive generator function attempts to fill a grid with words. It uses backtracking to explore possible word placements in different directions.</p>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fill_grid_(grid, words, i<span class="op">=</span><span class="dv">0</span>):</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    height <span class="op">=</span> <span class="bu">len</span>(grid)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    width <span class="op">=</span> <span class="bu">len</span>(grid[<span class="dv">0</span>])</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    ids <span class="op">=</span> placeable_word_ids(words)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> ids:</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">yield</span> grid, words</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> i <span class="op">&lt;</span> height <span class="op">*</span> width:</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        row <span class="op">=</span> i <span class="op">//</span> width</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>        col <span class="op">=</span> i <span class="op">%</span> width</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="bu">id</span> <span class="kw">in</span> ids:</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>            dir_length <span class="op">=</span> <span class="bu">len</span>(directions)</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> d <span class="kw">in</span> <span class="bu">range</span>(dir_length):</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>                <span class="bu">dir</span> <span class="op">=</span> directions[(i <span class="op">+</span> d) <span class="op">%</span> dir_length]</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> can_place_word(words[<span class="bu">id</span>][<span class="dv">1</span>], grid, <span class="bu">dir</span>, row, col):</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>                    previous <span class="op">=</span> replace_characters(words[<span class="bu">id</span>][<span class="dv">1</span>], grid, <span class="bu">dir</span>, row, col)</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>                    words[<span class="bu">id</span>] <span class="op">=</span> (<span class="bu">id</span>, words[<span class="bu">id</span>][<span class="dv">1</span>], (col, row), <span class="bu">dir</span>, words[<span class="bu">id</span>][<span class="dv">4</span>])</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">yield</span> <span class="cf">from</span> fill_grid_(grid, words, i<span class="op">+</span><span class="dv">1</span>)</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>                    words[<span class="bu">id</span>] <span class="op">=</span> (<span class="bu">id</span>, words[<span class="bu">id</span>][<span class="dv">1</span>], <span class="va">None</span>, <span class="va">None</span>, words[<span class="bu">id</span>][<span class="dv">4</span>])</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>                    replace_characters(previous, grid, <span class="bu">dir</span>, row, col)</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>            <span class="cf">yield</span> <span class="cf">from</span> fill_grid_(grid, words, i<span class="op">+</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The function <code>fill_grid</code> is a wrapper function that initializes the grid and calls <code>fill_grid_</code>.</p>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fill_grid(width, height):</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    loc_dir_words <span class="op">=</span> [(<span class="bu">id</span>, word, <span class="va">None</span>, <span class="va">None</span>, prec) <span class="cf">for</span> (<span class="bu">id</span>, word, prec) <span class="kw">in</span> words]</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    grid <span class="op">=</span> [[<span class="st">'?'</span> <span class="cf">for</span> c <span class="kw">in</span> <span class="bu">range</span>(width)] <span class="cf">for</span> r <span class="kw">in</span> <span class="bu">range</span>(height)]</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">yield</span> <span class="cf">from</span> fill_grid_(grid, loc_dir_words, <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We call this wrapper function as follows:</p>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>gen <span class="op">=</span> fill_grid(<span class="dv">15</span>, <span class="dv">11</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>(g, w) <span class="op">=</span> <span class="bu">next</span>(gen)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This returns a filled grid with a width of 15 and a height of 11. These dimensions were found experimentally. The digital photo frame that I’m using has an aspect ratio of 4:3. It makes sense to use a grid with a similar aspect ratio. I started with a width of 16 and height of 12, but that yielded grids with too many unoccupied spaces. Using 15 by 11 deviates only slightly from a 4:3 aspect ratio.</p>
+<p>Let’s look at the grid.</p>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<pre><code>[['i', 't', 'i', 't', 'w', 'e', 'n', 't', 'y', 'h', 'a', 'o', 'n', 'e', 't'],
+ ['t', 'f', 's', 's', '?', 'l', 'q', 'i', 'e', 't', 'a', '?', '?', 'i', 'w'],
+ ['h', 'o', 'i', 't', 'e', 'e', 'f', 'u', 'n', 'n', 'w', 'l', '?', 'g', 'e'],
+ ['i', 'u', 'x', 'h', 'm', 'v', 'p', 'i', 'a', 'e', 't', 'o', 'f', 'h', 'l'],
+ ['r', 'r', 't', 'r', 'i', 'e', 'e', 'a', 'v', 'r', 't', 'n', 'i', 't', 'v'],
+ ['t', 't', 'e', 'e', 'n', 'n', 'i', 'n', 's', 'e', 't', 'e', 'v', 'e', 'e'],
+ ['e', 'e', 'e', 'e', 'u', 'i', 't', 'g', 't', 't', 'l', 'e', 'e', 'e', 'f'],
+ ['e', 'e', 'n', 's', 't', '?', 'n', 'w', 'h', 'e', 'h', 'e', 'r', 'n', 'o'],
+ ['n', 'n', '?', 'i', 'e', '?', '?', 'e', 'o', 't', 'e', 'r', 'v', '?', 'u'],
+ ['?', '?', '?', 'x', 's', 'e', 'v', 'e', 'n', '?', '?', 'n', 'e', 'e', 'r'],
+ ['t', 'w', 'e', 'l', 'v', 'e', 'o', 'c', 'l', 'o', 'c', 'k', '?', 'e', 'n']]</code></pre>
+</div>
+</div>
+<p>And how the words are placed.</p>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>w</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<pre><code>[(0, 'it', (0, 0), (1, 0), []),
+ (1, 'is', (2, 0), (1, 1), [0]),
+ (2, 'twenty', (3, 0), (1, 0), [1]),
+ (3, 'half', (9, 0), (1, 1), [1]),
+ (4, 'ten', (7, 0), (1, 1), [1]),
+ (5, 'eleven', (5, 0), (0, 1), [1]),
+ (6, 'twelve', (14, 0), (0, 1), [1]),
+ (7, 'thirteen', (0, 1), (0, 1), [1]),
+ (8, 'fourteen', (1, 1), (0, 1), [2]),
+ (9, 'sixteen', (2, 1), (0, 1), [2]),
+ (10, 'seventeen', (3, 1), (1, 1), [2]),
+ (11, 'eighteen', (13, 0), (0, 1), [2]),
+ (12, 'nineteen', (6, 0), (1, 1), [2]),
+ (13, 'a', (10, 0), (1, 1), [1]),
+ (14, 'quarter', (6, 1), (1, 1), [13]),
+ (15, 'one', (11, 0), (1, 0), [2]),
+ (16, 'two', (9, 1), (1, 1), [2]),
+ (17, 'three', (3, 2), (0, 1), [2]),
+ (18, 'five', (6, 2), (1, 1), [2]),
+ (19, 'minutes', (4, 3), (0, 1), [15, 16, 17, 8, 9, 10, 11, 12, 5, 6, 7]),
+ (20, 'past', (6, 3), (1, 1), [19, 18, 4, 14, 2, 3]),
+ (21, 'to', (10, 3), (1, 0), [19, 18, 4, 14, 2]),
+ (22, 'one', (11, 3), (0, 1), [20, 21]),
+ (23, 'two', (6, 6), (1, 1), [20, 21]),
+ (24, 'three', (9, 6), (1, 1), [20, 21]),
+ (25, 'four', (14, 6), (0, 1), [20, 21]),
+ (26, 'five', (12, 3), (0, 1), [20, 21]),
+ (27, 'six', (3, 7), (0, 1), [20, 21]),
+ (28, 'seven', (4, 9), (1, 0), [20, 21]),
+ (29, 'eight', (5, 4), (1, 1), [20, 21]),
+ (30, 'nine', (4, 5), (1, 1), [20, 21]),
+ (31, 'ten', (0, 5), (1, 1), [20, 21]),
+ (32, 'eleven', (9, 5), (1, 1), [20, 21]),
+ (33, 'twelve', (0, 10), (1, 0), [20, 21]),
+ (34,
+  'oclock',
+  (6, 10),
+  (1, 0),
+  [22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33])]</code></pre>
+</div>
+</div>
+</section>
+<section id="occupying-vacant-spaces-in-the-grid" class="level2">
+<h2 class="anchored" data-anchor-id="occupying-vacant-spaces-in-the-grid">Occupying vacant spaces in the grid</h2>
+<p>Not all spaces in the grid are filled as indicated by the question marks. Let’s see how many are empty.</p>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="bu">sum</span>(row.count(<span class="st">'?'</span>) <span class="cf">for</span> row <span class="kw">in</span> g)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<pre><code>15</code></pre>
+</div>
+</div>
+<p>We can fill these spaces with some sage words.</p>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> remove_spaces_and_punctuation(input_string):</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Remove spaces</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    no_spaces <span class="op">=</span> input_string.replace(<span class="st">" "</span>, <span class="st">""</span>)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Remove punctuation</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    translator <span class="op">=</span> <span class="bu">str</span>.maketrans(<span class="st">""</span>, <span class="st">""</span>, string.punctuation)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    no_punctuation <span class="op">=</span> no_spaces.translate(translator)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> no_punctuation</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> replace_question_marks(grid, phrase):</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    chars <span class="op">=</span> remove_spaces_and_punctuation(phrase)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    i <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> row <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(grid)):</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> col <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(grid[row])):</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> grid[row][col] <span class="op">==</span> <span class="st">'?'</span> <span class="kw">and</span> i <span class="op">&lt;</span> <span class="bu">len</span>(chars):</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>                grid[row][col] <span class="op">=</span> chars[i]</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>                i <span class="op">+=</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>replace_question_marks(g, <span class="st">"Time keeps moving"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Spaces and interpunctions are removed before the phrase is placed in the grid.</p>
+</section>
+<section id="plotting-the-grid" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="plotting-the-grid">Plotting the grid</h2>
+<p>Now, we’re ready to visualize the grid using matplotlib. To do so, I defined a few helper functions.</p>
+<p>The following function converts a time to a sentence. The time is given in hours and minutes. The function returns a sentence that describes the time.</p>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> time_to_sentence(hours, minutes):</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Define words for numbers</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    time_words <span class="op">=</span> [<span class="st">"twelve"</span>, <span class="st">"one"</span>, <span class="st">"two"</span>, <span class="st">"three"</span>, <span class="st">"four"</span>, <span class="st">"five"</span>, <span class="st">"six"</span>, <span class="st">"seven"</span>, <span class="st">"eight"</span>, <span class="st">"nine"</span>, <span class="st">"ten"</span>, </span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>             <span class="st">"eleven"</span>, <span class="st">"twelve"</span>, <span class="st">"thirteen"</span>, <span class="st">"fourteen"</span>, <span class="st">"a quarter"</span>, <span class="st">"sixteen"</span>, <span class="st">"seventeen"</span>, <span class="st">"eighteen"</span>, <span class="st">"nineteen"</span>, <span class="st">"twenty"</span>,</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>             <span class="st">"twenty-one"</span>, <span class="st">"twenty-two"</span>, <span class="st">"twenty-three"</span>, <span class="st">"twenty-four"</span>, <span class="st">"twenty-five"</span>, <span class="st">"twenty-six"</span>, <span class="st">"twenty-seven"</span>, <span class="st">"twenty-eight"</span>, <span class="st">"twenty-nine"</span>, <span class="st">"half"</span>]</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Convert hours and minutes to words</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> minutes <span class="op">&lt;=</span> <span class="dv">30</span>:</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>        hour_word <span class="op">=</span> time_words[hours <span class="op">%</span> <span class="dv">12</span>]</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>        minute_word <span class="op">=</span> time_words[minutes]</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>        hour_word <span class="op">=</span> time_words[(hours<span class="op">+</span><span class="dv">1</span>) <span class="op">%</span> <span class="dv">12</span>]</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>        minute_word <span class="op">=</span> time_words[<span class="dv">60</span> <span class="op">-</span> minutes]</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Determine whether it's past or to</span></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> minutes <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>        time_phrase <span class="op">=</span> <span class="ss">f"it is </span><span class="sc">{</span>hour_word<span class="sc">}</span><span class="ss"> o'clock"</span></span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> minutes <span class="kw">in</span> [<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">20</span>, <span class="dv">25</span>, <span class="dv">30</span>]:</span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>        time_phrase <span class="op">=</span> <span class="ss">f"it is </span><span class="sc">{</span>minute_word<span class="sc">}</span><span class="ss"> past </span><span class="sc">{</span>hour_word<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> minutes <span class="kw">in</span> [<span class="dv">35</span>, <span class="dv">40</span>, <span class="dv">45</span>, <span class="dv">50</span>, <span class="dv">55</span>]:</span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>        time_phrase <span class="op">=</span> <span class="ss">f"it is </span><span class="sc">{</span>minute_word<span class="sc">}</span><span class="ss"> to </span><span class="sc">{</span>hour_word<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> minutes <span class="op">==</span> <span class="dv">1</span>:</span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>        time_phrase <span class="op">=</span> <span class="ss">f"it is </span><span class="sc">{</span>minute_word<span class="sc">}</span><span class="ss"> minute past </span><span class="sc">{</span>hour_word<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> minutes <span class="op">==</span> <span class="dv">59</span>:</span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>        time_phrase <span class="op">=</span> <span class="ss">f"it is </span><span class="sc">{</span>minute_word<span class="sc">}</span><span class="ss"> minute to </span><span class="sc">{</span>hour_word<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> minutes <span class="op">&lt;</span> <span class="dv">30</span>:</span>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a>        time_phrase <span class="op">=</span> <span class="ss">f"it is </span><span class="sc">{</span>minute_word<span class="sc">}</span><span class="ss"> minutes past </span><span class="sc">{</span>hour_word<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a>        time_phrase <span class="op">=</span> <span class="ss">f"it is </span><span class="sc">{</span>minute_word<span class="sc">}</span><span class="ss"> minutes to </span><span class="sc">{</span>hour_word<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> time_phrase</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s test this function.</p>
+<div class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(time_to_sentence(<span class="dv">10</span>, <span class="dv">23</span>))</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(time_to_sentence(<span class="dv">0</span>, <span class="dv">8</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>it is twenty-three minutes past ten
+it is eight minutes past twelve</code></pre>
+</div>
+</div>
+<p>We use a helper function that returns the word at a given location.</p>
+<div class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> word_at_location(words, r, c):</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (<span class="bu">id</span>, word, (x, y), <span class="bu">dir</span>, prec) <span class="kw">in</span> words:</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> x <span class="op">==</span> c <span class="kw">and</span> y <span class="op">==</span> r:</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> (<span class="bu">id</span>, word, (x, y), <span class="bu">dir</span>, prec)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">None</span>        </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The following function then finally plots the grid using matplotlib. It calls the <code>time_to_sequence</code> function to get a sentence that describes the time. This sentence is then split into words and the words are then highlighted in the grid. It loops through the positions in the grid from top-left to bottom-right and checks, using <code>word_at_location</code>, whether the word that starts at that position matches the next word in the sentence. If so, the word is highlighted.</p>
+<div class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_grid(grid, words<span class="op">=</span><span class="va">None</span>, hours<span class="op">=</span><span class="va">None</span>, minutes<span class="op">=</span><span class="va">None</span>, ax<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> ax:</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Create a figure and axes</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>        fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">12</span>,<span class="dv">9</span>))</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>        fig <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Give all cells the same value/color</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>    ax.imshow([[<span class="dv">0</span> <span class="cf">for</span> cell <span class="kw">in</span> row] <span class="cf">for</span> row <span class="kw">in</span> grid], cmap<span class="op">=</span><span class="st">'gray'</span>)</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>    ax.patch.set_edgecolor(<span class="st">'black'</span>)</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    ax.patch.set_linewidth(<span class="dv">2</span>)</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Display the letters</span></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(grid)):</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(grid[<span class="dv">0</span>])):</span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>            ax.text(j, i, grid[i][j].upper(), ha<span class="op">=</span><span class="st">'center'</span>, va<span class="op">=</span><span class="st">'center'</span>, fontsize<span class="op">=</span><span class="dv">32</span>, color<span class="op">=</span><span class="st">'white'</span>)</span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Highlight the time</span></span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> <span class="va">None</span> <span class="kw">in</span> [hours, minutes, words]:</span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Highlight the time</span></span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>        time_sentence <span class="op">=</span> time_to_sentence(hours, minutes)</span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>        time_sentence <span class="op">=</span> time_sentence.replace(<span class="st">"-"</span>, <span class="st">" "</span>)</span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>        time_sentence <span class="op">=</span> time_sentence.replace(<span class="st">"'"</span>, <span class="st">""</span>)</span>
+<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a>        time_words <span class="op">=</span> time_sentence.split()</span>
+<span id="cb23-27"><a href="#cb23-27" aria-hidden="true" tabindex="-1"></a>        i <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb23-28"><a href="#cb23-28" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> r <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(grid)):</span>
+<span id="cb23-29"><a href="#cb23-29" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> c <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(grid[<span class="dv">0</span>])):</span>
+<span id="cb23-30"><a href="#cb23-30" aria-hidden="true" tabindex="-1"></a>                word_at_loc <span class="op">=</span> word_at_location(words, r, c)</span>
+<span id="cb23-31"><a href="#cb23-31" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> word_at_loc:</span>
+<span id="cb23-32"><a href="#cb23-32" aria-hidden="true" tabindex="-1"></a>                    (_, word, (x, y), (d_x, d_y), _) <span class="op">=</span> word_at_loc</span>
+<span id="cb23-33"><a href="#cb23-33" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">if</span> i <span class="op">&lt;</span> <span class="bu">len</span>(time_words) <span class="kw">and</span> time_words[i] <span class="op">==</span> word[:<span class="bu">len</span>(time_words[i])]:</span>
+<span id="cb23-34"><a href="#cb23-34" aria-hidden="true" tabindex="-1"></a>                        x_values <span class="op">=</span> [x, x <span class="op">+</span> d_x <span class="op">*</span> (<span class="bu">len</span>(time_words[i])<span class="op">-</span><span class="dv">1</span>) <span class="op">+</span> <span class="fl">0.01</span>]</span>
+<span id="cb23-35"><a href="#cb23-35" aria-hidden="true" tabindex="-1"></a>                        y_values <span class="op">=</span> [y <span class="op">-</span> <span class="fl">0.05</span>, y <span class="op">+</span> d_y <span class="op">*</span> (<span class="bu">len</span>(time_words[i])<span class="op">-</span><span class="dv">1</span>) <span class="op">-</span> <span class="fl">0.05</span>]</span>
+<span id="cb23-36"><a href="#cb23-36" aria-hidden="true" tabindex="-1"></a>                        ax.plot(x_values, y_values, linewidth<span class="op">=</span><span class="dv">35</span>, solid_capstyle<span class="op">=</span><span class="st">'round'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb23-37"><a href="#cb23-37" aria-hidden="true" tabindex="-1"></a>                        i <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb23-38"><a href="#cb23-38" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb23-39"><a href="#cb23-39" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Remove the axes ticks</span></span>
+<span id="cb23-40"><a href="#cb23-40" aria-hidden="true" tabindex="-1"></a>    ax.set_xticks([])</span>
+<span id="cb23-41"><a href="#cb23-41" aria-hidden="true" tabindex="-1"></a>    ax.set_yticks([])</span>
+<span id="cb23-42"><a href="#cb23-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-43"><a href="#cb23-43" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> fig:</span>
+<span id="cb23-44"><a href="#cb23-44" aria-hidden="true" tabindex="-1"></a>        fig.tight_layout()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s plot the grid with the time fourteen minutes past four.</p>
+<div class="cell page-columns page-full" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>plot_grid(g, w, <span class="dv">4</span>, <span class="dv">14</span>)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display column-screen-inset-right">
+<p><img src="index_files/figure-html/cell-21-output-1.png" width="1142" height="843"></p>
+</div>
+</div>
+</section>
+<section id="saving-images-to-file" class="level2">
+<h2 class="anchored" data-anchor-id="saving-images-to-file">Saving images to file</h2>
+<p>We can now generate all images and save them to file. We loop through all hours and minutes and call <code>plot_grid</code> to plot the grid and save it to disk.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>output_directory <span class="op">=</span> <span class="st">'images'</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>os.makedirs(output_directory, exist_ok<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> h <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">12</span>):</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> m <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">60</span>):</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>        plot_grid(g, w, h, m)</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>        file_name <span class="op">=</span> <span class="ss">f"time_</span><span class="sc">{</span>h<span class="sc">:02d}</span><span class="ss">_</span><span class="sc">{</span>m<span class="sc">:02d}</span><span class="ss">.jpg"</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>        file_path <span class="op">=</span> os.path.join(output_directory, file_name)</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>        plt.savefig(file_path, bbox_inches<span class="op">=</span><span class="st">'tight'</span>)</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>        plt.close()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The files are saved as JPEG to the <code>images</code> folder.</p>
+<p>Finally, the images need to be transfered to an SD card or USB flash drive for displaying them on the digital photo frame. I own a Braun DigiFrame 88 photo frame, but any photo frame that allows you to set the display interval of the slideshow should work.</p>
+</section>
+<section id="reflecting-on-the-outcome" class="level2">
+<h2 class="anchored" data-anchor-id="reflecting-on-the-outcome">Reflecting on the outcome</h2>
+<p>I’m happy with how it turned out. It works pretty well, and I think it looks nice on my desk.</p>
+<p>There’s some minor drift as the images don’t switch exactly after 60 seconds. I deal with it by adjusting the image manually once a week or so which is easy enough using the buttons on the back of the device.</p>
+<p>If you want to play with the code to perhaps make a version for another language, check out one of the following links:</p>
+<p><a target="_blank" href="https://kaggle.com/kernels/welcome?src=https://gist.githubusercontent.com/afvanwoudenberg/d6b63c44fdb2a1c6a36aef6529436997/raw/38e9a94d288d908ac81b1f12c9a70e5c972e39be/word_search_clock.ipynb"><img src="https://kaggle.com/static/images/open-in-kaggle.svg" class="img-fluid" alt="Kaggle"></a> <a target="_blank" href="http://colab.research.google.com/gist/afvanwoudenberg/d6b63c44fdb2a1c6a36aef6529436997/word_search_clock.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" class="img-fluid" alt="Colab"></a> <a target="_blank" href="https://gist.github.com/afvanwoudenberg/d6b63c44fdb2a1c6a36aef6529436997"><img src="https://shields.io/badge/-View%20as%20Gist-grey.svg?logo=github&amp;style=flat&amp;logoColor=white&amp;labelColor=black" class="img-fluid" alt="GitHub"></a></p>
+<p>You can also download just the images from <a href="images.zip">here</a>.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="afvanwoudenberg/afvanwoudenberg.github.io" data-repo-id="R_kgDOIvCGfg" data-category="General" data-category-id="DIC_kwDOIvCGfs4CWx2r" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

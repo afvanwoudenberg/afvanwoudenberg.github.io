@@ -1,0 +1,839 @@
+day,month,year,name,bio,url
+1,1,1878,Agner Krarup Erlang,"Danish mathematician, statistician, and engineer (d. 1929)",https://en.wikipedia.org/wiki/Agner_Krarup_Erlang
+1,1,1894,Satyendra Nath Bose,Indian physicist and mathematician (d. 1974),https://en.wikipedia.org/wiki/Satyendra_Nath_Bose
+1,1,1905,Stanisław Mazur,Ukrainian-Polish mathematician and theorist (d. 1981),https://en.wikipedia.org/wiki/Stanis%C5%82aw_Mazur
+1,1,1912,Boris Vladimirovich Gnedenko,Russian mathematician and historian (d. 1995),https://en.wikipedia.org/wiki/Boris_Vladimirovich_Gnedenko
+2,1,1803,Guglielmo Libri Carucci dalla Sommaja,Italian mathematician and academic (d. 1869),https://en.wikipedia.org/wiki/Guglielmo_Libri_Carucci_dalla_Sommaja
+2,1,1822,Rudolf Clausius,Polish-German physicist and mathematician (d. 1888),https://en.wikipedia.org/wiki/Rudolf_Clausius
+3,1,1975,Danica McKellar,American actress and mathematician,https://en.wikipedia.org/wiki/Danica_McKellar
+4,1,1643,Isaac Newton,English mathematician and physicist (d. 1726/27),https://en.wikipedia.org/wiki/Isaac_Newton
+5,1,1838,Camille Jordan,French mathematician and academic (d. 1922),https://en.wikipedia.org/wiki/Camille_Jordan
+5,1,1909,Stephen Cole Kleene,American mathematician and computer scientist (d. 1994),https://en.wikipedia.org/wiki/Stephen_Cole_Kleene
+6,1,1561,Thomas Fincke,Danish mathematician and physicist (d. 1656),https://en.wikipedia.org/wiki/Thomas_Fincke
+6,1,1807,Joseph Petzval,German-Hungarian mathematician and physicist (d. 1891),https://en.wikipedia.org/wiki/Joseph_Petzval
+7,1,1871,Émile Borel,French mathematician and politician (d. 1956),https://en.wikipedia.org/wiki/%C3%89mile_Borel
+8,1,1888,Richard Courant,German-American mathematician and academic (d. 1972),https://en.wikipedia.org/wiki/Richard_Courant
+8,1,1952,Peter McCullagh,Irish mathematician and academic,https://en.wikipedia.org/wiki/Peter_McCullagh
+9,1,1864,Vladimir Steklov,Russian mathematician and physicist (d. 1926),https://en.wikipedia.org/wiki/Vladimir_Steklov_(mathematician)
+10,1,1875,Issai Schur,German mathematician and academic (d. 1941),https://en.wikipedia.org/wiki/Issai_Schur
+10,1,1891,Heinrich Behmann,German mathematician and academic (d. 1970),https://en.wikipedia.org/wiki/Heinrich_Behmann
+10,1,1938,Donald Knuth,American computer scientist and mathematician,https://en.wikipedia.org/wiki/Donald_Knuth
+11,1,1845,Albert Victor Bäcklund,Swedish mathematician and physicist (d. 1912),https://en.wikipedia.org/wiki/Albert_Victor_B%C3%A4cklund
+12,1,1853,Gregorio Ricci-Curbastro,Italian mathematician (d. 1925),https://en.wikipedia.org/wiki/Gregorio_Ricci-Curbastro
+13,1,1900,Gertrude Mary Cox,American mathematician (d. 1978),https://en.wikipedia.org/wiki/Gertrude_Mary_Cox
+13,1,1902,Karl Menger,Austrian-American mathematician from the Vienna Circle (d. 1985),https://en.wikipedia.org/wiki/Karl_Menger
+14,1,1684,Johann Matthias Hase,"German mathematician, astronomer, and cartographer (d. 1742)",https://en.wikipedia.org/wiki/Johann_Matthias_Hase
+14,1,1887,Hugo Steinhaus,Polish mathematician and academic (d. 1972),https://en.wikipedia.org/wiki/Hugo_Steinhaus
+14,1,1901,Alfred Tarski,Polish-American mathematician and philosopher (d. 1983),https://en.wikipedia.org/wiki/Alfred_Tarski
+15,1,1850,Sofia Kovalevskaya,Russian-Swedish mathematician and physicist (d. 1891),https://en.wikipedia.org/wiki/Sofia_Kovalevskaya
+17,1,1574,Robert Fludd,"English physician, astrologer, and mathematician (d. 1637)",https://en.wikipedia.org/wiki/Robert_Fludd
+17,1,1881,Antoni Łomnicki,Polish mathematician and academic (d. 1941),https://en.wikipedia.org/wiki/Antoni_%C5%81omnicki
+18,1,1901,Ivan Petrovsky,Russian mathematician and academic (d. 1973),https://en.wikipedia.org/wiki/Ivan_Petrovsky
+18,1,1908,Jacob Bronowski,"Polish-English mathematician, historian, and television host (d. 1974)",https://en.wikipedia.org/wiki/Jacob_Bronowski
+19,1,1833,Alfred Clebsch,German mathematician and academic (d. 1872),https://en.wikipedia.org/wiki/Alfred_Clebsch
+19,1,1908,Aleksandr Gennadievich Kurosh,Russian mathematician and theorist (d. 1971),https://en.wikipedia.org/wiki/Aleksandr_Gennadievich_Kurosh
+19,1,1912,Leonid Kantorovich,"Russian mathematician and economist, Nobel Prize laureate (d. 1986)",https://en.wikipedia.org/wiki/Leonid_Kantorovich
+20,1,1526,Rafael Bombelli,Italian mathematician (d. 1572),https://en.wikipedia.org/wiki/Rafael_Bombelli
+20,1,1775,André-Marie Ampère,French physicist and mathematician (d. 1836),https://en.wikipedia.org/wiki/Andr%C3%A9-Marie_Amp%C3%A8re
+20,1,1895,Gábor Szegő,Hungarian mathematician and academic (d. 1985),https://en.wikipedia.org/wiki/G%C3%A1bor_Szeg%C5%91
+20,1,1939,Chandra Wickramasinghe,"Sri Lankan-English mathematician, astronomer, and biologist",https://en.wikipedia.org/wiki/Chandra_Wickramasinghe
+21,1,1827,Ivan Mikheevich Pervushin,Russian mathematician and theorist (d. 1900),https://en.wikipedia.org/wiki/Ivan_Mikheevich_Pervushin
+21,1,1846,Pieter Hendrik Schoute,Dutch mathematician and academic (d. 1923),https://en.wikipedia.org/wiki/Pieter_Hendrik_Schoute
+21,1,1874,René-Louis Baire,French mathematician (d. 1932),https://en.wikipedia.org/wiki/Ren%C3%A9-Louis_Baire
+21,1,1882,Pavel Florensky,Russian mathematician and theologian (d. 1937),https://en.wikipedia.org/wiki/Pavel_Florensky
+21,1,1915,André Lichnerowicz,French mathematician (d. 1998),https://en.wikipedia.org/wiki/Andr%C3%A9_Lichnerowicz
+21,1,1947,Dorian M. Goldfeld,American mathematician,https://en.wikipedia.org/wiki/Dorian_M._Goldfeld
+22,1,1592,Pierre Gassendi,"French mathematician, astronomer, and philosopher (d. 1655)",https://en.wikipedia.org/wiki/Pierre_Gassendi
+22,1,1880,Frigyes Riesz,Hungarian mathematician and academic (d. 1956),https://en.wikipedia.org/wiki/Frigyes_Riesz
+23,1,1719,John Landen,English mathematician and theorist (d. 1790),https://en.wikipedia.org/wiki/John_Landen
+23,1,1846,Nikolay Umov,Russian physicist and mathematician (d. 1915),https://en.wikipedia.org/wiki/Nikolay_Umov
+23,1,1862,David Hilbert,German mathematician and academic (d. 1943),https://en.wikipedia.org/wiki/David_Hilbert
+23,1,1889,Claribel Kendall,American mathematician (d.1965),https://en.wikipedia.org/wiki/Claribel_Kendall
+23,1,1946,Boris Berezovsky,Russian-English businessman and mathematician (d. 2013),https://en.wikipedia.org/wiki/Boris_Berezovsky_(businessman)
+24,1,1814,John Colenso,British mathematician (d. 1883),https://en.wikipedia.org/wiki/John_Colenso
+24,1,1863,August Adler,Czech and Austrian mathematician (d. 1923),https://en.wikipedia.org/wiki/August_Adler
+24,1,1931,Lars Hörmander,Swedish mathematician and academic (d. 2012),https://en.wikipedia.org/wiki/Lars_H%C3%B6rmander
+25,1,1736,Joseph-Louis Lagrange,Italian-French mathematician and astronomer (d. 1813),https://en.wikipedia.org/wiki/Joseph-Louis_Lagrange
+26,1,1933,Donald Sarason,American mathematician (d. 2017),https://en.wikipedia.org/wiki/Donald_Sarason
+26,1,1946,Susan Friedlander,American mathematician,https://en.wikipedia.org/wiki/Susan_Friedlander
+27,1,1832,Lewis Carroll,"English novelist, poet, and mathematician (d. 1898)",https://en.wikipedia.org/wiki/Lewis_Carroll
+28,1,1540,Ludolph van Ceulen,German-Dutch mathematician and academic (d. 1610),https://en.wikipedia.org/wiki/Ludolph_van_Ceulen
+28,1,1701,Charles Marie de La Condamine,French mathematician and geographer (d. 1774),https://en.wikipedia.org/wiki/Charles_Marie_de_La_Condamine
+29,1,1810,Ernst Kummer,Polish-German mathematician and academic (d. 1893),https://en.wikipedia.org/wiki/Ernst_Kummer
+29,1,1846,Karol Olszewski,"Polish chemist, mathematician and physicist (d. 1915)",https://en.wikipedia.org/wiki/Karol_Olszewski
+29,1,1888,Sydney Chapman,English mathematician and geophysicist (d. 1970),https://en.wikipedia.org/wiki/Sydney_Chapman_(mathematician)
+29,1,1928,Joseph Kruskal,American mathematician and computer scientist (d. 2010),https://en.wikipedia.org/wiki/Joseph_Kruskal
+31,1,1854,David Emmanuel,Romanian mathematician and academic (d. 1941),https://en.wikipedia.org/wiki/David_Emmanuel_(mathematician)
+31,1,1896,Sofya Yanovskaya,Russian mathematician and historian (d. 1966),https://en.wikipedia.org/wiki/Sofya_Yanovskaya
+1,2,1561,Henry Briggs,British mathematician (d. 1630),https://en.wikipedia.org/wiki/Henry_Briggs_(mathematician)
+2,2,1522,Lodovico Ferrari,Italian mathematician and academic (d. 1565),https://en.wikipedia.org/wiki/Lodovico_Ferrari
+2,2,1786,Jacques Philippe Marie Binet,"French mathematician, physicist, and astronomer (d. 1856)",https://en.wikipedia.org/wiki/Jacques_Philippe_Marie_Binet
+2,2,1842,Julian Sochocki,Polish-Russian mathematician and academic (d. 1927),https://en.wikipedia.org/wiki/Julian_Sochocki
+2,2,1893,Cornelius Lanczos,Hungarian mathematician and physicist (d. 1974),https://en.wikipedia.org/wiki/Cornelius_Lanczos
+2,2,1896,Kazimierz Kuratowski,Polish mathematician and logician (d. 1980),https://en.wikipedia.org/wiki/Kazimierz_Kuratowski
+2,2,1897,Gertrude Blanch,Russian-American mathematician (d. 1996),https://en.wikipedia.org/wiki/Gertrude_Blanch
+3,2,1893,Gaston Julia,Algerian-French mathematician and academic (d. 1978),https://en.wikipedia.org/wiki/Gaston_Julia
+3,2,1905,Arne Beurling,Swedish-American mathematician and academic (d. 1986),https://en.wikipedia.org/wiki/Arne_Beurling
+3,2,1957,Eric Lander,"American mathematician, geneticist, and academic",https://en.wikipedia.org/wiki/Eric_Lander
+4,2,1921,Lotfi Zadeh,Iranian-American mathematician and computer scientist and founder of fuzzy logic (d. 2017),https://en.wikipedia.org/wiki/Lotfi_Zadeh
+4,2,1925,Christopher Zeeman,English mathematician and academic (d. 2016),https://en.wikipedia.org/wiki/Christopher_Zeeman
+5,2,1608,Gaspar Schott,German mathematician and physicist (d. 1666),https://en.wikipedia.org/wiki/Gaspar_Schott
+5,2,1937,Alar Toomre,Estonian-American astronomer and mathematician,https://en.wikipedia.org/wiki/Alar_Toomre
+6,2,1465,Scipione del Ferro,Italian mathematician and theorist (d. 1526),https://en.wikipedia.org/wiki/Scipione_del_Ferro
+6,2,1582,Mario Bettinus,"Italian mathematician, astronomer, and philosopher (d. 1657)",https://en.wikipedia.org/wiki/Mario_Bettinus
+6,2,1612,Antoine Arnauld,"French mathematician, theologian, and philosopher (d. 1694)",https://en.wikipedia.org/wiki/Antoine_Arnauld
+6,2,1695,Nicolaus II Bernoulli,Swiss-Russian mathematician and theorist (d. 1726),https://en.wikipedia.org/wiki/Nicolaus_II_Bernoulli
+6,2,1916,John Crank,English mathematician and physicist (d. 2006),https://en.wikipedia.org/wiki/John_Crank
+6,2,1940,Petr Hájek,Czech mathematician and academic (d. 2016),https://en.wikipedia.org/wiki/Petr_H%C3%A1jek
+7,2,1877,G. H. Hardy,English mathematician and geneticist (d. 1947),https://en.wikipedia.org/wiki/G._H._Hardy
+8,2,120,Vettius Valens,"Greek astronomer, mathematician, and astrologer (d. ~175)",https://en.wikipedia.org/wiki/Vettius_Valens
+8,2,412,Proclus,Greek mathematician and philosopher (d. ~485),https://en.wikipedia.org/wiki/Proclus
+8,2,1700,Daniel Bernoulli,Dutch-Swiss mathematician and physicist (d. 1782),https://en.wikipedia.org/wiki/Daniel_Bernoulli
+9,2,1775,Farkas Bolyai,Hungarian mathematician and academic (d. 1856),https://en.wikipedia.org/wiki/Farkas_Bolyai
+9,2,1880,Lipót Fejér,Hungarian mathematician and academic (d. 1959),https://en.wikipedia.org/wiki/Lip%C3%B3t_Fej%C3%A9r
+9,2,1907,Harold Scott MacDonald Coxeter,English-Canadian mathematician and academic (d. 2003),https://en.wikipedia.org/wiki/Harold_Scott_MacDonald_Coxeter
+9,2,1945,Carol Wood,American mathematician and academic,https://en.wikipedia.org/wiki/Carol_Wood
+11,2,1897,Emil Leon Post,Polish-American mathematician and logician (d.1954),https://en.wikipedia.org/wiki/Emil_Leon_Post
+11,2,1915,Richard Hamming,American mathematician and academic (d. 1998),https://en.wikipedia.org/wiki/Richard_Hamming
+12,2,1908,Jacques Herbrand,French mathematician and philosopher (d. 1931),https://en.wikipedia.org/wiki/Jacques_Herbrand
+12,2,1914,Johanna von Caemmerer,German mathematician (d. 1971),https://en.wikipedia.org/wiki/Hanna_Neumann
+13,2,1523,Valentin Naboth,German astronomer and mathematician (d. 1593),https://en.wikipedia.org/wiki/Valentin_Naboth
+13,2,1805,Peter Gustav Lejeune Dirichlet,German mathematician and academic (d. 1859),https://en.wikipedia.org/wiki/Peter_Gustav_Lejeune_Dirichlet
+14,2,1468,Johannes Werner,German priest and mathematician (d. 1522),https://en.wikipedia.org/wiki/Johannes_Werner
+14,2,1917,Herbert A. Hauptman,"American mathematician and academic, Nobel Prize laureate (d. 2011)",https://en.wikipedia.org/wiki/Herbert_A._Hauptman
+14,2,1973,Annalisa Buffa,Italian mathematician,https://en.wikipedia.org/wiki/Annalisa_Buffa
+14,2,1977,Anna Erschler,Russian mathematician,https://en.wikipedia.org/wiki/Anna_Erschler
+15,2,1564,Galileo Galilei,"Italian astronomer, physicist, and mathematician (d. 1642)",https://en.wikipedia.org/wiki/Galileo_Galilei
+15,2,1850,Sophie Bryant,"Irish mathematician, academic and activist (d. 1922)",https://en.wikipedia.org/wiki/Sophie_Bryant
+15,2,1851,Spiru Haret,"Romanian mathematician, astronomer, and politician, 55th Romanian Minister of Internal Affairs (d. 1912)",https://en.wikipedia.org/wiki/Spiru_Haret
+15,2,1861,Alfred North Whitehead,English mathematician and philosopher (d. 1947),https://en.wikipedia.org/wiki/Alfred_North_Whitehead
+16,2,1698,Pierre Bouguer,"French mathematician, geophysicist, and astronomer (d. 1758)",https://en.wikipedia.org/wiki/Pierre_Bouguer
+16,2,1937,Yuri Manin,Russian-German mathematician and academic (d. 2023),https://en.wikipedia.org/wiki/Yuri_Manin
+17,2,1891,Abraham Fraenkel,German-Israeli mathematician and academic (d. 1965),https://en.wikipedia.org/wiki/Abraham_Fraenkel
+17,2,1905,Rózsa Politzer,Hungarian mathematician (d. 1977),https://en.wikipedia.org/wiki/R%C3%B3zsa_P%C3%A9ter
+17,2,1918,Jacqueline Ferrand,French mathematician (d. 2014),https://en.wikipedia.org/wiki/Jacqueline_Ferrand
+19,2,1473,Nicolaus Copernicus,Prussian mathematician and astronomer (d. 1543),https://en.wikipedia.org/wiki/Nicolaus_Copernicus
+20,2,1931,John Milnor,American mathematician and academic,https://en.wikipedia.org/wiki/John_Milnor
+22,2,1796,Adolphe Quetelet,"Belgian mathematician, astronomer, and sociologist (d. 1874)",https://en.wikipedia.org/wiki/Adolphe_Quetelet
+22,2,1817,Carl Wilhelm Borchardt,German mathematician and academic (d. 1880),https://en.wikipedia.org/wiki/Carl_Wilhelm_Borchardt
+22,2,1824,Pierre Janssen,French astronomer and mathematician (d. 1907),https://en.wikipedia.org/wiki/Pierre_Janssen
+22,2,1849,Nikolay Yakovlevich Sonin,Russian mathematician and academic (d. 1915),https://en.wikipedia.org/wiki/Nikolay_Yakovlevich_Sonin
+22,2,1903,Frank P. Ramsey,"English economist, mathematician, and philosopher (d. 1930)",https://en.wikipedia.org/wiki/Frank_Ramsey_(mathematician)
+23,2,1583,Jean-Baptiste Morin,"French mathematician, astrologer, and astronomer (d. 1656)",https://en.wikipedia.org/wiki/Jean-Baptiste_Morin_(mathematician)
+24,2,1946,Grigory Margulis,Russian mathematician and academic,https://en.wikipedia.org/wiki/Grigory_Margulis
+25,2,1670,Maria Margarethe Kirch,German astronomer and mathematician (d. 1720),https://en.wikipedia.org/wiki/Maria_Margarethe_Kirch
+25,2,1926,Masatoshi Gündüz Ikeda,Japanese-Turkish mathematician and academic; developed algebraic number theory (d. 2003),https://en.wikipedia.org/wiki/Masatoshi_G%C3%BCnd%C3%BCz_Ikeda
+26,2,1786,François Arago,"French mathematician and politician, 25th Prime Minister of France (d. 1853)",https://en.wikipedia.org/wiki/Fran%C3%A7ois_Arago
+26,2,1976,Nalini Anantharaman,French mathematician,https://en.wikipedia.org/wiki/Nalini_Anantharaman
+27,2,1881,L. E. J. Brouwer,"Dutch mathematician, philosopher, and academic (d. 1966)",https://en.wikipedia.org/wiki/L._E._J._Brouwer
+27,2,1903,Hans Rohrbach,German mathematician (d. 1993),https://en.wikipedia.org/wiki/Hans_Rohrbach
+27,2,1927,Peter Whittle,English-New Zealand mathematician and theorist (d. 2021) ,https://en.wikipedia.org/wiki/Peter_Whittle_(mathematician)
+28,2,1552,Jost Bürgi,Swiss mathematician and clockmaker (d. 1632),https://en.wikipedia.org/wiki/Jost_B%C3%BCrgi
+28,2,1878,Pierre Fatou,French mathematician and astronomer (d. 1929),https://en.wikipedia.org/wiki/Pierre_Fatou
+28,2,1949,Zoia Ceaușescu,"Romanian mathematician, daughter of Communist leader Nicolae Ceaușescu and his wife Elena Ceaușescu (d. 2006)",https://en.wikipedia.org/wiki/Zoia_Ceau%C8%99escu
+29,2,1928,Seymour Papert,"South African mathematician and computer scientist, co-creator of the Logo programming language (d. 2016)",https://en.wikipedia.org/wiki/Seymour_Papert
+29,2,1932,Gene H. Golub,American mathematician and academic (d. 2007),https://en.wikipedia.org/wiki/Gene_H._Golub
+1,3,1597,Jean-Charles della Faille,Flemish priest and mathematician (d. 1652),https://en.wikipedia.org/wiki/Jean-Charles_della_Faille
+1,3,1611,John Pell,English mathematician and linguist (d. 1685),https://en.wikipedia.org/wiki/John_Pell_(mathematician)
+2,3,1901,Grete Hermann,German mathematician and philosopher (d. 1984),https://en.wikipedia.org/wiki/Grete_Hermann
+3,3,1845,Georg Cantor,Russian-German mathematician and philosopher (d. 1918),https://en.wikipedia.org/wiki/Georg_Cantor
+3,3,1898,Emil Artin,Austrian-German mathematician and academic (d. 1962),https://en.wikipedia.org/wiki/Emil_Artin
+3,3,1916,Paul Halmos,Hungarian-American mathematician (d. 2006),https://en.wikipedia.org/wiki/Paul_Halmos
+4,3,1822,Jules Antoine Lissajous,French mathematician and academic (d. 1880),https://en.wikipedia.org/wiki/Jules_Antoine_Lissajous
+4,3,1866,Eugène Cosserat,French mathematician and astronomer (d. 1931),https://en.wikipedia.org/wiki/Eug%C3%A8ne_Cosserat
+4,3,1871,Boris Galerkin,Russian mathematician and engineer (d. 1945),https://en.wikipedia.org/wiki/Boris_Galerkin
+4,3,1889,Oscar Chisini,Italian mathematician and statistician (d. 1967),https://en.wikipedia.org/wiki/Oscar_Chisini
+5,3,1512,Gerardus Mercator,"Flemish mathematician, cartographer, and philosopher (d. 1594)",https://en.wikipedia.org/wiki/Gerardus_Mercator
+5,3,1575,William Oughtred,English minister and mathematician (d. 1660),https://en.wikipedia.org/wiki/William_Oughtred
+5,3,1779,Benjamin Gompertz,English mathematician and statistician (d. 1865),https://en.wikipedia.org/wiki/Benjamin_Gompertz
+5,3,1794,Jacques Babinet,"French physicist, mathematician, and astronomer (d. 1872)",https://en.wikipedia.org/wiki/Jacques_Babinet
+5,3,1880,Sergei Natanovich Bernstein,Russian mathematician and academic (d. 1968),https://en.wikipedia.org/wiki/Sergei_Natanovich_Bernstein
+5,3,1883,Pauline Sperry,American mathematician (d. 1967),https://en.wikipedia.org/wiki/Pauline_Sperry
+5,3,1915,Laurent Schwartz,French mathematician and academic (d. 2002),https://en.wikipedia.org/wiki/Laurent_Schwartz
+7,3,1792,John Herschel,English mathematician and astronomer (d. 1871),https://en.wikipedia.org/wiki/John_Herschel
+7,3,1886,G. I. Taylor,English mathematician and physicist (d. 1975),https://en.wikipedia.org/wiki/G._I._Taylor
+7,3,1922,Olga Ladyzhenskaya,Russian mathematician and academic (d. 2004),https://en.wikipedia.org/wiki/Olga_Ladyzhenskaya
+11,3,1811,Urbain Le Verrier,French mathematician and astronomer (d. 1877),https://en.wikipedia.org/wiki/Urbain_Le_Verrier
+11,3,1822,Joseph Louis François Bertrand,"French mathematician, economist, and academic (d. 1900)",https://en.wikipedia.org/wiki/Joseph_Louis_Fran%C3%A7ois_Bertrand
+11,3,1870,Louis Bachelier,French mathematician and theorist (d. 1946),https://en.wikipedia.org/wiki/Louis_Bachelier
+12,3,1835,Simon Newcomb,Canadian-American astronomer and mathematician (d. 1909),https://en.wikipedia.org/wiki/Simon_Newcomb
+12,3,1859,Ernesto Cesàro,Italian mathematician (d. 1906),https://en.wikipedia.org/wiki/Ernesto_Ces%C3%A0ro
+12,3,1904,Lyudmila Keldysh,Russian mathematician (d. 1976),https://en.wikipedia.org/wiki/Lyudmila_Keldysh
+13,3,1855,Percival Lowell,American astronomer and mathematician (d. 1916),https://en.wikipedia.org/wiki/Percival_Lowell
+13,3,1899,John Hasbrouck Van Vleck,"American physicist and mathematician, Nobel Prize laureate (d. 1980)",https://en.wikipedia.org/wiki/John_Hasbrouck_Van_Vleck
+13,3,1945,Anatoly Fomenko,Russian mathematician and academic,https://en.wikipedia.org/wiki/Anatoly_Fomenko
+14,3,1882,Wacław Sierpiński,Polish mathematician and academic (d. 1969),https://en.wikipedia.org/wiki/Wac%C5%82aw_Sierpi%C5%84ski
+15,3,1790,Ludwig Immanuel Magnus,German mathematician and academic (d. 1861),https://en.wikipedia.org/wiki/Ludwig_Immanuel_Magnus
+15,3,1868,Grace Chisholm Young,English mathematician (d. 1944),https://en.wikipedia.org/wiki/Grace_Chisholm_Young
+16,3,1789,Georg Ohm,German physicist and mathematician (d. 1854),https://en.wikipedia.org/wiki/Georg_Ohm
+16,3,1821,Eduard Heine,German mathematician and academic (d. 1881),https://en.wikipedia.org/wiki/Eduard_Heine
+16,3,1846,Gösta Mittag-Leffler,Swedish mathematician and academic (d. 1927),https://en.wikipedia.org/wiki/G%C3%B6sta_Mittag-Leffler
+16,3,1915,Kunihiko Kodaira,Japanese mathematician (d. 1997),https://en.wikipedia.org/wiki/Kunihiko_Kodaira
+18,3,1640,Philippe de La Hire,French mathematician and astronomer (d. 1719),https://en.wikipedia.org/wiki/Philippe_de_La_Hire
+18,3,1690,Christian Goldbach,Prussian-German mathematician and academic (d. 1764),https://en.wikipedia.org/wiki/Christian_Goldbach
+18,3,1870,Agnes Sime Baxter,Canadian mathematician (d. 1917),https://en.wikipedia.org/wiki/Agnes_Sime_Baxter
+18,3,1930,James J. Andrews,American mathematician and academic (d. 1998),https://en.wikipedia.org/wiki/James_J._Andrews_(mathematician)
+18,3,1935,Ole Barndorff-Nielsen,Danish mathematician and statistician,https://en.wikipedia.org/wiki/Ole_Barndorff-Nielsen
+19,3,1914,Leonidas Alaoglu,Canadian-American mathematician and theorist (d. 1981),https://en.wikipedia.org/wiki/Leonidas_Alaoglu
+20,3,1834,Charles William Eliot,American mathematician and academic (d. 1926),https://en.wikipedia.org/wiki/Charles_William_Eliot
+20,3,1884,Philipp Frank,"Austrian-American physicist, mathematician, and philosopher (d. 1966)",https://en.wikipedia.org/wiki/Philipp_Frank
+20,3,1921,Alfréd Rényi,Hungarian mathematician and theorist (d. 1970),https://en.wikipedia.org/wiki/Alfr%C3%A9d_R%C3%A9nyi
+20,3,1938,Sergei Novikov,"Russian mathematician and academic, winner of the Fields Medal",https://en.wikipedia.org/wiki/Sergei_Novikov_(mathematician)
+20,3,1968,Ken Ono,Japanese-American mathematician,https://en.wikipedia.org/wiki/Ken_Ono
+21,3,1768,Joseph Fourier,French mathematician and physicist (d. 1830),https://en.wikipedia.org/wiki/Joseph_Fourier
+21,3,1884,George David Birkhoff,American mathematician (d. 1944),https://en.wikipedia.org/wiki/George_David_Birkhoff
+21,3,1896,Friedrich Waismann,"Austrian mathematician, physicist, and philosopher from the Vienna Circle (d. 1959)",https://en.wikipedia.org/wiki/Friedrich_Waismann
+22,3,1394,Ulugh Beg,Persian astronomer and mathematician (d. 1449),https://en.wikipedia.org/wiki/Ulugh_Beg
+22,3,1857,Paul Doumer,"French mathematician, journalist, and politician, 14th President of France (d. 1932)",https://en.wikipedia.org/wiki/Paul_Doumer
+22,3,1917,Irving Kaplansky,Canadian-American mathematician and academic (d. 2006),https://en.wikipedia.org/wiki/Irving_Kaplansky
+22,3,1946,Rudy Rucker,"American mathematician, computer scientist, and author",https://en.wikipedia.org/wiki/Rudy_Rucker
+23,3,1749,Pierre-Simon Laplace,French mathematician and astronomer (d. 1827),https://en.wikipedia.org/wiki/Pierre-Simon_Laplace
+23,3,1754,Jurij Vega,"Slovene mathematician, physicist and artillery officer (d. 1802)",https://en.wikipedia.org/wiki/Jurij_Vega
+23,3,1842,Susan Jane Cunningham,American mathematician (d. 1921),https://en.wikipedia.org/wiki/Susan_Jane_Cunningham
+23,3,1882,Emmy Noether,"Jewish German-American mathematician, physicist and academic (d. 1935)",https://en.wikipedia.org/wiki/Emmy_Noether
+23,3,1934,Ludvig Faddeev,Russian mathematician and physicist (d. 2017),https://en.wikipedia.org/wiki/Ludvig_Faddeev
+24,3,1809,Joseph Liouville,French mathematician and academic (d. 1882),https://en.wikipedia.org/wiki/Joseph_Liouville
+24,3,1835,Joseph Stefan,"Austrian physicist, mathematician, and poet (d. 1893)",https://en.wikipedia.org/wiki/Joseph_Stefan
+24,3,1892,Marston Morse,American mathematician and academic (d. 1977),https://en.wikipedia.org/wiki/Marston_Morse
+25,3,1538,Christopher Clavius,German mathematician and astronomer (d. 1612),https://en.wikipedia.org/wiki/Christopher_Clavius
+25,3,1952,Antanas Mockus,"Colombian mathematician, philosopher, and politician, Mayor of Bogotá",https://en.wikipedia.org/wiki/Antanas_Mockus
+26,3,1656,Nicolaas Hartsoeker,Dutch mathematician and physicist (d. 1725),https://en.wikipedia.org/wiki/Nicolaas_Hartsoeker
+26,3,1773,Nathaniel Bowditch,American mathematician and navigator (d. 1838),https://en.wikipedia.org/wiki/Nathaniel_Bowditch
+26,3,1859,Adolf Hurwitz,German-Swiss mathematician and academic (d. 1919),https://en.wikipedia.org/wiki/Adolf_Hurwitz
+26,3,1913,Paul Erdős,Hungarian-Polish mathematician and academic (d. 1996),https://en.wikipedia.org/wiki/Paul_Erd%C5%91s
+26,3,1914,Toru Kumon,Japanese mathematician and academic (d. 1995),https://en.wikipedia.org/wiki/Toru_Kumon
+26,3,1922,Guido Stampacchia,Italian mathematician and academic (d. 1978),https://en.wikipedia.org/wiki/Guido_Stampacchia
+27,3,1857,Karl Pearson,"English mathematician, eugenicist, and academic (d. 1936)",https://en.wikipedia.org/wiki/Karl_Pearson
+27,3,1897,Douglas Hartree,English mathematician and physicist (d. 1958),https://en.wikipedia.org/wiki/Douglas_Hartree
+27,3,1924,Margaret K. Butler,American mathematician and computer programmer (d. 2013),https://en.wikipedia.org/wiki/Margaret_K._Butler
+28,3,1847,Gyula Farkas,Hungarian mathematician and physicist (d. 1930),https://en.wikipedia.org/wiki/Gyula_Farkas_(natural_scientist)
+28,3,1928,Alexander Grothendieck,German-French mathematician and theorist (d. 2014),https://en.wikipedia.org/wiki/Alexander_Grothendieck
+29,3,1873,Tullio Levi-Civita,Italian mathematician and academic (d. 1941),https://en.wikipedia.org/wiki/Tullio_Levi-Civita
+29,3,1896,Wilhelm Ackermann,German mathematician (d. 1962),https://en.wikipedia.org/wiki/Wilhelm_Ackermann
+29,3,1918,Lê Văn Thiêm,Vietnamese mathematician and academic (d. 1991),https://en.wikipedia.org/wiki/L%C3%AA_V%C4%83n_Thi%C3%AAm
+29,3,1951,David Cheriton,"Canadian computer scientist, mathematician and businessman",https://en.wikipedia.org/wiki/David_Cheriton
+30,3,1606,Vincentio Reinieri,Italian mathematician and astronomer (d. 1647),https://en.wikipedia.org/wiki/Vincentio_Reinieri
+30,3,1892,Stefan Banach,Polish mathematician and academic (d. 1945),https://en.wikipedia.org/wiki/Stefan_Banach
+30,3,1910,Józef Marcinkiewicz,"Polish soldier, mathematician, and academic (d. 1940)",https://en.wikipedia.org/wiki/J%C3%B3zef_Marcinkiewicz
+30,3,1919,Robin Williams,"New Zealand mathematician, university administrator and public servant (d. 2013)",https://en.wikipedia.org/wiki/Robin_Williams_(mathematician)
+31,3,1596,René Descartes,French mathematician and philosopher (d. 1650),https://en.wikipedia.org/wiki/Ren%C3%A9_Descartes
+31,3,1730,Étienne Bézout,French mathematician and theorist (d. 1783),https://en.wikipedia.org/wiki/%C3%89tienne_B%C3%A9zout
+31,3,1847,Yegor Ivanovich Zolotarev,Russian mathematician and theorist (d. 1878),https://en.wikipedia.org/wiki/Yegor_Ivanovich_Zolotarev
+31,3,1947,Augustin Banyaga,Rwandan-American mathematician and academic,https://en.wikipedia.org/wiki/Augustin_Banyaga
+1,4,1640,Georg Mohr,Danish mathematician and academic (d. 1697),https://en.wikipedia.org/wiki/Georg_Mohr
+1,4,1776,Sophie Germain,"French mathematician, physicist, and philosopher (d. 1831)",https://en.wikipedia.org/wiki/Sophie_Germain
+1,4,1874,Ernest Barnes,English mathematician and theologian (d. 1953),https://en.wikipedia.org/wiki/Ernest_Barnes
+1,4,1898,William James Sidis,"Ukrainian-Russian Jewish American mathematician, anthropologist, and historian (d. 1944)",https://en.wikipedia.org/wiki/William_James_Sidis
+1,4,1916,Sheila May Edmonds,British mathematician (d. 2002),https://en.wikipedia.org/wiki/Sheila_May_Edmonds
+1,4,1947,Alain Connes,French mathematician and academic,https://en.wikipedia.org/wiki/Alain_Connes
+2,4,1618,Francesco Maria Grimaldi,Italian mathematician and physicist (d. 1663),https://en.wikipedia.org/wiki/Francesco_Maria_Grimaldi
+2,4,1898,Chiungtze C. Tsen,Chinese mathematician (d. 1940),https://en.wikipedia.org/wiki/Chiungtze_C._Tsen
+2,4,1923,G. Spencer-Brown,"English mathematician, psychologist, and author (d. 2016)",https://en.wikipedia.org/wiki/G._Spencer-Brown
+2,4,1934,Paul Cohen,American mathematician and theorist (d. 2007),https://en.wikipedia.org/wiki/Paul_Cohen
+3,4,1529,Michael Neander,German mathematician and astronomer (d. 1581),https://en.wikipedia.org/wiki/Michael_Neander
+3,4,1909,Stanislaw Ulam,Polish-American mathematician and academic (d. 1984),https://en.wikipedia.org/wiki/Stanislaw_Ulam
+4,4,1842,Édouard Lucas,French mathematician and theorist (d. 1891),https://en.wikipedia.org/wiki/%C3%89douard_Lucas
+4,4,1868,Philippa Fawcett,English mathematician and educator (d. 1948),https://en.wikipedia.org/wiki/Philippa_Fawcett
+4,4,1949,Shing-Tung Yau,Chinese-American mathematician and academic,https://en.wikipedia.org/wiki/Shing-Tung_Yau
+5,4,1622,Vincenzo Viviani,"Italian mathematician, astronomer, and physicist (d. 1703)",https://en.wikipedia.org/wiki/Vincenzo_Viviani
+5,4,1869,Sergey Chaplygin,"Russian physicist, mathematician, and engineer (d. 1942)",https://en.wikipedia.org/wiki/Sergey_Chaplygin
+5,4,1937,Andrzej Schinzel,Polish mathematician (d. 2021),https://en.wikipedia.org/wiki/Andrzej_Schinzel
+6,4,1947,Mike Worboys,English mathematician and computer scientist,https://en.wikipedia.org/wiki/Mike_Worboys
+7,4,1811,Hasan Tahsini,"Albanian astronomer, mathematician, and philosopher (d. 1881)",https://en.wikipedia.org/wiki/Hasan_Tahsini
+7,4,1921,Feza Gürsey,Turkish mathematician and physicist (d. 1992),https://en.wikipedia.org/wiki/Feza_G%C3%BCrsey
+7,4,1955,Tim Cochran,American mathematician and academic (d. 2014),https://en.wikipedia.org/wiki/Tim_Cochran
+8,4,1732,David Rittenhouse,American astronomer and mathematician (d. 1796),https://en.wikipedia.org/wiki/David_Rittenhouse
+8,4,1859,Edmund Husserl,German Jewish-Austrian mathematician and philosopher (d. 1938),https://en.wikipedia.org/wiki/Edmund_Husserl
+8,4,1917,Winifred Asprey,American mathematician and computer scientist (d. 2007),https://en.wikipedia.org/wiki/Winifred_Asprey
+8,4,1938,Mary W. Gray,"American mathematician, statistician, and lawyer",https://en.wikipedia.org/wiki/Mary_W._Gray
+9,4,1865,Charles Proteus Steinmetz,Polish-American mathematician and engineer (d. 1923),https://en.wikipedia.org/wiki/Charles_Proteus_Steinmetz
+9,4,1921,Mary Jackson,African-American mathematician and aerospace engineer (d. 2005),https://en.wikipedia.org/wiki/Mary_Jackson_(engineer)
+9,4,1928,Tom Lehrer,"American singer-songwriter, pianist, and mathematician",https://en.wikipedia.org/wiki/Tom_Lehrer
+10,4,1651,Ehrenfried Walther von Tschirnhaus,"German mathematician, physicist, and physician (d. 1708)",https://en.wikipedia.org/wiki/Ehrenfried_Walther_von_Tschirnhaus
+11,4,1914,Dorothy Lewis Bernstein,American mathematician (d. 1988),https://en.wikipedia.org/wiki/Dorothy_Lewis_Bernstein
+11,4,1953,Andrew Wiles,English mathematician and academic,https://en.wikipedia.org/wiki/Andrew_Wiles
+12,4,1794,Germinal Pierre Dandelin,Belgian mathematician and engineer (d. 1847),https://en.wikipedia.org/wiki/Germinal_Pierre_Dandelin
+12,4,1852,Ferdinand von Lindemann,German mathematician and academic (d. 1939),https://en.wikipedia.org/wiki/Ferdinand_von_Lindemann
+13,4,1949,Len Cook,New Zealand-English mathematician and statistician,https://en.wikipedia.org/wiki/Len_Cook
+14,4,1572,Adam Tanner,"Austrian mathematician, philosopher, and academic (d. 1632)",https://en.wikipedia.org/wiki/Adam_Tanner_(Jesuit_theologian)
+14,4,1629,Christiaan Huygens,"Dutch mathematician, astronomer, and physicist (d. 1695)",https://en.wikipedia.org/wiki/Christiaan_Huygens
+15,4,1552,Pietro Cataldi,Italian mathematician and astronomer (d. 1626),https://en.wikipedia.org/wiki/Pietro_Cataldi
+15,4,1707,Leonhard Euler,Swiss mathematician and physicist (d. 1783),https://en.wikipedia.org/wiki/Leonhard_Euler
+15,4,1809,Hermann Grassmann,German linguist and mathematician (d. 1877),https://en.wikipedia.org/wiki/Hermann_Grassmann
+16,4,1495,Petrus Apianus,German mathematician and astronomer (d. 1557),https://en.wikipedia.org/wiki/Petrus_Apianus
+16,4,1682,John Hadley,"English mathematician, invented the octant (d. 1744)",https://en.wikipedia.org/wiki/John_Hadley
+16,4,1823,Gotthold Eisenstein,German mathematician and academic (d. 1852),https://en.wikipedia.org/wiki/Gotthold_Eisenstein
+17,4,1798,Étienne Bobillier,French mathematician and academic (d. 1840),https://en.wikipedia.org/wiki/%C3%89tienne_Bobillier
+17,4,1863,Augustus Edward Hough Love,English mathematician and theorist (d. 1940),https://en.wikipedia.org/wiki/Augustus_Edward_Hough_Love
+19,4,1883,Richard von Mises,Austrian-American mathematician and physicist (d. 1953),https://en.wikipedia.org/wiki/Richard_von_Mises
+21,4,1642,Simon de la Loubère,"French mathematician, poet, and diplomat (d. 1729)",https://en.wikipedia.org/wiki/Simon_de_la_Loub%C3%A8re
+21,4,1652,Michel Rolle,French mathematician and academic (d. 1719),https://en.wikipedia.org/wiki/Michel_Rolle
+21,4,1774,Jean-Baptiste Biot,"French physicist, astronomer, and mathematician (d. 1862)",https://en.wikipedia.org/wiki/Jean-Baptiste_Biot
+21,4,1951,Michael Freedman,American mathematician and academic,https://en.wikipedia.org/wiki/Michael_Freedman
+22,4,1592,Wilhelm Schickard,German astronomer and mathematician (d. 1635),https://en.wikipedia.org/wiki/Wilhelm_Schickard
+22,4,1887,Harald Bohr,Danish mathematician and footballer (d. 1951),https://en.wikipedia.org/wiki/Harald_Bohr
+22,4,1891,Harold Jeffreys,"English mathematician, geophysicist, and astronomer (d. 1989)",https://en.wikipedia.org/wiki/Harold_Jeffreys
+22,4,1910,Norman Steenrod,American mathematician and academic (d. 1971),https://en.wikipedia.org/wiki/Norman_Steenrod
+22,4,1916,Hanfried Lenz,German mathematician and academic (d. 2013),https://en.wikipedia.org/wiki/Hanfried_Lenz
+22,4,1929,Michael Atiyah,English-Lebanese mathematician and academic (d. 2019),https://en.wikipedia.org/wiki/Michael_Atiyah
+22,4,1935,Bhama Srinivasan,Indian-American mathematician and academic,https://en.wikipedia.org/wiki/Bhama_Srinivasan
+22,4,1943,Scott W. Williams,American mathematician and professor,https://en.wikipedia.org/wiki/Scott_W._Williams
+23,4,1628,Johannes Hudde,Dutch mathematician and politician (d. 1704),https://en.wikipedia.org/wiki/Johannes_Hudde
+23,4,1910,Sheila Scott Macintyre,Scottish mathematician (d. 1960),https://en.wikipedia.org/wiki/Sheila_Scott_Macintyre
+23,4,1933,Annie Easley,"American computer scientist, mathematician, and engineer (d. 2011)",https://en.wikipedia.org/wiki/Annie_Easley
+24,4,1899,Oscar Zariski,Russian-American mathematician and academic (d. 1986),https://en.wikipedia.org/wiki/Oscar_Zariski
+24,4,1919,David Blackwell,American mathematician and academic (d. 2010),https://en.wikipedia.org/wiki/David_Blackwell
+25,4,1849,Felix Klein,German mathematician and academic (d. 1925),https://en.wikipedia.org/wiki/Felix_Klein
+25,4,1903,Andrey Kolmogorov,Russian mathematician and academic (d. 1987),https://en.wikipedia.org/wiki/Andrey_Kolmogorov
+25,4,1931,Felix Berezin,Russian mathematician and physicist (d. 1980),https://en.wikipedia.org/wiki/Felix_Berezin
+26,4,1925,Vladimir Boltyansky,"Russian mathematician, educator and author (d. 2019)",https://en.wikipedia.org/wiki/Vladimir_Boltyansky
+27,4,1755,Marc-Antoine Parseval,French mathematician and theorist (d. 1836),https://en.wikipedia.org/wiki/Marc-Antoine_Parseval
+27,4,1913,Irving Adler,"American mathematician, author, and academic (d. 2012)",https://en.wikipedia.org/wiki/Irving_Adler
+27,4,1920,Mark Krasnosel'skii,Ukrainian mathematician and academic (d. 1997),https://en.wikipedia.org/wiki/Mark_Krasnosel%27skii
+27,4,1932,Gian-Carlo Rota,Italian-American mathematician and philosopher (d. 1999),https://en.wikipedia.org/wiki/Gian-Carlo_Rota
+28,4,1765,Sylvestre François Lacroix,French mathematician and academic (d. 1834),https://en.wikipedia.org/wiki/Sylvestre_Fran%C3%A7ois_Lacroix
+28,4,1854,Hertha Marks Ayrton,"Polish-British engineer, mathematician, and physicist. (d. 1923)",https://en.wikipedia.org/wiki/Hertha_Marks_Ayrton
+28,4,1868,Georgy Voronoy,Ukrainian-Russian mathematician and academic (d. 1908),https://en.wikipedia.org/wiki/Georgy_Voronoy
+28,4,1906,Kurt Gödel,"Czech-American mathematician, philosopher, and academic (d. 1978)",https://en.wikipedia.org/wiki/Kurt_G%C3%B6del
+29,4,1854,Henri Poincaré,"French mathematician, physicist and engineer (d. 1912)",https://en.wikipedia.org/wiki/Henri_Poincar%C3%A9
+30,4,1777,Carl Friedrich Gauss,German mathematician and physicist (d. 1855),https://en.wikipedia.org/wiki/Carl_Friedrich_Gauss
+30,4,1905,Sergey Nikolsky,Russian mathematician and academic (d. 2012),https://en.wikipedia.org/wiki/Sergey_Nikolsky
+30,4,1916,Claude Shannon,American mathematician and engineer (d. 2001),https://en.wikipedia.org/wiki/Claude_Shannon
+1,5,1527,Johannes Stadius,"German astronomer, astrologer, mathematician (d. 1579)",https://en.wikipedia.org/wiki/Johannes_Stadius
+1,5,1825,Johann Jakob Balmer,Swiss mathematician and physicist (d. 1898),https://en.wikipedia.org/wiki/Johann_Jakob_Balmer
+1,5,1908,Morris Kline,American mathematician and academic (d. 1992),https://en.wikipedia.org/wiki/Morris_Kline
+1,5,1924,Evelyn Boyd Granville,"American mathematician, computer scientist, and academic (d. 2023)",https://en.wikipedia.org/wiki/Evelyn_Boyd_Granville
+1,5,1926,Peter Lax,Hungarian-American mathematician and academic,https://en.wikipedia.org/wiki/Peter_Lax
+2,5,1901,Edouard Zeckendorf,"Belgian doctor, army officer and mathematician (d. 1983)",https://en.wikipedia.org/wiki/Edouard_Zeckendorf
+3,5,1860,Vito Volterra,Italian mathematician and physicist (d. 1940),https://en.wikipedia.org/wiki/Vito_Volterra
+3,5,1905,Werner Fenchel,German-Danish mathematician and academic (d. 1988),https://en.wikipedia.org/wiki/Werner_Fenchel
+3,5,1928,Jacques-Louis Lions,French mathematician (d. 2001),https://en.wikipedia.org/wiki/Jacques-Louis_Lions
+3,5,1977,Maryam Mirzakhani,Iranian mathematician (d. 2017),https://en.wikipedia.org/wiki/Maryam_Mirzakhani
+4,5,1733,Jean-Charles de Borda,"French mathematician, physicist, and sailor (d. 1799)",https://en.wikipedia.org/wiki/Jean-Charles_de_Borda
+5,5,1883,Anna Johnson Pell Wheeler,American mathematician (d. 1966),https://en.wikipedia.org/wiki/Anna_Johnson_Pell_Wheeler
+5,5,1923,Cathleen Synge Morawetz,Canadian mathematician (d. 2017),https://en.wikipedia.org/wiki/Cathleen_Synge_Morawetz
+6,5,1769,Jean Nicolas Pierre Hachette,French mathematician and academic (d. 1834),https://en.wikipedia.org/wiki/Jean_Nicolas_Pierre_Hachette
+6,5,1872,Willem de Sitter,"Dutch mathematician, physicist, and astronomer (d. 1934)",https://en.wikipedia.org/wiki/Willem_de_Sitter
+6,5,1895,Júlio César de Mello e Souza,Brazilian mathematician and author (d. 1974),https://en.wikipedia.org/wiki/J%C3%BAlio_C%C3%A9sar_de_Mello_e_Souza
+6,5,1906,André Weil,French mathematician and academic (d. 1998),https://en.wikipedia.org/wiki/Andr%C3%A9_Weil
+8,5,1859,Johan Jensen,Danish mathematician and engineer (d. 1925),https://en.wikipedia.org/wiki/Johan_Jensen_(mathematician)
+8,5,1977,Kathrin Bringmann,German mathematician and academic,https://en.wikipedia.org/wiki/Kathrin_Bringmann
+9,5,1746,Gaspard Monge,French mathematician and engineer (d. 1818),https://en.wikipedia.org/wiki/Gaspard_Monge
+9,5,1912,Géza Ottlik,Hungarian mathematician and theorist (d. 1990),https://en.wikipedia.org/wiki/G%C3%A9za_Ottlik
+9,5,1948,Hans Georg Bock,"German mathematician, computer scientist, and academic",https://en.wikipedia.org/wiki/Hans_Georg_Bock
+10,5,1847,Wilhelm Killing,German mathematician and academic (d. 1923),https://en.wikipedia.org/wiki/Wilhelm_Killing
+11,5,1881,Theodore von Kármán,"Hungarian-American mathematician, physicist, and engineer (d. 1963)",https://en.wikipedia.org/wiki/Theodore_von_K%C3%A1rm%C3%A1n
+11,5,1902,Edna Ernestine Kramer,American mathematician (d. 1984),https://en.wikipedia.org/wiki/Edna_Kramer
+12,5,1924,Alexander Esenin-Volpin,Russian-American mathematician and poet (d. 2016),https://en.wikipedia.org/wiki/Alexander_Esenin-Volpin
+12,5,1967,Mireille Bousquet-Mélou,French mathematician,https://en.wikipedia.org/wiki/Mireille_Bousquet-M%C3%A9lou
+12,5,1977,Maryam Mirzakhani,Iranian mathematician (d. 2017) ,https://en.wikipedia.org/wiki/Maryam_Mirzakhani
+13,5,1713,Alexis Clairaut,"French mathematician, astronomer, and geophysicist (d. 1765)",https://en.wikipedia.org/wiki/Alexis_Clairaut
+13,5,1753,Lazare Carnot,"French general, mathematician, and politician, French Minister of the Interior (d. 1823)",https://en.wikipedia.org/wiki/Lazare_Carnot
+13,5,1857,Ronald Ross,"Indian-English physician and mathematician, Nobel Prize laureate (d. 1932)",https://en.wikipedia.org/wiki/Ronald_Ross
+13,5,1914,Antonia Ferrín Moreiras,"Spanish mathematician, academic, and astronomer (d. 2009)",https://en.wikipedia.org/wiki/Antonia_Ferr%C3%ADn_Moreiras
+14,5,1679,Peder Horrebow,Danish astronomer and mathematician (d. 1764),https://en.wikipedia.org/wiki/Peder_Horrebow
+14,5,1701,William Emerson,English mathematician and academic (d. 1782),https://en.wikipedia.org/wiki/William_Emerson_(mathematician)
+14,5,1832,Rudolf Lipschitz,German mathematician and academic (d. 1903),https://en.wikipedia.org/wiki/Rudolf_Lipschitz
+14,5,1863,John Charles Fields,"Canadian mathematician, founder of the Fields Medal (d. 1932)",https://en.wikipedia.org/wiki/John_Charles_Fields
+14,5,1888,Archie Alexander,American mathematician and engineer (d. 1958),https://en.wikipedia.org/wiki/Archie_Alexander
+14,5,1914,William Tutte,British codebreaker and mathematician (d. 2002) ,https://en.wikipedia.org/wiki/William_Tutte
+15,5,1900,Ida Rhodes,"American mathematician, pioneer in computer programming (d. 1986) ",https://en.wikipedia.org/wiki/Ida_Rhodes
+15,5,1903,Maria Reiche,German mathematician and archaeologist (d. 1998),https://en.wikipedia.org/wiki/Maria_Reiche
+15,5,1951,Frank Wilczek,"American mathematician and physicist, Nobel Prize laureate",https://en.wikipedia.org/wiki/Frank_Wilczek
+16,5,1718,Maria Gaetana Agnesi,Italian mathematician and philosopher (d. 1799),https://en.wikipedia.org/wiki/Maria_Gaetana_Agnesi
+16,5,1821,Pafnuty Chebyshev,Russian mathematician and statistician (d. 1894),https://en.wikipedia.org/wiki/Pafnuty_Chebyshev
+17,5,1818,Ezra Otis Kendall,"American professor, astronomer and mathematician (d. 1899)",https://en.wikipedia.org/wiki/Ezra_Otis_Kendall
+17,5,1860,Charlotte Barnum,American mathematician and social activist (d. 1934),https://en.wikipedia.org/wiki/Charlotte_Barnum
+18,5,1048,Omar Khayyám,"Persian mathematician, astronomer, and poet (d. 1131)",https://en.wikipedia.org/wiki/Omar_Khayy%C3%A1m
+18,5,1711,Roger Joseph Boscovich,"Ragusan physicist, astronomer, and mathematician (d. 1787)",https://en.wikipedia.org/wiki/Roger_Joseph_Boscovich
+18,5,1850,Oliver Heaviside,"English engineer, mathematician, and physicist (d. 1925)",https://en.wikipedia.org/wiki/Oliver_Heaviside
+18,5,1872,Bertrand Russell,"British mathematician, historian, and philosopher, Nobel Prize laureate (d. 1970)",https://en.wikipedia.org/wiki/Bertrand_Russell
+19,5,1927,Serge Lang,"French-American mathematician, author and academic (d. 2005)",https://en.wikipedia.org/wiki/Serge_Lang
+20,5,1901,Max Euwe,"Dutch chess player, mathematician, and author (d. 1981)",https://en.wikipedia.org/wiki/Max_Euwe
+20,5,1921,Hao Wang,"Chinese-American logician, philosopher, and mathematician (d. 1995)",https://en.wikipedia.org/wiki/Hao_Wang_(academic)
+21,5,1471,Albrecht Dürer,"German painter, engraver, and mathematician (d. 1528)",https://en.wikipedia.org/wiki/Albrecht_D%C3%BCrer
+21,5,1792,Gaspard-Gustave de Coriolis,French mathematician and engineer (d. 1843),https://en.wikipedia.org/wiki/Gaspard-Gustave_de_Coriolis
+21,5,1858,Édouard Goursat,French mathematician (d. 1936),https://en.wikipedia.org/wiki/%C3%89douard_Goursat
+21,5,1923,Armand Borel,Swiss-American mathematician and academic (d. 2003),https://en.wikipedia.org/wiki/Armand_Borel
+22,5,1933,Chen Jingrun,Chinese mathematician and academic (d. 1996),https://en.wikipedia.org/wiki/Chen_Jingrun
+22,5,1942,Ted Kaczynski,American academic and mathematician turned anarchist and serial murderer (Unabomber) (d. 2023),https://en.wikipedia.org/wiki/Ted_Kaczynski
+23,5,1606,Juan Caramuel y Lobkowitz,Spanish mathematician and philosopher (d. 1682),https://en.wikipedia.org/wiki/Juan_Caramuel_y_Lobkowitz
+23,5,1887,Thoralf Skolem,Norwegian mathematician and theorist (d. 1963),https://en.wikipedia.org/wiki/Thoralf_Skolem
+23,5,1917,Edward Norton Lorenz,American mathematician and meteorologist (d. 2008),https://en.wikipedia.org/wiki/Edward_Norton_Lorenz
+23,5,1940,Cora Sadosky,Argentinian mathematician and academic (d. 2010),https://en.wikipedia.org/wiki/Cora_Sadosky
+23,5,1963,Viviane Baladi,Swiss mathematician,https://en.wikipedia.org/wiki/Viviane_Baladi
+25,5,1944,Robert MacPherson,American mathematician and academic,https://en.wikipedia.org/wiki/Robert_MacPherson_(mathematician)
+26,5,1667,Abraham de Moivre,French-English mathematician and theorist (d. 1754),https://en.wikipedia.org/wiki/Abraham_de_Moivre
+26,5,1951,Lou van den Dries,Dutch mathematician,https://en.wikipedia.org/wiki/Lou_van_den_Dries
+28,5,1676,Jacopo Riccati,Italian mathematician and academic (d. 1754),https://en.wikipedia.org/wiki/Jacopo_Riccati
+28,5,1879,Milutin Milanković,"Serbian mathematician, astronomer, and geophysicist (d. 1958)",https://en.wikipedia.org/wiki/Milutin_Milankovi%C4%87
+29,5,1675,Humphry Ditton,English mathematician and philosopher (d. 1715),https://en.wikipedia.org/wiki/Humphry_Ditton
+30,5,1423,Georg von Peuerbach,German mathematician and astronomer (d. 1461),https://en.wikipedia.org/wiki/Georg_von_Peuerbach
+30,5,1814,Eugène Charles Catalan,Belgian-French mathematician and academic (d. 1894),https://en.wikipedia.org/wiki/Eug%C3%A8ne_Charles_Catalan
+30,5,1869,Grace Andrews,American mathematician (d. 1951),https://en.wikipedia.org/wiki/Grace_Andrews_(mathematician)
+30,5,1927,Joan Birman,American mathematician,https://en.wikipedia.org/wiki/Joan_Birman
+2,6,1923,Lloyd Shapley,"American mathematician and economist, Nobel Prize laureate (d. 2016)",https://en.wikipedia.org/wiki/Lloyd_Shapley
+3,6,1659,David Gregory,Scottish-English mathematician and astronomer (d. 1708),https://en.wikipedia.org/wiki/David_Gregory_(mathematician)
+3,6,1906,R. G. D. Allen,"English economist, mathematician, and statistician (d. 1983)",https://en.wikipedia.org/wiki/R._G._D._Allen
+3,6,1923,Igor Shafarevich,Russian mathematician and theorist (d. 2017),https://en.wikipedia.org/wiki/Igor_Shafarevich
+3,6,1954,Susan Landau,American mathematician and engineer,https://en.wikipedia.org/wiki/Susan_Landau
+4,6,1966,Svetlana Jitomirskaya,American mathematician,https://en.wikipedia.org/wiki/Svetlana_Jitomirskaya
+4,6,1966,Vladimir Voevodsky,Russian mathematician and academic (d. 2017),https://en.wikipedia.org/wiki/Vladimir_Voevodsky
+5,6,1646,Elena Cornaro Piscopia,Italian mathematician and philosopher (d. 1684),https://en.wikipedia.org/wiki/Elena_Cornaro_Piscopia
+5,6,1819,John Couch Adams,English mathematician and astronomer (d. 1892),https://en.wikipedia.org/wiki/John_Couch_Adams
+6,6,1436,Regiomontanus (Johannes Müller von Königsberg),"German mathematician, astronomer, and bishop (d. 1476)",https://en.wikipedia.org/wiki/Regiomontanus
+6,6,1857,Aleksandr Lyapunov,Russian mathematician and physicist (d. 1918),https://en.wikipedia.org/wiki/Aleksandr_Lyapunov
+6,6,1906,Max August Zorn,German mathematician and academic who is noted for Zorn's Lemma (d. 1993),https://en.wikipedia.org/wiki/Max_August_Zorn
+8,6,1625,Giovanni Domenico Cassini,Italian-French mathematician and astronomer (d. 1712),https://en.wikipedia.org/wiki/Giovanni_Domenico_Cassini
+8,6,1745,Caspar Wessel,Norwegian-Danish mathematician and cartographer (d. 1818),https://en.wikipedia.org/wiki/Caspar_Wessel
+8,6,1858,Charlotte Scott,English mathematician (d. 1931),https://en.wikipedia.org/wiki/Charlotte_Scott
+8,6,1860,Alicia Boole Stott,Irish-English mathematician and theorist (d. 1940),https://en.wikipedia.org/wiki/Alicia_Boole_Stott
+8,6,1897,John G. Bennett,English mathematician and technologist (d. 1974),https://en.wikipedia.org/wiki/John_G._Bennett
+8,6,1930,Robert Aumann,"German-American mathematician and economist, Nobel Prize laureate",https://en.wikipedia.org/wiki/Robert_Aumann
+9,6,1861,Pierre Duhem,"French physicist, mathematician, and historian (d. 1916)",https://en.wikipedia.org/wiki/Pierre_Duhem
+10,6,940,Abu al-Wafa' Buzjani,Persian mathematician and astronomer (d. 998),https://en.wikipedia.org/wiki/Abu_al-Wafa%27_Buzjani
+10,6,1924,Friedrich L. Bauer,"German mathematician, computer scientist, and academic (d. 2015)",https://en.wikipedia.org/wiki/Friedrich_L._Bauer
+10,6,1932,Pierre Cartier,French mathematician and academic,https://en.wikipedia.org/wiki/Pierre_Cartier_(mathematician)
+10,6,1935,Lu Jiaxi,Chinese self-taught mathematician (d. 1983),https://en.wikipedia.org/wiki/Lu_Jiaxi_(mathematician)
+10,6,1938,Vasanti N. Bhat-Nayak,Indian mathematician and academic (d. 2009),https://en.wikipedia.org/wiki/Vasanti_N._Bhat-Nayak
+11,6,1909,Natascha Artin Brunswick,German-American mathematician and photographer (d. 2003),https://en.wikipedia.org/wiki/Natascha_Artin_Brunswick
+11,6,1915,Nicholas Metropolis,American mathematician and physicist (d. 1999),https://en.wikipedia.org/wiki/Nicholas_Metropolis
+12,6,1577,Paul Guldin,Swiss astronomer and mathematician (d. 1643),https://en.wikipedia.org/wiki/Paul_Guldin
+12,6,1888,Zygmunt Janiszewski,Polish mathematician and academic (d. 1920),https://en.wikipedia.org/wiki/Zygmunt_Janiszewski
+12,6,1918,Christie Jayaratnam Eliezer,Sri Lankan-Australian mathematician and academic (d. 2001),https://en.wikipedia.org/wiki/Christie_Jayaratnam_Eliezer
+12,6,1937,Vladimir Arnold,Russian-French mathematician and academic (d. 2010),https://en.wikipedia.org/wiki/Vladimir_Arnold
+13,6,1555,Giovanni Antonio Magini,"Italian mathematician, cartographer and astronomer (d. 1617)",https://en.wikipedia.org/wiki/Giovanni_Antonio_Magini
+13,6,1580,Willebrord Snell,Dutch astronomer and mathematician (d. 1626),https://en.wikipedia.org/wiki/Willebrord_Snell
+13,6,1831,James Clerk Maxwell,Scottish physicist and mathematician (d. 1879),https://en.wikipedia.org/wiki/James_Clerk_Maxwell
+13,6,1884,Leon Chwistek,"Polish painter, philosopher, and mathematician (d. 1944)",https://en.wikipedia.org/wiki/Leon_Chwistek
+13,6,1902,Carolyn Eisele,American mathematician and historian (d. 2000),https://en.wikipedia.org/wiki/Carolyn_Eisele
+13,6,1906,Bruno de Finetti,Austrian-Italian mathematician and statistician (d. 1985),https://en.wikipedia.org/wiki/Bruno_de_Finetti
+13,6,1920,Iosif Vorovich,Russian mathematician and engineer (d. 2001),https://en.wikipedia.org/wiki/Iosif_Vorovich
+13,6,1928,John Forbes Nash,"Jr., American mathematician and academic, Nobel Prize laureate (d. 2015)","https://en.wikipedia.org/wiki/John_Forbes_Nash,_Jr."
+13,6,1966,Grigori Perelman,Russian mathematician,https://en.wikipedia.org/wiki/Grigori_Perelman
+14,6,1444,Nilakantha Somayaji,Indian astronomer and mathematician (d. 1544),https://en.wikipedia.org/wiki/Nilakantha_Somayaji
+14,6,1796,Nikolai Brashman,Czech-Russian mathematician and academic (d. 1866),https://en.wikipedia.org/wiki/Nikolai_Brashman
+14,6,1856,Andrey Markov,Russian mathematician and theorist (d. 1922),https://en.wikipedia.org/wiki/Andrey_Markov
+14,6,1903,Alonzo Church,American mathematician and logician (d. 1995),https://en.wikipedia.org/wiki/Alonzo_Church
+14,6,1917,Atle Selberg,Norwegian-American mathematician and academic (d. 2007),https://en.wikipedia.org/wiki/Atle_Selberg
+15,6,1640,Bernard Lamy,French mathematician and theologian (d. 1715),https://en.wikipedia.org/wiki/Bernard_Lamy
+15,6,1894,Nikolai Chebotaryov,Ukrainian-Russian mathematician and theorist (d. 1947),https://en.wikipedia.org/wiki/Nikolai_Chebotaryov
+15,6,1906,Gordon Welchman,English-American mathematician and author (d. 1985),https://en.wikipedia.org/wiki/Gordon_Welchman
+16,6,1591,Joseph Solomon Delmedigo,"Greek-Italian physician, mathematician, and theorist (d. 1655)",https://en.wikipedia.org/wiki/Joseph_Solomon_Delmedigo
+16,6,1801,Julius Plücker,German mathematician and physicist (d. 1868),https://en.wikipedia.org/wiki/Julius_Pl%C3%BCcker
+16,6,1888,Alexander Friedmann,Russian physicist and mathematician (d. 1925),https://en.wikipedia.org/wiki/Alexander_Friedmann
+16,6,1888,Peter Stoner,American mathematician and astronomer (d. 1980),https://en.wikipedia.org/wiki/Peter_Stoner
+16,6,1915,John Tukey,American mathematician and academic (d. 2000),https://en.wikipedia.org/wiki/John_Tukey
+18,6,1858,Andrew Forsyth,Scottish-English mathematician and academic (d. 1942),https://en.wikipedia.org/wiki/Andrew_Forsyth
+18,6,1870,Édouard Le Roy,French mathematician and philosopher (d. 1954),https://en.wikipedia.org/wiki/%C3%89douard_Le_Roy
+18,6,1913,Oswald Teichmüller,German mathematician (d. 1943),https://en.wikipedia.org/wiki/Oswald_Teichm%C3%BCller
+18,6,1915,Alice T. Schafer,American mathematician (d. 2009),https://en.wikipedia.org/wiki/Alice_T._Schafer
+19,6,1623,Blaise Pascal,French mathematician and physicist (d. 1662),https://en.wikipedia.org/wiki/Blaise_Pascal
+19,6,1771,Joseph Diaz Gergonne,French mathematician and philosopher (d. 1859),https://en.wikipedia.org/wiki/Joseph_Diaz_Gergonne
+19,6,1854,Hjalmar Mellin,Finnish mathematician and theorist (d. 1933),https://en.wikipedia.org/wiki/Hjalmar_Mellin
+19,6,1926,Erna Schneider Hoover,American mathematician and inventor,https://en.wikipedia.org/wiki/Erna_Schneider_Hoover
+20,6,1917,Helena Rasiowa,Austrian-Polish mathematician and academic (d. 1994),https://en.wikipedia.org/wiki/Helena_Rasiowa
+20,6,1942,Neil Trudinger,Australian mathematician and theorist,https://en.wikipedia.org/wiki/Neil_Trudinger
+20,6,1946,David Kazhdan,Russian-Israeli mathematician and academic,https://en.wikipedia.org/wiki/David_Kazhdan
+20,6,1969,Misha Verbitsky,Russian mathematician and academic,https://en.wikipedia.org/wiki/Misha_Verbitsky
+21,6,1710,James Short,Scottish-English mathematician and optician (d. 1768),https://en.wikipedia.org/wiki/James_Short_(mathematician)
+21,6,1781,Siméon Denis Poisson,French mathematician and physicist (d. 1840),https://en.wikipedia.org/wiki/Sim%C3%A9on_Denis_Poisson
+21,6,1894,Harry Schmidt,German mathematician and physicist (d. 1951),https://en.wikipedia.org/wiki/Harry_Schmidt_(mathematician)
+21,6,1918,Tibor Szele,Hungarian mathematician and academic (d. 1955),https://en.wikipedia.org/wiki/Tibor_Szele
+21,6,1928,Wolfgang Haken,German-American mathematician and academic (d. 2022),https://en.wikipedia.org/wiki/Wolfgang_Haken
+21,6,1938,Michael M. Richter,German mathematician and computer scientist (d. 2020),https://en.wikipedia.org/wiki/Michael_M._Richter
+22,6,1864,Hermann Minkowski,German mathematician and academic (d. 1909),https://en.wikipedia.org/wiki/Hermann_Minkowski
+22,6,1953,Mauro Francaviglia,Italian mathematician and academic (d. 2013),https://en.wikipedia.org/wiki/Mauro_Francaviglia
+23,6,1912,Alan Turing,English mathematician and computer scientist (d. 1954),https://en.wikipedia.org/wiki/Alan_Turing
+24,6,1880,Oswald Veblen,American mathematician and academic (g. 1960),https://en.wikipedia.org/wiki/Oswald_Veblen
+24,6,1900,Wilhelm Cauer,German mathematician and engineer (d. 1945),https://en.wikipedia.org/wiki/Wilhelm_Cauer
+24,6,1909,William Penney,"Baron Penney, English mathematician and physicist (d. 1991)","https://en.wikipedia.org/wiki/William_Penney,_Baron_Penney"
+25,6,1935,Charles Sheffield,"English-American mathematician, physicist, and author (d. 2002)",https://en.wikipedia.org/wiki/Charles_Sheffield
+25,6,1951,Eva Bayer-Fluckiger,Swiss mathematician and academic,https://en.wikipedia.org/wiki/Eva_Bayer-Fluckiger
+26,6,1878,Leopold Löwenheim,German mathematician and logician (d. 1957),https://en.wikipedia.org/wiki/Leopold_L%C3%B6wenheim
+27,6,1806,Augustus De Morgan,English mathematician and logician (d. 1871),https://en.wikipedia.org/wiki/Augustus_De_Morgan
+27,6,1850,Jørgen Pedersen Gram,Danish mathematician and academic (d. 1919),https://en.wikipedia.org/wiki/J%C3%B8rgen_Pedersen_Gram
+28,6,1875,Henri Lebesgue,French mathematician and academic (d. 1941),https://en.wikipedia.org/wiki/Henri_Lebesgue
+28,6,1972,Ngô Bảo Châu,Vietnamese-French mathematician and academic,https://en.wikipedia.org/wiki/Ng%C3%B4_B%E1%BA%A3o_Ch%C3%A2u
+29,6,1904,Witold Hurewicz,Polish mathematician (d. 1956),https://en.wikipedia.org/wiki/Witold_Hurewicz
+29,6,1914,Christos Papakyriakopoulos,Greek-American mathematician and academic (d. 1976),https://en.wikipedia.org/wiki/Christos_Papakyriakopoulos
+30,6,1928,Hassan Hassanzadeh Amoli,"Islamic philosopher, theologian, mathematician and mystic (d. 2021)",https://en.wikipedia.org/wiki/Hassan_Hassanzadeh_Amoli
+30,6,1952,Athanassios S. Fokas,Greek mathematician and academic,https://en.wikipedia.org/wiki/Athanassios_S._Fokas
+1,7,1646,Gottfried Wilhelm Leibniz,German mathematician and philosopher (d. 1716),https://en.wikipedia.org/wiki/Gottfried_Wilhelm_Leibniz
+1,7,1788,Jean-Victor Poncelet,French mathematician and engineer (d. 1867),https://en.wikipedia.org/wiki/Jean-Victor_Poncelet
+1,7,1906,Jean Dieudonné,French mathematician and academic (d. 1992),https://en.wikipedia.org/wiki/Jean_Dieudonn%C3%A9
+2,7,1862,William Henry Bragg,"English physicist, chemist, and mathematician, Nobel Prize laureate (d. 1942)",https://en.wikipedia.org/wiki/William_Henry_Bragg
+3,7,1879,Alfred Korzybski,"Polish-American mathematician, linguist, and philosopher (d. 1950)",https://en.wikipedia.org/wiki/Alfred_Korzybski
+3,7,1897,Jesse Douglas,American mathematician and academic (d. 1965),https://en.wikipedia.org/wiki/Jesse_Douglas
+3,7,1933,Edward Brandt,"Jr., American physician and mathematician (d. 2007)","https://en.wikipedia.org/wiki/Edward_Brandt,_Jr."
+4,7,1921,Gérard Debreu,"French economist and mathematician, Nobel Prize laureate (d. 2004)",https://en.wikipedia.org/wiki/G%C3%A9rard_Debreu
+5,7,1820,William John Macquorn Rankine,"Scottish physicist, mathematician, and engineer (d. 1872)",https://en.wikipedia.org/wiki/William_John_Macquorn_Rankine
+5,7,1953,Caryn Navy,American mathematician and computer scientist,https://en.wikipedia.org/wiki/Caryn_Navy
+6,7,1423,Antonio Manetti,Italian mathematician and architect (d. 1497),https://en.wikipedia.org/wiki/Antonio_Manetti
+6,7,1928,Bernard Malgrange,French mathematician,https://en.wikipedia.org/wiki/Bernard_Malgrange
+6,7,1976,Ioana Dumitriu,Romanian-American mathematician and academic,https://en.wikipedia.org/wiki/Ioana_Dumitriu
+7,7,1905,Marie-Louise Dubreil-Jacotin,French mathematician (d. 1972),https://en.wikipedia.org/wiki/Marie-Louise_Dubreil-Jacotin
+7,7,1906,William Feller,Croatian-American mathematician and academic (d. 1970),https://en.wikipedia.org/wiki/William_Feller
+7,7,1936,Egbert Brieskorn,German mathematician and academic (d. 2013),https://en.wikipedia.org/wiki/Egbert_Brieskorn
+8,7,1760,Christian Kramp,French mathematician and academic (d. 1826),https://en.wikipedia.org/wiki/Christian_Kramp
+8,7,1904,Henri Cartan,French mathematician and academic (d. 2008),https://en.wikipedia.org/wiki/Henri_Cartan
+9,7,1918,Nicolaas Govert de Bruijn,Dutch mathematician and academic (d. 2012),https://en.wikipedia.org/wiki/Nicolaas_Govert_de_Bruijn
+9,7,1922,Kathleen Booth,British computer scientist and mathematician (d. 2022),https://en.wikipedia.org/wiki/Kathleen_Booth
+10,7,1682,Roger Cotes,English mathematician and astronomer (d. 1716),https://en.wikipedia.org/wiki/Roger_Cotes
+10,7,1927,Grigory Barenblatt,Russian mathematician and academic (d. 2018),https://en.wikipedia.org/wiki/Grigory_Barenblatt
+12,7,1879,Margherita Piazzola Beloch,Italian mathematician (d. 1976),https://en.wikipedia.org/wiki/Margherita_Piazzola_Beloch
+12,7,1888,Zygmunt Janiszewski,Polish mathematician and academic (d. 1920),https://en.wikipedia.org/wiki/Zygmunt_Janiszewski
+13,7,1527,John Dee,"English-Welsh mathematician, astronomer, and astrologer (d. 1609)",https://en.wikipedia.org/wiki/John_Dee
+14,7,1671,Jacques d'Allonville,French astronomer and mathematician (d. 1732),https://en.wikipedia.org/wiki/Jacques_d%27Allonville
+15,7,1865,Wilhelm Wirtinger,Austrian-German mathematician and theorist (d. 1945),https://en.wikipedia.org/wiki/Wilhelm_Wirtinger
+15,7,1922,Leon M. Lederman,"American physicist and mathematician, Nobel Prize laureate (d. 2018)",https://en.wikipedia.org/wiki/Leon_M._Lederman
+15,7,1930,Stephen Smale,American mathematician and computer scientist,https://en.wikipedia.org/wiki/Stephen_Smale
+16,7,1903,Irmgard Flügge-Lotz,German mathematician and engineer (d. 1974),https://en.wikipedia.org/wiki/Irmgard_Fl%C3%BCgge-Lotz
+17,7,1698,Pierre Louis Maupertuis,French mathematician and philosopher (d. 1759),https://en.wikipedia.org/wiki/Pierre_Louis_Maupertuis
+17,7,1929,Sergei K. Godunov,Russian mathematician and academic (d. 2023),https://en.wikipedia.org/wiki/Sergei_K._Godunov
+17,7,1975,Terence Tao,Australian-American mathematician,https://en.wikipedia.org/wiki/Terence_Tao
+18,7,1013,Hermann of Reichenau,"German composer, mathematician, and astronomer (b. 1013)",https://en.wikipedia.org/wiki/Hermann_of_Reichenau
+18,7,1908,Beatrice Aitchison,"American mathematician, statistician, and transportation economist (d. 1997)",https://en.wikipedia.org/wiki/Beatrice_Aitchison
+19,7,1886,Michael Fekete,Hungarian-Israeli mathematician and academic (d. 1957),https://en.wikipedia.org/wiki/Michael_Fekete
+19,7,1894,Aleksandr Khinchin,Russian mathematician and academic (d. 1959),https://en.wikipedia.org/wiki/Aleksandr_Khinchin
+20,7,1876,Otto Blumenthal,German mathematician and academic (d. 1944),https://en.wikipedia.org/wiki/Otto_Blumenthal
+20,7,1882,Olga Hahn-Neurath,Austrian mathematician and philosopher (d. 1937),https://en.wikipedia.org/wiki/Olga_Hahn-Neurath
+22,7,1755,Gaspard de Prony,French mathematician and engineer (d. 1839),https://en.wikipedia.org/wiki/Gaspard_de_Prony
+22,7,1784,Friedrich Bessel,German mathematician and astronomer (d. 1846),https://en.wikipedia.org/wiki/Friedrich_Bessel
+22,7,1936,Geraldine Claudette Darden,American mathematician,https://en.wikipedia.org/wiki/Geraldine_Claudette_Darden
+23,7,1775,Étienne-Louis Malus,French physicist and mathematician (d. 1812),https://en.wikipedia.org/wiki/%C3%89tienne-Louis_Malus
+24,7,1786,Joseph Nicollet,French mathematician and explorer (d. 1843),https://en.wikipedia.org/wiki/Joseph_Nicollet
+24,7,1851,Friedrich Schottky,Polish-German mathematician and theorist (d. 1935),https://en.wikipedia.org/wiki/Friedrich_Schottky
+24,7,1856,Émile Picard,French mathematician and academic (d. 1941),https://en.wikipedia.org/wiki/%C3%89mile_Picard
+25,7,1923,Edgar Gilbert,American mathematician and theorist (d. 2013),https://en.wikipedia.org/wiki/Edgar_Gilbert
+26,7,1711,Lorenz Christoph Mizler,"German physician, mathematician, and historian (d. 1778)",https://en.wikipedia.org/wiki/Lorenz_Christoph_Mizler
+27,7,1667,Johann Bernoulli,Swiss mathematician and academic (d. 1748),https://en.wikipedia.org/wiki/Johann_Bernoulli
+27,7,1907,Irene Fischer,Austrian-American geodesist and mathematician (d. 2009),https://en.wikipedia.org/wiki/Irene_Fischer
+28,7,1954,Gerd Faltings,German mathematician and academic,https://en.wikipedia.org/wiki/Gerd_Faltings
+29,7,1925,Harold W. Kuhn,American mathematician and academic (d. 2014),https://en.wikipedia.org/wiki/Harold_W._Kuhn
+31,7,1704,Gabriel Cramer,Swiss mathematician and physicist (d. 1752),https://en.wikipedia.org/wiki/Gabriel_Cramer
+31,7,1926,Hilary Putnam,"American mathematician, computer scientist, and philosopher (d. 2016)",https://en.wikipedia.org/wiki/Hilary_Putnam
+1,8,1881,Otto Toeplitz,German mathematician and academic (d. 1940),https://en.wikipedia.org/wiki/Otto_Toeplitz
+2,8,1887,Oskar Anderson,Bulgarian-German mathematician and statistician (d. 1960),https://en.wikipedia.org/wiki/Oskar_Anderson
+2,8,1902,Mina Rees,American mathematician (d. 1997),https://en.wikipedia.org/wiki/Mina_Rees
+2,8,1927,Peter Swinnerton-Dyer,English mathematician and academic (d. 2018),https://en.wikipedia.org/wiki/Peter_Swinnerton-Dyer
+3,8,1943,Béla Bollobás,Hungarian-English mathematician and academic,https://en.wikipedia.org/wiki/B%C3%A9la_Bollob%C3%A1s
+4,8,1805,William Rowan Hamilton,"Irish physicist, astronomer, and mathematician (d. 1865)",https://en.wikipedia.org/wiki/William_Rowan_Hamilton
+4,8,1834,John Venn,English mathematician and philosopher (d. 1923),https://en.wikipedia.org/wiki/John_Venn
+4,8,1912,Aleksandr Danilovich Aleksandrov,"Russian mathematician, physicist, and mountaineer (d. 1999)",https://en.wikipedia.org/wiki/Aleksandr_Danilovich_Aleksandrov
+5,8,1802,Niels Henrik Abel,Norwegian mathematician and theorist (d. 1829),https://en.wikipedia.org/wiki/Niels_Henrik_Abel
+6,8,1667,Johann Bernoulli,Swiss mathematician (d. 1748),https://en.wikipedia.org/wiki/Johann_Bernoulli
+7,8,1869,Mary Frances Winston,American mathematician (d. 1959),https://en.wikipedia.org/wiki/Mary_Frances_Winston_Newson
+8,8,1931,Roger Penrose,"English physicist, mathematician, and philosopher, Nobel Prize laureate",https://en.wikipedia.org/wiki/Roger_Penrose
+8,8,1973,Ilka Agricola,German mathematician,https://en.wikipedia.org/wiki/Ilka_Agricola
+8,8,1974,Manjul Bhargava,Canadian-American mathematician and academic,https://en.wikipedia.org/wiki/Manjul_Bhargava
+9,8,1537,Francesco Barozzi,Italian mathematician and astronomer (d. 1604),https://en.wikipedia.org/wiki/Francesco_Barozzi
+9,8,1726,Francesco Cetti,"Italian priest, zoologist, and mathematician (d. 1778)",https://en.wikipedia.org/wiki/Francesco_Cetti
+9,8,1940,Linda Keen,American mathematician and academic,https://en.wikipedia.org/wiki/Linda_Keen
+10,8,1602,Gilles de Roberval,French mathematician and academic (d. 1675),https://en.wikipedia.org/wiki/Gilles_de_Roberval
+10,8,1926,Carol Ruth Vander Velde,American mathematician (d. 1972),https://en.wikipedia.org/wiki/Carol_Karp
+11,8,1956,Pierre-Louis Lions,French mathematician and academic,https://en.wikipedia.org/wiki/Pierre-Louis_Lions
+12,8,1452,Abraham Zacuto,"Jewish astronomer, astrologer, mathematician, rabbi and historian (d. 1515)",https://en.wikipedia.org/wiki/Abraham_Zacuto
+12,8,1930,Jacques Tits,Belgian-French mathematician and academic (d. 2021),https://en.wikipedia.org/wiki/Jacques_Tits
+13,8,1625,Rasmus Bartholin,"Danish physician, mathematician, and physicist (d. 1698)",https://en.wikipedia.org/wiki/Rasmus_Bartholin
+13,8,1819,Sir George Stokes,"1st Baronet, Anglo-Irish mathematician and physicist (d. 1903)","https://en.wikipedia.org/wiki/Sir_George_Stokes,_1st_Baronet"
+13,8,1914,Grace Bates,American mathematician and academic (d. 1996),https://en.wikipedia.org/wiki/Grace_Bates
+14,8,1530,Giambattista Benedetti,Italian mathematician and physicist (d. 1590),https://en.wikipedia.org/wiki/Giambattista_Benedetti
+14,8,1865,Guido Castelnuovo,Italian mathematician and academic (d. 1952),https://en.wikipedia.org/wiki/Guido_Castelnuovo
+14,8,1866,Charles Jean de la Vallée-Poussin,Belgian mathematician and academic (d. 1962),https://en.wikipedia.org/wiki/Charles_Jean_de_la_Vall%C3%A9e-Poussin
+14,8,1910,Nüzhet Gökdoğan,Turkish astronomer and mathematician (d. 2003),https://en.wikipedia.org/wiki/N%C3%BCzhet_G%C3%B6kdo%C4%9Fan
+15,8,1863,Aleksey Krylov,Russian mathematician and engineer (d. 1945),https://en.wikipedia.org/wiki/Aleksey_Krylov
+15,8,1901,Pyotr Novikov,Russian mathematician and theorist (d. 1975),https://en.wikipedia.org/wiki/Pyotr_Novikov
+16,8,1821,Arthur Cayley,English mathematician and academic (d. 1895),https://en.wikipedia.org/wiki/Arthur_Cayley
+16,8,1842,Jakob Rosanes,"Ukrainian-German mathematician, chess player, and academic (d. 1922)",https://en.wikipedia.org/wiki/Jakob_Rosanes
+18,8,1685,Brook Taylor,English mathematician and theorist (d. 1731),https://en.wikipedia.org/wiki/Brook_Taylor
+19,8,1947,Anuška Ferligoj,Slovenian mathematician,https://en.wikipedia.org/wiki/Anu%C5%A1ka_Ferligoj
+20,8,1710,Thomas Simpson,English mathematician and academic (d. 1761),https://en.wikipedia.org/wiki/Thomas_Simpson
+20,8,1957,Simon Donaldson,English mathematician and academic,https://en.wikipedia.org/wiki/Simon_Donaldson
+21,8,1660,Hubert Gautier,French mathematician and engineer (d. 1737),https://en.wikipedia.org/wiki/Hubert_Gautier
+21,8,1665,Giacomo F. Maraldi,French-Italian astronomer and mathematician (d. 1729),https://en.wikipedia.org/wiki/Giacomo_F._Maraldi
+21,8,1789,Augustin-Louis Cauchy,French mathematician and academic (d. 1857),https://en.wikipedia.org/wiki/Augustin-Louis_Cauchy
+21,8,1909,Nikolay Bogolyubov,Russian mathematician and physicist (d. 1992),https://en.wikipedia.org/wiki/Nikolay_Bogolyubov
+21,8,1917,Leonid Hurwicz,Russian economist and mathematician (d. 2008),https://en.wikipedia.org/wiki/Leonid_Hurwicz
+21,8,1940,Endre Szemerédi,Hungarian-American mathematician and computer scientist,https://en.wikipedia.org/wiki/Endre_Szemer%C3%A9di
+21,8,1951,Eric Goles,Chilean mathematician and computer scientist,https://en.wikipedia.org/wiki/Eric_Goles
+22,8,1647,Denis Papin,"French physicist and mathematician, developed pressure cooking (d. 1712)",https://en.wikipedia.org/wiki/Denis_Papin
+23,8,1829,Moritz Cantor,German mathematician and historian (d. 1920),https://en.wikipedia.org/wiki/Moritz_Cantor
+23,8,1919,Vladimir Abramovich Rokhlin,Azerbaijani mathematician and theorist (d. 1984),https://en.wikipedia.org/wiki/Vladimir_Abramovich_Rokhlin
+23,8,1956,Andreas Floer,German mathematician and academic (d. 1991),https://en.wikipedia.org/wiki/Andreas_Floer
+25,8,1561,Philippe van Lansberge,Dutch astronomer and mathematician (d. 1632),https://en.wikipedia.org/wiki/Philippe_van_Lansberge
+25,8,1898,Helmut Hasse,German mathematician and academic (d. 1975),https://en.wikipedia.org/wiki/Helmut_Hasse
+25,8,1964,Azmin Ali,Malaysian mathematician and politician,https://en.wikipedia.org/wiki/Azmin_Ali
+25,8,1964,Maxim Kontsevich,Russian-American mathematician and academic,https://en.wikipedia.org/wiki/Maxim_Kontsevich
+26,8,1728,Johann Heinrich Lambert,"Swiss mathematician, physicist, and astronomer (d. 1777)",https://en.wikipedia.org/wiki/Johann_Heinrich_Lambert
+26,8,1918,Katherine Johnson,American physicist and mathematician (d. 2020),https://en.wikipedia.org/wiki/Katherine_Johnson
+26,8,1921,Shimshon Amitsur,Israeli mathematician and scholar (d. 1994),https://en.wikipedia.org/wiki/Shimshon_Amitsur
+26,8,1965,Marcus du Sautoy,English mathematician and academic,https://en.wikipedia.org/wiki/Marcus_du_Sautoy
+27,8,1858,Giuseppe Peano,Italian mathematician and philosopher (d. 1932),https://en.wikipedia.org/wiki/Giuseppe_Peano
+28,8,1801,Antoine Augustin Cournot,French mathematician and philosopher (d. 1877),https://en.wikipedia.org/wiki/Antoine_Augustin_Cournot
+28,8,1910,Tjalling Koopmans,Dutch-American mathematician and economist Nobel Prize laureate (d. 1985),https://en.wikipedia.org/wiki/Tjalling_Koopmans
+28,8,1939,John Kingman,English mathematician and academic,https://en.wikipedia.org/wiki/John_Kingman
+29,8,1756,Jan Śniadecki,Polish mathematician and astronomer (d. 1830),https://en.wikipedia.org/wiki/Jan_%C5%9Aniadecki
+29,8,1959,Stephen Wolfram,English-American physicist and mathematician,https://en.wikipedia.org/wiki/Stephen_Wolfram
+30,8,1856,Carl David Tolmé Runge,"German mathematician, physicist, and spectroscopist (d. 1927)",https://en.wikipedia.org/wiki/Carl_David_Tolm%C3%A9_Runge
+30,8,1906,Olga Taussky-Todd,Austrian mathematician (d. 1995),https://en.wikipedia.org/wiki/Olga_Taussky-Todd
+30,8,1935,Alexandra Bellow,Romanian-American mathematician,https://en.wikipedia.org/wiki/Alexandra_Bellow
+2,9,1913,Israel Gelfand,Russian-American mathematician and biologist (d. 2009),https://en.wikipedia.org/wiki/Israel_Gelfand
+2,9,1923,René Thom,"French mathematician, biologist, and academic (d. 2002)",https://en.wikipedia.org/wiki/Ren%C3%A9_Thom
+3,9,1704,Joseph de Jussieu,"French explorer, geographer, and mathematician, (d. 1779)",https://en.wikipedia.org/wiki/Joseph_de_Jussieu
+3,9,1814,James Joseph Sylvester,English mathematician and academic (d. 1897),https://en.wikipedia.org/wiki/James_Joseph_Sylvester
+3,9,1908,Lev Pontryagin,Russian mathematician and academic (d. 1988),https://en.wikipedia.org/wiki/Lev_Pontryagin
+3,9,1945,Peter Goddard,English physicist and mathematician,https://en.wikipedia.org/wiki/Peter_Goddard_(physicist)
+5,9,1667,Giovanni Girolamo Saccheri,"Italian priest, mathematician, and philosopher (d. 1733)",https://en.wikipedia.org/wiki/Giovanni_Girolamo_Saccheri
+5,9,1725,Jean-Étienne Montucla,French mathematician and theorist (d. 1799),https://en.wikipedia.org/wiki/Jean-%C3%89tienne_Montucla
+5,9,1914,Nicanor Parra,"Chilean physicist, mathematician, and poet (d. 2018)",https://en.wikipedia.org/wiki/Nicanor_Parra
+6,9,1929,Ljubov Rebane,Estonian physicist and mathematician (d. 1991),https://en.wikipedia.org/wiki/Ljubov_Rebane
+7,9,1707,Georges-Louis Leclerc,"Comte de Buffon, French mathematician, cosmologist, and author (d. 1788)","https://en.wikipedia.org/wiki/Georges-Louis_Leclerc,_Comte_de_Buffon"
+7,9,1915,Kiyosi Itô,Japanese mathematician and academic (d. 2008),https://en.wikipedia.org/wiki/Kiyosi_It%C3%B4
+8,9,1588,Marin Mersenne,"French mathematician, philosopher, and theologian (d. 1648)",https://en.wikipedia.org/wiki/Marin_Mersenne
+8,9,1927,Marguerite Frank,American-French mathematician,https://en.wikipedia.org/wiki/Marguerite_Frank
+9,9,1920,Feng Kang,Chinese mathematician and physicist (d. 1993),https://en.wikipedia.org/wiki/Feng_Kang
+10,9,1839,Charles Sanders Peirce,"American mathematician, statistician, and philosopher (d. 1914)",https://en.wikipedia.org/wiki/Charles_Sanders_Peirce
+11,9,1877,James Hopwood Jeans,"English physicist, astronomer, and mathematician (d. 1946)",https://en.wikipedia.org/wiki/James_Hopwood_Jeans
+11,9,1951,Richard D. Gill,English-Dutch mathematician and academic,https://en.wikipedia.org/wiki/Richard_D._Gill
+12,9,1894,Dorothy Maud Wrinch,"Argentinian-English mathematician, biochemist and philosopher (d. 1976)",https://en.wikipedia.org/wiki/Dorothy_Maud_Wrinch
+12,9,1900,Haskell Curry,"American mathematician, logician, and academic (d. 1982)",https://en.wikipedia.org/wiki/Haskell_Curry
+13,9,1873,Constantin Carathéodory,German mathematician and author (d. 1950),https://en.wikipedia.org/wiki/Constantin_Carath%C3%A9odory
+13,9,1885,Wilhelm Blaschke,Austrian-German mathematician and academic (d. 1962),https://en.wikipedia.org/wiki/Wilhelm_Blaschke
+14,9,1713,Johann Kies,German astronomer and mathematician (d. 1781),https://en.wikipedia.org/wiki/Johann_Kies
+14,9,1837,Nikolai Bugaev,Georgian-Russian mathematician and philosopher (d. 1903),https://en.wikipedia.org/wiki/Nikolai_Bugaev
+14,9,1891,Ivan Matveyevich Vinogradov,Russian mathematician and academic (d. 1983),https://en.wikipedia.org/wiki/Ivan_Matveyevich_Vinogradov
+14,9,1920,Alberto Calderón,Argentinian-American mathematician and academic (d. 1998),https://en.wikipedia.org/wiki/Alberto_Calder%C3%B3n
+15,9,1736,Jean Sylvain Bailly,"French astronomer, mathematician, and politician, 1st Mayor of Paris (d. 1793)",https://en.wikipedia.org/wiki/Jean_Sylvain_Bailly
+15,9,1883,Esteban Terradas i Illa,Spanish mathematician and engineer (d. 1950),https://en.wikipedia.org/wiki/Esteban_Terradas_i_Illa
+15,9,1886,Paul Lévy,French mathematician and theorist (d. 1971),https://en.wikipedia.org/wiki/Paul_L%C3%A9vy_(mathematician)
+15,9,1926,Jean-Pierre Serre,French mathematician and academic,https://en.wikipedia.org/wiki/Jean-Pierre_Serre
+16,9,1666,Antoine Parent,French mathematician and theorist (d. 1716),https://en.wikipedia.org/wiki/Antoine_Parent
+17,9,1743,Marquis de Condorcet,French mathematician and political scientist (d. 1794),https://en.wikipedia.org/wiki/Marquis_de_Condorcet
+17,9,1826,Bernhard Riemann,German-Italian mathematician and academic (d. 1866),https://en.wikipedia.org/wiki/Bernhard_Riemann
+17,9,1944,Jean Taylor,American mathematician and academic,https://en.wikipedia.org/wiki/Jean_Taylor
+18,9,1752,Adrien-Marie Legendre,French mathematician and theorist (d. 1833),https://en.wikipedia.org/wiki/Adrien-Marie_Legendre
+18,9,1939,Jan Camiel Willems,Belgian mathematician and theorist (d. 2013),https://en.wikipedia.org/wiki/Jan_Camiel_Willems
+19,9,1749,Jean Baptiste Joseph Delambre,French mathematician and astronomer (d. 1822),https://en.wikipedia.org/wiki/Jean_Baptiste_Joseph_Delambre
+19,9,1811,Orson Pratt,American mathematician and religious leader (d. 1881),https://en.wikipedia.org/wiki/Orson_Pratt
+19,9,1888,James Waddell Alexander II,American mathematician and topologist (d. 1971),https://en.wikipedia.org/wiki/James_Waddell_Alexander_II
+19,9,1950,Michael Proctor,"English physicist, mathematician, and academic",https://en.wikipedia.org/wiki/Michael_Proctor_(academic)
+20,9,1906,Vera Faddeeva,Russian mathematician (d. 1983),https://en.wikipedia.org/wiki/Vera_Faddeeva
+20,9,1910,Dorothy Vaughan,American mathematician (d. 2008),https://en.wikipedia.org/wiki/Dorothy_Vaughan
+20,9,1930,Richard Montague,American mathematician and philosopher (d. 1971),https://en.wikipedia.org/wiki/Richard_Montague
+20,9,1956,Jennifer Tour Chayes,American mathematician and computer scientist,https://en.wikipedia.org/wiki/Jennifer_Tour_Chayes
+21,9,1884,Dénes Kőnig,Hungarian mathematician and theorist (d. 1944),https://en.wikipedia.org/wiki/D%C3%A9nes_K%C5%91nig
+21,9,1917,Phyllis Nicolson,English mathematician and academic (d. 1968),https://en.wikipedia.org/wiki/Phyllis_Nicolson
+21,9,1968,Kevin Buzzard,British mathematician,https://en.wikipedia.org/wiki/Kevin_Buzzard
+22,9,1547,Philipp Nicodemus Frischlin,"German philologist, mathematician, astronomer, and poet (d. 1590)",https://en.wikipedia.org/wiki/Philipp_Nicodemus_Frischlin
+22,9,1765,Paolo Ruffini,Italian mathematician and philosopher (d. 1822),https://en.wikipedia.org/wiki/Paolo_Ruffini_(mathematician)
+23,9,1851,Ellen Hayes,American mathematician and astronomer (d. 1930),https://en.wikipedia.org/wiki/Ellen_Hayes
+23,9,1902,Su Buqing,Chinese mathematician and academic (d. 2003),https://en.wikipedia.org/wiki/Su_Buqing
+24,9,1501,Gerolamo Cardano,"Italian mathematician, physician, and astrologer (d. 1576)",https://en.wikipedia.org/wiki/Gerolamo_Cardano
+24,9,1625,Johan de Witt,Dutch mathematician and politician (d. 1672),https://en.wikipedia.org/wiki/Johan_de_Witt
+24,9,1801,Mikhail Ostrogradsky,Ukrainian-Russian mathematician and physicist (d. 1862),https://en.wikipedia.org/wiki/Mikhail_Ostrogradsky
+24,9,1923,Raoul Bott,Hungarian-American mathematician (d. 2005),https://en.wikipedia.org/wiki/Raoul_Bott
+25,9,1893,Harald Cramér,Swedish mathematician and statistician (d. 1985),https://en.wikipedia.org/wiki/Harald_Cram%C3%A9r
+25,9,1931,Bryan John Birch,English mathematician and scholar,https://en.wikipedia.org/wiki/Bryan_John_Birch
+27,9,1719,Abraham Gotthelf Kästner,German mathematician and epigrammatist (d. 1800),https://en.wikipedia.org/wiki/Abraham_Gotthelf_K%C3%A4stner
+27,9,1843,Gaston Tarry,French mathematician and academic (d. 1913),https://en.wikipedia.org/wiki/Gaston_Tarry
+27,9,1879,Hans Hahn,Austrian mathematician and philosopher (d. 1934),https://en.wikipedia.org/wiki/Hans_Hahn_(mathematician)
+27,9,1919,James H. Wilkinson,American mathematician and computer scientist (d. 1986),https://en.wikipedia.org/wiki/James_H._Wilkinson
+28,9,1605,Ismaël Bullialdus,French astronomer and mathematician (d. 1694),https://en.wikipedia.org/wiki/Isma%C3%ABl_Bullialdus
+28,9,1893,Hilda Geiringer,Austrian mathematician (d. 1973),https://en.wikipedia.org/wiki/Hilda_Geiringer
+28,9,1925,Martin David Kruskal,American physicist and mathematician (d. 2006),https://en.wikipedia.org/wiki/Martin_David_Kruskal
+28,9,1947,Rhonda Hughes,American mathematician and academic,https://en.wikipedia.org/wiki/Rhonda_Hughes
+28,9,1956,Martha Isabel Fandiño Pinilla,Colombian-Italian mathematician and author,https://en.wikipedia.org/wiki/Martha_Isabel_Fandi%C3%B1o_Pinilla
+29,9,1561,Adriaan van Roomen,Flemish priest and mathematician (d. 1615),https://en.wikipedia.org/wiki/Adriaan_van_Roomen
+29,9,1803,Jacques Charles François Sturm,French mathematician and theorist (d. 1850),https://en.wikipedia.org/wiki/Jacques_Charles_Fran%C3%A7ois_Sturm
+29,9,1812,Adolph Göpel,German mathematician (d. 1847),https://en.wikipedia.org/wiki/Adolph_G%C3%B6pel
+30,9,1550,Michael Maestlin,German astronomer and mathematician (d. 1631),https://en.wikipedia.org/wiki/Michael_Maestlin
+1,10,1671,Luigi Guido Grandi,"Italian monk, mathematician, and engineer (d. 1742)",https://en.wikipedia.org/wiki/Luigi_Guido_Grandi
+1,10,1894,Edgar Krahn,Estonian mathematician and academic (d. 1961),https://en.wikipedia.org/wiki/Edgar_Krahn
+1,10,1912,Kathleen Ollerenshaw,"English mathematician, astronomer, and politician, Lord Mayor of Manchester (d. 2014)",https://en.wikipedia.org/wiki/Kathleen_Ollerenshaw
+1,10,1957,Éva Tardos,Hungarian mathematician and educator,https://en.wikipedia.org/wiki/%C3%89va_Tardos
+3,10,1944,Pierre Deligne,Belgian mathematician and academic,https://en.wikipedia.org/wiki/Pierre_Deligne
+4,10,1759,Louis François Antoine Arbogast,French mathematician and academic (d. 1803),https://en.wikipedia.org/wiki/Louis_Fran%C3%A7ois_Antoine_Arbogast
+4,10,1876,Florence Eliza Allen,American mathematician and suffrage activist (d. 1960),https://en.wikipedia.org/wiki/Florence_Eliza_Allen
+4,10,1906,Mary Celine Fasenmyer,American mathematician (d. 1996),https://en.wikipedia.org/wiki/Mary_Celine_Fasenmyer
+5,10,1781,Bernard Bolzano,Czech mathematician and philosopher (d. 1848),https://en.wikipedia.org/wiki/Bernard_Bolzano
+5,10,1930,Reinhard Selten,"German economist and mathematician, Nobel Prize laureate (d. 2016)",https://en.wikipedia.org/wiki/Reinhard_Selten
+5,10,1973,Cédric Villani,French mathematician and academic,https://en.wikipedia.org/wiki/C%C3%A9dric_Villani
+6,10,1831,Richard Dedekind,German mathematician and philosopher (d. 1916),https://en.wikipedia.org/wiki/Richard_Dedekind
+6,10,1908,Sergei Sobolev,Russian mathematician and academic (d. 1989),https://en.wikipedia.org/wiki/Sergei_Sobolev
+6,10,1921,Evgenii Landis,Ukrainian-Russian mathematician and theorist (d. 1997),https://en.wikipedia.org/wiki/Evgenii_Landis
+8,10,1924,John Nelder,English mathematician and statistician (d. 2010),https://en.wikipedia.org/wiki/John_Nelder
+9,10,1581,Claude Gaspard Bachet de Méziriac,"French mathematician, poet, and scholar (d. 1638)",https://en.wikipedia.org/wiki/Claude_Gaspard_Bachet_de_M%C3%A9ziriac
+9,10,1704,Johann Andreas Segner,"German mathematician, physicist, and physician (d. 1777)",https://en.wikipedia.org/wiki/Johann_Andreas_Segner
+10,10,1629,Richard Towneley,English mathematician and astronomer (d. 1707),https://en.wikipedia.org/wiki/Richard_Towneley
+10,10,1919,William Kruskal,American mathematician and statistician (d. 2005),https://en.wikipedia.org/wiki/William_Kruskal
+11,10,1910,Cahit Arf,Turkish mathematician and academic (d. 1997),https://en.wikipedia.org/wiki/Cahit_Arf
+12,10,1934,Albert Shiryaev,Russian mathematician and academic,https://en.wikipedia.org/wiki/Albert_Shiryaev
+12,10,1952,Roger Heath-Brown,English mathematician and theorist,https://en.wikipedia.org/wiki/Roger_Heath-Brown
+13,10,1893,Kurt Reidemeister,German mathematician connected to the Vienna Circle (d. 1971),https://en.wikipedia.org/wiki/Kurt_Reidemeister
+14,10,1687,Robert Simson,Scottish mathematician and academic (d. 1768),https://en.wikipedia.org/wiki/Robert_Simson
+15,10,1608,Evangelista Torricelli,Italian physicist and mathematician (d. 1647),https://en.wikipedia.org/wiki/Evangelista_Torricelli
+16,10,1918,Abraham Nemeth,American mathematician and academic (d. 2013),https://en.wikipedia.org/wiki/Abraham_Nemeth
+16,10,1959,Philip Maini,Northern Irish mathematician at the University of Oxford,https://en.wikipedia.org/wiki/Philip_Maini
+17,10,1906,Andrey Tikhonov,Russian mathematician (d. 1993),https://en.wikipedia.org/wiki/Andrey_Tikhonov_(mathematician)
+19,10,1910,Subrahmanyan Chandrasekhar,"Indian-American astrophysicist, astronomer, and mathematician, Nobel Prize laureate (d. 1995)",https://en.wikipedia.org/wiki/Subrahmanyan_Chandrasekhar
+19,10,1917,Sharadchandra Shankar Shrikhande,Indian mathematician (d. 2020),https://en.wikipedia.org/wiki/Sharadchandra_Shankar_Shrikhande
+19,10,1951,Demetrios Christodoulou,Greek mathematician and physicist,https://en.wikipedia.org/wiki/Demetrios_Christodoulou
+20,10,1616,Thomas Bartholin,"Danish physician, mathematician, and theologian (d. 1680)",https://en.wikipedia.org/wiki/Thomas_Bartholin
+20,10,1632,Christopher Wren,"English physicist, mathematician, and architect, designed St Paul's Cathedral (d. 1723)",https://en.wikipedia.org/wiki/Christopher_Wren
+21,10,1687,Nicolaus I Bernoulli,Swiss mathematician and theorist (d. 1759),https://en.wikipedia.org/wiki/Nicolaus_I_Bernoulli
+21,10,1914,Martin Gardner,American mathematician and author (d. 2010),https://en.wikipedia.org/wiki/Martin_Gardner
+22,10,1511,Erasmus Reinhold,German astronomer and mathematician (d. 1553),https://en.wikipedia.org/wiki/Erasmus_Reinhold
+22,10,1587,Joachim Jungius,German mathematician and philosopher (d. 1657),https://en.wikipedia.org/wiki/Joachim_Jungius
+22,10,1906,Aurelio Baldor,Cuban mathematician and lawyer (d. 1978),https://en.wikipedia.org/wiki/Aurelio_Baldor
+22,10,1921,Alexander Kronrod,Russian mathematician and computer scientist (d. 1986),https://en.wikipedia.org/wiki/Alexander_Kronrod
+24,10,1873,E. T. Whittaker,British mathematician and physicist (d. 1956),https://en.wikipedia.org/wiki/E._T._Whittaker
+24,10,1906,Alexander Gelfond,Russian mathematician and cryptographer (d. 1968),https://en.wikipedia.org/wiki/Alexander_Gelfond
+24,10,1920,Marcel-Paul Schützenberger,French mathematician and academic (d. 1996),https://en.wikipedia.org/wiki/Marcel-Paul_Sch%C3%BCtzenberger
+24,10,1930,Johan Galtung,Norwegian sociologist and mathematician,https://en.wikipedia.org/wiki/Johan_Galtung
+25,10,1811,Évariste Galois,French mathematician and theorist (d. 1832),https://en.wikipedia.org/wiki/%C3%89variste_Galois
+25,10,1915,Ivan M. Niven,Canadian-American mathematician and academic (d. 1999),https://en.wikipedia.org/wiki/Ivan_M._Niven
+25,10,1952,Wendy Hall,"English computer scientist, mathematician, and academic",https://en.wikipedia.org/wiki/Wendy_Hall
+26,10,1849,Ferdinand Georg Frobenius,German mathematician and academic (d. 1917),https://en.wikipedia.org/wiki/Ferdinand_Georg_Frobenius
+26,10,1935,Gloria Conyers Hewitt,American mathematician and academic,https://en.wikipedia.org/wiki/Gloria_Conyers_Hewitt
+28,10,1703,Antoine Deparcieux,French mathematician and engineer (d. 1768),https://en.wikipedia.org/wiki/Antoine_Deparcieux
+28,10,1718,Ignacije Szentmartony,"Croatian priest, mathematician, astronomer, and explorer (d. 1793)",https://en.wikipedia.org/wiki/Ignacije_Szentmartony
+28,10,1804,Pierre François Verhulst,Belgian mathematician and theorist (d. 1849),https://en.wikipedia.org/wiki/Pierre_Fran%C3%A7ois_Verhulst
+28,10,1905,Tatyana Ehrenfest,Dutch mathematician (d. 1984),https://en.wikipedia.org/wiki/Tatyana_Ehrenfest
+28,10,1960,Landon Curt Noll,American computer scientist and mathematician,https://en.wikipedia.org/wiki/Landon_Curt_Noll
+29,10,1690,Martin Folkes,English mathematician and astronomer (d. 1754),https://en.wikipedia.org/wiki/Martin_Folkes
+29,10,1925,Klaus Roth,British mathematician (d. 2015),https://en.wikipedia.org/wiki/Klaus_Roth
+29,10,1971,Daniel J. Bernstein,"American mathematician, cryptologist, and academic",https://en.wikipedia.org/wiki/Daniel_J._Bernstein
+30,10,1632,Christopher Wren,"English physicist, mathematician, and architect, designed St Paul's Cathedral (d. 1723)",https://en.wikipedia.org/wiki/Christopher_Wren
+31,10,1815,Karl Weierstrass,German mathematician and academic (d. 1897),https://en.wikipedia.org/wiki/Karl_Weierstrass
+31,10,1902,Abraham Wald,Jewish-Hungarian mathematician and economist (d. 1950),https://en.wikipedia.org/wiki/Abraham_Wald
+31,10,1919,Magnus Wenninger,American mathematician and author (d. 2017),https://en.wikipedia.org/wiki/Magnus_Wenninger
+31,10,1935,Ronald Graham,American mathematician and theorist (d. 2020),https://en.wikipedia.org/wiki/Ronald_Graham
+1,11,1585,Jan Brożek,"Polish mathematician, physician, and astronomer (d. 1652)",https://en.wikipedia.org/wiki/Jan_Bro%C5%BCek
+1,11,1919,Hermann Bondi,English-Austrian mathematician and cosmologist (d. 2005),https://en.wikipedia.org/wiki/Hermann_Bondi
+2,11,1815,George Boole,English mathematician and philosopher (d. 1864),https://en.wikipedia.org/wiki/George_Boole
+2,11,1911,Raphael M. Robinson,"American mathematician, philosopher, and theorist (d. 1995)",https://en.wikipedia.org/wiki/Raphael_M._Robinson
+3,11,1938,Martin Dunwoody,English mathematician and academic,https://en.wikipedia.org/wiki/Martin_Dunwoody
+4,11,1765,Pierre-Simon Girard,French mathematician and engineer (d. 1836),https://en.wikipedia.org/wiki/Pierre-Simon_Girard
+4,11,1929,Shakuntala Devi,Indian mathematician and astrologer (d. 2013),https://en.wikipedia.org/wiki/Shakuntala_Devi
+5,11,1688,Louis Bertrand Castel,French mathematician and philosopher (d. 1757),https://en.wikipedia.org/wiki/Louis_Bertrand_Castel
+7,11,1898,Raphaël Salem,Greek-French mathematician and academic (d. 1963),https://en.wikipedia.org/wiki/Rapha%C3%ABl_Salem
+8,11,1656,Edmond Halley,English astronomer and mathematician (d. 1742),https://en.wikipedia.org/wiki/Edmond_Halley
+8,11,1848,Gottlob Frege,German mathematician and philosopher (d. 1925),https://en.wikipedia.org/wiki/Gottlob_Frege
+8,11,1868,Felix Hausdorff,German mathematician and academic (d. 1942),https://en.wikipedia.org/wiki/Felix_Hausdorff
+9,11,1885,Theodor Kaluza,German mathematician and physicist (d. 1954),https://en.wikipedia.org/wiki/Theodor_Kaluza
+9,11,1885,Hermann Weyl,"German mathematician, physicist, and philosopher (d. 1955)",https://en.wikipedia.org/wiki/Hermann_Weyl
+9,11,1922,Imre Lakatos,"Hungarian mathematician, philosopher, and academic (d. 1974)",https://en.wikipedia.org/wiki/Imre_Lakatos
+11,11,1866,Martha Annie Whiteley,English chemist and mathematician (d. 1956),https://en.wikipedia.org/wiki/Martha_Annie_Whiteley
+11,11,1895,Wealthy Babcock,American mathematician and academic (d. 1990),https://en.wikipedia.org/wiki/Wealthy_Babcock
+11,11,1904,J. H. C. Whitehead,British mathematician and academic (d. 1960),https://en.wikipedia.org/wiki/J._H._C._Whitehead
+11,11,1930,Hugh Everett III,American physicist and mathematician (d. 1982),https://en.wikipedia.org/wiki/Hugh_Everett_III
+12,11,1927,Yutaka Taniyama,Japanese mathematician and theorist (d. 1958),https://en.wikipedia.org/wiki/Yutaka_Taniyama
+12,11,1945,Judith Roitman,American mathematician and academic,https://en.wikipedia.org/wiki/Judith_Roitman
+13,11,1878,Max Dehn,German-American mathematician and academic (d. 1952),https://en.wikipedia.org/wiki/Max_Dehn
+13,11,1927,Albert Turner Bharucha-Reid,American mathematician and theorist (d. 1985),https://en.wikipedia.org/wiki/Albert_Turner_Bharucha-Reid
+14,11,1916,Roger Apéry,Greek-French mathematician and academic (d. 1994),https://en.wikipedia.org/wiki/Roger_Ap%C3%A9ry
+15,11,1793,Michel Chasles,French mathematician and academic (d. 1880),https://en.wikipedia.org/wiki/Michel_Chasles
+16,11,1717,Jean le Rond d'Alembert,"French mathematician, physicist, and philosopher (d. 1793)",https://en.wikipedia.org/wiki/Jean_le_Rond_d%27Alembert
+17,11,1790,August Ferdinand Möbius,German mathematician and astronomer (d. 1868),https://en.wikipedia.org/wiki/August_Ferdinand_M%C3%B6bius
+17,11,1902,Eugene Wigner,"Hungarian physicist and mathematician, Nobel Prize laureate (d. 1995)",https://en.wikipedia.org/wiki/Eugene_Wigner
+17,11,1917,Ruth Aaronson Bari,American mathematician (d. 2005),https://en.wikipedia.org/wiki/Ruth_Aaronson_Bari
+19,11,1876,Tatyana Afanasyeva,Russian-Dutch mathematician and theorist (d. 1964),https://en.wikipedia.org/wiki/Tatyana_Afanasyeva
+19,11,1900,Mikhail Lavrentyev,Russian mathematician and hydrodynamicist (d. 1980),https://en.wikipedia.org/wiki/Mikhail_Lavrentyev
+19,11,1901,Nina Bari,Russian mathematician (d. 1961),https://en.wikipedia.org/wiki/Nina_Bari
+19,11,1964,Fred Diamond,American-English mathematician and academic,https://en.wikipedia.org/wiki/Fred_Diamond
+20,11,1841,Victor D'Hondt,"Belgian mathematician, lawyer, and jurist (d. 1901)",https://en.wikipedia.org/wiki/Victor_D%27Hondt
+20,11,1893,André Bloch,French mathematician (d. 1948),https://en.wikipedia.org/wiki/Andr%C3%A9_Bloch_(mathematician)
+20,11,1910,Willem Jacob van Stockum,"Dutch mathematician, pilot, and academic (d. 1944)",https://en.wikipedia.org/wiki/Willem_Jacob_van_Stockum
+20,11,1917,Leonard Jimmie Savage,American mathematician (d. 1971),https://en.wikipedia.org/wiki/Leonard_Jimmie_Savage
+20,11,1924,Benoit Mandelbrot,Polish-American mathematician and economist (d. 2010),https://en.wikipedia.org/wiki/Benoit_Mandelbrot
+20,11,1963,Timothy Gowers,English mathematician and academic,https://en.wikipedia.org/wiki/Timothy_Gowers
+21,11,1913,Gunnar Kangro,"Estonian mathematician, author, and academic (d. 1975)",https://en.wikipedia.org/wiki/Gunnar_Kangro
+21,11,1933,Etta Zuber Falconer,American educator and mathematician (d. 2002),https://en.wikipedia.org/wiki/Etta_Zuber_Falconer
+23,11,1820,Isaac Todhunter,English mathematician and author (d. 1884),https://en.wikipedia.org/wiki/Isaac_Todhunter
+25,11,1841,Ernst Schröder,German mathematician and academic (d. 1902),https://en.wikipedia.org/wiki/Ernst_Schr%C3%B6der_(mathematician)
+26,11,1894,Norbert Wiener,American-Swedish mathematician and philosopher (d. 1964),https://en.wikipedia.org/wiki/Norbert_Wiener
+26,11,1940,Enrico Bombieri,Italian mathematician and academic,https://en.wikipedia.org/wiki/Enrico_Bombieri
+27,11,1701,Anders Celsius,"Swedish astronomer, physicist, and mathematician (d. 1744)",https://en.wikipedia.org/wiki/Anders_Celsius
+27,11,1909,Anatoly Maltsev,Russian mathematician and theorist (d. 1967),https://en.wikipedia.org/wiki/Anatoly_Maltsev
+27,11,1923,J. Ernest Wilkins Jr.,"American nuclear scientist, mechanical engineer and mathematician (d. 2011)",https://en.wikipedia.org/wiki/J._Ernest_Wilkins_Jr.
+27,11,1934,Gilbert Strang,American mathematician and academic,https://en.wikipedia.org/wiki/Gilbert_Strang
+28,11,1700,Nathaniel Bliss,English astronomer and mathematician (d. 1764),https://en.wikipedia.org/wiki/Nathaniel_Bliss
+29,11,1803,Christian Doppler,Austrian mathematician and physicist (d. 1853),https://en.wikipedia.org/wiki/Christian_Doppler
+29,11,1873,Suzan Rose Benedict,American mathematician and academic (d. 1942),https://en.wikipedia.org/wiki/Suzan_Rose_Benedict
+29,11,1952,John D. Barrow,"English cosmologist, theoretical physicist, and mathematician (d. 2020)",https://en.wikipedia.org/wiki/John_D._Barrow
+29,11,1959,Richard Borcherds,South African-English mathematician and academic,https://en.wikipedia.org/wiki/Richard_Borcherds
+30,11,1549,Sir Henry Savile,English scholar and mathematician (d. 1622),https://en.wikipedia.org/wiki/Henry_Savile_(Bible_translator)
+30,11,1936,Dmitri Anosov,Russian mathematician and academic (d. 2014),https://en.wikipedia.org/wiki/Dmitri_Anosov
+1,12,1792,Nikolai Lobachevsky,Russian mathematician and geometer (d. 1856),https://en.wikipedia.org/wiki/Nikolai_Lobachevsky
+3,12,1616,John Wallis,English mathematician and cryptographer (d. 1703),https://en.wikipedia.org/wiki/John_Wallis
+3,12,1938,Sally Shlaer,American mathematician and engineer (d. 1998),https://en.wikipedia.org/wiki/Sally_Shlaer
+3,12,1967,Marie Françoise Ouedraogo,Burkinabé mathematician,https://en.wikipedia.org/wiki/Marie_Fran%C3%A7oise_Ouedraogo
+5,12,1863,Paul Painlevé,"French mathematician and politician, 84th Prime Minister of France (d. 1933)",https://en.wikipedia.org/wiki/Paul_Painlev%C3%A9
+5,12,1895,Elbert Frank Cox,American mathematician and academic (d. 1969),https://en.wikipedia.org/wiki/Elbert_Frank_Cox
+6,12,1908,Herta Freitag,Austrian-American mathematician (d. 2000),https://en.wikipedia.org/wiki/Herta_Freitag
+7,12,1823,Leopold Kronecker,Polish-German mathematician and academic (d. 1891),https://en.wikipedia.org/wiki/Leopold_Kronecker
+7,12,1903,Danilo Blanuša,"Croatian mathematician, physicist, and academic (d. 1987)",https://en.wikipedia.org/wiki/Danilo_Blanu%C5%A1a
+7,12,1924,Mary Ellen Rudin,American mathematician (d. 2013),https://en.wikipedia.org/wiki/Mary_Ellen_Rudin
+7,12,1943,Nick Katz,American mathematician and academic,https://en.wikipedia.org/wiki/Nick_Katz
+8,12,1795,Peter Andreas Hansen,Danish astronomer and mathematician (d. 1874),https://en.wikipedia.org/wiki/Peter_Andreas_Hansen
+8,12,1865,Jacques Hadamard,French mathematician and academic (d. 1963),https://en.wikipedia.org/wiki/Jacques_Hadamard
+8,12,1919,Julia Bowman,American mathematician and theorist (d. 1985),https://en.wikipedia.org/wiki/Julia_Robinson
+8,12,1948,Luis Caffarelli,Argentinian-American mathematician and academic,https://en.wikipedia.org/wiki/Luis_Caffarelli
+8,12,1969,Kristin Lauter,American mathematician and cryptographer,https://en.wikipedia.org/wiki/Kristin_Lauter
+9,12,1508,Gemma Frisius,Dutch mathematician and cartographer (d. 1555),https://en.wikipedia.org/wiki/Gemma_Frisius
+9,12,1571,Metius,Dutch mathematician and astronomer (d. 1635),https://en.wikipedia.org/wiki/Metius
+9,12,1667,William Whiston,"English mathematician, historian, and theologian (d. 1752)",https://en.wikipedia.org/wiki/William_Whiston
+9,12,1883,Nikolai Luzin,"Russian mathematician, theorist, and academic (d. 1950)",https://en.wikipedia.org/wiki/Nikolai_Luzin
+9,12,1969,Raphaël Rouquier,French mathematician and academic,https://en.wikipedia.org/wiki/Rapha%C3%ABl_Rouquier
+10,12,1452,Johannes Stöffler,German mathematician and astronomer (d. 1531),https://en.wikipedia.org/wiki/Johannes_St%C3%B6ffler
+10,12,1804,Carl Gustav Jacob Jacobi,German mathematician and academic (d. 1851),https://en.wikipedia.org/wiki/Carl_Gustav_Jacob_Jacobi
+10,12,1815,Ada Lovelace,English mathematician and computer scientist (d. 1852),https://en.wikipedia.org/wiki/Ada_Lovelace
+11,12,1781,David Brewster,"Scottish physicist, mathematician, and astronomer (d. 1868)",https://en.wikipedia.org/wiki/David_Brewster
+11,12,1873,Josip Plemelj,Slovenian mathematician and academic (d. 1967),https://en.wikipedia.org/wiki/Josip_Plemelj
+11,12,1882,Max Born,"German physicist and mathematician, Nobel Prize laureate (d. 1970)",https://en.wikipedia.org/wiki/Max_Born
+11,12,1954,Guðlaugur Kristinn Óttarsson,"Icelandic guitarist, mathematician, and engineer",https://en.wikipedia.org/wiki/Gu%C3%B0laugur_Kristinn_%C3%93ttarsson
+13,12,1885,Annie Dale Biddle Andrews,American mathematician (d. 1940),https://en.wikipedia.org/wiki/Annie_Dale_Biddle_Andrews
+13,12,1887,George Pólya,Hungarian-American mathematician and academic (d. 1985),https://en.wikipedia.org/wiki/George_P%C3%B3lya
+13,12,1911,Trygve Haavelmo,"Norwegian economist and mathematician, Nobel Prize laureate (d. 1999)",https://en.wikipedia.org/wiki/Trygve_Haavelmo
+14,12,1955,Jill Pipher,American mathematician and academic,https://en.wikipedia.org/wiki/Jill_Pipher
+15,12,1923,Freeman Dyson,English-American physicist and mathematician (d. 2020),https://en.wikipedia.org/wiki/Freeman_Dyson
+15,12,1924,Frank W. J. Olver,English-American mathematician and academic (d. 2013),https://en.wikipedia.org/wiki/Frank_W._J._Olver
+16,12,1804,Viktor Bunyakovsky,Russian mathematician and academic (d. 1889),https://en.wikipedia.org/wiki/Viktor_Bunyakovsky
+16,12,1905,Piet Hein,"Danish mathematician, author, and poet (d. 1996)",https://en.wikipedia.org/wiki/Piet_Hein_(scientist)
+16,12,1932,Grace Alele-Williams,Nigerian mathematician and academic,https://en.wikipedia.org/wiki/Grace_Alele-Williams
+17,12,1706,Émilie du Châtelet,French mathematician and physicist (d. 1749),https://en.wikipedia.org/wiki/%C3%89milie_du_Ch%C3%A2telet
+17,12,1842,Sophus Lie,Norwegian mathematician and academic (d. 1899),https://en.wikipedia.org/wiki/Sophus_Lie
+17,12,1900,Mary Cartwright,"English mathematician and academic, one of the first people to analyze a dynamical system with chaos (d. 1998)",https://en.wikipedia.org/wiki/Mary_Cartwright
+18,12,1552,Ahmad Ibn al-Qadi,"Moroccan writer, judge and mathematician (d. 1616)",https://en.wikipedia.org/wiki/Ahmad_Ibn_al-Qadi
+18,12,1942,Lenore Blum,American mathematician and academic,https://en.wikipedia.org/wiki/Lenore_Blum
+19,12,1875,Grace Marie Bareis,American mathematician (d. 1962),https://en.wikipedia.org/wiki/Grace_Marie_Bareis
+19,12,1944,Mitchell Feigenbaum,American physicist and mathematician (d. 2019),https://en.wikipedia.org/wiki/Mitchell_Feigenbaum
+20,12,1494,Oronce Finé,French mathematician and cartographer (d. 1555),https://en.wikipedia.org/wiki/Oronce_Fin%C3%A9
+21,12,1542,Thomas Allen,English mathematician and astrologer (d. 1632),https://en.wikipedia.org/wiki/Thomas_Allen_(mathematician)
+21,12,1877,Jaan Sarv,Estonian mathematician and scholar (d. 1954),https://en.wikipedia.org/wiki/Jaan_Sarv
+21,12,1878,Jan Łukasiewicz,Polish-Irish mathematician and philosopher (d. 1956),https://en.wikipedia.org/wiki/Jan_%C5%81ukasiewicz
+21,12,1905,Käte Fenchel,German mathematician (d. 1983),https://en.wikipedia.org/wiki/K%C3%A4te_Fenchel
+21,12,1922,Cécile DeWitt-Morette,French mathematician and physicist (d. 2017),https://en.wikipedia.org/wiki/C%C3%A9cile_DeWitt-Morette
+22,12,1765,Johann Friedrich Pfaff,German mathematician and academic (d. 1825),https://en.wikipedia.org/wiki/Johann_Friedrich_Pfaff
+22,12,1819,Pierre Ossian Bonnet,French mathematician and academic (d. 1892),https://en.wikipedia.org/wiki/Pierre_Ossian_Bonnet
+22,12,1853,Evgraf Fedorov,"Russian mathematician, crystallographer, and mineralogist (d. 1919)",https://en.wikipedia.org/wiki/Evgraf_Fedorov
+22,12,1869,Dmitri Egorov,Russian mathematician and academic (d. 1931),https://en.wikipedia.org/wiki/Dmitri_Egorov
+22,12,1887,Srinivasa Ramanujan,Indian mathematician and theorist (d. 1920),https://en.wikipedia.org/wiki/Srinivasa_Ramanujan
+22,12,1898,Vladimir Fock,Russian physicist and mathematician (d. 1974),https://en.wikipedia.org/wiki/Vladimir_Fock
+23,12,1943,Mikhail Leonidovich Gromov,Russian-French mathematician and academic,https://en.wikipedia.org/wiki/Mikhail_Leonidovich_Gromov
+24,12,1868,Emanuel Lasker,"German chess player, mathematician, and philosopher (d. 1941)",https://en.wikipedia.org/wiki/Emanuel_Lasker
+25,12,1642,Isaac Newton,English physicist and mathematician (d. 1726/1727),https://en.wikipedia.org/wiki/Isaac_Newton
+26,12,1780,Mary Somerville,"Scottish mathematician, astronomer, and author (d. 1872)",https://en.wikipedia.org/wiki/Mary_Somerville
+26,12,1791,Charles Babbage,"English mathematician and engineer, invented the Difference engine (d. 1871)",https://en.wikipedia.org/wiki/Charles_Babbage
+26,12,1937,John Horton Conway,"English mathematician, known for Conway's Game of Life (d. 2020)",https://en.wikipedia.org/wiki/John_Horton_Conway
+26,12,1960,Keith Martin Ball,American mathematician and academic,https://en.wikipedia.org/wiki/Keith_Martin_Ball
+27,12,1571,Johannes Kepler,"German mathematician, astronomer, and astrologer (d. 1630)",https://en.wikipedia.org/wiki/Johannes_Kepler
+28,12,1798,Thomas Henderson,Scottish astronomer and mathematician (d. 1844),https://en.wikipedia.org/wiki/Thomas_Henderson_(astronomer)
+28,12,1882,Arthur Eddington,"English astronomer, physicist, and mathematician (d. 1944)",https://en.wikipedia.org/wiki/Arthur_Eddington
+28,12,1903,John von Neumann,Hungarian-American mathematician and physicist (d. 1957),https://en.wikipedia.org/wiki/John_von_Neumann
+28,12,1950,Clifford Cocks,English mathematician and cryptographer,https://en.wikipedia.org/wiki/Clifford_Cocks
+29,12,1856,Thomas Joannes Stieltjes,Dutch-French mathematician and academic (d. 1894),https://en.wikipedia.org/wiki/Thomas_Joannes_Stieltjes
+30,12,1944,Joseph Hilbe,American mathematician and philosopher (d. 2017),https://en.wikipedia.org/wiki/Joseph_Hilbe
+31,12,1714,Arima Yoriyuki,Japanese mathematician and educator (d. 1783),https://en.wikipedia.org/wiki/Arima_Yoriyuki
+31,12,1952,Vaughan Jones,New Zealand mathematician and academic (d. 2020),https://en.wikipedia.org/wiki/Vaughan_Jones

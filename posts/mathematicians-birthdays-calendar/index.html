@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Aswin van Woudenberg">
+<meta name="dcterms.date" content="2023-12-25">
+<meta name="description" content="Web scraping Wikipedia to create a mathematicians’ birthdays calendar.">
+
+<title>Aswin van Woudenberg - Mathematicians’ Birthdays Calendar</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-WWJVHMJ');</script>
+<!-- End Google Tag Manager -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Aswin van Woudenberg</span>
+    </a>
+  </div>
+          <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/afvanwoudenberg" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://linkedin.com/in/afvanwoudenberg" rel="" target=""><i class="bi bi-linkedin" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../index.xml" rel="" target=""><i class="bi bi-rss" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+          <div class="quarto-navbar-tools">
+</div>
+            <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Mathematicians’ Birthdays Calendar</h1>
+                  <div>
+        <div class="description">
+          Web scraping Wikipedia to create a mathematicians’ birthdays calendar.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">programming</div>
+                <div class="quarto-category">python</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Aswin van Woudenberg </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">December 25, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#importing-libraries" id="toc-importing-libraries" class="nav-link active" data-scroll-target="#importing-libraries">Importing libraries</a></li>
+  <li><a href="#scraping-wikipedia" id="toc-scraping-wikipedia" class="nav-link" data-scroll-target="#scraping-wikipedia">Scraping Wikipedia</a></li>
+  <li><a href="#building-the-scraper" id="toc-building-the-scraper" class="nav-link" data-scroll-target="#building-the-scraper">Building the scraper</a>
+  <ul class="collapse">
+  <li><a href="#scraping-attributes" id="toc-scraping-attributes" class="nav-link" data-scroll-target="#scraping-attributes">Scraping attributes</a></li>
+  <li><a href="#scraping-text" id="toc-scraping-text" class="nav-link" data-scroll-target="#scraping-text">Scraping text</a></li>
+  <li><a href="#cleaning-and-transforming-data" id="toc-cleaning-and-transforming-data" class="nav-link" data-scroll-target="#cleaning-and-transforming-data">Cleaning and transforming data</a></li>
+  <li><a href="#merging-data" id="toc-merging-data" class="nav-link" data-scroll-target="#merging-data">Merging data</a></li>
+  <li><a href="#navigating-pages" id="toc-navigating-pages" class="nav-link" data-scroll-target="#navigating-pages">Navigating pages</a></li>
+  </ul></li>
+  <li><a href="#running-the-scraper" id="toc-running-the-scraper" class="nav-link" data-scroll-target="#running-the-scraper">Running the scraper</a></li>
+  <li><a href="#creating-the-calendar" id="toc-creating-the-calendar" class="nav-link" data-scroll-target="#creating-the-calendar">Creating the calendar</a></li>
+  <li><a href="#importing-the-calendar" id="toc-importing-the-calendar" class="nav-link" data-scroll-target="#importing-the-calendar">Importing the calendar</a></li>
+  <li><a href="#isaac-newtons-two-birthdays" id="toc-isaac-newtons-two-birthdays" class="nav-link" data-scroll-target="#isaac-newtons-two-birthdays">Isaac Newton’s two birthdays</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WWJVHMJ" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+
+
+
+<p>I teach several courses in the Applied Mathematics program at NHL Stenden University of Applied Sciences. My favorite days are the ones when there’s something to celebrate (like a birthday) and someone brings cake.</p>
+<p>In an effort to convince my department that we should have cake more often, I’ve created a birthday calendar featuring the birthdates of mathematicians, both living and deceased. I scraped these birthdays from Wikipedia and converted them into an ICS file that can be imported into a calendar application like Google Calendar or Microsoft Outlook Calendar.</p>
+<p>Read on to learn how I did this.</p>
+<section id="importing-libraries" class="level2">
+<h2 class="anchored" data-anchor-id="importing-libraries">Importing libraries</h2>
+<p>We start by importing some libraries. I’m using <a href="https://www.selenium.dev/">Selenium</a> for webscraping. The <a href="https://pypi.org/project/icalendar/">icalendar</a> package is used to create the birthday calendar.</p>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> selenium <span class="im">import</span> webdriver</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> selenium.webdriver.chrome.service <span class="im">import</span> Service</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> selenium.webdriver.common.by <span class="im">import</span> By</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> selenium.common.exceptions <span class="im">import</span> NoSuchElementException</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> webdriver_manager.chrome <span class="im">import</span> ChromeDriverManager</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> icalendar <span class="im">import</span> Calendar, Event, vRecur</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datetime <span class="im">import</span> date</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> abc <span class="im">import</span> ABC, abstractmethod</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> calendar</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pickle</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="scraping-wikipedia" class="level2">
+<h2 class="anchored" data-anchor-id="scraping-wikipedia">Scraping Wikipedia</h2>
+<p>Wikipedia has, for each day of the year, an entry listing historical events, births, and deaths. We will scrape, for each day in a year, from this list, the births of mathematicians and place them in a dictionary.</p>
+<p>To see what I mean, let’s look at the entry for <a href="https://en.wikipedia.org/wiki/December_7">December, the 7th</a>.</p>
+<p><img src="december_7.png" class="img-fluid"></p>
+<p>Each wikipedia page has a title which is shown here with a red border. If we scroll down we see a list of people who were born on this day. The first mathematician we find is <a href="https://en.wikipedia.org/wiki/Leopold_Kronecker">Leopold Kronecker</a>.</p>
+<p><img src="leopold_kronecker_december_7.png" class="img-fluid"></p>
+<p>Scrolling further down, we find three more mathematicians.</p>
+<p>The idea is to open for each day in the year its corresponding Wikipedia page. Using <a href="https://en.wikipedia.org/wiki/XPath">XPATH</a> expressions, we’ll extract the title of the page and each row in the list of births that contains the word <em>mathematician</em>. Each row, contains the year the mathematician was born (<em>1823</em>), their name (<em>Leopold Kronecker</em>), a one-line bio (<em>Polish-German mathematician and academic (d.&nbsp;1891)</em>), and a URL pointing to a Wikipedia page about the mathematician in question (<em>https://en.wikipedia.org/wiki/Leopold_Kronecker</em>).</p>
+</section>
+<section id="building-the-scraper" class="level2">
+<h2 class="anchored" data-anchor-id="building-the-scraper">Building the scraper</h2>
+<p>There are various ways to scrape using Python. Popular scraping libraries include <a href="https://scrapy.org/">Scrapy</a> and <a href="https://www.crummy.com/software/BeautifulSoup/">Beautiful Soup</a>. I usually use Selenium because it allows me to scrape from websites that render HTML from JavaScript. Selenium can be a bit slow, but we’re only scraping 366 pages so it won’t take that long.</p>
+<p>In previous projects I have created some helper classes that allow me to quickly set up a scraping task. These classes can be easily chained together to define a new scraper. I got inspired by scraper tools such as <a href="https://webscraper.io/">Web scraper</a> and <a href="https://www.parsehub.com/">ParseHub</a> that let you compose a tree that that specifies how to parse data from a website. Using the classes I defined, we can do something similar in Python.</p>
+<p>All these helper classes inherit from an <a href="https://en.wikipedia.org/wiki/Class_(computer_programming)#Abstract_and_concrete">abstract base class</a> called <code>BaseSelector</code>.</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> BaseSelector(ABC):</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">@abstractmethod</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> scrape(<span class="va">self</span>, scraper, parent, <span class="op">**</span>kwargs):</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">pass</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Classes that inherit from <code>BaseSelector</code> need to provide an implementation of the <code>scrape</code> method. This method generally scrapes some content from a webpage and returns this wrapped up in a Python dictionary. It may scrape a single DOM element, and return a single dictionary object, or it may scrape multiple elements and return these as a list of dictionaries.</p>
+<section id="scraping-attributes" class="level3">
+<h3 class="anchored" data-anchor-id="scraping-attributes">Scraping attributes</h3>
+<p>The following class is one of these classes that inherit from <code>BaseSelector</code>. It locates an element(s) and returns a specific attribute of that element, such as the <em>href</em> (in case it matches an anchor link).</p>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> AttributeSelector(BaseSelector):</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, <span class="bu">id</span>, by, path, attribute, multiple<span class="op">=</span><span class="va">False</span>, default<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.<span class="bu">id</span> <span class="op">=</span> <span class="bu">id</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.by <span class="op">=</span> by</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.path <span class="op">=</span> path</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.attribute <span class="op">=</span> attribute</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.multiple <span class="op">=</span> multiple</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.default <span class="op">=</span> default</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> scrape(<span class="va">self</span>, scraper, parent, <span class="op">**</span>kwargs):    </span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> <span class="va">self</span>.multiple:</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>            <span class="cf">try</span>:</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>                elem <span class="op">=</span> parent.find_element(<span class="va">self</span>.by, <span class="va">self</span>.path.<span class="bu">format</span>(<span class="op">**</span>kwargs))</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>                <span class="cf">return</span> {<span class="va">self</span>.<span class="bu">id</span>: elem.get_attribute(<span class="va">self</span>.attribute)}</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>            <span class="cf">except</span> NoSuchElementException:</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>                <span class="cf">return</span> <span class="va">self</span>.default</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>            elems <span class="op">=</span> parent.find_elements(<span class="va">self</span>.by, <span class="va">self</span>.path.<span class="bu">format</span>(<span class="op">**</span>kwargs))</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> [{<span class="va">self</span>.<span class="bu">id</span>: elem.get_attribute(<span class="va">self</span>.attribute)} <span class="cf">for</span> elem <span class="kw">in</span> elems]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s see how we can use it to scrape the URLs for each mathematicians found on a page (e.g.&nbsp;<a href="https://en.m.wikipedia.org/wiki/Leopold_Kronecker">https://en.m.wikipedia.org/wiki/Leopold_Kronecker</a>).</p>
+<p>We create a new <code>AttributeSelector</code> as follows.</p>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>urls_selector <span class="op">=</span> AttributeSelector(</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'url'</span>, </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    By.XPATH, </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"//*[@id='mw-content-text']/div/ul[preceding::h2/span[.='Births'] and following::h2/span[.='Deaths']]/li[contains(., 'mathematician')]/a[string-length(.)&gt;4][1]"</span>, </span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'href'</span>, </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    multiple<span class="op">=</span><span class="va">True</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We provide a key (<em>‘url’</em>) for the dictionary object.</p>
+<p>We also tell it to search for an element addressed by an XPATH expression. In this case we look for list items that contain the string <em>mathematician</em> and find within each list item the first link with a content length of greater than four. We check for length because sometimes it may find multiple links on a single line but the first link always refers to a <em>year</em> (and is therefor at most 4 digits long). Note how we’re only looking for <code>li</code> elements after a <code>span</code> that contains the text <em>Births</em>, but before a <code>span</code> that contains the word <em>Deaths</em>. XPATH expressions can get a bit unwieldly but they’re very powerful.</p>
+<p>Links (<code>a</code> or <em>anchor</em> tags) have an <code>href</code> attribute that we are interested in. We can expect multiple results as there may be multiple mathematicians born on the same day.</p>
+<p>Before we can call this <code>urls_selector</code> object, we first need to initilize a Selenium webdriver.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>driver <span class="op">=</span> webdriver.Chrome(service<span class="op">=</span>Service(ChromeDriverManager().install()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This will open a new instance of Google Chrome. Now we can open the webpage we want to scrape from.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>driver.get(<span class="st">"https://en.wikipedia.org/wiki/December_7"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>And we get the URLs we’re interested in.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>urls <span class="op">=</span> urls_selector.scrape(driver, driver)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>urls</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="142">
+<pre><code>[{'url': 'https://en.wikipedia.org/wiki/Leopold_Kronecker'},
+ {'url': 'https://en.wikipedia.org/wiki/Danilo_BlanuC5%A1a'},
+ {'url': 'https://en.wikipedia.org/wiki/Mary_Ellen_Rudin'},
+ {'url': 'https://en.wikipedia.org/wiki/Nick_Katz'}]</code></pre>
+</div>
+</div>
+</section>
+<section id="scraping-text" class="level3">
+<h3 class="anchored" data-anchor-id="scraping-text">Scraping text</h3>
+<p>Most often we are interested in the text that is contained in an element. To scrape simple text we can use the <code>TextSelector</code> class.</p>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> TextSelector(AttributeSelector):</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, <span class="bu">id</span>, by, path, multiple<span class="op">=</span><span class="va">False</span>, default<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>(<span class="bu">id</span>, by, path, <span class="st">'innerText'</span>, multiple, default)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>It extends the AttributeSelector class we defined before. We can use it as follows to get all text of lines that contain the word <em>mathematician</em>.</p>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>mathematician_selector <span class="op">=</span> TextSelector(</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'mathematician'</span>, </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    By.XPATH, </span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"//*[@id='mw-content-text']/div/ul[preceding::h2/span[.='Births'] and following::h2/span[.='Deaths']]/li[contains(., 'mathematician')]"</span>, </span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    multiple<span class="op">=</span><span class="va">True</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Again we use XPATH to address the elements we’re interested in. This time we don’t have to check for URL length, so the expression is a bit simpler. Let’s use it to get each line corresponding to the birth of a mathematician.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>mathematicians <span class="op">=</span> mathematician_selector.scrape(driver, driver)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>mathematicians</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="146">
+<pre><code>[{'mathematician': '1823 – Leopold Kronecker, Polish-German mathematician and academic (d. 1891)'},
+ {'mathematician': '1903 – Danilo Blanuša, Croatian mathematician, physicist, and academic (d. 1987)'},
+ {'mathematician': '1924 – Mary Ellen Rudin, American mathematician (d. 2013)[16]'},
+ {'mathematician': '1943 – Nick Katz, American mathematician and academic'}]</code></pre>
+</div>
+</div>
+<p>Similarly we can scrape the month and day from the top of the page.</p>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>month_day_selector <span class="op">=</span> TextSelector(<span class="st">'month_day'</span>, By.XPATH, <span class="st">'//*[@id="firstHeading"]/span'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>month_day <span class="op">=</span> month_day_selector.scrape(driver, driver)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>month_day</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="149">
+<pre><code>{'month_day': 'December 7'}</code></pre>
+</div>
+</div>
+</section>
+<section id="cleaning-and-transforming-data" class="level3">
+<h3 class="anchored" data-anchor-id="cleaning-and-transforming-data">Cleaning and transforming data</h3>
+<p>We see that the third item in the <code>mathematicians</code> list, contains a reference as indicated by <code>[16]</code>. We want to get rid of this. Furthermore, we also want to split the values for the key <code>mathematician</code> into several keys, such as, <code>year</code>, <code>name</code>, <code>bio</code>.</p>
+<p>The value <code>month_day</code> contains both the month and day. This is another thing we will want to split up into two seperate keys.</p>
+<p>We could leave it as is, and do some data cleaning after having scraped all pages. With the approach I’m taking here, it’s however quite easy to immediately clean and transform the data <em>while</em> scraping.</p>
+<p>I defined a <code>MapSelector</code> class that let’s me map a function over scraped data.</p>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> MapSelector(BaseSelector):</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, fun, child):</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.fun <span class="op">=</span> fun</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.child <span class="op">=</span> child</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> scrape(<span class="va">self</span>, scraper, parent, <span class="op">**</span>kwargs):</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>        data <span class="op">=</span> <span class="va">self</span>.child.scrape(scraper, parent, <span class="op">**</span>kwargs)</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">type</span>(data) <span class="op">==</span> <span class="bu">dict</span>:</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="va">self</span>.fun(data)</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="bu">list</span>(<span class="bu">map</span>(<span class="va">self</span>.fun, data))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This class doesn’t do any actual scraping, but is meant to be chained with other <em>selector</em> classes. Let’s see how it can be used to split up <code>month_day</code> values. We’ll also convert the month name to its number.</p>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>split_month_day_selector <span class="op">=</span> MapSelector(</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> m: { </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">"day"</span>: <span class="bu">int</span>(m[<span class="st">'month_day'</span>].split()[<span class="dv">1</span>]), </span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">"month"</span>: <span class="bu">list</span>(calendar.month_name).index(m[<span class="st">'month_day'</span>].split()[<span class="dv">0</span>]) </span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    month_day_selector</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Note how I’m specifying a lambda function to split up <code>month_day</code> into two seperate keys. I’m passing the <code>month_day_selector</code> we defined above to the constructor as well so the <code>MapSelector</code> knows where to get data from before applying the function.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>split_month_day <span class="op">=</span> split_month_day_selector.scrape(driver, driver)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Calling <code>scrape</code> on the <code>split_month_day_selector</code> object will cause it to call the <code>scrape</code> function on the <code>month_day_selector</code> which does the actual scraping.</p>
+<div class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>split_month_day</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="153">
+<pre><code>{'day': 7, 'month': 12}</code></pre>
+</div>
+</div>
+<p>Instead of providing a <code>lambda</code> function, we can use a regular function. Let’s create a function that cleans and splits up the <code>mathematician</code> key in the <code>mathematicians</code> list.</p>
+<div class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> unpack_mathematician_data(m):</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> re.sub(<span class="vs">r'\[[^\]]*\]'</span>, <span class="st">''</span>, m[<span class="st">'mathematician'</span>]) <span class="co"># remove any references</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    match <span class="op">=</span> re.match(<span class="vs">r'^(\d+)\s.*–\s*(.*?),\s*(.*?)$'</span>, data)</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"year"</span>: <span class="bu">int</span>(match.group(<span class="dv">1</span>)),</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: match.group(<span class="dv">2</span>),</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"bio"</span>: match.group(<span class="dv">3</span>)</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>    }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>split_mathematicians_selector <span class="op">=</span> MapSelector(unpack_mathematician_data, mathematician_selector)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>split_mathematicians <span class="op">=</span> split_mathematicians_selector.scrape(driver, driver)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now we have our data in seperate keys.</p>
+<div class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>split_mathematicians</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="157">
+<pre><code>[{'year': 1823,
+  'name': 'Leopold Kronecker',
+  'bio': 'Polish-German mathematician and academic (d. 1891)'},
+ {'year': 1903,
+  'name': 'Danilo Blanuša',
+  'bio': 'Croatian mathematician, physicist, and academic (d. 1987)'},
+ {'year': 1924,
+  'name': 'Mary Ellen Rudin',
+  'bio': 'American mathematician (d. 2013)'},
+ {'year': 1943,
+  'name': 'Nick Katz',
+  'bio': 'American mathematician and academic'}]</code></pre>
+</div>
+</div>
+</section>
+<section id="merging-data" class="level3">
+<h3 class="anchored" data-anchor-id="merging-data">Merging data</h3>
+<p>We now have <em>selectors</em> that we can call to scrape a list of dictionaries with the <em>year</em>, <em>name</em>, and <em>biography</em> of each mathematician, and a dictionary with the <em>month</em> and <em>day</em> these mathematicians were born. We also defined a <em>selector</em> that scrapes a list of dictionaries of <em>URLs</em>.</p>
+<p>In order to merge data from different <em>selectors</em> I defined a <code>ZipSelector</code>. If it merges two lists, the dicts in the first list will be extended with the keys and values of the dicts in the second list. It will only return as many items as are contained in the shortest list (similar to Python <code>zip</code>). If a list is merged with a dictionary, the dictionary keys are added to each dictionary in the list. If it merges two dictionaries, it returns a single dictionary containing the keys and values of both dictionaries.</p>
+<div class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ZipSelector(BaseSelector):</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, left, right):</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.left <span class="op">=</span> left</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.right <span class="op">=</span> right</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> scrape(<span class="va">self</span>, scraper, parent, <span class="op">**</span>kwargs):</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>        data_left <span class="op">=</span> <span class="va">self</span>.left.scrape(scraper, parent, <span class="op">**</span>kwargs)</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>        data_right <span class="op">=</span> <span class="va">self</span>.right.scrape(scraper, parent, <span class="op">**</span>kwargs)</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">type</span>(data_left) <span class="op">==</span> <span class="bu">dict</span> <span class="kw">and</span> <span class="bu">type</span>(data_right) <span class="op">==</span> <span class="bu">dict</span>:</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> data_left <span class="op">|</span> data_right</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> <span class="bu">type</span>(data_left) <span class="op">==</span> <span class="bu">dict</span> <span class="kw">and</span> <span class="bu">type</span>(data_right) <span class="op">==</span> <span class="bu">list</span>:</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> [data_left <span class="op">|</span> m <span class="cf">for</span> m <span class="kw">in</span> data_right]</span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> <span class="bu">type</span>(data_left) <span class="op">==</span> <span class="bu">list</span> <span class="kw">and</span> <span class="bu">type</span>(data_right) <span class="op">==</span> <span class="bu">dict</span>:</span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> [m <span class="op">|</span> data_right <span class="cf">for</span> m <span class="kw">in</span> data_left]</span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> [data_left[i] <span class="op">|</span> data_right[i] <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">min</span>(<span class="bu">len</span>(data_left),<span class="bu">len</span>(data_right)))]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s see how it works.</p>
+<div class="cell" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>zip_month_day_mathematicians_selector <span class="op">=</span> ZipSelector(split_month_day_selector, split_mathematicians_selector)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>zip_month_day_mathematicians_urls_selector <span class="op">=</span> ZipSelector(zip_month_day_mathematicians_selector, urls_selector)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We first merge the <em>month</em> and <em>day</em> with the <em>year</em>, <em>name</em>, and <em>bio</em>. Then using a second <code>ZipSelector</code> we combine this with <em>url</em>.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>zip_month_day_mathematicians_urls <span class="op">=</span> zip_month_day_mathematicians_urls_selector.scrape(driver, driver)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If it wasn’t clear already: we don’t need to call the <code>scrape</code> method on each <em>selector</em> object seperately. We are combining <em>selector</em> objects into a tree and just call <code>scrape</code> on the root node and this causes a cascade of calls throughout the tree.</p>
+<div class="cell" data-execution_count="25">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>zip_month_day_mathematicians_urls</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="161">
+<pre><code>[{'day': 7,
+  'month': 12,
+  'year': 1823,
+  'name': 'Leopold Kronecker',
+  'bio': 'Polish-German mathematician and academic (d. 1891)',
+  'url': 'https://en.wikipedia.org/wiki/Leopold_Kronecker'},
+ {'day': 7,
+  'month': 12,
+  'year': 1903,
+  'name': 'Danilo Blanuša',
+  'bio': 'Croatian mathematician, physicist, and academic (d. 1987)',
+  'url': 'https://en.wikipedia.org/wiki/Danilo_Blanu%C5%A1a'},
+ {'day': 7,
+  'month': 12,
+  'year': 1924,
+  'name': 'Mary Ellen Rudin',
+  'bio': 'American mathematician (d. 2013)',
+  'url': 'https://en.wikipedia.org/wiki/Mary_Ellen_Rudin'},
+ {'day': 7,
+  'month': 12,
+  'year': 1943,
+  'name': 'Nick Katz',
+  'bio': 'American mathematician and academic',
+  'url': 'https://en.wikipedia.org/wiki/Nick_Katz'}]</code></pre>
+</div>
+</div>
+</section>
+<section id="navigating-pages" class="level3">
+<h3 class="anchored" data-anchor-id="navigating-pages">Navigating pages</h3>
+<p>We can now call the <code>zip_month_day_mathematicians_urls_selector</code> for each page we want to scrape. This means calling the <code>get</code> method on the <code>driver</code> object to navigate to each page and then repeatedly call the <code>scrape</code> method on the <code>zip_month_day_mathematicians_urls_selector</code> object and concatenate all the results. To do that automatically I’ve created, you guessed it, another class. The <code>URLSelector</code> class takes a list of URLs and opens them one by one each time calling a <em>selector</em> instance to scrape the data. All the data that is scraped is concatenated and eventually returned.</p>
+<div class="cell" data-execution_count="26">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> URLSelector(BaseSelector):</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, urls, child):</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.urls <span class="op">=</span> urls</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.child <span class="op">=</span> child</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> scrape(<span class="va">self</span>, scraper, parent, <span class="op">**</span>kwargs):</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>        result <span class="op">=</span> []</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> url <span class="kw">in</span> <span class="va">self</span>.urls:</span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>            scraper.get(url.<span class="bu">format</span>(<span class="op">**</span>kwargs))</span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>            data <span class="op">=</span> <span class="va">self</span>.child.scrape(scraper, scraper, <span class="op">**</span>kwargs)</span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="bu">type</span>(data) <span class="op">==</span> <span class="bu">dict</span>:</span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>                result.append(data)</span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a>            <span class="cf">elif</span> <span class="bu">type</span>(data) <span class="op">==</span> <span class="bu">list</span>:</span>
+<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a>                result.extend(data)</span>
+<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> result</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The constructor takes a list of URLs and a <em>selector</em> class to call for each page.</p>
+<p>We start by creating a list of all URLs we will scrape from.</p>
+<div class="cell" data-execution_count="27">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>month_names <span class="op">=</span> calendar.month_name[<span class="dv">1</span>:]</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>days_in_month <span class="op">=</span> [calendar.monthrange(<span class="dv">2020</span>, month)[<span class="dv">1</span>] <span class="cf">for</span> month <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">13</span>)]</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>months_and_days <span class="op">=</span> <span class="bu">list</span>(<span class="bu">zip</span>(month_names, days_in_month))</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>wikipedia_urls <span class="op">=</span> [<span class="ss">f"https://en.wikipedia.org/wiki/</span><span class="sc">{</span>month<span class="sc">}</span><span class="ss">_</span><span class="sc">{</span>day<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> (month, days) <span class="kw">in</span> months_and_days <span class="cf">for</span> day <span class="kw">in</span> <span class="bu">range</span>(days)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Note how I selected a leap year (2020) to make sure I get 366 URLs. Let’s show the first five.</p>
+<div class="cell" data-execution_count="28">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>wikipedia_urls[:<span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="164">
+<pre><code>['https://en.wikipedia.org/wiki/January_1',
+ 'https://en.wikipedia.org/wiki/January_2',
+ 'https://en.wikipedia.org/wiki/January_3',
+ 'https://en.wikipedia.org/wiki/January_4',
+ 'https://en.wikipedia.org/wiki/January_5']</code></pre>
+</div>
+</div>
+<p>Now we create an instance of <code>URLSelector</code> and pass it this list of URLs and the <em>selector</em> object to call for each page, in this case <code>zip_month_day_mathematicians_urls_selector</code>.</p>
+<div class="cell" data-execution_count="29">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>scraper <span class="op">=</span> URLSelector(wikipedia_urls, zip_month_day_mathematicians_urls_selector)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We build the scraper step by step. Here’s an overview of how we combined the various classes.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<div>
+<svg width="672" height="480" viewbox="0.00 0.00 872.00 353.60" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 349.6)">
+<title>
+scraper
+</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-349.6 868,-349.6 868,4 -4,4"></polygon> <!-- us --> <g id="node1" class="node">
+<title>
+us
+</title>
+<polygon fill="#7fcdbb" stroke="#7fcdbb" points="144,-150.92 0,-150.92 0,-114.92 144,-114.92 144,-150.92"></polygon> <text text-anchor="middle" x="72" y="-128.72" font-family="Times,serif" font-size="14.00">URLSelector</text> </g> <!-- zs1 --> <g id="node2" class="node">
+<title>
+zs1
+</title>
+<polygon fill="lightblue" stroke="lightblue" points="324,-150.92 180,-150.92 180,-114.92 324,-114.92 324,-150.92"></polygon> <text text-anchor="middle" x="252" y="-128.72" font-family="Times,serif" font-size="14.00">ZipSelector</text> </g> <!-- us&#45;&gt;zs1 --> <g id="edge1" class="edge">
+<title>
+us-&gt;zs1
+</title>
+<path fill="none" stroke="black" d="M144.12,-132.92C152.61,-132.92 161.33,-132.92 169.94,-132.92"></path> <polygon fill="black" stroke="black" points="170,-136.42 180,-132.92 170,-129.42 170,-136.42"></polygon> </g> <!-- zs2 --> <g id="node3" class="node">
+<title>
+zs2
+</title>
+<polygon fill="lightblue" stroke="lightblue" points="504,-230.92 360,-230.92 360,-194.92 504,-194.92 504,-230.92"></polygon> <text text-anchor="middle" x="432" y="-208.72" font-family="Times,serif" font-size="14.00">ZipSelector</text> </g> <!-- zs1&#45;&gt;zs2 --> <g id="edge2" class="edge">
+<title>
+zs1-&gt;zs2
+</title>
+<path fill="none" stroke="black" d="M293.39,-151.08C319.56,-162.84 353.83,-178.24 381.61,-190.73"></path> <polygon fill="black" stroke="black" points="380.21,-193.93 390.77,-194.84 383.08,-187.55 380.21,-193.93"></polygon> </g> <!-- as --> <g id="node8" class="node">
+<title>
+as
+</title>
+<polygon fill="lightgreen" stroke="lightgreen" points="504,-70.92 360,-70.92 360,-34.92 504,-34.92 504,-70.92"></polygon> <text text-anchor="middle" x="432" y="-48.72" font-family="Times,serif" font-size="14.00">AttributeSelector</text> </g> <!-- zs1&#45;&gt;as --> <g id="edge3" class="edge">
+<title>
+zs1-&gt;as
+</title>
+<path fill="none" stroke="black" d="M293.39,-114.77C319.56,-103.01 353.83,-87.61 381.61,-75.12"></path> <polygon fill="black" stroke="black" points="383.08,-78.3 390.77,-71 380.21,-71.91 383.08,-78.3"></polygon> </g> <!-- ms1 --> <g id="node4" class="node">
+<title>
+ms1
+</title>
+<polygon fill="lightgrey" stroke="lightgrey" points="684,-310.92 540,-310.92 540,-274.92 684,-274.92 684,-310.92"></polygon> <text text-anchor="middle" x="612" y="-288.72" font-family="Times,serif" font-size="14.00">MapSelector</text> </g> <!-- zs2&#45;&gt;ms1 --> <g id="edge4" class="edge">
+<title>
+zs2-&gt;ms1
+</title>
+<path fill="none" stroke="black" d="M473.39,-231.08C499.56,-242.84 533.83,-258.24 561.61,-270.73"></path> <polygon fill="black" stroke="black" points="560.21,-273.93 570.77,-274.84 563.08,-267.55 560.21,-273.93"></polygon> </g> <!-- ms2 --> <g id="node6" class="node">
+<title>
+ms2
+</title>
+<polygon fill="lightgrey" stroke="lightgrey" points="684,-150.92 540,-150.92 540,-114.92 684,-114.92 684,-150.92"></polygon> <text text-anchor="middle" x="612" y="-128.72" font-family="Times,serif" font-size="14.00">MapSelector</text> </g> <!-- zs2&#45;&gt;ms2 --> <g id="edge5" class="edge">
+<title>
+zs2-&gt;ms2
+</title>
+<path fill="none" stroke="black" d="M473.39,-194.77C499.56,-183.01 533.83,-167.61 561.61,-155.12"></path> <polygon fill="black" stroke="black" points="563.08,-158.3 570.77,-151 560.21,-151.91 563.08,-158.3"></polygon> </g> <!-- ts1 --> <g id="node5" class="node">
+<title>
+ts1
+</title>
+<polygon fill="lightgreen" stroke="lightgreen" points="864,-310.92 720,-310.92 720,-274.92 864,-274.92 864,-310.92"></polygon> <text text-anchor="middle" x="792" y="-288.72" font-family="Times,serif" font-size="14.00">TextSelector</text> </g> <!-- ms1&#45;&gt;ts1 --> <g id="edge6" class="edge">
+<title>
+ms1-&gt;ts1
+</title>
+<path fill="none" stroke="black" d="M684.12,-292.92C692.61,-292.92 701.33,-292.92 709.94,-292.92"></path> <polygon fill="black" stroke="black" points="710,-296.42 720,-292.92 710,-289.42 710,-296.42"></polygon> </g> <!-- ts2 --> <g id="node7" class="node">
+<title>
+ts2
+</title>
+<polygon fill="lightgreen" stroke="lightgreen" points="864,-150.92 720,-150.92 720,-114.92 864,-114.92 864,-150.92"></polygon> <text text-anchor="middle" x="792" y="-128.72" font-family="Times,serif" font-size="14.00">TextSelector</text> </g> <!-- ms2&#45;&gt;ts2 --> <g id="edge7" class="edge">
+<title>
+ms2-&gt;ts2
+</title>
+<path fill="none" stroke="black" d="M684.12,-132.92C692.61,-132.92 701.33,-132.92 709.94,-132.92"></path> <polygon fill="black" stroke="black" points="710,-136.42 720,-132.92 710,-129.42 710,-136.42"></polygon> </g> </g>
+</svg>
+</div>
+</div>
+</div>
+</div>
+<p>The direction of the arrows indicate the direction of the cascade of calls. The data flows in the opposite direction.</p>
+<p>Only <code>TextSelector</code> and <code>AttributeSelector</code> do any actual scraping. <code>URLSelector</code> navigates to each URL. The other <em>selector</em> classes merge or transform the data. In other scraping projects I might use custom <em>selector</em> classes that take care of pagination or filling forms and pressing buttons.</p>
+</section>
+</section>
+<section id="running-the-scraper" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="running-the-scraper">Running the scraper</h2>
+<p>Calling the <code>scrape</code> method will scrape all mathematicians’ birthdays.</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> scraper.scrape(driver, driver)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Let’s looks at the first five results.</p>
+<div class="cell" data-execution_count="31">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>data[:<span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="167">
+<pre><code>[{'day': 1,
+  'month': 1,
+  'year': 1878,
+  'name': 'Agner Krarup Erlang',
+  'bio': 'Danish mathematician, statistician, and engineer (d. 1929)',
+  'url': 'https://en.wikipedia.org/wiki/Agner_Krarup_Erlang'},
+ {'day': 1,
+  'month': 1,
+  'year': 1894,
+  'name': 'Satyendra Nath Bose',
+  'bio': 'Indian physicist and mathematician (d. 1974)',
+  'url': 'https://en.wikipedia.org/wiki/Satyendra_Nath_Bose'},
+ {'day': 1,
+  'month': 1,
+  'year': 1905,
+  'name': 'Stanisław Mazur',
+  'bio': 'Ukrainian-Polish mathematician and theorist (d. 1981)',
+  'url': 'https://en.wikipedia.org/wiki/Stanis%C5%82aw_Mazur'},
+ {'day': 1,
+  'month': 1,
+  'year': 1912,
+  'name': 'Boris Vladimirovich Gnedenko',
+  'bio': 'Russian mathematician and historian (d. 1995)',
+  'url': 'https://en.wikipedia.org/wiki/Boris_Vladimirovich_Gnedenko'},
+ {'day': 2,
+  'month': 1,
+  'year': 1803,
+  'name': 'Guglielmo Libri Carucci dalla Sommaja',
+  'bio': 'Italian mathematician and academic (d. 1869)',
+  'url': 'https://en.wikipedia.org/wiki/Guglielmo_Libri_Carucci_dalla_Sommaja'}]</code></pre>
+</div>
+</div>
+<p>We can save the result as a JSON file.</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Save to a JSON file</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">'data.json'</span>, <span class="st">'w'</span>) <span class="im">as</span> json_file:</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>    json.dump(data, json_file)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Or convert it to a dataframe and save it as CSV.</p>
+<div class="cell page-columns page-full" data-execution_count="32">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(data)</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display column-screen-inset" data-execution_count="168">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">day</th>
+<th data-quarto-table-cell-role="th">month</th>
+<th data-quarto-table-cell-role="th">year</th>
+<th data-quarto-table-cell-role="th">name</th>
+<th data-quarto-table-cell-role="th">bio</th>
+<th data-quarto-table-cell-role="th">url</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1</td>
+<td>1</td>
+<td>1878</td>
+<td>Agner Krarup Erlang</td>
+<td>Danish mathematician, statistician, and engine...</td>
+<td>https://en.wikipedia.org/wiki/Agner_Krarup_Erlang</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>1</td>
+<td>1</td>
+<td>1894</td>
+<td>Satyendra Nath Bose</td>
+<td>Indian physicist and mathematician (d. 1974)</td>
+<td>https://en.wikipedia.org/wiki/Satyendra_Nath_Bose</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>1</td>
+<td>1</td>
+<td>1905</td>
+<td>Stanisław Mazur</td>
+<td>Ukrainian-Polish mathematician and theorist (d...</td>
+<td>https://en.wikipedia.org/wiki/Stanis%C5%82aw_M...</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>1</td>
+<td>1</td>
+<td>1912</td>
+<td>Boris Vladimirovich Gnedenko</td>
+<td>Russian mathematician and historian (d. 1995)</td>
+<td>https://en.wikipedia.org/wiki/Boris_Vladimirov...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>2</td>
+<td>1</td>
+<td>1803</td>
+<td>Guglielmo Libri Carucci dalla Sommaja</td>
+<td>Italian mathematician and academic (d. 1869)</td>
+<td>https://en.wikipedia.org/wiki/Guglielmo_Libri_...</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">833</td>
+<td>28</td>
+<td>12</td>
+<td>1950</td>
+<td>Clifford Cocks</td>
+<td>English mathematician and cryptographer</td>
+<td>https://en.wikipedia.org/wiki/Clifford_Cocks</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">834</td>
+<td>29</td>
+<td>12</td>
+<td>1856</td>
+<td>Thomas Joannes Stieltjes</td>
+<td>Dutch-French mathematician and academic (d. 1894)</td>
+<td>https://en.wikipedia.org/wiki/Thomas_Joannes_S...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">835</td>
+<td>30</td>
+<td>12</td>
+<td>1944</td>
+<td>Joseph Hilbe</td>
+<td>American mathematician and philosopher (d. 2017)</td>
+<td>https://en.wikipedia.org/wiki/Joseph_Hilbe</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">836</td>
+<td>31</td>
+<td>12</td>
+<td>1714</td>
+<td>Arima Yoriyuki</td>
+<td>Japanese mathematician and educator (d. 1783)</td>
+<td>https://en.wikipedia.org/wiki/Arima_Yoriyuki</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">837</td>
+<td>31</td>
+<td>12</td>
+<td>1952</td>
+<td>Vaughan Jones</td>
+<td>New Zealand mathematician and academic (d. 2020)</td>
+<td>https://en.wikipedia.org/wiki/Vaughan_Jones</td>
+</tr>
+</tbody>
+</table>
+
+<p>838 rows × 6 columns</p>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="33">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>df.to_csv(<span class="st">'data.csv'</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="creating-the-calendar" class="level2">
+<h2 class="anchored" data-anchor-id="creating-the-calendar">Creating the calendar</h2>
+<p>Finally, we convert this data to an ICS calendar file that can be imported into most calendar applications, like Google Calendar or Microsoft Outlook.</p>
+<div class="cell" data-execution_count="34">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the calendar</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>cal <span class="op">=</span> Calendar()</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Iterate through the birthday data and add recurring events to the calendar</span></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> person <span class="kw">in</span> data:</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>    name <span class="op">=</span> person[<span class="st">'name'</span>]</span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>    birthdate <span class="op">=</span> date(person[<span class="st">'year'</span>], person[<span class="st">'month'</span>], person[<span class="st">'day'</span>])</span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>    bio <span class="op">=</span> person[<span class="st">'bio'</span>]</span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>    url <span class="op">=</span> person[<span class="st">'url'</span>]</span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create an event for the birthday with recurrence rule</span></span>
+<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a>    event <span class="op">=</span> Event()</span>
+<span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a>    event.add(<span class="st">'summary'</span>, <span class="ss">f"</span><span class="sc">{</span>name<span class="sc">}</span><span class="ss">'s birthday"</span>)</span>
+<span id="cb45-14"><a href="#cb45-14" aria-hidden="true" tabindex="-1"></a>    event.add(<span class="st">'description'</span>, <span class="ss">f"</span><span class="sc">{</span>name<span class="sc">}</span><span class="ss"> - </span><span class="sc">{</span>bio<span class="sc">}</span><span class="ch">\n\n</span><span class="sc">{</span>url<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb45-15"><a href="#cb45-15" aria-hidden="true" tabindex="-1"></a>    event.add(<span class="st">'dtstart'</span>, birthdate)</span>
+<span id="cb45-16"><a href="#cb45-16" aria-hidden="true" tabindex="-1"></a>    event.add(<span class="st">'rrule'</span>, {<span class="st">'freq'</span>: <span class="st">'yearly'</span>})</span>
+<span id="cb45-17"><a href="#cb45-17" aria-hidden="true" tabindex="-1"></a>    event.add(<span class="st">'url'</span>, url)</span>
+<span id="cb45-18"><a href="#cb45-18" aria-hidden="true" tabindex="-1"></a>    event.add(<span class="st">'transp'</span>, <span class="st">'TRANSPARENT'</span>) <span class="co"># Make events not show up as 'busy'</span></span>
+<span id="cb45-19"><a href="#cb45-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-20"><a href="#cb45-20" aria-hidden="true" tabindex="-1"></a>    cal.add_component(event)</span>
+<span id="cb45-21"><a href="#cb45-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-22"><a href="#cb45-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Save the calendar to a file</span></span>
+<span id="cb45-23"><a href="#cb45-23" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">'mathematicians_birthdays_calendar.ics'</span>, <span class="st">'wb'</span>) <span class="im">as</span> ics_file:</span>
+<span id="cb45-24"><a href="#cb45-24" aria-hidden="true" tabindex="-1"></a>    ics_file.write(cal.to_ical())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The file is saved as <a href="mathematicians_birthdays_calendar.ics">mathematicians_birthdays_calendar.ics</a> and ready to be imported into your calendar.</p>
+</section>
+<section id="importing-the-calendar" class="level2">
+<h2 class="anchored" data-anchor-id="importing-the-calendar">Importing the calendar</h2>
+</section>
+<section id="isaac-newtons-two-birthdays" class="level2">
+<h2 class="anchored" data-anchor-id="isaac-newtons-two-birthdays">Isaac Newton’s two birthdays</h2>
+<p>You may have noticed, after viewing this calendar, that Isaac Newton seemingly has two birthdays, ten days apart. Initially recognized as born on December 25, 1642, his birthday is now more commonly acknowledged as January 4, 1643. This is due to the calendar difference between England and the rest of Europe during his birth. While England stuck to the Julian calendar, lagging ten days behind, the continent had already adopted the Gregorian calendar.</p>
+<p>While January 4 is now widely acknowledged as Isaac Newton’s birthday, December 25 continues to be celebrated as <a href="https://www.timeanddate.com/holidays/fun/grav-mass-day">Grav-Mass day</a>. This unofficial holiday annually honors Newton’s contributions to the understanding of gravity and mass in physics.</p>
+<p>I left both days in the calendar because it means I get to eat even more cake!</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="afvanwoudenberg/afvanwoudenberg.github.io" data-repo-id="R_kgDOIvCGfg" data-category="General" data-category-id="DIC_kwDOIvCGfs4CWx2r" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

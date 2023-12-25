@@ -4,7 +4,6 @@ description: "Web scraping Wikipedia to create a mathematicians' birthdays calen
 author: "Aswin van Woudenberg"
 date: "2023-12-25"
 categories: [programming, python]
-draft: true
 toc: true
 ---
 
@@ -58,7 +57,7 @@ The idea is to open for each day in the year its corresponding Wikipedia page. U
 
 There are various ways to scrape using Python. Popular scraping libraries include [Scrapy](https://scrapy.org/) and [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/). I usually use Selenium because it allows me to scrape from websites that render HTML from JavaScript. Selenium can be a bit slow, but we're only scraping 366 pages so it won't take that long. 
 
-In previous projects I have created some helper classes that allow me to quickly set up a scraping task. These classes can be easily chained together to define a new scraper. I got inspired by scraper tools such as [Web scraper](https://webscraper.io/) and [ParseHub](https://www.parsehub.com/) that let you compose a tree that that specifies how to parse data from a website. Using the classes I defined, we can do something similar in Python.
+In previous projects I have created some helper classes that allow me to quickly set up a scraping task. These classes can be easily chained together to define a new scraper. I got inspired by scraper tools such as [Web scraper](https://webscraper.io/) and [ParseHub](https://www.parsehub.com/) that let you compose a tree that specifies how to parse data from a website. Using the classes I defined, we can do something similar in Python.
 
 All these helper classes inherit from an [abstract base class](https://en.wikipedia.org/wiki/Class_(computer_programming)#Abstract_and_concrete) called `BaseSelector`.
 
@@ -493,7 +492,7 @@ df.to_csv('data.csv', index=False)
 
 ## Creating the calendar
 
-Finally, we convert this data to an ICS calendar file that can be imported into most calendar applications, like Google Calendar or Microsoft Outlook.
+We're now ready to convert this data into an ICS calendar file so it can be imported into a calendar application, like Google Calendar or Microsoft Outlook.
 
 ```{python}
 # Create the calendar
@@ -526,7 +525,36 @@ The file is saved as [mathematicians_birthdays_calendar.ics](mathematicians_birt
 
 ## Importing the calendar
 
+Here's how to add the ICS calendar to Google Calendar:
 
+1. **Open Google Calendar**:<br>
+Open your Google Calendar in a web browser. Ensure that you are logged in with the Google account you want to associate with the birthday calendar.
+
+2. **Navigate to "Settings"**:<br>
+In the top-right corner, click on the gear icon to access the settings menu. From the dropdown, select "Settings."
+
+3. **Choose "Add Calendar"**:<br>
+In the settings menu, navigate to the "Add calendar" section.
+
+4. **Select "From URL"**:<br>
+Within the "Add calendar" section, choose the "From URL" option.
+
+5. **Enter ICS Calendar URL**:<br>
+Copy and paste the following URL: https://www.aswinvanwoudenberg.com/posts/mathematicians-birthdays-calendar/mathematicians_birthdays_calendar.ics
+
+6. **Click "Add Calendar"**:<br>
+After entering the URL, click the "Add Calendar" button. Google Calendar will validate the URL and add the calendar to your account.
+
+7. **View Your New Calendar**:<br>
+Once added, you should see the new calendar in the left sidebar under "Other calendars." The birthdays will be displayed on your Google Calendar.
+
+![](google_calendar.png)
+
+Clicking on an event will show some details including a link to a Wikipedia page to learn more about the mathematician.
+
+![](birthday_details.png)
+
+Enjoy all the cake!
 
 ## Isaac Newton's two birthdays
 
@@ -535,3 +563,7 @@ You may have noticed, after viewing this calendar, that Isaac Newton seemingly h
 While January 4 is now widely acknowledged as Isaac Newton's birthday, December 25 continues to be celebrated as [Grav-Mass day](https://www.timeanddate.com/holidays/fun/grav-mass-day). This unofficial holiday annually honors Newton's contributions to the understanding of gravity and mass in physics. 
 
 I left both days in the calendar because it means I get to eat even more cake!
+
+## Download the code 
+
+You can find the code [here](https://gist.github.com/afvanwoudenberg/e7fac4ebf85c0f814bd0f82ed28929dc).

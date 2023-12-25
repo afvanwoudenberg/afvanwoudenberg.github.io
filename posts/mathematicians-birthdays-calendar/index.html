@@ -206,6 +206,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#creating-the-calendar" id="toc-creating-the-calendar" class="nav-link" data-scroll-target="#creating-the-calendar">Creating the calendar</a></li>
   <li><a href="#importing-the-calendar" id="toc-importing-the-calendar" class="nav-link" data-scroll-target="#importing-the-calendar">Importing the calendar</a></li>
   <li><a href="#isaac-newtons-two-birthdays" id="toc-isaac-newtons-two-birthdays" class="nav-link" data-scroll-target="#isaac-newtons-two-birthdays">Isaac Newton’s two birthdays</a></li>
+  <li><a href="#download-the-code" id="toc-download-the-code" class="nav-link" data-scroll-target="#download-the-code">Download the code</a></li>
   </ul>
 </nav>
     </div>
@@ -257,7 +258,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="building-the-scraper" class="level2">
 <h2 class="anchored" data-anchor-id="building-the-scraper">Building the scraper</h2>
 <p>There are various ways to scrape using Python. Popular scraping libraries include <a href="https://scrapy.org/">Scrapy</a> and <a href="https://www.crummy.com/software/BeautifulSoup/">Beautiful Soup</a>. I usually use Selenium because it allows me to scrape from websites that render HTML from JavaScript. Selenium can be a bit slow, but we’re only scraping 366 pages so it won’t take that long.</p>
-<p>In previous projects I have created some helper classes that allow me to quickly set up a scraping task. These classes can be easily chained together to define a new scraper. I got inspired by scraper tools such as <a href="https://webscraper.io/">Web scraper</a> and <a href="https://www.parsehub.com/">ParseHub</a> that let you compose a tree that that specifies how to parse data from a website. Using the classes I defined, we can do something similar in Python.</p>
+<p>In previous projects I have created some helper classes that allow me to quickly set up a scraping task. These classes can be easily chained together to define a new scraper. I got inspired by scraper tools such as <a href="https://webscraper.io/">Web scraper</a> and <a href="https://www.parsehub.com/">ParseHub</a> that let you compose a tree that specifies how to parse data from a website. Using the classes I defined, we can do something similar in Python.</p>
 <p>All these helper classes inherit from an <a href="https://en.wikipedia.org/wiki/Class_(computer_programming)#Abstract_and_concrete">abstract base class</a> called <code>BaseSelector</code>.</p>
 <div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> BaseSelector(ABC):</span>
@@ -312,7 +313,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>urls <span class="op">=</span> urls_selector.scrape(driver, driver)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>urls</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="142">
+<div class="cell-output cell-output-display" data-execution_count="40">
 <pre><code>[{'url': 'https://en.wikipedia.org/wiki/Leopold_Kronecker'},
  {'url': 'https://en.wikipedia.org/wiki/Danilo_BlanuC5%A1a'},
  {'url': 'https://en.wikipedia.org/wiki/Mary_Ellen_Rudin'},
@@ -341,7 +342,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>mathematicians <span class="op">=</span> mathematician_selector.scrape(driver, driver)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>mathematicians</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="146">
+<div class="cell-output cell-output-display" data-execution_count="44">
 <pre><code>[{'mathematician': '1823 – Leopold Kronecker, Polish-German mathematician and academic (d. 1891)'},
  {'mathematician': '1903 – Danilo Blanuša, Croatian mathematician, physicist, and academic (d. 1987)'},
  {'mathematician': '1924 – Mary Ellen Rudin, American mathematician (d. 2013)[16]'},
@@ -355,7 +356,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>month_day <span class="op">=</span> month_day_selector.scrape(driver, driver)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>month_day</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="149">
+<div class="cell-output cell-output-display" data-execution_count="47">
 <pre><code>{'month_day': 'December 7'}</code></pre>
 </div>
 </div>
@@ -393,7 +394,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Calling <code>scrape</code> on the <code>split_month_day_selector</code> object will cause it to call the <code>scrape</code> function on the <code>month_day_selector</code> which does the actual scraping.</p>
 <div class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>split_month_day</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="153">
+<div class="cell-output cell-output-display" data-execution_count="51">
 <pre><code>{'day': 7, 'month': 12}</code></pre>
 </div>
 </div>
@@ -416,7 +417,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Now we have our data in seperate keys.</p>
 <div class="cell" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>split_mathematicians</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="157">
+<div class="cell-output cell-output-display" data-execution_count="55">
 <pre><code>[{'year': 1823,
   'name': 'Leopold Kronecker',
   'bio': 'Polish-German mathematician and academic (d. 1891)'},
@@ -464,7 +465,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>If it wasn’t clear already: we don’t need to call the <code>scrape</code> method on each <em>selector</em> object seperately. We are combining <em>selector</em> objects into a tree and just call <code>scrape</code> on the root node and this causes a cascade of calls throughout the tree.</p>
 <div class="cell" data-execution_count="25">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>zip_month_day_mathematicians_urls</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="161">
+<div class="cell-output cell-output-display" data-execution_count="59">
 <pre><code>[{'day': 7,
   'month': 12,
   'year': 1823,
@@ -527,7 +528,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Note how I selected a leap year (2020) to make sure I get 366 URLs. Let’s show the first five.</p>
 <div class="cell" data-execution_count="28">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>wikipedia_urls[:<span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="164">
+<div class="cell-output cell-output-display" data-execution_count="62">
 <pre><code>['https://en.wikipedia.org/wiki/January_1',
  'https://en.wikipedia.org/wiki/January_2',
  'https://en.wikipedia.org/wiki/January_3',
@@ -626,7 +627,7 @@ ms2-&gt;ts2
 <p>Let’s looks at the first five results.</p>
 <div class="cell" data-execution_count="31">
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>data[:<span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="167">
+<div class="cell-output cell-output-display" data-execution_count="65">
 <pre><code>[{'day': 1,
   'month': 1,
   'year': 1878,
@@ -667,7 +668,7 @@ ms2-&gt;ts2
 <div class="cell page-columns page-full" data-execution_count="32">
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(data)</span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display column-screen-inset" data-execution_count="168">
+<div class="cell-output cell-output-display column-screen-inset" data-execution_count="66">
 <div>
 
 
@@ -796,7 +797,7 @@ ms2-&gt;ts2
 </section>
 <section id="creating-the-calendar" class="level2">
 <h2 class="anchored" data-anchor-id="creating-the-calendar">Creating the calendar</h2>
-<p>Finally, we convert this data to an ICS calendar file that can be imported into most calendar applications, like Google Calendar or Microsoft Outlook.</p>
+<p>We’re now ready to convert this data into an ICS calendar file so it can be imported into a calendar application, like Google Calendar or Microsoft Outlook.</p>
 <div class="cell" data-execution_count="34">
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the calendar</span></span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>cal <span class="op">=</span> Calendar()</span>
@@ -827,12 +828,30 @@ ms2-&gt;ts2
 </section>
 <section id="importing-the-calendar" class="level2">
 <h2 class="anchored" data-anchor-id="importing-the-calendar">Importing the calendar</h2>
+<p>Here’s how to add the ICS calendar to Google Calendar:</p>
+<ol type="1">
+<li><p><strong>Open Google Calendar</strong>:<br> Open your Google Calendar in a web browser. Ensure that you are logged in with the Google account you want to associate with the birthday calendar.</p></li>
+<li><p><strong>Navigate to “Settings”</strong>:<br> In the top-right corner, click on the gear icon to access the settings menu. From the dropdown, select “Settings.”</p></li>
+<li><p><strong>Choose “Add Calendar”</strong>:<br> In the settings menu, navigate to the “Add calendar” section.</p></li>
+<li><p><strong>Select “From URL”</strong>:<br> Within the “Add calendar” section, choose the “From URL” option.</p></li>
+<li><p><strong>Enter ICS Calendar URL</strong>:<br> Copy and paste the following URL: https://www.aswinvanwoudenberg.com/posts/mathematicians-birthdays-calendar/mathematicians_birthdays_calendar.ics</p></li>
+<li><p><strong>Click “Add Calendar”</strong>:<br> After entering the URL, click the “Add Calendar” button. Google Calendar will validate the URL and add the calendar to your account.</p></li>
+<li><p><strong>View Your New Calendar</strong>:<br> Once added, you should see the new calendar in the left sidebar under “Other calendars.” The birthdays will be displayed on your Google Calendar.</p></li>
+</ol>
+<p><img src="google_calendar.png" class="img-fluid"></p>
+<p>Clicking on an event will show some details including a link to a Wikipedia page to learn more about the mathematician.</p>
+<p><img src="birthday_details.png" class="img-fluid"></p>
+<p>Enjoy all the cake!</p>
 </section>
 <section id="isaac-newtons-two-birthdays" class="level2">
 <h2 class="anchored" data-anchor-id="isaac-newtons-two-birthdays">Isaac Newton’s two birthdays</h2>
 <p>You may have noticed, after viewing this calendar, that Isaac Newton seemingly has two birthdays, ten days apart. Initially recognized as born on December 25, 1642, his birthday is now more commonly acknowledged as January 4, 1643. This is due to the calendar difference between England and the rest of Europe during his birth. While England stuck to the Julian calendar, lagging ten days behind, the continent had already adopted the Gregorian calendar.</p>
 <p>While January 4 is now widely acknowledged as Isaac Newton’s birthday, December 25 continues to be celebrated as <a href="https://www.timeanddate.com/holidays/fun/grav-mass-day">Grav-Mass day</a>. This unofficial holiday annually honors Newton’s contributions to the understanding of gravity and mass in physics.</p>
 <p>I left both days in the calendar because it means I get to eat even more cake!</p>
+</section>
+<section id="download-the-code" class="level2">
+<h2 class="anchored" data-anchor-id="download-the-code">Download the code</h2>
+<p>You can find the code <a href="https://gist.github.com/afvanwoudenberg/e7fac4ebf85c0f814bd0f82ed28929dc">here</a>.</p>
 
 
 </section>

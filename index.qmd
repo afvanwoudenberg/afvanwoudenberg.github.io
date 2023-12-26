@@ -6,6 +6,7 @@ listing:
   contents: posts
   sort: "date desc"
   type: default
+  page-size: 20
   categories: true
   sort-ui: false
   filter-ui: false
@@ -24,7 +25,7 @@ format:
 
 ![](profile.jpg){.profile-pic}
 
-Hello, I'm Aswin, a lecturer at NHL Stenden University of Applied Sciences and freelance data scientist. On this website, I share my professional and personal pursuits with a focus on machine learning, logic programming, and software development.
+Hello, I'm Aswin, a lecturer at NHL Stenden University of Applied Sciences and freelance data scientist and software engineer. On this website, I share my professional and personal pursuits with a focus on machine learning, logic programming, and software development.
 
 :::
 

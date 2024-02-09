@@ -1,0 +1,86 @@
+---
+title: "Run a terminal in Google Colab (on the free tier)"
+description: "How to open a terminal on Google Colab without paying for Colab Pro."
+author: "Aswin van Woudenberg"
+date: "2024-02-10"
+categories: [programming, python, machine learning]
+toc: true
+---
+
+[Google Colab](https://colab.research.google.com/) is an awesome service that lets you run Jupyter Notebooks in the cloud. There's a free version and some paid plans. Even with the free version, you get some serious compute and can use hardware like GPUs or TPUs.
+
+In Jupyter Notebook environments, like Colab, executing shell commands is straightforward. For example, to list the contents of a directory, you can simply type `!ls` in a code cell and execute it. 
+
+While this is fine for short shell commands, there are instances where a full shell environment is more convenient.
+
+## A solution for people who don't mind spending some money
+
+In the bottom left of the Colab interface you can click an icon that should open a terminal to the container running the Colab instance.
+
+![](colab-terminal-popup.png)
+
+Sadly, this only works on a paid plan. 
+
+## A solution for ~~cheapskates~~ frugal people
+
+The solution I came up with is to install and run [Shell in a Box](https://github.com/shellinabox/shellinabox). This tool lets you use command line tools like Bash in a web-based terminal emulator, which you can open in a notebook cell or a separate browser tab.
+
+### Setting it up
+
+Setting this up is a breeze. First, install and run Shell in a Box. Then, make sure you've got access to a standard server environment by running `unminimize`.
+
+```{.python}
+!apt install shellinabox &> /dev/null
+!nohup shellinaboxd --disable-ssl --no-beep --port=8000 --css /etc/shellinabox/options-enabled/00_White\ On\ Black.css -s "/:root:root:/root:/bin/bash -c bash -i" &> /dev/null &
+!yes | /usr/local/sbin/unminimize &> /dev/null
+```
+
+Running `unminimize` is optional and could be done at a later time as well. Some things, like `man` pages, won't work on a _minimized_ system. For this reason, I like to run it right away for full functionality.
+
+### Opening a terminal in an iframe
+
+To access the terminal within the notebook, run the following code. 
+
+```{.python}
+from google.colab.output import serve_kernel_port_as_iframe
+serve_kernel_port_as_iframe(8000)
+```
+
+It'll open up a terminal right within the cell's output.
+
+![](colab-terminal-iframe.png)
+
+The `serve_kernel_port_as_iframe` function lets you customize the dimensions of the iframe by providing arguments like `width` and `height`.
+
+### Opening a terminal in a seperate tab
+
+If you prefer a separate tab for your terminal, run the following code snippet:
+
+```{.python}
+from google.colab.output import serve_kernel_port_as_window
+serve_kernel_port_as_window(8000, anchor_text = "Open a terminal")
+```
+
+It'll give you a link to click.
+
+![](colab-terminal-link.png)
+
+Clicking this link will open a terminal in a new browser window.
+
+![](colab-terminal-tab.png)
+
+Each time you click the link, a fresh tab (and terminal) pops up.
+
+## Some remarks
+
+Here are some things to remember:
+
+* If you don't do anything in the notebook, it will timeout. If it does, you'll need to restart it and reinstall and rerun Shell in a Box. The free plan gives you up to 12 hours of runtime.
+* You can access your files through a shell by mounting your Google Drive. Colab will put your Google Drive under `/content/drive/MyDrive`.
+* Some activities are off-limits on Google Colab. No mining cryptocurrencies or using it for file hosting. It's handy to have shell access, but it's not a free Linux box in the cloud. Check the [FAQ](https://research.google.com/colaboratory/faq.html#disallowed-activities) to see what's allowed.
+
+## Want to give it a go? 
+
+Use this link to try it out.
+
+<a target="_blank" href="http://colab.research.google.com/gist/afvanwoudenberg/904ae132a578fb61f8bd1149b0dc6b53/terminal.ipynb">![Colab](https://colab.research.google.com/assets/colab-badge.svg)</a>

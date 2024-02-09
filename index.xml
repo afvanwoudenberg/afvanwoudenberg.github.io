@@ -6,246 +6,247 @@
       version="2.0">
 <channel>
 <title>Aswin van Woudenberg</title>
-<link>https://www.aswinvanwoudenberg.com/index.html</link>
+<link>https://www.aswinvanwoudenberg.com/</link>
 <atom:link href="https://www.aswinvanwoudenberg.com/index.xml" rel="self" type="application/rss+xml"/>
 <description>A blog on machine learning and coding</description>
-<generator>quarto-1.3.450</generator>
-<lastBuildDate>Mon, 25 Dec 2023 00:00:00 GMT</lastBuildDate>
+<generator>quarto-1.4.549</generator>
+<lastBuildDate>Sat, 10 Feb 2024 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Run a terminal in Google Colab (on the free tier)</title>
+  <dc:creator>Aswin van Woudenberg</dc:creator>
+  <link>https://www.aswinvanwoudenberg.com/posts/run-a-terminal-in-google-colab-on-the-free-tier/</link>
+  <description><![CDATA[ How to open a terminal on Google Colab without paying for Colab Pro. ]]></description>
+  <category>programming</category>
+  <category>python</category>
+  <category>machine learning</category>
+  <guid>https://www.aswinvanwoudenberg.com/posts/run-a-terminal-in-google-colab-on-the-free-tier/</guid>
+  <pubDate>Sat, 10 Feb 2024 00:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Mathematicians’ Birthdays Calendar</title>
   <dc:creator>Aswin van Woudenberg</dc:creator>
-  <link>https://www.aswinvanwoudenberg.com/posts/mathematicians-birthdays-calendar/index.html</link>
-  <description><![CDATA[ I teach several courses in the Applied Mathematics program at NHL Stenden University of Applied Sciences. My favorite days are the ones when there’s something to celebrate (like a birthday) and someone brings cake. ]]></description>
+  <link>https://www.aswinvanwoudenberg.com/posts/mathematicians-birthdays-calendar/</link>
+  <description><![CDATA[ Web scraping Wikipedia to create a mathematicians’ birthdays calendar. ]]></description>
   <category>programming</category>
   <category>python</category>
-  <guid>https://www.aswinvanwoudenberg.com/posts/mathematicians-birthdays-calendar/index.html</guid>
+  <guid>https://www.aswinvanwoudenberg.com/posts/mathematicians-birthdays-calendar/</guid>
   <pubDate>Mon, 25 Dec 2023 00:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Word Search Clock</title>
   <dc:creator>Aswin van Woudenberg</dc:creator>
-  <link>https://www.aswinvanwoudenberg.com/posts/word-search-clock/index.html</link>
-  <description><![CDATA[ A few weeks ago, my clock stopped working, and I wasn’t inclined to invest in a replacement. After futile attempts to revive it, I decided to get crafty. I had an unused photo frame collecting dust and realized it could be turned into a clock by making it display images that show the time of the day. I’d need one image for every minute of the day and display each of them for 60 seconds before transitioning to the next one. ]]></description>
+  <link>https://www.aswinvanwoudenberg.com/posts/word-search-clock/</link>
+  <description><![CDATA[ How I created a clock using an old digital photo frame and some Python code. ]]></description>
   <category>programming</category>
   <category>python</category>
   <category>matplotlib</category>
   <category>algorithms</category>
-  <guid>https://www.aswinvanwoudenberg.com/posts/word-search-clock/index.html</guid>
+  <guid>https://www.aswinvanwoudenberg.com/posts/word-search-clock/</guid>
   <pubDate>Sun, 26 Nov 2023 00:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Soma Cube</title>
   <dc:creator>Aswin van Woudenberg</dc:creator>
-  <link>https://www.aswinvanwoudenberg.com/posts/soma-cube/index.html</link>
-  <description><![CDATA[ The <a href="https://en.wikipedia.org/wiki/Soma_cube">Soma cube</a> is the brainchild of Danish mathematician, inventor, designer, writer and poet <a href="https://en.wikipedia.org/wiki/Piet_Hein_(scientist)">Piet Hein</a>. The puzzle consists of seven pieces and the goal is to assemble these pieces into a 3x3x3 cube or other shapes. ]]></description>
+  <link>https://www.aswinvanwoudenberg.com/posts/soma-cube/</link>
+  <description><![CDATA[ Solving Piet Hein’s Soma cube with Python. ]]></description>
   <category>programming</category>
   <category>python</category>
   <category>matplotlib</category>
   <category>puzzles</category>
-  <guid>https://www.aswinvanwoudenberg.com/posts/soma-cube/index.html</guid>
+  <guid>https://www.aswinvanwoudenberg.com/posts/soma-cube/</guid>
   <pubDate>Fri, 20 Oct 2023 00:00:00 GMT</pubDate>
 </item>
 <item>
   <title>From Procrastination to Productivity</title>
   <dc:creator>Aswin van Woudenberg</dc:creator>
-  <link>https://www.aswinvanwoudenberg.com/posts/from-procrastination-to-productivity/index.html</link>
-  <description><![CDATA[ We’ve all been there - you sit down at your computer with the intention of getting work done, but suddenly find yourself lost in a rabbit hole of endless browsing. But what exactly are you doing when you’re procrastinating online? ]]></description>
+  <link>https://www.aswinvanwoudenberg.com/posts/from-procrastination-to-productivity/</link>
+  <description><![CDATA[ How I analyzed my browser history using Python. ]]></description>
   <category>programming</category>
   <category>python</category>
   <category>pandas</category>
   <category>matplotlib</category>
-  <guid>https://www.aswinvanwoudenberg.com/posts/from-procrastination-to-productivity/index.html</guid>
+  <guid>https://www.aswinvanwoudenberg.com/posts/from-procrastination-to-productivity/</guid>
   <pubDate>Sat, 02 Sep 2023 00:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Musikalisches Würfelspiel</title>
   <dc:creator>Aswin van Woudenberg</dc:creator>
-  <link>https://www.aswinvanwoudenberg.com/posts/musikalisches-wuerfelspiel/index.html</link>
-  <description><![CDATA[ In generative AI, music composition is one of the areas in which there has been remarkable progress. Models like <a href="https://magenta.tensorflow.org/music-transformer">Magenta’s Music Transformer</a>, <a href="https://openai.com/research/musenet">MuseNet</a>, <a href="https://www.aiva.ai/">AIVA</a>, and <a href="https://www.riffusion.com/">Riffusion</a> are able to create musical pieces, further blurring the line between human and machine creativity. ]]></description>
+  <link>https://www.aswinvanwoudenberg.com/posts/musikalisches-wuerfelspiel/</link>
+  <description><![CDATA[ A Python implementation of Mozart’s musical dice game to automatically generate compositions and play them over MIDI. ]]></description>
   <category>programming</category>
   <category>python</category>
   <category>music</category>
   <category>art</category>
   <category>games</category>
-  <guid>https://www.aswinvanwoudenberg.com/posts/musikalisches-wuerfelspiel/index.html</guid>
+  <guid>https://www.aswinvanwoudenberg.com/posts/musikalisches-wuerfelspiel/</guid>
   <pubDate>Wed, 26 Jul 2023 00:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Solving Word Ladders with Prolog</title>
   <dc:creator>Aswin van Woudenberg</dc:creator>
-  <link>https://www.aswinvanwoudenberg.com/posts/solving-word-ladders-with-prolog/index.html</link>
-  <description><![CDATA[ A few weeks ago, a friend saw that I had created a <a href="../../posts/draining-the-fun-out-of-wordle/">Wordle solver</a> and he thought I might enjoy another word puzzle called <a href="https://wordwormdormdork.com/">Weaver</a>. However, he couldn’t have been more wrong! I actually hate puzzles, especially the ones involving words. ]]></description>
+  <link>https://www.aswinvanwoudenberg.com/posts/solving-word-ladders-with-prolog/</link>
+  <description><![CDATA[ How to solve word ladders using the A* algorithm and Prolog. ]]></description>
   <category>programming</category>
   <category>puzzles</category>
   <category>prolog</category>
   <category>algorithms</category>
-  <guid>https://www.aswinvanwoudenberg.com/posts/solving-word-ladders-with-prolog/index.html</guid>
+  <guid>https://www.aswinvanwoudenberg.com/posts/solving-word-ladders-with-prolog/</guid>
   <pubDate>Sat, 03 Jun 2023 00:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Thinking Inside the Matchbox</title>
   <dc:creator>Aswin van Woudenberg</dc:creator>
-  <link>https://www.aswinvanwoudenberg.com/posts/thinking-inside-the-matchbox/index.html</link>
-  <description><![CDATA[ Reinforcement Learning (RL) has emerged as a powerful paradigm, enabling machines to learn and make decisions through trial and error. Recent successes in RL, such as agents that <a href="https://www.deepmind.com/blog/agent57-outperforming-the-human-atari-benchmark">play Atari games</a>, <a href="https://www.deepmind.com/blog/building-safer-dialogue-agents">hold</a> <a href="https://openai.com/research/instruction-following">conversations</a>, <a href="https://www.deepmind.com/blog/accelerating-fusion-science-through-learned-plasma-control">control nuclear fusion plasma</a> and <a href="https://www.deepmind.com/blog/discovering-novel-algorithms-with-alphatensor">discover new algorithms</a>, have demonstrated its potential for solving complex problems. However, the roots of RL can be traced back to an earlier era, where <a href="https://en.wikipedia.org/wiki/Donald_Michie">Donald Michie</a> and his creation <a href="https://en.wikipedia.org/wiki/Matchbox_Educable_Noughts_and_Crosses_Engine">MENACE</a>, helped pave the way for machines that could learn. ]]></description>
+  <link>https://www.aswinvanwoudenberg.com/posts/thinking-inside-the-matchbox/</link>
+  <description><![CDATA[ An implementation of Donald Michie’s MENACE in Python. ]]></description>
   <category>programming</category>
   <category>python</category>
   <category>machine learning</category>
   <category>reinforcement learning</category>
   <category>matplotlib</category>
   <category>games</category>
-  <guid>https://www.aswinvanwoudenberg.com/posts/thinking-inside-the-matchbox/index.html</guid>
+  <guid>https://www.aswinvanwoudenberg.com/posts/thinking-inside-the-matchbox/</guid>
   <pubDate>Sat, 27 May 2023 00:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Call Me Maybe?</title>
   <dc:creator>Aswin van Woudenberg</dc:creator>
-  <link>https://www.aswinvanwoudenberg.com/posts/call-me-maybe/index.html</link>
-  <description><![CDATA[ Understanding program structure and concepts like recursion can be challenging, especially for students just starting their coding journey. ]]></description>
+  <link>https://www.aswinvanwoudenberg.com/posts/call-me-maybe/</link>
+  <description><![CDATA[ A Python decorator to log function calls and a custom logging handler for creating call graphs. ]]></description>
   <category>programming</category>
   <category>python</category>
-  <guid>https://www.aswinvanwoudenberg.com/posts/call-me-maybe/index.html</guid>
+  <guid>https://www.aswinvanwoudenberg.com/posts/call-me-maybe/</guid>
   <pubDate>Tue, 16 May 2023 00:00:00 GMT</pubDate>
 </item>
 <item>
   <title>BLOCBIRDS</title>
   <dc:creator>Aswin van Woudenberg</dc:creator>
-  <link>https://www.aswinvanwoudenberg.com/posts/blocbirds/index.html</link>
-  <description><![CDATA[ A few years ago, I visited the <a href="https://blocbirds.nl/">BLOCBIRDS</a> exhibition while it was on display at the <a href="https://natuurmuseumfryslan.nl/en/">Frisian Museum of Natural History</a>. The exhibition featured 25 compositions, each one inspired by different bird species and crafted entirely from rectangular shapes. ]]></description>
+  <link>https://www.aswinvanwoudenberg.com/posts/blocbirds/</link>
+  <description><![CDATA[ How Mondrian would have produced his art had he been into birds and machine learning. ]]></description>
   <category>programming</category>
   <category>python</category>
   <category>sklearn</category>
   <category>art</category>
-  <guid>https://www.aswinvanwoudenberg.com/posts/blocbirds/index.html</guid>
+  <guid>https://www.aswinvanwoudenberg.com/posts/blocbirds/</guid>
   <pubDate>Fri, 13 Jan 2023 00:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Dancing Queen(s)</title>
   <dc:creator>Aswin van Woudenberg</dc:creator>
-  <link>https://www.aswinvanwoudenberg.com/posts/dancing-queens/index.html</link>
-  <description><![CDATA[ The <a href="https://en.wikipedia.org/wiki/Eight_queens_puzzle">n-queens problem</a> is a puzzle that involves placing n queens on an n x n chessboard such that no two queens threaten each other. A queen can threaten another queen if they are in the same row, column, or diagonal. The objective is to find all possible ways to place n queens on the chessboard without any of them threatening each other. ]]></description>
+  <link>https://www.aswinvanwoudenberg.com/posts/dancing-queens/</link>
+  <description><![CDATA[ Solving the classic n-queens problem with Python and visualizing solutions using Matplotlib. ]]></description>
   <category>programming</category>
   <category>python</category>
   <category>matplotlib</category>
   <category>puzzles</category>
-  <guid>https://www.aswinvanwoudenberg.com/posts/dancing-queens/index.html</guid>
+  <guid>https://www.aswinvanwoudenberg.com/posts/dancing-queens/</guid>
   <pubDate>Mon, 26 Sep 2022 00:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Making Sense of Sorting</title>
   <dc:creator>Aswin van Woudenberg</dc:creator>
-  <link>https://www.aswinvanwoudenberg.com/posts/making-sense-of-sorting/index.html</link>
-  <description><![CDATA[ Sorting algorithms are a fundamental concept in computer science, but understanding how they work can be tricky. In this blog post, I’ll demonstrate an easy way to visualize their inner workings. By the end, you’ll not only be able to visualize sorting algorithms, but other list algorithms as well. Let’s dive in! ]]></description>
+  <link>https://www.aswinvanwoudenberg.com/posts/making-sense-of-sorting/</link>
+  <description><![CDATA[ Easy algorithm visualization in Python. ]]></description>
   <category>programming</category>
   <category>python</category>
   <category>matplotlib</category>
   <category>algorithms</category>
-  <guid>https://www.aswinvanwoudenberg.com/posts/making-sense-of-sorting/index.html</guid>
+  <guid>https://www.aswinvanwoudenberg.com/posts/making-sense-of-sorting/</guid>
   <pubDate>Sun, 18 Sep 2022 00:00:00 GMT</pubDate>
 </item>
 <item>
   <title>From Baby Face to Neanderthal</title>
   <dc:creator>Aswin van Woudenberg</dc:creator>
-  <link>https://www.aswinvanwoudenberg.com/posts/from-baby-face-to-neanderthal/index.html</link>
-  <description><![CDATA[ Earlier this year, I embarked on the famous pilgrimage <em>Camino de Santiago</em>, walking from my hometown Leeuwarden in the north of the Netherlands all the way to Santiago de Compostela. For three months, I lived out of a backpack and primarily engaged in wild-camping along the trail. Throughout my journey, I visited some of the most awe-inspiring places, met incredible people along the way, and created unforgettable memories that I will cherish forever. ]]></description>
+  <link>https://www.aswinvanwoudenberg.com/posts/from-baby-face-to-neanderthal/</link>
+  <description><![CDATA[ How to turn a series of selfies into a time-lapse video using MediaPipe. ]]></description>
   <category>programming</category>
   <category>python</category>
   <category>mediapipe</category>
   <category>opencv</category>
-  <guid>https://www.aswinvanwoudenberg.com/posts/from-baby-face-to-neanderthal/index.html</guid>
+  <guid>https://www.aswinvanwoudenberg.com/posts/from-baby-face-to-neanderthal/</guid>
   <pubDate>Thu, 28 Jul 2022 00:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Draining the Fun Out of Wordle</title>
   <dc:creator>Aswin van Woudenberg</dc:creator>
-  <link>https://www.aswinvanwoudenberg.com/posts/draining-the-fun-out-of-wordle/index.html</link>
-  <description><![CDATA[ <a href="https://www.nytimes.com/games/wordle/index.html">Wordle</a>’s addictive nature has caused it to spread like wildfire, captivating players around the world who find themselves entangled in the pursuit of streaks. It has become a quest for daily victories, a battle against time to maintain unbroken chains of triumphant solves. The desire to conquer the next puzzle and extend those streaks has become an obsession that consumes countless hours of human capital. ]]></description>
+  <link>https://www.aswinvanwoudenberg.com/posts/draining-the-fun-out-of-wordle/</link>
+  <description><![CDATA[ How to generate a decision tree for solving Wordle games and save our civilization. ]]></description>
   <category>programming</category>
   <category>python</category>
   <category>sklearn</category>
   <category>puzzles</category>
   <category>decision trees</category>
-  <guid>https://www.aswinvanwoudenberg.com/posts/draining-the-fun-out-of-wordle/index.html</guid>
+  <guid>https://www.aswinvanwoudenberg.com/posts/draining-the-fun-out-of-wordle/</guid>
   <pubDate>Mon, 21 Feb 2022 00:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Traversing a Decision Tree to Win at Guess Who?</title>
   <dc:creator>Aswin van Woudenberg</dc:creator>
-  <link>https://www.aswinvanwoudenberg.com/posts/traversing-a-decision-tree-to-win-at-guess-who/index.html</link>
-  <description><![CDATA[ In the scikit-learn machine learning library, the <code>predict</code> method is used to make predictions on new data with a fitted model. This method expects the input data to have the same number of features as the data that the model was trained on. This makes sense for many models, but not necessarily for decision trees. Since decision trees look at one feature at a time, they may only need a subset of all features to make a prediction. ]]></description>
+  <link>https://www.aswinvanwoudenberg.com/posts/traversing-a-decision-tree-to-win-at-guess-who/</link>
+  <description><![CDATA[ How to construct and traverse a decision tree and use it for playing Guess Who? ]]></description>
   <category>machine learning</category>
   <category>decision trees</category>
   <category>games</category>
   <category>python</category>
   <category>sklearn</category>
   <category>programming</category>
-  <guid>https://www.aswinvanwoudenberg.com/posts/traversing-a-decision-tree-to-win-at-guess-who/index.html</guid>
+  <guid>https://www.aswinvanwoudenberg.com/posts/traversing-a-decision-tree-to-win-at-guess-who/</guid>
   <pubDate>Tue, 04 Jan 2022 00:00:00 GMT</pubDate>
   <media:content url="https://www.aswinvanwoudenberg.com/posts/traversing-a-decision-tree-to-win-at-guess-who/guess-who.jpg" medium="image" type="image/jpeg"/>
 </item>
 <item>
   <title>A Custom Sudoku Widget</title>
   <dc:creator>Aswin van Woudenberg</dc:creator>
-  <link>https://www.aswinvanwoudenberg.com/posts/a-custom-sudoku-widget/index.html</link>
-  <description><![CDATA[ In this post I’ll demonstrate how to build a custom Jupyter widget for displaying and editing Sudoku puzzles. I’ll also show how to create a Sudoku solver that uses this widget. ]]></description>
+  <link>https://www.aswinvanwoudenberg.com/posts/a-custom-sudoku-widget/</link>
+  <description><![CDATA[ Creating a custom Jupyter widget for editing and displaying Sudoku puzzles. ]]></description>
   <category>programming</category>
   <category>python</category>
   <category>puzzles</category>
-  <guid>https://www.aswinvanwoudenberg.com/posts/a-custom-sudoku-widget/index.html</guid>
+  <guid>https://www.aswinvanwoudenberg.com/posts/a-custom-sudoku-widget/</guid>
   <pubDate>Fri, 26 Feb 2021 00:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Pictionary Air Mouse</title>
   <dc:creator>Aswin van Woudenberg</dc:creator>
-  <link>https://www.aswinvanwoudenberg.com/posts/pictionary-air-mouse/index.html</link>
-  <description><![CDATA[ <em>Pictionary Air</em> is a modern take on the classic Pictionary game in which players draw in the air with an electronic pen instead of on paper. Using a special AR app on a smartphone or tablet teammates can see what is being drawn. ]]></description>
+  <link>https://www.aswinvanwoudenberg.com/posts/pictionary-air-mouse/</link>
+  <description><![CDATA[ Use the Pictionary Air pen as an alternative input device. ]]></description>
   <category>programming</category>
   <category>python</category>
   <category>opencv</category>
-  <guid>https://www.aswinvanwoudenberg.com/posts/pictionary-air-mouse/index.html</guid>
+  <guid>https://www.aswinvanwoudenberg.com/posts/pictionary-air-mouse/</guid>
   <pubDate>Sun, 13 Dec 2020 00:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Icosian Game</title>
   <dc:creator>Aswin van Woudenberg</dc:creator>
-  <link>https://www.aswinvanwoudenberg.com/posts/icosian-game/index.html</link>
-  <description><![CDATA[ The Irish mathematician <a href="https://en.wikipedia.org/wiki/William_Rowan_Hamilton">William Rowan Hamilton</a> is probably best known for discovering <a href="https://en.wikipedia.org/wiki/Quaternion">quaternions</a>. He is also the inventor of the <a href="https://en.wikipedia.org/wiki/Icosian_game">Icosian game</a>. ]]></description>
+  <link>https://www.aswinvanwoudenberg.com/posts/icosian-game/</link>
+  <description><![CDATA[ A Prolog solver for the Icosian game. ]]></description>
   <category>programming</category>
   <category>prolog</category>
   <category>puzzles</category>
-  <guid>https://www.aswinvanwoudenberg.com/posts/icosian-game/index.html</guid>
+  <guid>https://www.aswinvanwoudenberg.com/posts/icosian-game/</guid>
   <pubDate>Fri, 24 Apr 2020 00:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Supercharging the Nabaztag</title>
   <dc:creator>Aswin van Woudenberg</dc:creator>
-  <link>https://www.aswinvanwoudenberg.com/posts/supercharging-the-nabaztag/index.html</link>
-  <description><![CDATA[ The <a href="https://en.wikipedia.org/wiki/Nabaztag">Nabaztag</a> is a WiFi enabled ambient device shaped like a bunny. It has moveable ears, a speaker, several LEDs, and a button on its head. The second generation (the one I have) also has a microphone, an RFID sensor, and supports MP3 audio streams. ]]></description>
+  <link>https://www.aswinvanwoudenberg.com/posts/supercharging-the-nabaztag/</link>
+  <description><![CDATA[ A Nabaztag server that interfaces with ifttt.com. ]]></description>
   <category>programming</category>
   <category>prolog</category>
   <category>iot</category>
-  <guid>https://www.aswinvanwoudenberg.com/posts/supercharging-the-nabaztag/index.html</guid>
+  <guid>https://www.aswinvanwoudenberg.com/posts/supercharging-the-nabaztag/</guid>
   <pubDate>Mon, 15 Jul 2019 00:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Skyline Puzzle</title>
   <dc:creator>Aswin van Woudenberg</dc:creator>
-  <link>https://www.aswinvanwoudenberg.com/posts/skyline-puzzle/index.html</link>
-  <description><![CDATA[ A coworker of mine recently introduced me to this puzzle: ]]></description>
+  <link>https://www.aswinvanwoudenberg.com/posts/skyline-puzzle/</link>
+  <description><![CDATA[ A Prolog solver for the ‘Skyline’ puzzle. ]]></description>
   <category>programming</category>
   <category>prolog</category>
   <category>puzzles</category>
-  <guid>https://www.aswinvanwoudenberg.com/posts/skyline-puzzle/index.html</guid>
+  <guid>https://www.aswinvanwoudenberg.com/posts/skyline-puzzle/</guid>
   <pubDate>Sun, 04 Oct 2015 00:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>VBA IBAN Validator</title>
-  <dc:creator>Aswin van Woudenberg</dc:creator>
-  <link>https://www.aswinvanwoudenberg.com/posts/vba-iban-validator/index.html</link>
-  <description><![CDATA[ From February 2014 onwards, IBAN will be the new European standard for bank account numbers. This standardization is part of the SEPA initiative to improve the efficiency of cross-border euro payments. ]]></description>
-  <category>programming</category>
-  <category>vba</category>
-  <guid>https://www.aswinvanwoudenberg.com/posts/vba-iban-validator/index.html</guid>
-  <pubDate>Thu, 18 Jul 2013 00:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>

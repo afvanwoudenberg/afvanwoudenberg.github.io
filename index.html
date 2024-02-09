@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.549">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -48,7 +48,13 @@ ul.task-list li input[type="checkbox"] {
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -57,6 +63,7 @@ ul.task-list li input[type="checkbox"] {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -103,35 +110,62 @@ ul.task-list li input[type="checkbox"] {
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
 <link rel="stylesheet" href="styles.css">
-<link rel="alternate" type="application/rss+xml" title="Aswin van Woudenberg" href="index.xml"></head>
+<link rel="alternate" type="application/rss+xml" title="Aswin van Woudenberg" href="index.xml" data-external="1"></head>
 
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand navbar-dark ">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">Aswin van Woudenberg</span>
     </a>
   </div>
           <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/afvanwoudenberg" rel="" target=""><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/afvanwoudenberg"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://linkedin.com/in/afvanwoudenberg" rel="" target=""><i class="bi bi-linkedin" role="img">
+    <a class="nav-link" href="https://linkedin.com/in/afvanwoudenberg"> <i class="bi bi-linkedin" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="./index.xml" rel="" target=""><i class="bi bi-rss" role="img">
+    <a class="nav-link" href="./index.xml"> <i class="bi bi-rss" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
           <div class="quarto-navbar-tools">
@@ -145,7 +179,7 @@ ul.task-list li input[type="checkbox"] {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(23)</span></div><div class="category" data-category="algorithms">algorithms <span class="quarto-category-count">(3)</span></div><div class="category" data-category="art">art <span class="quarto-category-count">(2)</span></div><div class="category" data-category="decision trees">decision trees <span class="quarto-category-count">(2)</span></div><div class="category" data-category="esoteric">esoteric <span class="quarto-category-count">(1)</span></div><div class="category" data-category="games">games <span class="quarto-category-count">(3)</span></div><div class="category" data-category="iot">iot <span class="quarto-category-count">(1)</span></div><div class="category" data-category="machine learning">machine learning <span class="quarto-category-count">(2)</span></div><div class="category" data-category="matplotlib">matplotlib <span class="quarto-category-count">(6)</span></div><div class="category" data-category="mediapipe">mediapipe <span class="quarto-category-count">(1)</span></div><div class="category" data-category="music">music <span class="quarto-category-count">(1)</span></div><div class="category" data-category="opencv">opencv <span class="quarto-category-count">(2)</span></div><div class="category" data-category="pandas">pandas <span class="quarto-category-count">(1)</span></div><div class="category" data-category="programming">programming <span class="quarto-category-count">(23)</span></div><div class="category" data-category="prolog">prolog <span class="quarto-category-count">(7)</span></div><div class="category" data-category="puzzles">puzzles <span class="quarto-category-count">(9)</span></div><div class="category" data-category="python">python <span class="quarto-category-count">(15)</span></div><div class="category" data-category="reinforcement learning">reinforcement learning <span class="quarto-category-count">(1)</span></div><div class="category" data-category="sklearn">sklearn <span class="quarto-category-count">(3)</span></div><div class="category" data-category="vba">vba <span class="quarto-category-count">(1)</span></div></div></div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(24)</span></div><div class="category" data-category="algorithms">algorithms <span class="quarto-category-count">(3)</span></div><div class="category" data-category="art">art <span class="quarto-category-count">(2)</span></div><div class="category" data-category="decision trees">decision trees <span class="quarto-category-count">(2)</span></div><div class="category" data-category="esoteric">esoteric <span class="quarto-category-count">(1)</span></div><div class="category" data-category="games">games <span class="quarto-category-count">(3)</span></div><div class="category" data-category="iot">iot <span class="quarto-category-count">(1)</span></div><div class="category" data-category="machine learning">machine learning <span class="quarto-category-count">(3)</span></div><div class="category" data-category="matplotlib">matplotlib <span class="quarto-category-count">(6)</span></div><div class="category" data-category="mediapipe">mediapipe <span class="quarto-category-count">(1)</span></div><div class="category" data-category="music">music <span class="quarto-category-count">(1)</span></div><div class="category" data-category="opencv">opencv <span class="quarto-category-count">(2)</span></div><div class="category" data-category="pandas">pandas <span class="quarto-category-count">(1)</span></div><div class="category" data-category="programming">programming <span class="quarto-category-count">(24)</span></div><div class="category" data-category="prolog">prolog <span class="quarto-category-count">(7)</span></div><div class="category" data-category="puzzles">puzzles <span class="quarto-category-count">(9)</span></div><div class="category" data-category="python">python <span class="quarto-category-count">(16)</span></div><div class="category" data-category="reinforcement learning">reinforcement learning <span class="quarto-category-count">(1)</span></div><div class="category" data-category="sklearn">sklearn <span class="quarto-category-count">(3)</span></div><div class="category" data-category="vba">vba <span class="quarto-category-count">(1)</span></div></div></div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
 <!-- Google Tag Manager (noscript) -->
@@ -154,12 +188,16 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<div class="quarto-layout-panel">
-<div class="quarto-layout-row quarto-layout-valign-top">
+
+<div>
+
+</div>
+<div class="quarto-layout-panel" data-layout="[21,79]">
+<div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 21.0%;justify-content: center;">
 <p><img src="profile.jpg" class="profile-pic img-fluid"></p>
 </div>
-<div class="quarto-layout-cell" style="flex-basis: 79.0%;justify-content: center;">
+<div class="quarto-layout-cell" style="flex-basis: 79.0%;justify-content: flex-start;">
 <p>Hello, I’m Aswin, a lecturer at NHL Stenden University of Applied Sciences and freelance data scientist and software engineer. On this website, I share my professional and personal pursuits with a focus on machine learning, logic programming, and software development.</p>
 </div>
 </div>
@@ -173,16 +211,48 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="recent-posts">📮 Recent Posts</h2>
 <div id="listing-blog-listings" class="quarto-listing quarto-listing-container-default">
 <div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="programming,python" data-listing-date-sort="1703462400000" data-listing-file-modified-sort="1704370772497" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17">
+<div class="quarto-post image-right" data-index="0" data-categories="programming,python,machine learning" data-listing-date-sort="1707523200000" data-listing-file-modified-sort="1707521763740" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="485">
 <div class="body">
-<a href="./posts/mathematicians-birthdays-calendar/index.html">
 <h3 class="no-anchor listing-title">
-Mathematicians’ Birthdays Calendar
+<a href="./posts/run-a-terminal-in-google-colab-on-the-free-tier/index.html" class="no-external">Run a terminal in Google Colab (on the free tier)</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/run-a-terminal-in-google-colab-on-the-free-tier/index.html" class="no-external"></a>
+</div>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('programming'); return false;">
+programming
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('python'); return false;">
+python
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('machine learning'); return false;">
+machine learning
+</div>
+</div>
+<div class="listing-description">
+<a href="./posts/run-a-terminal-in-google-colab-on-the-free-tier/index.html" class="no-external">How to open a terminal on Google Colab without paying for Colab Pro.</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./posts/run-a-terminal-in-google-colab-on-the-free-tier/index.html" class="no-external">
+<div class="listing-date">
+Feb 10, 2024
+</div>
+<div class="listing-reading-time">
+3 min
 </div>
 </a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="1" data-categories="programming,python" data-listing-date-sort="1703462400000" data-listing-file-modified-sort="1707521763556" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17" data-listing-word-count-sort="3393">
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/mathematicians-birthdays-calendar/index.html" class="no-external">Mathematicians’ Birthdays Calendar</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/mathematicians-birthdays-calendar/index.html" class="no-external"></a>
+</div>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('programming'); return false;">
 programming
@@ -191,14 +261,12 @@ programming
 python
 </div>
 </div>
-<a href="./posts/mathematicians-birthdays-calendar/index.html">
 <div class="listing-description">
-<p>Web scraping Wikipedia to create a mathematicians’ birthdays calendar.</p>
+<a href="./posts/mathematicians-birthdays-calendar/index.html" class="no-external">Web scraping Wikipedia to create a mathematicians’ birthdays calendar.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/mathematicians-birthdays-calendar/index.html">
+<a href="./posts/mathematicians-birthdays-calendar/index.html" class="no-external">
 <div class="listing-date">
 Dec 25, 2023
 </div>
@@ -208,16 +276,14 @@ Dec 25, 2023
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="1" data-categories="programming,python,matplotlib,algorithms" data-listing-date-sort="1700956800000" data-listing-file-modified-sort="1704370772789" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="19">
+<div class="quarto-post image-right" data-index="2" data-categories="programming,python,matplotlib,algorithms" data-listing-date-sort="1700956800000" data-listing-file-modified-sort="1707521763860" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="19" data-listing-word-count-sort="3731">
 <div class="body">
-<a href="./posts/word-search-clock/index.html">
 <h3 class="no-anchor listing-title">
-Word Search Clock
+<a href="./posts/word-search-clock/index.html" class="no-external">Word Search Clock</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/word-search-clock/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('programming'); return false;">
 programming
@@ -232,14 +298,12 @@ matplotlib
 algorithms
 </div>
 </div>
-<a href="./posts/word-search-clock/index.html">
 <div class="listing-description">
-<p>How I created a clock using an old digital photo frame and some Python code.</p>
+<a href="./posts/word-search-clock/index.html" class="no-external">How I created a clock using an old digital photo frame and some Python code.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/word-search-clock/index.html">
+<a href="./posts/word-search-clock/index.html" class="no-external">
 <div class="listing-date">
 Nov 26, 2023
 </div>
@@ -249,16 +313,14 @@ Nov 26, 2023
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="2" data-categories="programming,python,matplotlib,puzzles" data-listing-date-sort="1697760000000" data-listing-file-modified-sort="1704370772677" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="24">
+<div class="quarto-post image-right" data-index="3" data-categories="programming,python,matplotlib,puzzles" data-listing-date-sort="1697760000000" data-listing-file-modified-sort="1707521763744" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="24" data-listing-word-count-sort="4713">
 <div class="body">
-<a href="./posts/soma-cube/index.html">
 <h3 class="no-anchor listing-title">
-Soma Cube
+<a href="./posts/soma-cube/index.html" class="no-external">Soma Cube</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/soma-cube/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('programming'); return false;">
 programming
@@ -273,14 +335,12 @@ matplotlib
 puzzles
 </div>
 </div>
-<a href="./posts/soma-cube/index.html">
 <div class="listing-description">
-<p>Solving Piet Hein’s Soma cube with Python.</p>
+<a href="./posts/soma-cube/index.html" class="no-external">Solving Piet Hein’s Soma cube with Python.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/soma-cube/index.html">
+<a href="./posts/soma-cube/index.html" class="no-external">
 <div class="listing-date">
 Oct 20, 2023
 </div>
@@ -290,16 +350,14 @@ Oct 20, 2023
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="3" data-categories="programming,python,pandas,matplotlib" data-listing-date-sort="1693612800000" data-listing-file-modified-sort="1704370772489" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="15">
+<div class="quarto-post image-right" data-index="4" data-categories="programming,python,pandas,matplotlib" data-listing-date-sort="1693612800000" data-listing-file-modified-sort="1707521763552" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="15" data-listing-word-count-sort="2865">
 <div class="body">
-<a href="./posts/from-procrastination-to-productivity/index.html">
 <h3 class="no-anchor listing-title">
-From Procrastination to Productivity
+<a href="./posts/from-procrastination-to-productivity/index.html" class="no-external">From Procrastination to Productivity</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/from-procrastination-to-productivity/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('programming'); return false;">
 programming
@@ -314,14 +372,12 @@ pandas
 matplotlib
 </div>
 </div>
-<a href="./posts/from-procrastination-to-productivity/index.html">
 <div class="listing-description">
-<p>How I analyzed my browser history using Python.</p>
+<a href="./posts/from-procrastination-to-productivity/index.html" class="no-external">How I analyzed my browser history using Python.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/from-procrastination-to-productivity/index.html">
+<a href="./posts/from-procrastination-to-productivity/index.html" class="no-external">
 <div class="listing-date">
 Sep 2, 2023
 </div>
@@ -331,16 +387,14 @@ Sep 2, 2023
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="4" data-categories="programming,python,music,art,games" data-listing-date-sort="1690329600000" data-listing-file-modified-sort="1704370772497" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="14">
+<div class="quarto-post image-right" data-index="5" data-categories="programming,python,music,art,games" data-listing-date-sort="1690329600000" data-listing-file-modified-sort="1707521763560" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="14" data-listing-word-count-sort="2606">
 <div class="body">
-<a href="./posts/musikalisches-wuerfelspiel/index.html">
 <h3 class="no-anchor listing-title">
-Musikalisches Würfelspiel
+<a href="./posts/musikalisches-wuerfelspiel/index.html" class="no-external">Musikalisches Würfelspiel</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/musikalisches-wuerfelspiel/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('programming'); return false;">
 programming
@@ -358,14 +412,12 @@ art
 games
 </div>
 </div>
-<a href="./posts/musikalisches-wuerfelspiel/index.html">
 <div class="listing-description">
-<p>A Python implementation of Mozart’s musical dice game to automatically generate compositions and play them over MIDI.</p>
+<a href="./posts/musikalisches-wuerfelspiel/index.html" class="no-external">A Python implementation of Mozart’s musical dice game to automatically generate compositions and play them over MIDI.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/musikalisches-wuerfelspiel/index.html">
+<a href="./posts/musikalisches-wuerfelspiel/index.html" class="no-external">
 <div class="listing-date">
 Jul 26, 2023
 </div>
@@ -375,16 +427,14 @@ Jul 26, 2023
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="5" data-categories="programming,puzzles,prolog,algorithms" data-listing-date-sort="1685750400000" data-listing-file-modified-sort="1704370772673" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11">
+<div class="quarto-post image-right" data-index="6" data-categories="programming,puzzles,prolog,algorithms" data-listing-date-sort="1685750400000" data-listing-file-modified-sort="1707521763744" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11" data-listing-word-count-sort="2079">
 <div class="body">
-<a href="./posts/solving-word-ladders-with-prolog/index.html">
 <h3 class="no-anchor listing-title">
-Solving Word Ladders with Prolog
+<a href="./posts/solving-word-ladders-with-prolog/index.html" class="no-external">Solving Word Ladders with Prolog</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/solving-word-ladders-with-prolog/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('programming'); return false;">
 programming
@@ -399,14 +449,12 @@ prolog
 algorithms
 </div>
 </div>
-<a href="./posts/solving-word-ladders-with-prolog/index.html">
 <div class="listing-description">
-<p>How to solve word ladders using the A* algorithm and Prolog.</p>
+<a href="./posts/solving-word-ladders-with-prolog/index.html" class="no-external">How to solve word ladders using the A* algorithm and Prolog.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/solving-word-ladders-with-prolog/index.html">
+<a href="./posts/solving-word-ladders-with-prolog/index.html" class="no-external">
 <div class="listing-date">
 Jun 3, 2023
 </div>
@@ -416,16 +464,14 @@ Jun 3, 2023
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="6" data-categories="programming,python,machine learning,reinforcement learning,matplotlib,games" data-listing-date-sort="1685145600000" data-listing-file-modified-sort="1704370772677" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="28">
+<div class="quarto-post image-right" data-index="7" data-categories="programming,python,machine learning,reinforcement learning,matplotlib,games" data-listing-date-sort="1685145600000" data-listing-file-modified-sort="1707521763744" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="28" data-listing-word-count-sort="5447">
 <div class="body">
-<a href="./posts/thinking-inside-the-matchbox/index.html">
 <h3 class="no-anchor listing-title">
-Thinking Inside the Matchbox
+<a href="./posts/thinking-inside-the-matchbox/index.html" class="no-external">Thinking Inside the Matchbox</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/thinking-inside-the-matchbox/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('programming'); return false;">
 programming
@@ -446,14 +492,12 @@ matplotlib
 games
 </div>
 </div>
-<a href="./posts/thinking-inside-the-matchbox/index.html">
 <div class="listing-description">
-<p>An implementation of Donald Michie’s MENACE in Python.</p>
+<a href="./posts/thinking-inside-the-matchbox/index.html" class="no-external">An implementation of Donald Michie’s MENACE in Python.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/thinking-inside-the-matchbox/index.html">
+<a href="./posts/thinking-inside-the-matchbox/index.html" class="no-external">
 <div class="listing-date">
 May 27, 2023
 </div>
@@ -463,16 +507,14 @@ May 27, 2023
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="7" data-categories="programming,python" data-listing-date-sort="1684195200000" data-listing-file-modified-sort="1704370771941" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="14">
+<div class="quarto-post image-right" data-index="8" data-categories="programming,python" data-listing-date-sort="1684195200000" data-listing-file-modified-sort="1707521763008" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="14" data-listing-word-count-sort="2697">
 <div class="body">
-<a href="./posts/call-me-maybe/index.html">
 <h3 class="no-anchor listing-title">
-Call Me Maybe?
+<a href="./posts/call-me-maybe/index.html" class="no-external">Call Me Maybe?</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/call-me-maybe/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('programming'); return false;">
 programming
@@ -481,14 +523,12 @@ programming
 python
 </div>
 </div>
-<a href="./posts/call-me-maybe/index.html">
 <div class="listing-description">
-<p>A Python decorator to log function calls and a custom logging handler for creating call graphs.</p>
+<a href="./posts/call-me-maybe/index.html" class="no-external">A Python decorator to log function calls and a custom logging handler for creating call graphs.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/call-me-maybe/index.html">
+<a href="./posts/call-me-maybe/index.html" class="no-external">
 <div class="listing-date">
 May 16, 2023
 </div>
@@ -498,16 +538,14 @@ May 16, 2023
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="8" data-categories="programming,python,sklearn,art" data-listing-date-sort="1673568000000" data-listing-file-modified-sort="1704370771941" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6">
+<div class="quarto-post image-right" data-index="9" data-categories="programming,python,sklearn,art" data-listing-date-sort="1673568000000" data-listing-file-modified-sort="1707521763004" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1176">
 <div class="body">
-<a href="./posts/blocbirds/index.html">
 <h3 class="no-anchor listing-title">
-BLOCBIRDS
+<a href="./posts/blocbirds/index.html" class="no-external">BLOCBIRDS</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/blocbirds/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('programming'); return false;">
 programming
@@ -522,14 +560,12 @@ sklearn
 art
 </div>
 </div>
-<a href="./posts/blocbirds/index.html">
 <div class="listing-description">
-<p>How Mondrian would have produced his art had he been into birds and machine learning.</p>
+<a href="./posts/blocbirds/index.html" class="no-external">How Mondrian would have produced his art had he been into birds and machine learning.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/blocbirds/index.html">
+<a href="./posts/blocbirds/index.html" class="no-external">
 <div class="listing-date">
 Jan 13, 2023
 </div>
@@ -539,16 +575,14 @@ Jan 13, 2023
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="9" data-categories="programming,python,matplotlib,puzzles" data-listing-date-sort="1664150400000" data-listing-file-modified-sort="1704370771941" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10">
+<div class="quarto-post image-right" data-index="10" data-categories="programming,python,matplotlib,puzzles" data-listing-date-sort="1664150400000" data-listing-file-modified-sort="1707521763008" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10" data-listing-word-count-sort="1837">
 <div class="body">
-<a href="./posts/dancing-queens/index.html">
 <h3 class="no-anchor listing-title">
-Dancing Queen(s)
+<a href="./posts/dancing-queens/index.html" class="no-external">Dancing Queen(s)</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/dancing-queens/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('programming'); return false;">
 programming
@@ -563,14 +597,12 @@ matplotlib
 puzzles
 </div>
 </div>
-<a href="./posts/dancing-queens/index.html">
 <div class="listing-description">
-<p>Solving the classic n-queens problem with Python and visualizing solutions using Matplotlib.</p>
+<a href="./posts/dancing-queens/index.html" class="no-external">Solving the classic n-queens problem with Python and visualizing solutions using Matplotlib.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/dancing-queens/index.html">
+<a href="./posts/dancing-queens/index.html" class="no-external">
 <div class="listing-date">
 Sep 26, 2022
 </div>
@@ -580,16 +612,14 @@ Sep 26, 2022
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="10" data-categories="programming,python,matplotlib,algorithms" data-listing-date-sort="1663459200000" data-listing-file-modified-sort="1704370772489" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9">
+<div class="quarto-post image-right" data-index="11" data-categories="programming,python,matplotlib,algorithms" data-listing-date-sort="1663459200000" data-listing-file-modified-sort="1707521763556" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-word-count-sort="1606">
 <div class="body">
-<a href="./posts/making-sense-of-sorting/index.html">
 <h3 class="no-anchor listing-title">
-Making Sense of Sorting
+<a href="./posts/making-sense-of-sorting/index.html" class="no-external">Making Sense of Sorting</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/making-sense-of-sorting/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('programming'); return false;">
 programming
@@ -604,14 +634,12 @@ matplotlib
 algorithms
 </div>
 </div>
-<a href="./posts/making-sense-of-sorting/index.html">
 <div class="listing-description">
-<p>Easy algorithm visualization in Python.</p>
+<a href="./posts/making-sense-of-sorting/index.html" class="no-external">Easy algorithm visualization in Python.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/making-sense-of-sorting/index.html">
+<a href="./posts/making-sense-of-sorting/index.html" class="no-external">
 <div class="listing-date">
 Sep 18, 2022
 </div>
@@ -621,16 +649,14 @@ Sep 18, 2022
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="11" data-categories="programming,python,mediapipe,opencv" data-listing-date-sort="1658966400000" data-listing-file-modified-sort="1704370771941" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9">
+<div class="quarto-post image-right" data-index="12" data-categories="programming,python,mediapipe,opencv" data-listing-date-sort="1658966400000" data-listing-file-modified-sort="1707521763008" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-word-count-sort="1800">
 <div class="body">
-<a href="./posts/from-baby-face-to-neanderthal/index.html">
 <h3 class="no-anchor listing-title">
-From Baby Face to Neanderthal
+<a href="./posts/from-baby-face-to-neanderthal/index.html" class="no-external">From Baby Face to Neanderthal</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/from-baby-face-to-neanderthal/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('programming'); return false;">
 programming
@@ -645,14 +671,12 @@ mediapipe
 opencv
 </div>
 </div>
-<a href="./posts/from-baby-face-to-neanderthal/index.html">
 <div class="listing-description">
-<p>How to turn a series of selfies into a time-lapse video using MediaPipe.</p>
+<a href="./posts/from-baby-face-to-neanderthal/index.html" class="no-external">How to turn a series of selfies into a time-lapse video using MediaPipe.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/from-baby-face-to-neanderthal/index.html">
+<a href="./posts/from-baby-face-to-neanderthal/index.html" class="no-external">
 <div class="listing-date">
 Jul 28, 2022
 </div>
@@ -662,16 +686,14 @@ Jul 28, 2022
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="12" data-categories="programming,python,sklearn,puzzles,decision trees" data-listing-date-sort="1645401600000" data-listing-file-modified-sort="1704370771941" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="18">
+<div class="quarto-post image-right" data-index="13" data-categories="programming,python,sklearn,puzzles,decision trees" data-listing-date-sort="1645401600000" data-listing-file-modified-sort="1707521763008" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="18" data-listing-word-count-sort="3449">
 <div class="body">
-<a href="./posts/draining-the-fun-out-of-wordle/index.html">
 <h3 class="no-anchor listing-title">
-Draining the Fun Out of Wordle
+<a href="./posts/draining-the-fun-out-of-wordle/index.html" class="no-external">Draining the Fun Out of Wordle</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/draining-the-fun-out-of-wordle/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('programming'); return false;">
 programming
@@ -689,14 +711,12 @@ puzzles
 decision trees
 </div>
 </div>
-<a href="./posts/draining-the-fun-out-of-wordle/index.html">
 <div class="listing-description">
-<p>How to generate a decision tree for solving Wordle games and save our civilization.</p>
+<a href="./posts/draining-the-fun-out-of-wordle/index.html" class="no-external">How to generate a decision tree for solving Wordle games and save our civilization.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/draining-the-fun-out-of-wordle/index.html">
+<a href="./posts/draining-the-fun-out-of-wordle/index.html" class="no-external">
 <div class="listing-date">
 Feb 21, 2022
 </div>
@@ -706,16 +726,14 @@ Feb 21, 2022
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="13" data-categories="machine learning,decision trees,games,python,sklearn,programming" data-listing-date-sort="1641254400000" data-listing-file-modified-sort="1704370772697" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17">
+<div class="quarto-post image-right" data-index="14" data-categories="machine learning,decision trees,games,python,sklearn,programming" data-listing-date-sort="1641254400000" data-listing-file-modified-sort="1707521763768" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17" data-listing-word-count-sort="3366">
 <div class="body">
-<a href="./posts/traversing-a-decision-tree-to-win-at-guess-who/index.html">
 <h3 class="no-anchor listing-title">
-Traversing a Decision Tree to Win at Guess Who?
+<a href="./posts/traversing-a-decision-tree-to-win-at-guess-who/index.html" class="no-external">Traversing a Decision Tree to Win at Guess Who?</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/traversing-a-decision-tree-to-win-at-guess-who/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('machine learning'); return false;">
 machine learning
@@ -736,14 +754,12 @@ sklearn
 programming
 </div>
 </div>
-<a href="./posts/traversing-a-decision-tree-to-win-at-guess-who/index.html">
 <div class="listing-description">
-<p>How to construct and traverse a decision tree and use it for playing Guess Who?</p>
+<a href="./posts/traversing-a-decision-tree-to-win-at-guess-who/index.html" class="no-external">How to construct and traverse a decision tree and use it for playing Guess Who?</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/traversing-a-decision-tree-to-win-at-guess-who/index.html">
+<a href="./posts/traversing-a-decision-tree-to-win-at-guess-who/index.html" class="no-external">
 <div class="listing-date">
 Jan 4, 2022
 </div>
@@ -753,16 +769,14 @@ Jan 4, 2022
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="14" data-categories="programming,python,puzzles" data-listing-date-sort="1614297600000" data-listing-file-modified-sort="1704370771937" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="37">
+<div class="quarto-post image-right" data-index="15" data-categories="programming,python,puzzles" data-listing-date-sort="1614297600000" data-listing-file-modified-sort="1707521763004" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="37" data-listing-word-count-sort="7265">
 <div class="body">
-<a href="./posts/a-custom-sudoku-widget/index.html">
 <h3 class="no-anchor listing-title">
-A Custom Sudoku Widget
+<a href="./posts/a-custom-sudoku-widget/index.html" class="no-external">A Custom Sudoku Widget</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/a-custom-sudoku-widget/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('programming'); return false;">
 programming
@@ -774,14 +788,12 @@ python
 puzzles
 </div>
 </div>
-<a href="./posts/a-custom-sudoku-widget/index.html">
 <div class="listing-description">
-<p>Creating a custom Jupyter widget for editing and displaying Sudoku puzzles.</p>
+<a href="./posts/a-custom-sudoku-widget/index.html" class="no-external">Creating a custom Jupyter widget for editing and displaying Sudoku puzzles.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/a-custom-sudoku-widget/index.html">
+<a href="./posts/a-custom-sudoku-widget/index.html" class="no-external">
 <div class="listing-date">
 Feb 26, 2021
 </div>
@@ -791,16 +803,14 @@ Feb 26, 2021
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="15" data-categories="programming,python,opencv" data-listing-date-sort="1607817600000" data-listing-file-modified-sort="1704370772665" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5">
+<div class="quarto-post image-right" data-index="16" data-categories="programming,python,opencv" data-listing-date-sort="1607817600000" data-listing-file-modified-sort="1707521763732" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="851">
 <div class="body">
-<a href="./posts/pictionary-air-mouse/index.html">
 <h3 class="no-anchor listing-title">
-Pictionary Air Mouse
+<a href="./posts/pictionary-air-mouse/index.html" class="no-external">Pictionary Air Mouse</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/pictionary-air-mouse/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('programming'); return false;">
 programming
@@ -812,14 +822,12 @@ python
 opencv
 </div>
 </div>
-<a href="./posts/pictionary-air-mouse/index.html">
 <div class="listing-description">
-<p>Use the Pictionary Air pen as an alternative input device.</p>
+<a href="./posts/pictionary-air-mouse/index.html" class="no-external">Use the Pictionary Air pen as an alternative input device.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/pictionary-air-mouse/index.html">
+<a href="./posts/pictionary-air-mouse/index.html" class="no-external">
 <div class="listing-date">
 Dec 13, 2020
 </div>
@@ -829,16 +837,14 @@ Dec 13, 2020
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="16" data-categories="programming,prolog,puzzles" data-listing-date-sort="1587686400000" data-listing-file-modified-sort="1704370772489" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5">
+<div class="quarto-post image-right" data-index="17" data-categories="programming,prolog,puzzles" data-listing-date-sort="1587686400000" data-listing-file-modified-sort="1707521763556" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="873">
 <div class="body">
-<a href="./posts/icosian-game/index.html">
 <h3 class="no-anchor listing-title">
-Icosian Game
+<a href="./posts/icosian-game/index.html" class="no-external">Icosian Game</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/icosian-game/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('programming'); return false;">
 programming
@@ -850,14 +856,12 @@ prolog
 puzzles
 </div>
 </div>
-<a href="./posts/icosian-game/index.html">
 <div class="listing-description">
-<p>A Prolog solver for the Icosian game.</p>
+<a href="./posts/icosian-game/index.html" class="no-external">A Prolog solver for the Icosian game.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/icosian-game/index.html">
+<a href="./posts/icosian-game/index.html" class="no-external">
 <div class="listing-date">
 Apr 24, 2020
 </div>
@@ -867,16 +871,14 @@ Apr 24, 2020
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="17" data-categories="programming,prolog,iot" data-listing-date-sort="1563148800000" data-listing-file-modified-sort="1704370772677" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5">
+<div class="quarto-post image-right" data-index="18" data-categories="programming,prolog,iot" data-listing-date-sort="1563148800000" data-listing-file-modified-sort="1707521763744" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="839">
 <div class="body">
-<a href="./posts/supercharging-the-nabaztag/index.html">
 <h3 class="no-anchor listing-title">
-Supercharging the Nabaztag
+<a href="./posts/supercharging-the-nabaztag/index.html" class="no-external">Supercharging the Nabaztag</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/supercharging-the-nabaztag/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('programming'); return false;">
 programming
@@ -888,14 +890,12 @@ prolog
 iot
 </div>
 </div>
-<a href="./posts/supercharging-the-nabaztag/index.html">
 <div class="listing-description">
-<p>A Nabaztag server that interfaces with ifttt.com.</p>
+<a href="./posts/supercharging-the-nabaztag/index.html" class="no-external">A Nabaztag server that interfaces with ifttt.com.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/supercharging-the-nabaztag/index.html">
+<a href="./posts/supercharging-the-nabaztag/index.html" class="no-external">
 <div class="listing-date">
 Jul 15, 2019
 </div>
@@ -905,16 +905,14 @@ Jul 15, 2019
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="18" data-categories="programming,prolog,puzzles" data-listing-date-sort="1443916800000" data-listing-file-modified-sort="1704370772673" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3">
+<div class="quarto-post image-right" data-index="19" data-categories="programming,prolog,puzzles" data-listing-date-sort="1443916800000" data-listing-file-modified-sort="1707521763740" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="514">
 <div class="body">
-<a href="./posts/skyline-puzzle/index.html">
 <h3 class="no-anchor listing-title">
-Skyline Puzzle
+<a href="./posts/skyline-puzzle/index.html" class="no-external">Skyline Puzzle</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/skyline-puzzle/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('programming'); return false;">
 programming
@@ -926,14 +924,12 @@ prolog
 puzzles
 </div>
 </div>
-<a href="./posts/skyline-puzzle/index.html">
 <div class="listing-description">
-<p>A Prolog solver for the ‘Skyline’ puzzle.</p>
+<a href="./posts/skyline-puzzle/index.html" class="no-external">A Prolog solver for the ‘Skyline’ puzzle.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/skyline-puzzle/index.html">
+<a href="./posts/skyline-puzzle/index.html" class="no-external">
 <div class="listing-date">
 Oct 4, 2015
 </div>
@@ -943,16 +939,14 @@ Oct 4, 2015
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="19" data-categories="programming,vba" data-listing-date-sort="1374105600000" data-listing-file-modified-sort="1704370772713" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4">
+<div class="quarto-post image-right" data-index="20" data-categories="programming,vba" data-listing-date-sort="1374105600000" data-listing-file-modified-sort="1707521763780" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="789">
 <div class="body">
-<a href="./posts/vba-iban-validator/index.html">
 <h3 class="no-anchor listing-title">
-VBA IBAN Validator
+<a href="./posts/vba-iban-validator/index.html" class="no-external">VBA IBAN Validator</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/vba-iban-validator/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('programming'); return false;">
 programming
@@ -961,14 +955,12 @@ programming
 vba
 </div>
 </div>
-<a href="./posts/vba-iban-validator/index.html">
 <div class="listing-description">
-<p>A function in VBA that checks the validity of an IBAN (International Bank Account Number).</p>
+<a href="./posts/vba-iban-validator/index.html" class="no-external">A function in VBA that checks the validity of an IBAN (International Bank Account Number).</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/vba-iban-validator/index.html">
+<a href="./posts/vba-iban-validator/index.html" class="no-external">
 <div class="listing-date">
 Jul 18, 2013
 </div>
@@ -978,16 +970,14 @@ Jul 18, 2013
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="20" data-categories="programming,prolog,puzzles" data-listing-date-sort="1246579200000" data-listing-file-modified-sort="1704370771941" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5">
+<div class="quarto-post image-right" data-index="21" data-categories="programming,prolog,puzzles" data-listing-date-sort="1246579200000" data-listing-file-modified-sort="1707521763004" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="871">
 <div class="body">
-<a href="./posts/bridge-and-torch-puzzle/index.html">
 <h3 class="no-anchor listing-title">
-Bridge and Torch Puzzle
+<a href="./posts/bridge-and-torch-puzzle/index.html" class="no-external">Bridge and Torch Puzzle</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/bridge-and-torch-puzzle/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('programming'); return false;">
 programming
@@ -999,14 +989,12 @@ prolog
 puzzles
 </div>
 </div>
-<a href="./posts/bridge-and-torch-puzzle/index.html">
 <div class="listing-description">
-<p>A Prolog solver for the ‘Bridge and torch’ puzzle.</p>
+<a href="./posts/bridge-and-torch-puzzle/index.html" class="no-external">A Prolog solver for the ‘Bridge and torch’ puzzle.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/bridge-and-torch-puzzle/index.html">
+<a href="./posts/bridge-and-torch-puzzle/index.html" class="no-external">
 <div class="listing-date">
 Jul 3, 2009
 </div>
@@ -1016,16 +1004,14 @@ Jul 3, 2009
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="21" data-categories="programming,prolog,puzzles" data-listing-date-sort="1193356800000" data-listing-file-modified-sort="1704370772713" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6">
+<div class="quarto-post image-right" data-index="22" data-categories="programming,prolog,puzzles" data-listing-date-sort="1193356800000" data-listing-file-modified-sort="1707521763780" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1181">
 <div class="body">
-<a href="./posts/who-owns-the-zebra/index.html">
 <h3 class="no-anchor listing-title">
-Who Owns the Zebra
+<a href="./posts/who-owns-the-zebra/index.html" class="no-external">Who Owns the Zebra</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/who-owns-the-zebra/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('programming'); return false;">
 programming
@@ -1037,14 +1023,12 @@ prolog
 puzzles
 </div>
 </div>
-<a href="./posts/who-owns-the-zebra/index.html">
 <div class="listing-description">
-<p>A Prolog solver for the ‘Zebra puzzle’ a.k.a. ‘Einstein’s puzzle’.</p>
+<a href="./posts/who-owns-the-zebra/index.html" class="no-external">A Prolog solver for the ‘Zebra puzzle’ a.k.a. ‘Einstein’s puzzle’.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/who-owns-the-zebra/index.html">
+<a href="./posts/who-owns-the-zebra/index.html" class="no-external">
 <div class="listing-date">
 Oct 26, 2007
 </div>
@@ -1054,16 +1038,14 @@ Oct 26, 2007
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="22" data-categories="programming,esoteric,prolog" data-listing-date-sort="1167955200000" data-listing-file-modified-sort="1704370771937" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4">
+<div class="quarto-post image-right" data-index="23" data-categories="programming,esoteric,prolog" data-listing-date-sort="1167955200000" data-listing-file-modified-sort="1707521763004" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="619">
 <div class="body">
-<a href="./posts/a-brainfuck-interpreter-in-prolog/index.html">
 <h3 class="no-anchor listing-title">
-A Brainf*ck Interpreter in Prolog
+<a href="./posts/a-brainfuck-interpreter-in-prolog/index.html" class="no-external">A Brainf*ck Interpreter in Prolog</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/a-brainfuck-interpreter-in-prolog/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('programming'); return false;">
 programming
@@ -1075,14 +1057,12 @@ esoteric
 prolog
 </div>
 </div>
-<a href="./posts/a-brainfuck-interpreter-in-prolog/index.html">
 <div class="listing-description">
-<p>An esoteric programming language interpreter written in a slightly less esoteric programming language.</p>
+<a href="./posts/a-brainfuck-interpreter-in-prolog/index.html" class="no-external">An esoteric programming language interpreter written in a slightly less esoteric programming language.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/a-brainfuck-interpreter-in-prolog/index.html">
+<a href="./posts/a-brainfuck-interpreter-in-prolog/index.html" class="no-external">
 <div class="listing-date">
 Jan 5, 2007
 </div>
@@ -1185,10 +1165,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1198,8 +1177,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1212,6 +1200,125 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -1255,6 +1362,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1280,6 +1388,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1340,6 +1474,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+
 
 
 

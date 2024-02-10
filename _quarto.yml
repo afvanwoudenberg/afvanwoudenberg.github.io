@@ -8,7 +8,7 @@ website:
   description: "A blog on machine learning and coding"
   navbar:
     collapse: false
-    right:
+    tools:
       - icon: github
         href: https://github.com/afvanwoudenberg
       - icon: linkedin
@@ -19,7 +19,7 @@ format:
   html:
     include-in-header: gtm_code_head.html
     include-before-body: gtm_code_body.html
-    theme: [litera, theme.scss]
+    theme: [simplex, theme.scss]
     page-layout: article
     css: styles.css
 comments:

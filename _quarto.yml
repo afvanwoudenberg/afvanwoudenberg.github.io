@@ -19,7 +19,7 @@ format:
   html:
     include-in-header: gtm_code_head.html
     include-before-body: gtm_code_body.html
-    theme: [simplex, theme.scss]
+    theme: [litera, theme.scss]
     page-layout: article
     css: styles.css
 comments:

@@ -1,5 +1,5 @@
 ---
-title: "Run a terminal in Google Colab (on the free tier)"
+title: "Run a Terminal in Google Colab (on the Free Tier)"
 description: "How to open a terminal on Google Colab without paying for Colab Pro."
 author: "Aswin van Woudenberg"
 date: "2024-02-10"

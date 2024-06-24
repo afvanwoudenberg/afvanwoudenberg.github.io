@@ -1,0 +1,1524 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.555">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Aswin van Woudenberg">
+<meta name="dcterms.date" content="2024-06-24">
+<meta name="description" content="Reading and visualizing bank transactions with Pandas and Matplotlib.">
+
+<title>Aswin van Woudenberg - From CAMT.053 to Charts</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-WWJVHMJ');</script>
+<!-- End Google Tag Manager -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+<script src="https://unpkg.com/@jupyter-widgets/html-manager@*/dist/embed-amd.js" crossorigin="anonymous"></script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Aswin van Woudenberg</span>
+    </a>
+  </div>
+        <div class="quarto-navbar-tools tools-wide tools-end">
+    <a href="https://github.com/afvanwoudenberg" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-github"></i></a>
+    <a href="https://linkedin.com/in/afvanwoudenberg" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-linkedin"></i></a>
+    <a href="../../index.xml" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-rss"></i></a>
+</div>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">From CAMT.053 to Charts</h1>
+                  <div>
+        <div class="description">
+          Reading and visualizing bank transactions with Pandas and Matplotlib.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">programming</div>
+                <div class="quarto-category">python</div>
+                <div class="quarto-category">matplotlib</div>
+                <div class="quarto-category">pandas</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Aswin van Woudenberg </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">June 24, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#about-the-camt.053-file-format" id="toc-about-the-camt.053-file-format" class="nav-link active" data-scroll-target="#about-the-camt.053-file-format">About the CAMT.053 file format</a></li>
+  <li><a href="#importing-dependencies" id="toc-importing-dependencies" class="nav-link" data-scroll-target="#importing-dependencies">Importing dependencies</a></li>
+  <li><a href="#reading-camt.053-files" id="toc-reading-camt.053-files" class="nav-link" data-scroll-target="#reading-camt.053-files">Reading CAMT.053 files</a></li>
+  <li><a href="#creating-some-useful-plots" id="toc-creating-some-useful-plots" class="nav-link" data-scroll-target="#creating-some-useful-plots">Creating some useful plots</a>
+  <ul class="collapse">
+  <li><a href="#account-balance-over-time" id="toc-account-balance-over-time" class="nav-link" data-scroll-target="#account-balance-over-time">Account balance over time</a></li>
+  <li><a href="#income-vs.-expenses-over-time" id="toc-income-vs.-expenses-over-time" class="nav-link" data-scroll-target="#income-vs.-expenses-over-time">Income vs.&nbsp;expenses over time</a></li>
+  <li><a href="#heatmap-of-income-and-expenses" id="toc-heatmap-of-income-and-expenses" class="nav-link" data-scroll-target="#heatmap-of-income-and-expenses">Heatmap of income and expenses</a></li>
+  </ul></li>
+  <li><a href="#categorizing-transactions" id="toc-categorizing-transactions" class="nav-link" data-scroll-target="#categorizing-transactions">Categorizing transactions</a>
+  <ul class="collapse">
+  <li><a href="#inspecting-categories" id="toc-inspecting-categories" class="nav-link" data-scroll-target="#inspecting-categories">Inspecting categories</a></li>
+  <li><a href="#plotting-the-expenses-per-category" id="toc-plotting-the-expenses-per-category" class="nav-link" data-scroll-target="#plotting-the-expenses-per-category">Plotting the expenses per category</a></li>
+  </ul></li>
+  <li><a href="#analyzing-your-own-finances" id="toc-analyzing-your-own-finances" class="nav-link" data-scroll-target="#analyzing-your-own-finances">Analyzing your own finances</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WWJVHMJ" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+
+
+
+
+<p>The <code>CAMT.053</code> file format is a standard XML format for exporting transactions and account balances to, for example, an accounting package. Most (European) banks allow their customers to download their transactions and balances in this file format from their banking portal. In this post I’ll show how to read <code>CAMT.053</code> files into Pandas dataframes.</p>
+<p>I wrote this code because I wanted to get a better grip on how I’m spending my hard-earned money. Besides showing how to read <code>CAMT.053</code> files into dataframes, I’ll also demonstrate how to categorize transactions and display some pretty graphs using Matplotlib.</p>
+<section id="about-the-camt.053-file-format" class="level2">
+<h2 class="anchored" data-anchor-id="about-the-camt.053-file-format">About the CAMT.053 file format</h2>
+<p>Schematically, a <code>CAMT.053</code> file has the following structure:</p>
+<ul>
+<li>Group Header</li>
+<li>Statements
+<ul>
+<li>Balances</li>
+<li>Entries
+<ul>
+<li>Entry Details</li>
+</ul></li>
+</ul></li>
+</ul>
+<p>Each file starts with a <em>group header</em> followed by one or more <em>statements</em>. Each <em>statement</em> may contain multiple account <em>balances</em> and multiple transactions (<em>entries</em>). Each <em>entry</em> (transaction) can contain one or more <em>entry details</em>.</p>
+<p>Pandas can read XML files using the <code>read_xml()</code> function. However, because of how deeply nested <code>CAMT.053</code> files are, we need to first flatten its structure using <a href="https://en.wikipedia.org/wiki/XSLT">XSLT</a> stylesheets.</p>
+<p>I created a set of stylesheets for flattening <em>group headers</em>, <em>balances</em>, <em>statements</em> and <em>entries</em>. Using these, we’ll be able to read each of these into a separate dataframe.</p>
+<details>
+<summary>
+File: <a href="groupheader.xsl">groupheader.xsl</a>
+</summary>
+<div class="sourceCode" id="cb1"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">&lt;?xml</span><span class="ot"> version=</span><span class="st">"1.0"</span><span class="ot"> encoding=</span><span class="st">"UTF-8"</span><span class="fu">?&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">xsl:stylesheet</span><span class="ot"> version=</span><span class="st">"1.0"</span> </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ot">  xmlns:xsl=</span><span class="st">"http://www.w3.org/1999/XSL/Transform"</span> </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ot">  xmlns:camt=</span><span class="st">"urn:iso:std:iso:20022:tech:xsd:camt.053.001.02"</span>&gt;</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">xsl:output</span><span class="ot"> method=</span><span class="st">"xml"</span><span class="ot"> version=</span><span class="st">"1.0"</span><span class="ot"> encoding=</span><span class="st">"UTF-8"</span><span class="ot"> indent=</span><span class="st">"yes"</span>/&gt;</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">xsl:template</span><span class="ot"> match=</span><span class="st">"/camt:Document/camt:BkToCstmrStmt/camt:GrpHdr"</span>&gt; </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">data</span>&gt;</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  &lt;<span class="kw">row</span>&gt;</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    &lt;<span class="kw">MessageIdentification</span>&gt;&lt;<span class="kw">xsl:value-of</span><span class="ot"> select=</span><span class="st">"camt:MsgId"</span>/&gt;&lt;/<span class="kw">MessageIdentification</span>&gt;</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    &lt;<span class="kw">CreationDateTime</span>&gt;&lt;<span class="kw">xsl:value-of</span><span class="ot"> select=</span><span class="st">"camt:CreDtTm"</span>/&gt;&lt;/<span class="kw">CreationDateTime</span>&gt;</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    &lt;<span class="kw">xsl:if</span><span class="ot"> test=</span><span class="st">"camt:MsgPgntn"</span>&gt;</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">PageNumber</span>&gt;&lt;<span class="kw">xsl:value-of</span><span class="ot"> select=</span><span class="st">"camt:MsgPgntn/camt:PgNb"</span>/&gt;&lt;/<span class="kw">PageNumber</span>&gt;</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">LastPageIndicator</span>&gt;&lt;<span class="kw">xsl:value-of</span><span class="ot"> select=</span><span class="st">"camt:MsgPgntn/camt:LastPgInd"</span>/&gt;&lt;/<span class="kw">LastPageIndicator</span>&gt;</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    &lt;/<span class="kw">xsl:if</span>&gt;</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  &lt;/<span class="kw">row</span>&gt;</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">data</span>&gt;</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">xsl:template</span>&gt;</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">xsl:stylesheet</span>&gt;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<details>
+<summary>
+File: <a href="balance.xsl">balance.xsl</a>
+</summary>
+<div class="sourceCode" id="cb2"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">&lt;?xml</span><span class="ot"> version=</span><span class="st">"1.0"</span><span class="ot"> encoding=</span><span class="st">"UTF-8"</span><span class="fu">?&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">xsl:stylesheet</span><span class="ot"> version=</span><span class="st">"1.0"</span> </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ot">  xmlns:xsl=</span><span class="st">"http://www.w3.org/1999/XSL/Transform"</span> </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="ot">  xmlns:camt=</span><span class="st">"urn:iso:std:iso:20022:tech:xsd:camt.053.001.02"</span>&gt;</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">xsl:output</span><span class="ot"> method=</span><span class="st">"xml"</span><span class="ot"> version=</span><span class="st">"1.0"</span><span class="ot"> encoding=</span><span class="st">"UTF-8"</span><span class="ot"> indent=</span><span class="st">"yes"</span>/&gt;</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">xsl:template</span><span class="ot"> match=</span><span class="st">"/camt:Document/camt:BkToCstmrStmt"</span>&gt; </span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">data</span>&gt;</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    &lt;<span class="kw">xsl:for-each</span><span class="ot"> select=</span><span class="st">"camt:Stmt/camt:Bal"</span>&gt;</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    &lt;<span class="kw">row</span>&gt;    </span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">Identification</span>&gt;&lt;<span class="kw">xsl:value-of</span><span class="ot"> select=</span><span class="st">"../camt:Id"</span>/&gt;&lt;/<span class="kw">Identification</span>&gt;</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">xsl:if</span><span class="ot"> test=</span><span class="st">"camt:Tp/camt:CdOrPrtry/camt:Cd"</span>&gt;</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">Code</span>&gt;&lt;<span class="kw">xsl:value-of</span><span class="ot"> select=</span><span class="st">"camt:Tp/camt:CdOrPrtry/camt:Cd"</span>/&gt;&lt;/<span class="kw">Code</span>&gt;</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>      &lt;/<span class="kw">xsl:if</span>&gt;</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">xsl:if</span><span class="ot"> test=</span><span class="st">"camt:Tp/camt:CdOrPrtry/camt:Prtry"</span>&gt;</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">Proprietary</span>&gt;&lt;<span class="kw">xsl:value-of</span><span class="ot"> select=</span><span class="st">"camt:Tp/camt:CdOrPrtry/camt:Prtry"</span>/&gt;&lt;/<span class="kw">Proprietary</span>&gt;</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>      &lt;/<span class="kw">xsl:if</span>&gt;</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">Amount</span>&gt;&lt;<span class="kw">xsl:value-of</span><span class="ot"> select=</span><span class="st">"camt:Amt"</span>/&gt;&lt;/<span class="kw">Amount</span>&gt;</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">Currency</span>&gt;&lt;<span class="kw">xsl:value-of</span><span class="ot"> select=</span><span class="st">"camt:Amt/@Ccy"</span>/&gt;&lt;/<span class="kw">Currency</span>&gt;</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">CreditDebitIndicator</span>&gt;&lt;<span class="kw">xsl:value-of</span><span class="ot"> select=</span><span class="st">"camt:CdtDbtInd"</span>/&gt;&lt;/<span class="kw">CreditDebitIndicator</span>&gt;</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">Date</span>&gt;&lt;<span class="kw">xsl:value-of</span><span class="ot"> select=</span><span class="st">"camt:Dt"</span>/&gt;&lt;/<span class="kw">Date</span>&gt;</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    &lt;/<span class="kw">row</span>&gt;</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  &lt;/<span class="kw">xsl:for-each</span>&gt;</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">data</span>&gt;</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">xsl:template</span>&gt;</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">xsl:stylesheet</span>&gt;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<details>
+<summary>
+File: <a href="statement.xsl">statement.xsl</a>
+</summary>
+<div class="sourceCode" id="cb3"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">&lt;?xml</span><span class="ot"> version=</span><span class="st">"1.0"</span><span class="ot"> encoding=</span><span class="st">"UTF-8"</span><span class="fu">?&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">xsl:stylesheet</span><span class="ot"> version=</span><span class="st">"1.0"</span> </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ot">  xmlns:xsl=</span><span class="st">"http://www.w3.org/1999/XSL/Transform"</span> </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="ot">  xmlns:camt=</span><span class="st">"urn:iso:std:iso:20022:tech:xsd:camt.053.001.02"</span>&gt;</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">xsl:output</span><span class="ot"> method=</span><span class="st">"xml"</span><span class="ot"> version=</span><span class="st">"1.0"</span><span class="ot"> encoding=</span><span class="st">"UTF-8"</span><span class="ot"> indent=</span><span class="st">"yes"</span>/&gt;</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">xsl:template</span><span class="ot"> match=</span><span class="st">"/camt:Document/camt:BkToCstmrStmt"</span>&gt; </span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">data</span>&gt;</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  &lt;<span class="kw">row</span>&gt;</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    &lt;<span class="kw">xsl:for-each</span><span class="ot"> select=</span><span class="st">"camt:Stmt"</span>&gt;</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">MessageIdentification</span>&gt;&lt;<span class="kw">xsl:value-of</span><span class="ot"> select=</span><span class="st">"/camt:Document/camt:BkToCstmrStmt/camt:GrpHdr/camt:MsgId"</span>/&gt;&lt;/<span class="kw">MessageIdentification</span>&gt;</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">Identification</span>&gt;&lt;<span class="kw">xsl:value-of</span><span class="ot"> select=</span><span class="st">"camt:Id"</span>/&gt;&lt;/<span class="kw">Identification</span>&gt;</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">xsl:if</span><span class="ot"> test=</span><span class="st">"camt:ElctrncSeqNb"</span>&gt;</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">ElectronicSequenceNumber</span>&gt;&lt;<span class="kw">xsl:value-of</span><span class="ot"> select=</span><span class="st">"camt:ElctrncSeqNb"</span>/&gt;&lt;/<span class="kw">ElectronicSequenceNumber</span>&gt;</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>      &lt;/<span class="kw">xsl:if</span>&gt;</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">CreationDateTime</span>&gt;&lt;<span class="kw">xsl:value-of</span><span class="ot"> select=</span><span class="st">"camt:CreDtTm"</span>/&gt;&lt;/<span class="kw">CreationDateTime</span>&gt;</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">IBAN</span>&gt;&lt;<span class="kw">xsl:value-of</span><span class="ot"> select=</span><span class="st">"camt:Acct/camt:Id/camt:IBAN"</span>/&gt;&lt;/<span class="kw">IBAN</span>&gt;</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">xsl:if</span><span class="ot"> test=</span><span class="st">"camt:Acct/camt:Ccy"</span>&gt;</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">Currency</span>&gt;&lt;<span class="kw">xsl:value-of</span><span class="ot"> select=</span><span class="st">"camt:Acct/camt:Ccy"</span>/&gt;&lt;/<span class="kw">Currency</span>&gt;</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>      &lt;/<span class="kw">xsl:if</span>&gt;</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">xsl:if</span><span class="ot"> test=</span><span class="st">"camt:Acct/camt:Svcr"</span>&gt;</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">BIC</span>&gt;&lt;<span class="kw">xsl:value-of</span><span class="ot"> select=</span><span class="st">"camt:Acct/camt:Svcr/camt:FinInstnId/camt:BIC"</span>/&gt;&lt;/<span class="kw">BIC</span>&gt;</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>      &lt;/<span class="kw">xsl:if</span>&gt;</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    &lt;/<span class="kw">xsl:for-each</span>&gt;</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>  &lt;/<span class="kw">row</span>&gt;</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">data</span>&gt;</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">xsl:template</span>&gt;</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">xsl:stylesheet</span>&gt;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<details>
+<summary>
+File: <a href="entry.xsl">entry.xsl</a>
+</summary>
+<div class="sourceCode" id="cb4"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">&lt;?xml</span><span class="ot"> version=</span><span class="st">"1.0"</span><span class="ot"> encoding=</span><span class="st">"UTF-8"</span><span class="fu">?&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">xsl:stylesheet</span><span class="ot"> version=</span><span class="st">"1.0"</span> </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ot">  xmlns:xsl=</span><span class="st">"http://www.w3.org/1999/XSL/Transform"</span> </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="ot">  xmlns:camt=</span><span class="st">"urn:iso:std:iso:20022:tech:xsd:camt.053.001.02"</span>&gt;</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">xsl:output</span><span class="ot"> method=</span><span class="st">"xml"</span><span class="ot"> version=</span><span class="st">"1.0"</span><span class="ot"> encoding=</span><span class="st">"UTF-8"</span><span class="ot"> indent=</span><span class="st">"yes"</span>/&gt;</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">xsl:template</span><span class="ot"> match=</span><span class="st">"/camt:Document/camt:BkToCstmrStmt"</span>&gt; </span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">data</span>&gt;</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  &lt;<span class="kw">xsl:for-each</span><span class="ot"> select=</span><span class="st">"camt:Stmt/camt:Ntry"</span>&gt;</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    &lt;<span class="kw">row</span>&gt;     </span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">Identification</span>&gt;&lt;<span class="kw">xsl:value-of</span><span class="ot"> select=</span><span class="st">"../camt:Id"</span>/&gt;&lt;/<span class="kw">Identification</span>&gt;</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">Amount</span>&gt;&lt;<span class="kw">xsl:value-of</span><span class="ot"> select=</span><span class="st">"camt:Amt"</span>/&gt;&lt;/<span class="kw">Amount</span>&gt;</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">Currency</span>&gt;&lt;<span class="kw">xsl:value-of</span><span class="ot"> select=</span><span class="st">"camt:Amt/@Ccy"</span>/&gt;&lt;/<span class="kw">Currency</span>&gt;</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">CreditDebitIndicator</span>&gt;&lt;<span class="kw">xsl:value-of</span><span class="ot"> select=</span><span class="st">"camt:CdtDbtInd"</span>/&gt;&lt;/<span class="kw">CreditDebitIndicator</span>&gt;</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">Status</span>&gt;&lt;<span class="kw">xsl:value-of</span><span class="ot"> select=</span><span class="st">"camt:Sts"</span>/&gt;&lt;/<span class="kw">Status</span>&gt;</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">xsl:if</span><span class="ot"> test=</span><span class="st">"camt:BookgDt"</span>&gt;</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">BookingDate</span>&gt;&lt;<span class="kw">xsl:value-of</span><span class="ot"> select=</span><span class="st">"camt:BookgDt/camt:Dt"</span>/&gt;&lt;/<span class="kw">BookingDate</span>&gt;</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>      &lt;/<span class="kw">xsl:if</span>&gt;</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">xsl:if</span><span class="ot"> test=</span><span class="st">"camt:ValDt"</span>&gt;</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">ValueDate</span>&gt;&lt;<span class="kw">xsl:value-of</span><span class="ot"> select=</span><span class="st">"camt:ValDt/camt:Dt"</span>/&gt;&lt;/<span class="kw">ValueDate</span>&gt;</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>      &lt;/<span class="kw">xsl:if</span>&gt;</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">xsl:if</span><span class="ot"> test=</span><span class="st">"camt:AcctSvcrRef"</span>&gt;</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">AccountServicerReference</span>&gt;&lt;<span class="kw">xsl:value-of</span><span class="ot"> select=</span><span class="st">"camt:AcctSvcrRef"</span>/&gt;&lt;/<span class="kw">AccountServicerReference</span>&gt;</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>      &lt;/<span class="kw">xsl:if</span>&gt;</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">xsl:if</span><span class="ot"> test=</span><span class="st">"camt:BkTxCd/camt:Domn"</span>&gt;</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">DomainCode</span>&gt;&lt;<span class="kw">xsl:value-of</span><span class="ot"> select=</span><span class="st">"camt:BkTxCd/camt:Domn/camt:Cd"</span>/&gt;&lt;/<span class="kw">DomainCode</span>&gt;</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>    &lt;<span class="kw">FamilyCode</span>&gt;&lt;<span class="kw">xsl:value-of</span><span class="ot"> select=</span><span class="st">"camt:BkTxCd/camt:Domn/camt:Fmly/camt:Cd"</span>/&gt;&lt;/<span class="kw">FamilyCode</span>&gt;</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>    &lt;<span class="kw">SubFamilyCode</span>&gt;&lt;<span class="kw">xsl:value-of</span><span class="ot"> select=</span><span class="st">"camt:BkTxCd/camt:Domn/camt:Fmly/camt:SubFmlyCd"</span>/&gt;&lt;/<span class="kw">SubFamilyCode</span>&gt;</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>      &lt;/<span class="kw">xsl:if</span>&gt;</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">xsl:if</span><span class="ot"> test=</span><span class="st">"camt:BkTxCd/camt:Prtry"</span>&gt;</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">ProprietaryCode</span>&gt;&lt;<span class="kw">xsl:value-of</span><span class="ot"> select=</span><span class="st">"camt:BkTxCd/camt:Prtry/camt:Cd"</span>/&gt;&lt;/<span class="kw">ProprietaryCode</span>&gt;</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>    &lt;<span class="kw">xsl:if</span><span class="ot"> test=</span><span class="st">"camt:BkTxCd/camt:Prtry/camt:Issr"</span>&gt;</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">Issuer</span>&gt;&lt;<span class="kw">xsl:value-of</span><span class="ot"> select=</span><span class="st">"camt:BkTxCd/camt:Prtry/camt:Issr"</span>/&gt;&lt;/<span class="kw">Issuer</span>&gt;</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>        &lt;/<span class="kw">xsl:if</span>&gt;</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>      &lt;/<span class="kw">xsl:if</span>&gt;</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">xsl:if</span><span class="ot"> test=</span><span class="st">"camt:NtryDtls/camt:TxDtls/camt:Refs/camt:MsgId"</span>&gt;</span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">DetailsMessageIdentification</span>&gt;&lt;<span class="kw">xsl:value-of</span><span class="ot"> select=</span><span class="st">"camt:NtryDtls/camt:TxDtls/camt:Refs/camt:MsgId"</span>/&gt;&lt;/<span class="kw">DetailsMessageIdentification</span>&gt;</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>      &lt;/<span class="kw">xsl:if</span>&gt;</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">xsl:if</span><span class="ot"> test=</span><span class="st">"camt:NtryDtls/camt:TxDtls/camt:Refs/camt:InstrId"</span>&gt;</span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">DetailsInstructionIdentification</span>&gt;&lt;<span class="kw">xsl:value-of</span><span class="ot"> select=</span><span class="st">"camt:NtryDtls/camt:TxDtls/camt:Refs/camt:InstrId"</span>/&gt;&lt;/<span class="kw">DetailsInstructionIdentification</span>&gt;</span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>      &lt;/<span class="kw">xsl:if</span>&gt;</span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">xsl:if</span><span class="ot"> test=</span><span class="st">"camt:NtryDtls/camt:TxDtls/camt:Refs/camt:AcctSvcrRef"</span>&gt;</span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">DetailsAccountServicerReference</span>&gt;&lt;<span class="kw">xsl:value-of</span><span class="ot"> select=</span><span class="st">"camt:NtryDtls/camt:TxDtls/camt:Refs/camt:AcctSvcrRef"</span>/&gt;&lt;/<span class="kw">DetailsAccountServicerReference</span>&gt;</span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>      &lt;/<span class="kw">xsl:if</span>&gt;</span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">xsl:if</span><span class="ot"> test=</span><span class="st">"camt:NtryDtls/camt:TxDtls/camt:Refs/camt:EndToEndId"</span>&gt;</span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">DetailsEndToEndIdentification</span>&gt;&lt;<span class="kw">xsl:value-of</span><span class="ot"> select=</span><span class="st">"camt:NtryDtls/camt:TxDtls/camt:Refs/camt:EndToEndId"</span>/&gt;&lt;/<span class="kw">DetailsEndToEndIdentification</span>&gt;</span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>      &lt;/<span class="kw">xsl:if</span>&gt;</span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">xsl:if</span><span class="ot"> test=</span><span class="st">"camt:NtryDtls/camt:TxDtls/camt:Refs/camt:MndtId"</span>&gt;</span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">DetailsMandateIdentification</span>&gt;&lt;<span class="kw">xsl:value-of</span><span class="ot"> select=</span><span class="st">"camt:NtryDtls/camt:TxDtls/camt:Refs/camt:MndtId"</span>/&gt;&lt;/<span class="kw">DetailsMandateIdentification</span>&gt;</span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>      &lt;/<span class="kw">xsl:if</span>&gt;</span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">xsl:if</span><span class="ot"> test=</span><span class="st">"camt:NtryDtls/camt:TxDtls/camt:Refs/camt:TxId"</span>&gt;</span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">DetailsTransactionIdentification</span>&gt;&lt;<span class="kw">xsl:value-of</span><span class="ot"> select=</span><span class="st">"camt:NtryDtls/camt:TxDtls/camt:Refs/camt:TxId"</span>/&gt;&lt;/<span class="kw">DetailsTransactionIdentification</span>&gt;</span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>      &lt;/<span class="kw">xsl:if</span>&gt;</span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">xsl:if</span><span class="ot"> test=</span><span class="st">"camt:NtryDtls/camt:TxDtls/camt:AmtDtls/camt:TxAmt/camt:Amt"</span>&gt;</span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">DetailsAmount</span>&gt;&lt;<span class="kw">xsl:value-of</span><span class="ot"> select=</span><span class="st">"camt:NtryDtls/camt:TxDtls/camt:AmtDtls/camt:TxAmt/camt:Amt"</span>/&gt;&lt;/<span class="kw">DetailsAmount</span>&gt;</span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>    &lt;<span class="kw">DetailsCurrency</span>&gt;&lt;<span class="kw">xsl:value-of</span><span class="ot"> select=</span><span class="st">"camt:NtryDtls/camt:TxDtls/camt:AmtDtls/camt:TxAmt/camt:Amt/@Ccy"</span>/&gt;&lt;/<span class="kw">DetailsCurrency</span>&gt;</span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>      &lt;/<span class="kw">xsl:if</span>&gt;</span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">xsl:if</span><span class="ot"> test=</span><span class="st">"camt:NtryDtls/camt:TxDtls/camt:RltdPties/camt:Cdtr/camt:Nm"</span>&gt;</span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">DetailsCreditorName</span>&gt;&lt;<span class="kw">xsl:value-of</span><span class="ot"> select=</span><span class="st">"camt:NtryDtls/camt:TxDtls/camt:RltdPties/camt:Cdtr/camt:Nm"</span>/&gt;&lt;/<span class="kw">DetailsCreditorName</span>&gt;</span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>      &lt;/<span class="kw">xsl:if</span>&gt;</span>
+<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">xsl:if</span><span class="ot"> test=</span><span class="st">"camt:NtryDtls/camt:TxDtls/camt:RltdPties/camt:Cdtr/camt:PstlAdr/camt:Ctry"</span>&gt;</span>
+<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">DetailsCreditorCountry</span>&gt;&lt;<span class="kw">xsl:value-of</span><span class="ot"> select=</span><span class="st">"camt:NtryDtls/camt:TxDtls/camt:RltdPties/camt:Cdtr/camt:PstlAdr/camt:Ctry"</span>/&gt;&lt;/<span class="kw">DetailsCreditorCountry</span>&gt;</span>
+<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a>      &lt;/<span class="kw">xsl:if</span>&gt;</span>
+<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">xsl:if</span><span class="ot"> test=</span><span class="st">"camt:NtryDtls/camt:TxDtls/camt:RltdPties/camt:Dbtr/camt:Nm"</span>&gt;</span>
+<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">DetailsDebtorName</span>&gt;&lt;<span class="kw">xsl:value-of</span><span class="ot"> select=</span><span class="st">"camt:NtryDtls/camt:TxDtls/camt:RltdPties/camt:Dbtr/camt:Nm"</span>/&gt;&lt;/<span class="kw">DetailsDebtorName</span>&gt;</span>
+<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a>      &lt;/<span class="kw">xsl:if</span>&gt;</span>
+<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">xsl:if</span><span class="ot"> test=</span><span class="st">"camt:NtryDtls/camt:TxDtls/camt:RltdPties/camt:CdtrAcct/camt:Id/camt:IBAN"</span>&gt;</span>
+<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">DetailsCreditorIBAN</span>&gt;&lt;<span class="kw">xsl:value-of</span><span class="ot"> select=</span><span class="st">"camt:NtryDtls/camt:TxDtls/camt:RltdPties/camt:CdtrAcct/camt:Id/camt:IBAN"</span>/&gt;&lt;/<span class="kw">DetailsCreditorIBAN</span>&gt;</span>
+<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a>      &lt;/<span class="kw">xsl:if</span>&gt;</span>
+<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">xsl:if</span><span class="ot"> test=</span><span class="st">"camt:NtryDtls/camt:TxDtls/camt:RltdPties/camt:DbtrAcct/camt:Id/camt:IBAN"</span>&gt;</span>
+<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">DetailsDebtorIBAN</span>&gt;&lt;<span class="kw">xsl:value-of</span><span class="ot"> select=</span><span class="st">"camt:NtryDtls/camt:TxDtls/camt:RltdPties/camt:DbAcct/camt:Id/camt:IBAN"</span>/&gt;&lt;/<span class="kw">DetailsDebtorIBAN</span>&gt;</span>
+<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a>      &lt;/<span class="kw">xsl:if</span>&gt;</span>
+<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">xsl:if</span><span class="ot"> test=</span><span class="st">"camt:NtryDtls/camt:TxDtls/camt:RltdAgts/camt:DbtrAgt/camt:FinInstnId/camt:BIC"</span>&gt;</span>
+<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">DetailsDebtorAgentBIC</span>&gt;&lt;<span class="kw">xsl:value-of</span><span class="ot"> select=</span><span class="st">"camt:NtryDtls/camt:TxDtls/camt:RltdAgts/camt:DbtrAgt/camt:FinInstnId/camt:BIC"</span>/&gt;&lt;/<span class="kw">DetailsDebtorAgentBIC</span>&gt;</span>
+<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a>      &lt;/<span class="kw">xsl:if</span>&gt;</span>
+<span id="cb4-77"><a href="#cb4-77" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">xsl:if</span><span class="ot"> test=</span><span class="st">"camt:NtryDtls/camt:TxDtls/camt:RltdAgts/camt:CdtrAgt/camt:FinInstnId/camt:BIC"</span>&gt;</span>
+<span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">DetailsCreditorAgentBIC</span>&gt;&lt;<span class="kw">xsl:value-of</span><span class="ot"> select=</span><span class="st">"camt:NtryDtls/camt:TxDtls/camt:RltdAgts/camt:CdtrAgt/camt:FinInstnId/camt:BIC"</span>/&gt;&lt;/<span class="kw">DetailsCreditorAgentBIC</span>&gt;</span>
+<span id="cb4-79"><a href="#cb4-79" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">xsl:if</span>&gt;</span>
+<span id="cb4-80"><a href="#cb4-80" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">xsl:if</span><span class="ot"> test=</span><span class="st">"camt:NtryDtls/camt:TxDtls/camt:RltdAgts/camt:DbtrAgt/camt:FinInstnId/camt:BIC"</span>&gt;</span>
+<span id="cb4-81"><a href="#cb4-81" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">DetailsDebtorAgentBIC</span>&gt;&lt;<span class="kw">xsl:value-of</span><span class="ot"> select=</span><span class="st">"camt:NtryDtls/camt:TxDtls/camt:RltdAgts/camt:DbtrAgt/camt:FinInstnId/camt:BIC"</span>/&gt;&lt;/<span class="kw">DetailsDebtorAgentBIC</span>&gt;</span>
+<span id="cb4-82"><a href="#cb4-82" aria-hidden="true" tabindex="-1"></a>      &lt;/<span class="kw">xsl:if</span>&gt;</span>
+<span id="cb4-83"><a href="#cb4-83" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">xsl:if</span><span class="ot"> test=</span><span class="st">"camt:NtryDtls/camt:TxDtls/camt:RmtInf/camt:Ustrd"</span>&gt;</span>
+<span id="cb4-84"><a href="#cb4-84" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">DetailsRemittanceInformationUnstructured</span>&gt;&lt;<span class="kw">xsl:value-of</span><span class="ot"> select=</span><span class="st">"camt:NtryDtls/camt:TxDtls/camt:RmtInf/camt:Ustrd"</span>/&gt;&lt;/<span class="kw">DetailsRemittanceInformationUnstructured</span>&gt;</span>
+<span id="cb4-85"><a href="#cb4-85" aria-hidden="true" tabindex="-1"></a>      &lt;/<span class="kw">xsl:if</span>&gt;</span>
+<span id="cb4-86"><a href="#cb4-86" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">xsl:if</span><span class="ot"> test=</span><span class="st">"camt:AddtlNtryInf"</span>&gt;</span>
+<span id="cb4-87"><a href="#cb4-87" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">AdditionalEntryInformation</span>&gt;&lt;<span class="kw">xsl:value-of</span><span class="ot"> select=</span><span class="st">"camt:AddtlNtryInf"</span>/&gt;&lt;/<span class="kw">AdditionalEntryInformation</span>&gt;</span>
+<span id="cb4-88"><a href="#cb4-88" aria-hidden="true" tabindex="-1"></a>      &lt;/<span class="kw">xsl:if</span>&gt;</span>
+<span id="cb4-89"><a href="#cb4-89" aria-hidden="true" tabindex="-1"></a>    &lt;/<span class="kw">row</span>&gt;</span>
+<span id="cb4-90"><a href="#cb4-90" aria-hidden="true" tabindex="-1"></a>  &lt;/<span class="kw">xsl:for-each</span>&gt;</span>
+<span id="cb4-91"><a href="#cb4-91" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">data</span>&gt;</span>
+<span id="cb4-92"><a href="#cb4-92" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">xsl:template</span>&gt;</span>
+<span id="cb4-93"><a href="#cb4-93" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb4-94"><a href="#cb4-94" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">xsl:stylesheet</span>&gt;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<p>Many of the values in the <code>CAMT.053</code> files are optional and it depends on your bank whether or not certain fields are provided. I tested the stylesheets on the XML files provided by the banks I have accounts with. It might be that your bank provides additional values that you’re interested in. In that case you’ll have to extend one or more of the stylesheets.</p>
+<p>See <a href="https://www.betaalvereniging.nl/wp-content/uploads/IG-Bank-to-Customer-Statement-CAMT-053-v1-1.pdf">this document</a> for all the nitty-gritty details on the <code>CAMT.053</code> format and its structure.</p>
+</section>
+<section id="importing-dependencies" class="level2">
+<h2 class="anchored" data-anchor-id="importing-dependencies">Importing dependencies</h2>
+<p>We start by importing the necessary dependencies.</p>
+<div id="f29fc06d" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.ticker <span class="im">as</span> ticker</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ipywidgets <span class="im">as</span> widgets</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> calendar</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datetime <span class="im">import</span> datetime, timedelta</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> babel.numbers <span class="im">import</span> format_currency</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ipywidgets <span class="im">import</span> interact</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="reading-camt.053-files" class="level2">
+<h2 class="anchored" data-anchor-id="reading-camt.053-files">Reading CAMT.053 files</h2>
+<p>The following constant defines where we will read the <code>CAMT.053</code> files from.</p>
+<div id="b0fc7c2b" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>IMPORT_PATH <span class="op">=</span> <span class="st">"import"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Make sure that you place all <code>CAMT.053</code> files you download from your banking portal into this directory.</p>
+<p>Now we’re ready to import all files in the <code>import</code> directory into a set of dataframes. Note how we provide the stylesheets as an argument to the <code>read_xml</code> call.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>groupheaders <span class="op">=</span> pd.DataFrame()</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>statements <span class="op">=</span> pd.DataFrame()</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>balances <span class="op">=</span> pd.DataFrame()</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>entries <span class="op">=</span> pd.DataFrame()</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="bu">file</span> <span class="kw">in</span> os.listdir(IMPORT_PATH):</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># groupheaders</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.read_xml(os.path.join(IMPORT_PATH, <span class="bu">file</span>), stylesheet<span class="op">=</span><span class="st">"groupheader.xsl"</span>)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    df.insert(<span class="dv">0</span>, <span class="st">"FileName"</span>, <span class="bu">file</span>)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    groupheaders <span class="op">=</span> pd.concat([groupheaders, df], ignore_index<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># statements</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.read_xml(os.path.join(IMPORT_PATH, <span class="bu">file</span>), stylesheet<span class="op">=</span><span class="st">"statement.xsl"</span>)</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    df.insert(<span class="dv">0</span>, <span class="st">"FileName"</span>, <span class="bu">file</span>)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    statements <span class="op">=</span> pd.concat([statements, df], ignore_index<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># balances</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.read_xml(os.path.join(IMPORT_PATH, <span class="bu">file</span>), stylesheet<span class="op">=</span><span class="st">"balance.xsl"</span>)</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    df.insert(<span class="dv">0</span>, <span class="st">"FileName"</span>, <span class="bu">file</span>)</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    balances <span class="op">=</span> pd.concat([balances, df], ignore_index<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.read_xml(os.path.join(IMPORT_PATH, <span class="bu">file</span>), stylesheet<span class="op">=</span><span class="st">"entry.xsl"</span>)</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    df.insert(<span class="dv">0</span>, <span class="st">"FileName"</span>, <span class="bu">file</span>)</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>    entries <span class="op">=</span> pd.concat([entries, df], ignore_index<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>groupheaders[<span class="st">'CreationDateTime'</span>] <span class="op">=</span> pd.to_datetime(groupheaders.CreationDateTime)</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>groupheaders.sort_values(<span class="st">'CreationDateTime'</span>, ignore_index<span class="op">=</span><span class="va">True</span>, inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>statements[<span class="st">'CreationDateTime'</span>] <span class="op">=</span> pd.to_datetime(statements.CreationDateTime)</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>statements.sort_values(<span class="st">'CreationDateTime'</span>, ignore_index<span class="op">=</span><span class="va">True</span>, inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>balances[<span class="st">'Date'</span>] <span class="op">=</span> pd.to_datetime(balances.Date)</span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>balances.sort_values(<span class="st">'Date'</span>, ignore_index<span class="op">=</span><span class="va">True</span>, inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>entries[<span class="st">'BookingDate'</span>] <span class="op">=</span> pd.to_datetime(entries.BookingDate)</span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>entries[<span class="st">'ValueDate'</span>] <span class="op">=</span> pd.to_datetime(entries.ValueDate)</span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>entries.sort_values(<span class="st">'BookingDate'</span>, ignore_index<span class="op">=</span><span class="va">True</span>, inplace<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The <code>groupheaders</code> dataframe has the following structure:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>groupheaders.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 707 entries, 0 to 706
+Data columns (total 5 columns):
+ #   Column                 Non-Null Count  Dtype  
+---  ------                 --------------  -----  
+ 0   FileName               707 non-null    object 
+ 1   MessageIdentification  707 non-null    object 
+ 2   CreationDateTime       707 non-null    object 
+ 3   PageNumber             705 non-null    float64
+ 4   LastPageIndicator      705 non-null    object 
+dtypes: float64(1), object(4)
+memory usage: 27.7+ KB</code></pre>
+<p>The <code>statements</code> dataframe looks like this:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>statements.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 707 entries, 0 to 706
+Data columns (total 8 columns):
+ #   Column                    Non-Null Count  Dtype 
+---  ------                    --------------  ----- 
+ 0   FileName                  707 non-null    object
+ 1   MessageIdentification     707 non-null    object
+ 2   Identification            707 non-null    object
+ 3   ElectronicSequenceNumber  707 non-null    int64 
+ 4   CreationDateTime          707 non-null    object
+ 5   IBAN                      707 non-null    object
+ 6   Currency                  707 non-null    object
+ 7   BIC                       707 non-null    object
+dtypes: int64(1), object(7)
+memory usage: 44.3+ KB</code></pre>
+<p>The account balances can be found in the <code>balances</code> dataframe.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>balances.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 1426 entries, 0 to 1425
+Data columns (total 7 columns):
+ #   Column                Non-Null Count  Dtype         
+---  ------                --------------  -----         
+ 0   FileName              1426 non-null   object        
+ 1   Identification        1426 non-null   object        
+ 2   Code                  1426 non-null   object        
+ 3   Amount                1426 non-null   float64       
+ 4   Currency              1426 non-null   object        
+ 5   CreditDebitIndicator  1426 non-null   object        
+ 6   Date                  1426 non-null   datetime64[ns]
+dtypes: datetime64[ns](1), float64(1), object(5)
+memory usage: 78.1+ KB</code></pre>
+<p>The <code>entries</code> dataframe has the most columns and contains each transaction.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>entries.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 2308 entries, 0 to 2307
+Data columns (total 31 columns):
+ #   Column                                    Non-Null Count  Dtype         
+---  ------                                    --------------  -----         
+ 0   FileName                                  2308 non-null   object        
+ 1   Identification                            2308 non-null   object        
+ 2   Amount                                    2308 non-null   float64       
+ 3   Currency                                  2308 non-null   object        
+ 4   CreditDebitIndicator                      2308 non-null   object        
+ 5   Status                                    2308 non-null   object        
+ 6   BookingDate                               2308 non-null   datetime64[ns]
+ 7   ValueDate                                 2308 non-null   datetime64[ns]
+ 8   AccountServicerReference                  1319 non-null   object        
+ 9   DomainCode                                2203 non-null   object        
+ 10  FamilyCode                                2203 non-null   object        
+ 11  SubFamilyCode                             2203 non-null   object        
+ 12  ProprietaryCode                           2308 non-null   object        
+ 13  Issuer                                    2308 non-null   object        
+ 14  AdditionalEntryInformation                2203 non-null   object        
+ 15  DetailsAccountServicerReference           603 non-null    object        
+ 16  DetailsEndToEndIdentification             677 non-null    object        
+ 17  DetailsAmount                             603 non-null    float64       
+ 18  DetailsCurrency                           603 non-null    object        
+ 19  DetailsCreditorName                       512 non-null    object        
+ 20  DetailsCreditorIBAN                       512 non-null    object        
+ 21  DetailsDebtorAgentBIC                     636 non-null    object        
+ 22  DetailsCreditorAgentBIC                   644 non-null    object        
+ 23  DetailsRemittanceInformationUnstructured  703 non-null    object        
+ 24  DetailsMessageIdentification              393 non-null    object        
+ 25  DetailsDebtorName                         165 non-null    object        
+ 26  DetailsDebtorIBAN                         0 non-null      float64       
+ 27  DetailsMandateIdentification              357 non-null    object        
+ 28  DetailsCreditorCountry                    254 non-null    object        
+ 29  DetailsInstructionIdentification          74 non-null     object        
+ 30  DetailsTransactionIdentification          74 non-null     object        
+dtypes: datetime64[ns](2), float64(3), object(26)
+memory usage: 559.1+ KB</code></pre>
+<p>Your dataframe may contain less columns if your bank doesn’t provide that specific data in its <code>CAMT.053</code> files.</p>
+</section>
+<section id="creating-some-useful-plots" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="creating-some-useful-plots">Creating some useful plots</h2>
+<p>Now let’s see how we can use this data to create some nice looking graphs.</p>
+<section id="account-balance-over-time" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="account-balance-over-time">Account balance over time</h3>
+<p>By joining the <code>balances</code> and <code>statements</code> dataframes we can plot the account balance over time. A dropdown widget is used to select the account number. For each month, we’ll plot the mean balance. For obvious reasons I’m showing ficticious data.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="at">@interact</span>(iban<span class="op">=</span>widgets.Dropdown(options<span class="op">=</span>statements.IBAN.unique(), description<span class="op">=</span><span class="st">'Account:'</span>))</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_account_balance(iban):</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    statement_balances <span class="op">=</span> pd.merge(left<span class="op">=</span>balances, right<span class="op">=</span>statements, left_on<span class="op">=</span>[<span class="st">'FileName'</span>,<span class="st">'Identification'</span>], right_on<span class="op">=</span>[<span class="st">'FileName'</span>,<span class="st">'Identification'</span>]).query(<span class="st">'Code=="CLBD" &amp; IBAN==@iban'</span>)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    statement_balances.loc[statement_balances[<span class="st">'CreditDebitIndicator'</span>] <span class="op">==</span> <span class="st">'DBIT'</span>, <span class="st">'Amount'</span>] <span class="op">*=</span> <span class="op">-</span><span class="dv">1</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    xticks <span class="op">=</span> [(y, m) <span class="cf">for</span> y, m <span class="kw">in</span> statement_balances.groupby([statement_balances.Date.dt.year, statement_balances.Date.dt.month]).size().index]</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    xtick_labels <span class="op">=</span> [<span class="st">"</span><span class="sc">{}</span><span class="st">, </span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(y, m) <span class="cf">for</span> y, _, m <span class="kw">in</span> statement_balances.groupby([statement_balances.Date.dt.year, statement_balances.Date.dt.month, statement_balances.Date.dt.month_name()]).size().index]</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    ax <span class="op">=</span> (statement_balances</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>        .groupby([statement_balances.Date.dt.year, statement_balances.Date.dt.month])[<span class="st">'Amount'</span>].mean()</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>        .plot(kind<span class="op">=</span><span class="st">'line'</span>, figsize<span class="op">=</span>(<span class="dv">14</span>,<span class="dv">5</span>))</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>    ax.set_xticks(np.arange(<span class="dv">0</span>,<span class="bu">len</span>(xticks),<span class="dv">1</span>))</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>    ax.set_xticklabels(xtick_labels, rotation <span class="op">=</span> <span class="dv">90</span>)</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="va">None</span>)</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>    ax.yaxis.set_major_formatter(ticker.FormatStrFormatter(<span class="st">"</span><span class="ch">\u20ac</span><span class="sc">%d</span><span class="st">"</span>))</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>    plt.plot()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="19b13ff0" class="cell page-columns page-full" data-execution_count="3">
+<div class="cell-output cell-output-display column-page-inset-right">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"419b1aca67fb4f87a24910f867412739","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display page-columns page-full">
+<div class="page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="index_files/figure-html/cell-4-output-2.png" width="1121" height="514" class="figure-img column-page-inset-right"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="income-vs.-expenses-over-time" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="income-vs.-expenses-over-time">Income vs.&nbsp;expenses over time</h3>
+<p>To get an idea of one’s monthly income and expenses over time we can plot a grouped bar chart. We’ll use a dropdown widget to select the account number and a slider to select the date range.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>dates <span class="op">=</span> pd.date_range(entries.ValueDate.<span class="bu">min</span>(), entries.ValueDate.<span class="bu">max</span>() <span class="op">+</span> timedelta(days<span class="op">=</span><span class="dv">31</span>), freq<span class="op">=</span><span class="st">'M'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="at">@interact</span>(</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    iban<span class="op">=</span>widgets.Dropdown(options<span class="op">=</span>statements.IBAN.unique(), description<span class="op">=</span><span class="st">'Account:'</span>, layout<span class="op">=</span>{<span class="st">'width'</span>: <span class="st">'500px'</span>}), </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    date_range<span class="op">=</span>widgets.SelectionRangeSlider(</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>        options<span class="op">=</span>[(date.strftime(<span class="st">' %b %Y '</span>), date) <span class="cf">for</span> date <span class="kw">in</span> dates],</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>        index<span class="op">=</span>(<span class="dv">0</span>, <span class="bu">len</span>(dates)<span class="op">-</span><span class="dv">1</span>),</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>        description<span class="op">=</span><span class="st">'Dates:'</span>,</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>        layout<span class="op">=</span>{<span class="st">'width'</span>: <span class="st">'500px'</span>}</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_income_expenses(iban, date_range):</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>    start_date <span class="op">=</span> datetime(date_range[<span class="dv">0</span>].year, date_range[<span class="dv">0</span>].month, <span class="dv">1</span>)</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>    end_date <span class="op">=</span> date_range[<span class="dv">1</span>]</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>    transactions <span class="op">=</span> pd.merge(left<span class="op">=</span>statements, right<span class="op">=</span>entries, left_on<span class="op">=</span>[<span class="st">'FileName'</span>, <span class="st">'Identification'</span>], right_on<span class="op">=</span>[<span class="st">'FileName'</span>, <span class="st">'Identification'</span>]).query(<span class="st">'IBAN == @iban &amp; ValueDate &gt;= @start_date &amp; ValueDate &lt;= @end_date'</span>)</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>    xticks <span class="op">=</span> [<span class="st">"</span><span class="sc">{}</span><span class="st">, </span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(y, m) <span class="cf">for</span> y, _, m <span class="kw">in</span> transactions.groupby([transactions.ValueDate.dt.year, transactions.ValueDate.dt.month, transactions.ValueDate.dt.month_name()]).size().index]</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>    ax <span class="op">=</span> (transactions</span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>        .groupby([transactions.ValueDate.dt.year, transactions.ValueDate.dt.month, <span class="st">'CreditDebitIndicator'</span>])[<span class="st">'Amount'</span>].<span class="bu">sum</span>().unstack(<span class="st">'CreditDebitIndicator'</span>)</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>        .plot(kind<span class="op">=</span><span class="st">'bar'</span>, figsize<span class="op">=</span>(<span class="dv">14</span>,<span class="dv">5</span>), color<span class="op">=</span>[<span class="st">'tab:blue'</span>, <span class="st">'tab:orange'</span>])</span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>    ax.legend([<span class="st">'Income'</span>, <span class="st">'Expenses'</span>])</span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>    ax.set_xticklabels(xticks)</span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="va">None</span>)</span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>    ax.yaxis.set_major_formatter(ticker.FormatStrFormatter(<span class="st">"</span><span class="ch">\u20ac</span><span class="sc">%d</span><span class="st">"</span>))</span>
+<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate average values</span></span>
+<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a>    averages <span class="op">=</span> transactions.groupby([transactions.ValueDate.dt.year, transactions.ValueDate.dt.month, <span class="st">'CreditDebitIndicator'</span>])[<span class="st">'Amount'</span>].<span class="bu">sum</span>().unstack(<span class="st">'CreditDebitIndicator'</span>).mean()</span>
+<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Plot average lines</span></span>
+<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a>    ax.axhline(y<span class="op">=</span>averages.get(<span class="st">'CRDT'</span>, <span class="dv">0</span>), linestyle<span class="op">=</span><span class="st">'--'</span>, color<span class="op">=</span><span class="st">'tab:blue'</span>)</span>
+<span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a>    ax.axhline(y<span class="op">=</span>averages.get(<span class="st">'DBIT'</span>, <span class="dv">0</span>), linestyle<span class="op">=</span><span class="st">'--'</span>, color<span class="op">=</span><span class="st">'tab:orange'</span>)</span>
+<span id="cb18-32"><a href="#cb18-32" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb18-33"><a href="#cb18-33" aria-hidden="true" tabindex="-1"></a>    plt.plot()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="b38eb8ff" class="cell page-columns page-full" data-execution_count="4">
+<div class="cell-output cell-output-display column-page-inset-right">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"dd455139a8fc4db1991fb886ae261c19","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"74a0e0391f2e438cb0cbd0a47ad6363c","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display page-columns page-full">
+<div class="page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="index_files/figure-html/cell-5-output-3.png" width="1113" height="514" class="figure-img column-page-inset-right"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The two horizontal lines show the average income and expenses in the selected date range.</p>
+</section>
+<section id="heatmap-of-income-and-expenses" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="heatmap-of-income-and-expenses">Heatmap of income and expenses</h3>
+<p>We can subtract the expenses from the income for each month and turn this into a heatmap. This shows the monthly increase or decrease of money in an account.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="at">@interact</span>(iban<span class="op">=</span>widgets.Dropdown(options<span class="op">=</span>statements.IBAN.unique(), description<span class="op">=</span><span class="st">'Account:'</span>))</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_heatmap_income_expenses(iban):</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    transactions <span class="op">=</span> pd.merge(left<span class="op">=</span>statements, right<span class="op">=</span>entries, left_on<span class="op">=</span>[<span class="st">'FileName'</span>, <span class="st">'Identification'</span>], right_on<span class="op">=</span>[<span class="st">'FileName'</span>, <span class="st">'Identification'</span>]).query(<span class="st">'IBAN == @iban'</span>)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    transactions.loc[transactions[<span class="st">'CreditDebitIndicator'</span>] <span class="op">==</span> <span class="st">'DBIT'</span>, <span class="st">'Amount'</span>] <span class="op">*=</span> <span class="op">-</span><span class="dv">1</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> (transactions.groupby([transactions.ValueDate.dt.year, transactions.ValueDate.dt.month])[<span class="st">'Amount'</span>].<span class="bu">sum</span>().unstack(<span class="dv">1</span>)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>        .rename_axis(<span class="st">'Year'</span>).rename_axis(<span class="st">'Month'</span>, axis<span class="op">=</span><span class="st">'columns'</span>)</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>        .reindex(<span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">1</span>,<span class="dv">13</span>)), axis<span class="op">=</span><span class="st">'columns'</span>, fill_value<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>        .rename(columns<span class="op">=</span><span class="kw">lambda</span> x: <span class="bu">list</span>(calendar.month_name)[x]))</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    v <span class="op">=</span> <span class="bu">max</span>(df.<span class="bu">max</span>(axis<span class="op">=</span><span class="va">None</span>), df.<span class="bu">min</span>(axis<span class="op">=</span><span class="va">None</span>))</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>    display(df</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>        .style.<span class="bu">format</span>(na_rep<span class="op">=</span><span class="dv">0</span>, precision<span class="op">=</span><span class="dv">2</span>).background_gradient(cmap<span class="op">=</span><span class="st">'RdBu'</span>, vmin<span class="op">=-</span>v, vmax<span class="op">=</span>v)</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>        .applymap(<span class="kw">lambda</span> x: <span class="st">'background-color: white; color: white;'</span> <span class="cf">if</span> pd.isnull(x) <span class="kw">or</span> x<span class="op">==</span><span class="dv">0</span> <span class="cf">else</span> <span class="st">''</span>)</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="b732c841" class="cell page-columns page-full" data-execution_count="5">
+<div class="cell-output cell-output-display column-page-inset-right">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"1f4e82d907d44f99a91adf7b63e7bfef","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<style type="text/css">
+#T_2bfae_row0_col0, #T_2bfae_row0_col1, #T_2bfae_row3_col5, #T_2bfae_row3_col6, #T_2bfae_row3_col7, #T_2bfae_row3_col8, #T_2bfae_row3_col9, #T_2bfae_row3_col10, #T_2bfae_row3_col11 {
+  background-color: #000000;
+  color: #f1f1f1;
+  background-color: white;
+  color: white;
+}
+#T_2bfae_row0_col2 {
+  background-color: #d5e7f1;
+  color: #000000;
+}
+#T_2bfae_row0_col3 {
+  background-color: #fcd7c2;
+  color: #000000;
+}
+#T_2bfae_row0_col4 {
+  background-color: #e9f0f4;
+  color: #000000;
+}
+#T_2bfae_row0_col5 {
+  background-color: #195696;
+  color: #f1f1f1;
+}
+#T_2bfae_row0_col6 {
+  background-color: #f8f3f0;
+  color: #000000;
+}
+#T_2bfae_row0_col7 {
+  background-color: #c5dfec;
+  color: #000000;
+}
+#T_2bfae_row0_col8 {
+  background-color: #f6b394;
+  color: #000000;
+}
+#T_2bfae_row0_col9 {
+  background-color: #6eaed2;
+  color: #f1f1f1;
+}
+#T_2bfae_row0_col10 {
+  background-color: #e4eef4;
+  color: #000000;
+}
+#T_2bfae_row0_col11 {
+  background-color: #68abd0;
+  color: #f1f1f1;
+}
+#T_2bfae_row1_col0 {
+  background-color: #dae9f2;
+  color: #000000;
+}
+#T_2bfae_row1_col1 {
+  background-color: #09386d;
+  color: #f1f1f1;
+}
+#T_2bfae_row1_col2 {
+  background-color: #6bacd1;
+  color: #f1f1f1;
+}
+#T_2bfae_row1_col3 {
+  background-color: #408fc1;
+  color: #f1f1f1;
+}
+#T_2bfae_row1_col4, #T_2bfae_row3_col3 {
+  background-color: #0c3d73;
+  color: #f1f1f1;
+}
+#T_2bfae_row1_col5 {
+  background-color: #96c7df;
+  color: #000000;
+}
+#T_2bfae_row1_col6 {
+  background-color: #3f8ec0;
+  color: #f1f1f1;
+}
+#T_2bfae_row1_col7 {
+  background-color: #7bb6d6;
+  color: #000000;
+}
+#T_2bfae_row1_col8 {
+  background-color: #faeae1;
+  color: #000000;
+}
+#T_2bfae_row1_col9 {
+  background-color: #f8f2ef;
+  color: #000000;
+}
+#T_2bfae_row1_col10 {
+  background-color: #569fc9;
+  color: #f1f1f1;
+}
+#T_2bfae_row1_col11, #T_2bfae_row2_col0 {
+  background-color: #1a5899;
+  color: #f1f1f1;
+}
+#T_2bfae_row2_col1 {
+  background-color: #134c87;
+  color: #f1f1f1;
+}
+#T_2bfae_row2_col2 {
+  background-color: #053061;
+  color: #f1f1f1;
+}
+#T_2bfae_row2_col3 {
+  background-color: #fce2d2;
+  color: #000000;
+}
+#T_2bfae_row2_col4 {
+  background-color: #2267ac;
+  color: #f1f1f1;
+}
+#T_2bfae_row2_col5 {
+  background-color: #b6d7e8;
+  color: #000000;
+}
+#T_2bfae_row2_col6, #T_2bfae_row2_col11 {
+  background-color: #185493;
+  color: #f1f1f1;
+}
+#T_2bfae_row2_col7 {
+  background-color: #08366a;
+  color: #f1f1f1;
+}
+#T_2bfae_row2_col8 {
+  background-color: #2e77b5;
+  color: #f1f1f1;
+}
+#T_2bfae_row2_col9 {
+  background-color: #75b2d4;
+  color: #f1f1f1;
+}
+#T_2bfae_row2_col10 {
+  background-color: #9dcbe1;
+  color: #000000;
+}
+#T_2bfae_row3_col0 {
+  background-color: #f8f4f2;
+  color: #000000;
+}
+#T_2bfae_row3_col1 {
+  background-color: #f9ede5;
+  color: #000000;
+}
+#T_2bfae_row3_col2 {
+  background-color: #f9ebe3;
+  color: #000000;
+}
+#T_2bfae_row3_col4 {
+  background-color: #f7b799;
+  color: #000000;
+}
+</style>
+
+<table id="T_2bfae" class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th class="index_name level0" data-quarto-table-cell-role="th">Month</th>
+<th id="T_2bfae_level0_col0" class="col_heading level0 col0" data-quarto-table-cell-role="th">January</th>
+<th id="T_2bfae_level0_col1" class="col_heading level0 col1" data-quarto-table-cell-role="th">February</th>
+<th id="T_2bfae_level0_col2" class="col_heading level0 col2" data-quarto-table-cell-role="th">March</th>
+<th id="T_2bfae_level0_col3" class="col_heading level0 col3" data-quarto-table-cell-role="th">April</th>
+<th id="T_2bfae_level0_col4" class="col_heading level0 col4" data-quarto-table-cell-role="th">May</th>
+<th id="T_2bfae_level0_col5" class="col_heading level0 col5" data-quarto-table-cell-role="th">June</th>
+<th id="T_2bfae_level0_col6" class="col_heading level0 col6" data-quarto-table-cell-role="th">July</th>
+<th id="T_2bfae_level0_col7" class="col_heading level0 col7" data-quarto-table-cell-role="th">August</th>
+<th id="T_2bfae_level0_col8" class="col_heading level0 col8" data-quarto-table-cell-role="th">September</th>
+<th id="T_2bfae_level0_col9" class="col_heading level0 col9" data-quarto-table-cell-role="th">October</th>
+<th id="T_2bfae_level0_col10" class="col_heading level0 col10" data-quarto-table-cell-role="th">November</th>
+<th id="T_2bfae_level0_col11" class="col_heading level0 col11" data-quarto-table-cell-role="th">December</th>
+</tr>
+<tr class="odd">
+<th class="index_name level0" data-quarto-table-cell-role="th">Year</th>
+<th class="blank col0" data-quarto-table-cell-role="th">&nbsp;</th>
+<th class="blank col1" data-quarto-table-cell-role="th">&nbsp;</th>
+<th class="blank col2" data-quarto-table-cell-role="th">&nbsp;</th>
+<th class="blank col3" data-quarto-table-cell-role="th">&nbsp;</th>
+<th class="blank col4" data-quarto-table-cell-role="th">&nbsp;</th>
+<th class="blank col5" data-quarto-table-cell-role="th">&nbsp;</th>
+<th class="blank col6" data-quarto-table-cell-role="th">&nbsp;</th>
+<th class="blank col7" data-quarto-table-cell-role="th">&nbsp;</th>
+<th class="blank col8" data-quarto-table-cell-role="th">&nbsp;</th>
+<th class="blank col9" data-quarto-table-cell-role="th">&nbsp;</th>
+<th class="blank col10" data-quarto-table-cell-role="th">&nbsp;</th>
+<th class="blank col11" data-quarto-table-cell-role="th">&nbsp;</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td id="T_2bfae_level0_row0" class="row_heading level0 row0" data-quarto-table-cell-role="th">2021</td>
+<td id="T_2bfae_row0_col0" class="data row0 col0">0</td>
+<td id="T_2bfae_row0_col1" class="data row0 col1">0</td>
+<td id="T_2bfae_row0_col2" class="data row0 col2">50.12</td>
+<td id="T_2bfae_row0_col3" class="data row0 col3">-61.77</td>
+<td id="T_2bfae_row0_col4" class="data row0 col4">21.83</td>
+<td id="T_2bfae_row0_col5" class="data row0 col5">247.10</td>
+<td id="T_2bfae_row0_col6" class="data row0 col6">-8.50</td>
+<td id="T_2bfae_row0_col7" class="data row0 col7">69.29</td>
+<td id="T_2bfae_row0_col8" class="data row0 col8">-99.98</td>
+<td id="T_2bfae_row0_col9" class="data row0 col9">141.42</td>
+<td id="T_2bfae_row0_col10" class="data row0 col10">27.40</td>
+<td id="T_2bfae_row0_col11" class="data row0 col11">146.08</td>
+</tr>
+<tr class="even">
+<td id="T_2bfae_level0_row1" class="row_heading level0 row1" data-quarto-table-cell-role="th">2022</td>
+<td id="T_2bfae_row1_col0" class="data row1 col0">44.12</td>
+<td id="T_2bfae_row1_col1" class="data row1 col1">279.10</td>
+<td id="T_2bfae_row1_col2" class="data row1 col2">143.02</td>
+<td id="T_2bfae_row1_col3" class="data row1 col3">178.19</td>
+<td id="T_2bfae_row1_col4" class="data row1 col4">274.45</td>
+<td id="T_2bfae_row1_col5" class="data row1 col5">111.13</td>
+<td id="T_2bfae_row1_col6" class="data row1 col6">179.65</td>
+<td id="T_2bfae_row1_col7" class="data row1 col7">131.15</td>
+<td id="T_2bfae_row1_col8" class="data row1 col8">-24.88</td>
+<td id="T_2bfae_row1_col9" class="data row1 col9">-10.51</td>
+<td id="T_2bfae_row1_col10" class="data row1 col10">159.53</td>
+<td id="T_2bfae_row1_col11" class="data row1 col11">246.07</td>
+</tr>
+<tr class="odd">
+<td id="T_2bfae_level0_row2" class="row_heading level0 row2" data-quarto-table-cell-role="th">2023</td>
+<td id="T_2bfae_row2_col0" class="data row2 col0">244.03</td>
+<td id="T_2bfae_row2_col1" class="data row2 col1">259.47</td>
+<td id="T_2bfae_row2_col2" class="data row2 col2">289.19</td>
+<td id="T_2bfae_row2_col3" class="data row2 col3">-44.69</td>
+<td id="T_2bfae_row2_col4" class="data row2 col4">229.24</td>
+<td id="T_2bfae_row2_col5" class="data row2 col5">83.17</td>
+<td id="T_2bfae_row2_col6" class="data row2 col6">250.44</td>
+<td id="T_2bfae_row2_col7" class="data row2 col7">280.18</td>
+<td id="T_2bfae_row2_col8" class="data row2 col8">208.55</td>
+<td id="T_2bfae_row2_col9" class="data row2 col9">135.56</td>
+<td id="T_2bfae_row2_col10" class="data row2 col10">105.18</td>
+<td id="T_2bfae_row2_col11" class="data row2 col11">249.79</td>
+</tr>
+<tr class="even">
+<td id="T_2bfae_level0_row3" class="row_heading level0 row3" data-quarto-table-cell-role="th">2024</td>
+<td id="T_2bfae_row3_col0" class="data row3 col0">-6.29</td>
+<td id="T_2bfae_row3_col1" class="data row3 col1">-21.15</td>
+<td id="T_2bfae_row3_col2" class="data row3 col2">-23.76</td>
+<td id="T_2bfae_row3_col3" class="data row3 col3">274.46</td>
+<td id="T_2bfae_row3_col4" class="data row3 col4">-95.00</td>
+<td id="T_2bfae_row3_col5" class="data row3 col5">0</td>
+<td id="T_2bfae_row3_col6" class="data row3 col6">0</td>
+<td id="T_2bfae_row3_col7" class="data row3 col7">0</td>
+<td id="T_2bfae_row3_col8" class="data row3 col8">0</td>
+<td id="T_2bfae_row3_col9" class="data row3 col9">0</td>
+<td id="T_2bfae_row3_col10" class="data row3 col10">0</td>
+<td id="T_2bfae_row3_col11" class="data row3 col11">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>A blue positive number means we spent less than we earned. A red negative number means we spent more than we earned. A negative number doesn’t mean we are in debt. Similarly, a positive blue number doesn’t mean that we have money in our account. The numbers and colors only indicate whether our account balance has increased or decreased and by how much.</p>
+</section>
+</section>
+<section id="categorizing-transactions" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="categorizing-transactions">Categorizing transactions</h2>
+<p>By categorizing bank transactions we can get a better sense of where our money is going. I tried to automatically categorize transactions using an LLM and also experimented with <a href="https://en.wikipedia.org/wiki/Active_learning_(machine_learning)">active learning</a>. In the end I concluded that matching keywords in transaction descriptions actually worked best. For example, transactions with “Starbucks” or “Lidl” can be tagged as food, while those with “Uber” or “Lyft” would be categorized under transportation.</p>
+<p>We start out with a dataframe of uncategorized transactions.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>transactions <span class="op">=</span> pd.merge(left<span class="op">=</span>statements, right<span class="op">=</span>entries, left_on<span class="op">=</span>[<span class="st">'FileName'</span>, <span class="st">'Identification'</span>], right_on<span class="op">=</span>[<span class="st">'FileName'</span>, <span class="st">'Identification'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Coming up with a good list of categories was challenging. In the end I settled on the categories suggested <a href="https://www.ramseysolutions.com/budgeting/budget-percentages">here</a>.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>categories <span class="op">=</span> {</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Income"</span>: [<span class="st">"Salary"</span>, ...],</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Giving"</span>: [<span class="st">"Gift"</span>, <span class="st">"WWF"</span>, ...],</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Saving"</span>: [<span class="st">"Savings"</span>, <span class="st">"Retirement"</span>, ...],</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Food"</span>: [<span class="st">"Albert Heijn"</span>, <span class="st">"Jumbo"</span>, <span class="st">"Lidl"</span>, <span class="st">"Starbucks"</span>, <span class="st">"Restaurant"</span>, ...],</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Utilities"</span>: [<span class="st">"Vitens"</span>, <span class="st">"KPN"</span>, <span class="st">"Vattenfall"</span>, <span class="st">"Internet Services"</span>, ...],</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Housing"</span>: [<span class="st">"Mortage"</span>, ...],</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Transportation"</span>: [<span class="st">"NS"</span>, <span class="st">"OV-Chipkaart"</span>, <span class="st">"Uber"</span>, <span class="st">"Lyft"</span>, ...],</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Health"</span>: [<span class="st">"Infomedics"</span>, ...],</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Insurance"</span>: [<span class="st">"AEGON"</span>, <span class="st">"Centraal beheer"</span>, ...],</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Trips and Entertainment"</span>: [<span class="st">"Booking.com"</span>, <span class="st">"AirBnB"</span>, ...],</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Personal Spending"</span>: [<span class="st">"Hairsalon"</span>, <span class="st">"Shoes"</span>, ...],</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Miscellaneous"</span>: [<span class="st">"ATM"</span>, ...]</span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>I’ve included some of the keywords I’m using. The food category has the most keywords and in my case contains a list of supermarkets, vending machines, coffee places and restaurants I frequent. You might want to split this category into ‘groceries’ and ‘eating out’, depending on how detailed you want your categories.</p>
+<p>The following function uses the dictionary above to classify each transaction. I’m only matching keywords in the columns <code>AdditionalEntryInformation</code> and <code>DetailsRemittanceInformationUnstructured</code>. If you want to match by other columns (such as account number) you can extend this list.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> categorize_transaction(row):</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    columns <span class="op">=</span> [<span class="st">'AdditionalEntryInformation'</span>, <span class="st">'DetailsRemittanceInformationUnstructured'</span>]</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (category, keywords) <span class="kw">in</span> categories.items():</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> column <span class="kw">in</span> columns:</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="bu">isinstance</span>(row[column], <span class="bu">str</span>) <span class="kw">and</span> <span class="bu">any</span>([row[column].lower().find(kw.lower()) <span class="op">&gt;=</span> <span class="dv">0</span> <span class="cf">for</span> kw <span class="kw">in</span> keywords]):</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>                <span class="cf">return</span> category</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">None</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>A new column will be added to the dataframe with the hopefully correct categorization.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>transactions[<span class="st">'Category'</span>] <span class="op">=</span> transactions.<span class="bu">apply</span>(categorize_transaction, axis<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="inspecting-categories" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="inspecting-categories">Inspecting categories</h3>
+<p>It requires a bit of trial and error to come up with a good list of keywords. With the following code, we can see which transactions fall into each category. By selecting ‘Uncategorized’ we can see which transactions haven’t been assigned to a category yet.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="at">@interact</span>(iban<span class="op">=</span>widgets.Dropdown(options<span class="op">=</span>statements.IBAN.unique(), description<span class="op">=</span><span class="st">'Account:'</span>), category<span class="op">=</span>widgets.Dropdown(options<span class="op">=</span><span class="bu">list</span>(categories.keys()) <span class="op">+</span> [<span class="st">'Uncategorized'</span>], description<span class="op">=</span><span class="st">'Category:'</span>))</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> show_transactions(iban, category):</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    columns <span class="op">=</span> [<span class="st">'IBAN'</span>, <span class="st">'Amount'</span>,<span class="st">'CreditDebitIndicator'</span>, <span class="st">'BookingDate'</span>, <span class="st">'ValueDate'</span>, <span class="st">'Issuer'</span>, <span class="st">'AdditionalEntryInformation'</span>, <span class="st">'DetailsAmount'</span>, <span class="st">'DetailsCurrency'</span>,</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>       <span class="st">'DetailsCreditorName'</span>, <span class="st">'DetailsCreditorIBAN'</span>, <span class="st">'DetailsRemittanceInformationUnstructured'</span>, <span class="st">'DetailsDebtorName'</span>, <span class="st">'DetailsDebtorIBAN'</span>, <span class="st">'DetailsCreditorCountry'</span>]</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> category <span class="op">==</span> <span class="st">"Uncategorized"</span>:</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>        display(transactions.query(<span class="st">'IBAN == @iban &amp; Category.isnull()'</span>)[columns])</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>        display(transactions.query(<span class="st">'IBAN == @iban &amp; Category == @category'</span>)[columns])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="0505a037" class="cell page-columns page-full" data-execution_count="6">
+<div class="cell-output cell-output-display column-screen-inset-right">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"28da130f03c14acd887eb7fdd08c79c6","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"71738f3ce49d4bb69dd13560b124420b","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">IBAN</th>
+<th data-quarto-table-cell-role="th">Amount</th>
+<th data-quarto-table-cell-role="th">CreditDebitIndicator</th>
+<th data-quarto-table-cell-role="th">BookingDate</th>
+<th data-quarto-table-cell-role="th">ValueDate</th>
+<th data-quarto-table-cell-role="th">Issuer</th>
+<th data-quarto-table-cell-role="th">AdditionalEntryInformation</th>
+<th data-quarto-table-cell-role="th">DetailsAmount</th>
+<th data-quarto-table-cell-role="th">DetailsCurrency</th>
+<th data-quarto-table-cell-role="th">DetailsCreditorName</th>
+<th data-quarto-table-cell-role="th">DetailsCreditorIBAN</th>
+<th data-quarto-table-cell-role="th">DetailsRemittanceInformationUnstructured</th>
+<th data-quarto-table-cell-role="th">DetailsDebtorName</th>
+<th data-quarto-table-cell-role="th">DetailsDebtorIBAN</th>
+<th data-quarto-table-cell-role="th">DetailsCreditorCountry</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>In this case all transactions have been categorized.</p>
+</section>
+<section id="plotting-the-expenses-per-category" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="plotting-the-expenses-per-category">Plotting the expenses per category</h3>
+<p>Let’s use a donut chart to visualize how much is spent in each category.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="at">@interact</span>(</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    iban<span class="op">=</span>widgets.Dropdown(options<span class="op">=</span>statements.IBAN.unique(), description<span class="op">=</span><span class="st">'Account:'</span>, layout<span class="op">=</span>{<span class="st">'width'</span>: <span class="st">'500px'</span>}), </span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    date_range<span class="op">=</span>widgets.SelectionRangeSlider(</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>        options<span class="op">=</span>[(date.strftime(<span class="st">' %b %Y '</span>), date) <span class="cf">for</span> date <span class="kw">in</span> dates],</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>        index<span class="op">=</span>(<span class="dv">0</span>, <span class="bu">len</span>(dates)<span class="op">-</span><span class="dv">1</span>),</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>        description<span class="op">=</span><span class="st">'Dates:'</span>,</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>        layout<span class="op">=</span>{<span class="st">'width'</span>: <span class="st">'500px'</span>}</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_expenses_by_category(iban, date_range):</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>    start_date <span class="op">=</span> datetime(date_range[<span class="dv">0</span>].year, date_range[<span class="dv">0</span>].month, <span class="dv">1</span>)</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>    end_date <span class="op">=</span> date_range[<span class="dv">1</span>]</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> transactions.query(<span class="st">'IBAN == @iban &amp; ValueDate &gt;= @start_date &amp; ValueDate &lt;= @end_date &amp; Category != "Income"'</span>).groupby(<span class="st">'Category'</span>)[<span class="st">'Amount'</span>].<span class="bu">sum</span>()</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>    total <span class="op">=</span> df.<span class="bu">sum</span>()</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>    ax <span class="op">=</span> df.plot(kind<span class="op">=</span><span class="st">'pie'</span>, startangle<span class="op">=</span><span class="dv">90</span>, figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">10</span>), legend<span class="op">=</span><span class="va">False</span>, autopct<span class="op">=</span><span class="kw">lambda</span> v: <span class="st">'</span><span class="sc">{:.1f}</span><span class="st">%</span><span class="ch">\n\u20ac</span><span class="sc">{:.2f}</span><span class="st">'</span>.<span class="bu">format</span>(v, total<span class="op">*</span>v<span class="op">/</span><span class="dv">100</span>))</span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>    ax.set_title(<span class="st">"Expenses"</span>)</span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>    ax.axis(<span class="st">'off'</span>)</span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>    ax.add_artist(plt.Circle(xy<span class="op">=</span>(<span class="dv">0</span>,<span class="dv">0</span>), radius<span class="op">=</span><span class="fl">.75</span>, facecolor<span class="op">=</span><span class="st">'white'</span>))</span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="285905b9" class="cell page-columns page-full" data-execution_count="7">
+<div class="cell-output cell-output-display column-page-inset-right">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"0bada3b056444a46bbd4054289b6c261","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"d77534d0e4ed431bb486fea770a4e549","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display page-columns page-full">
+<div class="page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="index_files/figure-html/cell-8-output-3.png" width="824" height="778" class="figure-img column-page-inset-right"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The slider allows for setting a date range. In the example above, I’ve set the date range to the year 2023.</p>
+</section>
+</section>
+<section id="analyzing-your-own-finances" class="level2">
+<h2 class="anchored" data-anchor-id="analyzing-your-own-finances">Analyzing your own finances</h2>
+<p>If you want to try this out with your own data, you can find all the code and the complete Jupyter Notebook in the following GitHub repository:</p>
+<p><a target="_blank" href="https://github.com/afvanwoudenberg/personal-finance"><img src="https://shields.io/badge/-View%20on%20GitHub-grey.svg?logo=github&amp;style=flat&amp;logoColor=white&amp;labelColor=black" class="img-fluid" alt="GitHub"></a></p>
+<p>Happy tracking!</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script type="application/vnd.jupyter.widget-state+json">
+{"state":{"03558c25e61e4edf9c5ad35e7a81f2b5":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"DropdownModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"DropdownModel","_options_labels":["NL02ABNA0123456789","NL21RBOS0123456789","NL20FBHL0123456789"],"_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"DropdownView","description":"Account:","description_allow_html":false,"disabled":false,"index":0,"layout":"IPY_MODEL_8985011c4c114b9fb3748bb8992a8a1c","style":"IPY_MODEL_9ccdafce9f5847fa8cfe4165a297ccc6","tabbable":null,"tooltip":null}},"0887c2e5edb64bccad508d63825f36d3":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":"500px"}},"0a7ccf9e5ee7484d9c6b2b45e0aaf383":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"DropdownModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"DropdownModel","_options_labels":["Income","Giving","Saving","Food","Utilities","Housing","Transportation","Health","Insurance","Trips and Entertainment","Personal Spending","Miscellaneous","Uncategorized"],"_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"DropdownView","description":"Category:","description_allow_html":false,"disabled":false,"index":12,"layout":"IPY_MODEL_e7f6dd8cefee43e5a8add85ae0ad6a2c","style":"IPY_MODEL_ff5309130ed248e5bf95c23e9c8fa4a9","tabbable":null,"tooltip":null}},"0bada3b056444a46bbd4054289b6c261":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"DropdownModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"DropdownModel","_options_labels":["NL02ABNA0123456789","NL21RBOS0123456789","NL20FBHL0123456789"],"_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"DropdownView","description":"Account:","description_allow_html":false,"disabled":false,"index":0,"layout":"IPY_MODEL_c7298826c8924ba28198251703e5668a","style":"IPY_MODEL_3b0e89cdbfd94e9fb45eb8b1656efbbf","tabbable":null,"tooltip":null}},"0c97c9a76b0240429694353cd6262b2a":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"1f4e82d907d44f99a91adf7b63e7bfef":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"DropdownModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"DropdownModel","_options_labels":["NL02ABNA0123456789","NL21RBOS0123456789","NL20FBHL0123456789"],"_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"DropdownView","description":"Account:","description_allow_html":false,"disabled":false,"index":0,"layout":"IPY_MODEL_6150a81e432c4df294db8302e64d72e4","style":"IPY_MODEL_e2c1f6f633784e6aa924e5488ab76065","tabbable":null,"tooltip":null}},"28da130f03c14acd887eb7fdd08c79c6":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"DropdownModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"DropdownModel","_options_labels":["NL02ABNA0123456789","NL21RBOS0123456789","NL20FBHL0123456789"],"_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"DropdownView","description":"Account:","description_allow_html":false,"disabled":false,"index":0,"layout":"IPY_MODEL_e73f0e1cf572454dbafa05b8fd9b704c","style":"IPY_MODEL_97f6020f11a548fca700afe1fac68743","tabbable":null,"tooltip":null}},"2b9529db900e4f71a0a9298de7bea424":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"SelectionRangeSliderModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"SelectionRangeSliderModel","_options_labels":[" Mar 2021 "," Apr 2021 "," May 2021 "," Jun 2021 "," Jul 2021 "," Aug 2021 "," Sep 2021 "," Oct 2021 "," Nov 2021 "," Dec 2021 "," Jan 2022 "," Feb 2022 "," Mar 2022 "," Apr 2022 "," May 2022 "," Jun 2022 "," Jul 2022 "," Aug 2022 "," Sep 2022 "," Oct 2022 "," Nov 2022 "," Dec 2022 "," Jan 2023 "," Feb 2023 "," Mar 2023 "," Apr 2023 "," May 2023 "," Jun 2023 "," Jul 2023 "," Aug 2023 "," Sep 2023 "," Oct 2023 "," Nov 2023 "," Dec 2023 "," Jan 2024 "," Feb 2024 "," Mar 2024 "," Apr 2024 "," May 2024 "],"_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"SelectionRangeSliderView","behavior":"drag-tap","continuous_update":true,"description":"Dates:","description_allow_html":false,"disabled":false,"index":[22,33],"layout":"IPY_MODEL_b77b12ced97c4601bba60f6900950613","orientation":"horizontal","readout":true,"style":"IPY_MODEL_a7545986092646e6be7e32a6762defc0","tabbable":null,"tooltip":null}},"31e15781bbde4ea194aa395ce5a1f722":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"DescriptionStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"DescriptionStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","description_width":""}},"3b0e89cdbfd94e9fb45eb8b1656efbbf":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"DescriptionStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"DescriptionStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","description_width":""}},"419b1aca67fb4f87a24910f867412739":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"DropdownModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"DropdownModel","_options_labels":["NL02ABNA0123456789","NL21RBOS0123456789","NL20FBHL0123456789"],"_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"DropdownView","description":"Account:","description_allow_html":false,"disabled":false,"index":0,"layout":"IPY_MODEL_64f7a9f5e2764f48b6781ca057c701bd","style":"IPY_MODEL_31e15781bbde4ea194aa395ce5a1f722","tabbable":null,"tooltip":null}},"499431135f3e4c8aaa27dda3971a6ff0":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"SelectionRangeSliderModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"SelectionRangeSliderModel","_options_labels":[" Mar 2021 "," Apr 2021 "," May 2021 "," Jun 2021 "," Jul 2021 "," Aug 2021 "," Sep 2021 "," Oct 2021 "," Nov 2021 "," Dec 2021 "," Jan 2022 "," Feb 2022 "," Mar 2022 "," Apr 2022 "," May 2022 "," Jun 2022 "," Jul 2022 "," Aug 2022 "," Sep 2022 "," Oct 2022 "," Nov 2022 "," Dec 2022 "," Jan 2023 "," Feb 2023 "," Mar 2023 "," Apr 2023 "," May 2023 "," Jun 2023 "," Jul 2023 "," Aug 2023 "," Sep 2023 "," Oct 2023 "," Nov 2023 "," Dec 2023 "," Jan 2024 "," Feb 2024 "," Mar 2024 "," Apr 2024 "," May 2024 "],"_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"SelectionRangeSliderView","behavior":"drag-tap","continuous_update":true,"description":"Dates:","description_allow_html":false,"disabled":false,"index":[22,33],"layout":"IPY_MODEL_fe24b2ded16143eabcb4bb98d30ced82","orientation":"horizontal","readout":true,"style":"IPY_MODEL_c65a0c05a39441e8b7b4e516029f015d","tabbable":null,"tooltip":null}},"4f3c0d8dde5945fdbbd7c21c705a0180":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"608060c9ab244559b08c845fd84bb991":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"DescriptionStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"DescriptionStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","description_width":""}},"6150a81e432c4df294db8302e64d72e4":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"64f7a9f5e2764f48b6781ca057c701bd":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"6565de26cf5a427f8da6dc32a0a98548":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"DropdownModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"DropdownModel","_options_labels":["NL02ABNA0123456789","NL21RBOS0123456789","NL20FBHL0123456789"],"_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"DropdownView","description":"Account:","description_allow_html":false,"disabled":false,"index":0,"layout":"IPY_MODEL_a26dd16659cc45f59e49649974af0da2","style":"IPY_MODEL_741ee303ddd344c487025cc19b7c2c2b","tabbable":null,"tooltip":null}},"71738f3ce49d4bb69dd13560b124420b":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"DropdownModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"DropdownModel","_options_labels":["Income","Giving","Saving","Food","Utilities","Housing","Transportation","Health","Insurance","Trips and Entertainment","Personal Spending","Miscellaneous","Uncategorized"],"_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"DropdownView","description":"Category:","description_allow_html":false,"disabled":false,"index":12,"layout":"IPY_MODEL_4f3c0d8dde5945fdbbd7c21c705a0180","style":"IPY_MODEL_aabab8be13ce418bad5bd20991b83ae8","tabbable":null,"tooltip":null}},"741ee303ddd344c487025cc19b7c2c2b":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"DescriptionStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"DescriptionStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","description_width":""}},"74a0e0391f2e438cb0cbd0a47ad6363c":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"SelectionRangeSliderModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"SelectionRangeSliderModel","_options_labels":[" Mar 2021 "," Apr 2021 "," May 2021 "," Jun 2021 "," Jul 2021 "," Aug 2021 "," Sep 2021 "," Oct 2021 "," Nov 2021 "," Dec 2021 "," Jan 2022 "," Feb 2022 "," Mar 2022 "," Apr 2022 "," May 2022 "," Jun 2022 "," Jul 2022 "," Aug 2022 "," Sep 2022 "," Oct 2022 "," Nov 2022 "," Dec 2022 "," Jan 2023 "," Feb 2023 "," Mar 2023 "," Apr 2023 "," May 2023 "," Jun 2023 "," Jul 2023 "," Aug 2023 "," Sep 2023 "," Oct 2023 "," Nov 2023 "," Dec 2023 "," Jan 2024 "," Feb 2024 "," Mar 2024 "," Apr 2024 "," May 2024 "],"_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"SelectionRangeSliderView","behavior":"drag-tap","continuous_update":true,"description":"Dates:","description_allow_html":false,"disabled":false,"index":[22,33],"layout":"IPY_MODEL_bd654df3937f481ebe8ece720764109f","orientation":"horizontal","readout":true,"style":"IPY_MODEL_c90dca09579448caafab07f7837318c2","tabbable":null,"tooltip":null}},"8985011c4c114b9fb3748bb8992a8a1c":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":"500px"}},"92ab4b9ac44f42caa8fcad088a5a91cb":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"97f6020f11a548fca700afe1fac68743":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"DescriptionStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"DescriptionStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","description_width":""}},"9ccdafce9f5847fa8cfe4165a297ccc6":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"DescriptionStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"DescriptionStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","description_width":""}},"a1eee6280bfe42a9bc3fe36c020b7b34":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"DropdownModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"DropdownModel","_options_labels":["NL02ABNA0123456789","NL21RBOS0123456789","NL20FBHL0123456789"],"_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"DropdownView","description":"Account:","description_allow_html":false,"disabled":false,"index":0,"layout":"IPY_MODEL_b4e3d4c501eb41b39a76dc89e3d6ef8b","style":"IPY_MODEL_abff134e7ac64640b6325c13c281fc1a","tabbable":null,"tooltip":null}},"a26dd16659cc45f59e49649974af0da2":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"a7545986092646e6be7e32a6762defc0":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"SliderStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"SliderStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","description_width":"","handle_color":null}},"aabab8be13ce418bad5bd20991b83ae8":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"DescriptionStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"DescriptionStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","description_width":""}},"abff134e7ac64640b6325c13c281fc1a":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"DescriptionStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"DescriptionStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","description_width":""}},"acf110f69c7549e28358ec8acdfbbafc":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"DescriptionStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"DescriptionStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","description_width":""}},"b4e3d4c501eb41b39a76dc89e3d6ef8b":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":"500px"}},"b77b12ced97c4601bba60f6900950613":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":"500px"}},"bd654df3937f481ebe8ece720764109f":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":"500px"}},"c65a0c05a39441e8b7b4e516029f015d":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"SliderStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"SliderStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","description_width":"","handle_color":null}},"c6637cfba6b345c8826bc786ea389b1d":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"SliderStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"SliderStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","description_width":"","handle_color":null}},"c7298826c8924ba28198251703e5668a":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":"500px"}},"c90dca09579448caafab07f7837318c2":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"SliderStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"SliderStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","description_width":"","handle_color":null}},"cbc9419ac9f84d288be9e670be5f5cbe":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"DropdownModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"DropdownModel","_options_labels":["NL02ABNA0123456789","NL21RBOS0123456789","NL20FBHL0123456789"],"_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"DropdownView","description":"Account:","description_allow_html":false,"disabled":false,"index":0,"layout":"IPY_MODEL_0c97c9a76b0240429694353cd6262b2a","style":"IPY_MODEL_db687040a2814f9db16a01185b4ef4cb","tabbable":null,"tooltip":null}},"cc32990bbd5543a4b0606230e561dbfc":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":"500px"}},"cfdbdb01e1454c028f468013c2d75ec4":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"DropdownModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"DropdownModel","_options_labels":["NL02ABNA0123456789","NL21RBOS0123456789","NL20FBHL0123456789"],"_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"DropdownView","description":"Account:","description_allow_html":false,"disabled":false,"index":0,"layout":"IPY_MODEL_92ab4b9ac44f42caa8fcad088a5a91cb","style":"IPY_MODEL_acf110f69c7549e28358ec8acdfbbafc","tabbable":null,"tooltip":null}},"d77534d0e4ed431bb486fea770a4e549":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"SelectionRangeSliderModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"SelectionRangeSliderModel","_options_labels":[" Mar 2021 "," Apr 2021 "," May 2021 "," Jun 2021 "," Jul 2021 "," Aug 2021 "," Sep 2021 "," Oct 2021 "," Nov 2021 "," Dec 2021 "," Jan 2022 "," Feb 2022 "," Mar 2022 "," Apr 2022 "," May 2022 "," Jun 2022 "," Jul 2022 "," Aug 2022 "," Sep 2022 "," Oct 2022 "," Nov 2022 "," Dec 2022 "," Jan 2023 "," Feb 2023 "," Mar 2023 "," Apr 2023 "," May 2023 "," Jun 2023 "," Jul 2023 "," Aug 2023 "," Sep 2023 "," Oct 2023 "," Nov 2023 "," Dec 2023 "," Jan 2024 "," Feb 2024 "," Mar 2024 "," Apr 2024 "," May 2024 "],"_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"SelectionRangeSliderView","behavior":"drag-tap","continuous_update":true,"description":"Dates:","description_allow_html":false,"disabled":false,"index":[22,33],"layout":"IPY_MODEL_cc32990bbd5543a4b0606230e561dbfc","orientation":"horizontal","readout":true,"style":"IPY_MODEL_c6637cfba6b345c8826bc786ea389b1d","tabbable":null,"tooltip":null}},"db687040a2814f9db16a01185b4ef4cb":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"DescriptionStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"DescriptionStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","description_width":""}},"dd455139a8fc4db1991fb886ae261c19":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"DropdownModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"DropdownModel","_options_labels":["NL02ABNA0123456789","NL21RBOS0123456789","NL20FBHL0123456789"],"_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"DropdownView","description":"Account:","description_allow_html":false,"disabled":false,"index":0,"layout":"IPY_MODEL_0887c2e5edb64bccad508d63825f36d3","style":"IPY_MODEL_608060c9ab244559b08c845fd84bb991","tabbable":null,"tooltip":null}},"e2c1f6f633784e6aa924e5488ab76065":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"DescriptionStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"DescriptionStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","description_width":""}},"e73f0e1cf572454dbafa05b8fd9b704c":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"e7f6dd8cefee43e5a8add85ae0ad6a2c":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"fe24b2ded16143eabcb4bb98d30ced82":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":"500px"}},"ff5309130ed248e5bf95c23e9c8fa4a9":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"DescriptionStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"DescriptionStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","description_width":""}}},"version_major":2,"version_minor":0}
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/www\.aswinvanwoudenberg\.com");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="afvanwoudenberg/afvanwoudenberg.github.io" data-repo-id="R_kgDOIvCGfg" data-category="General" data-category-id="DIC_kwDOIvCGfs4CWx2r" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark">
+</div> <!-- /content -->
+
+
+
+
+</body></html>

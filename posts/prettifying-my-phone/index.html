@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.54">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Aswin van Woudenberg">
+<meta name="dcterms.date" content="2024-07-14">
+<meta name="description" content="How I organized my mobile apps using the Chamfer distance metric, hierarchical clustering, and a simulated annealing-based algorithm for finding Hamiltonian paths.">
+
+<title>Prettifying My Phone – Aswin van Woudenberg</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-WWJVHMJ');</script>
+<!-- End Google Tag Manager -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+<script src="https://unpkg.com/@jupyter-widgets/html-manager@*/dist/embed-amd.js" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Aswin van Woudenberg</span>
+    </a>
+  </div>
+        <div class="quarto-navbar-tools tools-wide tools-end">
+    <a href="https://github.com/afvanwoudenberg" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-github"></i></a>
+    <a href="https://linkedin.com/in/afvanwoudenberg" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-linkedin"></i></a>
+    <a href="../../index.xml" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-rss"></i></a>
+</div>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Prettifying My Phone</h1>
+                  <div>
+        <div class="description">
+          How I organized my mobile apps using the Chamfer distance metric, hierarchical clustering, and a simulated annealing-based algorithm for finding Hamiltonian paths.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">programming</div>
+                <div class="quarto-category">python</div>
+                <div class="quarto-category">matplotlib</div>
+                <div class="quarto-category">machine learning</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Aswin van Woudenberg </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">July 14, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#the-best-way-to-organize-ones-apps" id="toc-the-best-way-to-organize-ones-apps" class="nav-link active" data-scroll-target="#the-best-way-to-organize-ones-apps">The best way to organize one’s apps</a></li>
+  <li><a href="#importing-libraries" id="toc-importing-libraries" class="nav-link" data-scroll-target="#importing-libraries">Importing libraries</a></li>
+  <li><a href="#getting-the-icons" id="toc-getting-the-icons" class="nav-link" data-scroll-target="#getting-the-icons">Getting the icons</a></li>
+  <li><a href="#loading-all-images-and-removing-the-background" id="toc-loading-all-images-and-removing-the-background" class="nav-link" data-scroll-target="#loading-all-images-and-removing-the-background">Loading all images and removing the background</a></li>
+  <li><a href="#plotting-all-images-in-a-grid" id="toc-plotting-all-images-in-a-grid" class="nav-link" data-scroll-target="#plotting-all-images-in-a-grid">Plotting all images in a grid</a></li>
+  <li><a href="#the-chamfer-distance" id="toc-the-chamfer-distance" class="nav-link" data-scroll-target="#the-chamfer-distance">The Chamfer distance</a></li>
+  <li><a href="#computing-the-chamfer-distance-between-two-images" id="toc-computing-the-chamfer-distance-between-two-images" class="nav-link" data-scroll-target="#computing-the-chamfer-distance-between-two-images">Computing the Chamfer distance between two images</a></li>
+  <li><a href="#comparing-images-pairwise" id="toc-comparing-images-pairwise" class="nav-link" data-scroll-target="#comparing-images-pairwise">Comparing images pairwise</a></li>
+  <li><a href="#computing-the-distance-matrix" id="toc-computing-the-distance-matrix" class="nav-link" data-scroll-target="#computing-the-distance-matrix">Computing the distance matrix</a></li>
+  <li><a href="#finding-the-shortest-hamiltonian-path" id="toc-finding-the-shortest-hamiltonian-path" class="nav-link" data-scroll-target="#finding-the-shortest-hamiltonian-path">Finding the shortest Hamiltonian path</a></li>
+  <li><a href="#grouping-apps-using-hierarchical-clustering" id="toc-grouping-apps-using-hierarchical-clustering" class="nav-link" data-scroll-target="#grouping-apps-using-hierarchical-clustering">Grouping apps using hierarchical clustering</a></li>
+  <li><a href="#selecting-clusters-and-ordering-apps" id="toc-selecting-clusters-and-ordering-apps" class="nav-link" data-scroll-target="#selecting-clusters-and-ordering-apps">Selecting clusters and ordering apps</a></li>
+  <li><a href="#the-final-result" id="toc-the-final-result" class="nav-link" data-scroll-target="#the-final-result">The final result</a></li>
+  <li><a href="#prettifying-your-own-phone" id="toc-prettifying-your-own-phone" class="nav-link" data-scroll-target="#prettifying-your-own-phone">Prettifying your own phone</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WWJVHMJ" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+
+
+
+
+<p>Did you know the average Dutch person spends 2 hours and 46 minutes daily consuming content on their phone? Surprisingly, this is still quite a bit below the global average as people worldwide spend an average of 3 hours and 50 minutes on their mobiles each day. The Filipinos top the chart, with a whopping 5 hours and 20 minutes spent daily on their smartphones. For statistics on other countries, click <a href="https://www.comparitech.com/tv-streaming/screen-time-statistics/">here</a>.</p>
+<p>Given the insane amount of time we spend on our phones, it’s only logical to <del>consider its mental health effects</del> organize your apps in the neatest way possible. In this post, I’ll show how to do just that using some math and Python.</p>
+<section id="the-best-way-to-organize-ones-apps" class="level2">
+<h2 class="anchored" data-anchor-id="the-best-way-to-organize-ones-apps">The best way to organize one’s apps</h2>
+<p>There are different ways to organize apps on the home screen of your phone. You can:</p>
+<ul>
+<li>group apps into categories such as travel, chat, or social media; or</li>
+<li>arrange them alphabetically; or</li>
+<li>organize apps by color.</li>
+</ul>
+<p>While some people may claim that the first two ways of organizing helps you find apps faster, I couldn’t care less about issues like speed or usability. I just want my home screen to look pretty. Organizing by color is clearly the superior choice. Who needs efficiency when you can have aesthetics?</p>
+<p>However, organizing apps by color is challenging because many apps have multiple colors in various shades. This makes it difficult to group them. To make our home screens look good, we want to arrange our apps in such a way that the color difference between adjacent icons is minimal.</p>
+<p>The solution I describe in this post is based on the following ideas:</p>
+<ul>
+<li>We can quantify color differences between icons using the Chamfer distance function.</li>
+<li>Finding the best arrangement of apps (where color differences are minimized) is equivalent to finding the shortest Hamiltonian path through a graph. In this graph, vertices are the app icons, and edges are the color differences.</li>
+<li>To decide which apps should be placed together on the same home screen, we can use hierarchical clustering.</li>
+</ul>
+<p>Read on to see how it all comes together.</p>
+</section>
+<section id="importing-libraries" class="level2">
+<h2 class="anchored" data-anchor-id="importing-libraries">Importing libraries</h2>
+<p>We’ll start by importing some dependencies.</p>
+<div id="8967d598" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> glob</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ipywidgets <span class="im">as</span> widgets</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> PIL <span class="im">import</span> Image, ImageDraw</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.spatial <span class="im">import</span> KDTree</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ipywidgets <span class="im">import</span> interact, interact_manual</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.cluster.hierarchy <span class="im">import</span> linkage, dendrogram, fcluster</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib.offsetbox <span class="im">import</span> OffsetImage, AnnotationBbox</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mpl_toolkits.mplot3d <span class="im">import</span> Axes3D</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="getting-the-icons" class="level2">
+<h2 class="anchored" data-anchor-id="getting-the-icons">Getting the icons</h2>
+<p>To organize our apps by color, we first need to get the icons for all the apps installed on our phones. I found that the easiest and most reliable way to do this (on Android) is by using the <a href="https://play.google.com/store/apps/details?id=sk.styk.martin.apkanalyzer">Apk Analyzer</a> app.</p>
+<p>Once you have saved all icons, transfer them to your computer and place them in a folder called <code>app_icons</code>.</p>
+<p><img src="app_icons_folder.png" class="img-fluid"></p>
+<p>Apk Analyzer saves the icon files as JPEGs, which don’t support transparency. As can be seen in the image above, this will cause each icon to have a black background. We’ll need to remove this programmatically later.</p>
+<p>The following code finds all JPEG files in the <code>app_icons</code> folder and saves their names to a list.</p>
+<div id="a6b3660f" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>files <span class="op">=</span> glob.glob(<span class="st">"app_icons/*.jpeg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="loading-all-images-and-removing-the-background" class="level2">
+<h2 class="anchored" data-anchor-id="loading-all-images-and-removing-the-background">Loading all images and removing the background</h2>
+<p>Now that we have a list of file names, we can load the images. As mentioned above, we’ll need to remove the black background. To do this, we’ll create a mask that can be applied to each image. The following functions will handle creating and applying this mask to each image.</p>
+<div id="d6e7be5f" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_mask(size):</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create a mask image with a transparent (black) background</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    mask <span class="op">=</span> Image.new(<span class="st">"L"</span>, size, <span class="dv">0</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    margin <span class="op">=</span> <span class="bu">int</span>(size[<span class="dv">0</span>] <span class="op">*</span> <span class="fl">0.03</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    radius <span class="op">=</span> <span class="bu">int</span>(size[<span class="dv">0</span>] <span class="op">*</span> <span class="fl">0.37</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Draw a white rounded rectangle on the mask</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    draw <span class="op">=</span> ImageDraw.Draw(mask)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    draw.rounded_rectangle([(margin, margin), (size[<span class="dv">0</span>] <span class="op">-</span> margin, size[<span class="dv">1</span>] <span class="op">-</span> margin)], radius<span class="op">=</span>radius, fill<span class="op">=</span><span class="dv">255</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> mask</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="ab650e10" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> apply_mask(image, mask):</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create a white background image</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    white_bg <span class="op">=</span> Image.new(<span class="st">"RGBA"</span>, image.size, (<span class="dv">255</span>, <span class="dv">255</span>, <span class="dv">255</span>, <span class="dv">255</span>))</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Composite the images using the mask</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> Image.composite(image, white_bg, mask)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> result.convert(<span class="st">"RGB"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="b61a1e5d" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> remove_background(image):</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    mask <span class="op">=</span> create_mask(image.size)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> apply_mask(image, mask)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We’ll resize each image to 64x64 to ensure they all have the same size.</p>
+<div id="5614ead1" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>size <span class="op">=</span> (<span class="dv">64</span>, <span class="dv">64</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The mask that is applied to each image looks like this:</p>
+<div id="ff1ffb06" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>mask <span class="op">=</span> create_mask((<span class="dv">265</span>,<span class="dv">265</span>)).resize(size)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>mask</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="110">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-9-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Next, let’s load all images and remove their backgrounds.</p>
+<div id="e255cd59" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>images <span class="op">=</span> [remove_background(Image.<span class="bu">open</span>(f)).resize(size) <span class="cf">for</span> f <span class="kw">in</span> files]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="plotting-all-images-in-a-grid" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="plotting-all-images-in-a-grid">Plotting all images in a grid</h2>
+<p>The helper function below will display all the images in a grid.</p>
+<div id="a4b840df" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_image_grid(images, ncols<span class="op">=</span><span class="va">None</span>, title<span class="op">=</span><span class="st">''</span>):</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    ncols <span class="op">=</span> ncols <span class="kw">or</span> <span class="bu">int</span>(np.sqrt(<span class="bu">len</span>(images)))</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    nrows, ncols <span class="op">=</span> (<span class="bu">len</span>(images) <span class="op">+</span> ncols <span class="op">-</span> <span class="dv">1</span>) <span class="op">//</span> ncols, ncols</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    imgs <span class="op">=</span> images <span class="op">+</span> [<span class="va">None</span>] <span class="op">*</span> (nrows <span class="op">*</span> ncols <span class="op">-</span> <span class="bu">len</span>(images))</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    fig, axes <span class="op">=</span> plt.subplots(nrows, ncols, figsize<span class="op">=</span>(ncols, nrows))</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> title:</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>        fig.suptitle(title, x<span class="op">=</span><span class="fl">0.125</span>, ha<span class="op">=</span><span class="st">'left'</span>)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> img, ax <span class="kw">in</span> <span class="bu">zip</span>(imgs, axes.flatten()): </span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> img <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>            ax.imshow(img)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>        ax.axis(<span class="st">'off'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s call this function to display our loaded images.</p>
+<div id="6b784d4f" class="cell page-columns page-full" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>plot_image_grid(images, <span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display page-columns page-full">
+<div class="page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="index_files/figure-html/cell-12-output-1.png" width="1135" height="462" class="figure-img column-page-inset-right"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Such a chaotic look! Let’s quickly move on to organizing this mess!</p>
+</section>
+<section id="the-chamfer-distance" class="level2">
+<h2 class="anchored" data-anchor-id="the-chamfer-distance">The Chamfer distance</h2>
+<p>In order to quantify the difference in color palette between two app icons we will use the Chamfer distance. This particular distance metric is a measure of dissimilarity between two sets of points. It calculates how far points in one set are from the nearest points in another set, averaged over all points.</p>
+<p>In our case, each set represents all the pixels in one image. Each pixel has an RGB value that represents one point. The smaller the Chamfer distance, the more similar in color the two images are.</p>
+<p>Its symmetric version can be defined as follows:</p>
+<p><span class="math display">\[d_{\text{CD}}(A, B) = \frac{1}{|A|} \sum_{a \in A} \min_{b \in B} \| a - b \|_2 + \frac{1}{|B|} \sum_{b \in B} \min_{a \in A} \| b - a \|_2\]</span></p>
+<p>where</p>
+<ul>
+<li><span class="math inline">\(\| \cdot \|_2\)</span> denotes the Euclidean distance.</li>
+<li><span class="math inline">\(\min_{b \in B} \| a - b \|_2\)</span> represents the minimum Euclidean distance from a point <span class="math inline">\(a \in A\)</span> to any point in <span class="math inline">\(b \in B\)</span>.</li>
+<li><span class="math inline">\(\min_{a \in A} \| b - a \|_2\)</span> represents the minimum Euclidean distance from a point <span class="math inline">\(b \in B\)</span> to any point in <span class="math inline">\(a \in A\)</span>.</li>
+<li><span class="math inline">\(|A|\)</span> and <span class="math inline">\(|B|\)</span> denote the number of points in sets <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>, respectively.</li>
+</ul>
+<p>N.B.: You might see variations of this distance metric. When used as a loss function the Euclidian distances are generally squared. This makes the resulting function smooth and differentiable which is useful in gradient-based optimization algorithms. This isn’t needed in our situation.</p>
+<p>The following function calculates the Chamfer distance. It was taken <a href="https://medium.com/@sim30217/chamfer-distance-4207955e8612">from here</a>. It uses <code>KDTree</code> for efficient nearest neighbor searches.</p>
+<div id="aaf27ec4" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> chamfer_distance(a, b):</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    tree <span class="op">=</span> KDTree(b)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    dist_a <span class="op">=</span> tree.query(a)[<span class="dv">0</span>]</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    tree <span class="op">=</span> KDTree(a)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    dist_b <span class="op">=</span> tree.query(b)[<span class="dv">0</span>]</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.mean(dist_a) <span class="op">+</span> np.mean(dist_b)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="computing-the-chamfer-distance-between-two-images" class="level2">
+<h2 class="anchored" data-anchor-id="computing-the-chamfer-distance-between-two-images">Computing the Chamfer distance between two images</h2>
+<p>Let’s explore a bit more visually how the Chamfer distance is used to quantify the dissimilarity between the color palettes of two images.</p>
+<p>As an example we’ll compute the Chamfer distance between the first two images we have loaded.</p>
+<div id="bb53d2ef" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>plot_image_grid([images[<span class="dv">0</span>],images[<span class="dv">1</span>]], <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-14-output-1.png" width="168" height="87" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The following function creates a 3D scatterplot to visualize the RGB values of an image’s pixels. In this plot, the x-axis, y-axis, and z-axis represent the red, green, and blue color values, respectively. Each point in the scatterplot corresponds to a pixel, and its position is determined by the pixel’s RGB values.</p>
+<div id="0f8c40cd" class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_image_colors(image, ax<span class="op">=</span><span class="va">None</span>, title<span class="op">=</span><span class="st">''</span>):</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    boolean_mask <span class="op">=</span> np.array(mask).astype(<span class="bu">bool</span>).flatten()</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> np.array(image).reshape((<span class="dv">64</span><span class="op">*</span><span class="dv">64</span>, <span class="op">-</span><span class="dv">1</span>))[boolean_mask]</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    R, G, B <span class="op">=</span> data[:, <span class="dv">0</span>], data[:, <span class="dv">1</span>], data[:, <span class="dv">2</span>]</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    colors <span class="op">=</span> data <span class="op">/</span> <span class="fl">255.0</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> ax:</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>        fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">7</span>, <span class="dv">6</span>))</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>        ax <span class="op">=</span> fig.add_subplot(<span class="dv">111</span>, projection<span class="op">=</span><span class="st">'3d'</span>)</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>        fig <span class="op">=</span> ax.get_figure()</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>    scatter <span class="op">=</span> ax.scatter(R, G, B, c<span class="op">=</span>colors, s<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="st">'Red'</span>)</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>    ax.set_ylabel(<span class="st">'Green'</span>)</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>    ax.set_zlabel(<span class="st">'Blue'</span>, labelpad<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>    ax.zaxis.label.set_rotation(<span class="dv">90</span>)</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>    ax.xaxis.set_ticks(np.arange(<span class="dv">0</span>, <span class="dv">256</span>, <span class="dv">50</span>))</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>    ax.yaxis.set_ticks(np.arange(<span class="dv">0</span>, <span class="dv">256</span>, <span class="dv">50</span>))</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>    ax.zaxis.set_ticks(np.arange(<span class="dv">0</span>, <span class="dv">256</span>, <span class="dv">50</span>))</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>    ax.set_title(title)</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Add inset axis for the image</span></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>    inset_ax <span class="op">=</span> fig.add_axes([ax.get_position().x0, ax.get_position().y1 <span class="op">-</span> <span class="fl">0.15</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span>])</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>    inset_ax.imshow(image)</span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>    inset_ax.axis(<span class="st">'off'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>If we plot the colors of the first image, we get the following:</p>
+<div id="aebf5ad5" class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>plot_image_colors(images[<span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-16-output-1.png" width="480" height="463" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Now let’s do the same for the second image:</p>
+<div id="0cdc2214" class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>plot_image_colors(images[<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-17-output-1.png" width="480" height="463" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>As you can see, in this case, the points in one scatterplot are, on average, quite far from the nearest point in the other scatterplot. Calculating the Chamfer distance between the two sets of points gives us a relatively high value.</p>
+<div id="708e1a57" class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a boolean mask</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>boolean_mask <span class="op">=</span> np.array(mask).astype(<span class="bu">bool</span>).flatten()</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># The number of pixels</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>num_pixels <span class="op">=</span> math.prod(size)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>chamfer_distance(np.array(images[<span class="dv">0</span>]).reshape((num_pixels, <span class="op">-</span><span class="dv">1</span>))[boolean_mask], np.array(images[<span class="dv">1</span>]).reshape((num_pixels, <span class="op">-</span><span class="dv">1</span>))[boolean_mask])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="119">
+<pre><code>226.8853693815226</code></pre>
+</div>
+</div>
+<p>Note how a boolean mask is applied to exclude the pixels that are not part of the actual icon. In other words, we exclude all pixels that lie outside the rounded rectangle. Furthermore, the image is converted to a numpy array and reshaped in such a way that each row represents the RGB value of one pixel as this is how the <code>chamfer_distance</code> function expects it.</p>
+</section>
+<section id="comparing-images-pairwise" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="comparing-images-pairwise">Comparing images pairwise</h2>
+<p>The code below allows us to interactively compare pairs of images side-by-side.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>np_images_foreground <span class="op">=</span> [np.array(image).reshape((num_pixels, <span class="op">-</span><span class="dv">1</span>))[boolean_mask] <span class="cf">for</span> image <span class="kw">in</span> images]</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_images_colors_side_by_side(image_num1, image_num2):</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    image1 <span class="op">=</span> images[image_num1]</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    image2 <span class="op">=</span> images[image_num2]</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">6</span>))</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># First subplot</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>    ax1 <span class="op">=</span> fig.add_subplot(<span class="dv">121</span>, projection<span class="op">=</span><span class="st">'3d'</span>)</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>    plot_image_colors(image1, ax1, <span class="st">'Image 1'</span>)</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Second subplot</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>    ax2 <span class="op">=</span> fig.add_subplot(<span class="dv">122</span>, projection<span class="op">=</span><span class="st">'3d'</span>)</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>    plot_image_colors(image2, ax2, <span class="st">'Image 2'</span>)</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>    fig.text(<span class="fl">0.5</span>, <span class="fl">0.02</span>, <span class="ss">f'Chamfer distance: </span><span class="sc">{</span>chamfer_distance(np_images_foreground[image_num1], np_images_foreground[image_num2])<span class="sc">}</span><span class="ss">'</span>, ha<span class="op">=</span><span class="st">'center'</span>, va<span class="op">=</span><span class="st">'center'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> interact(plot_images_colors_side_by_side, </span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>    image_num1<span class="op">=</span>widgets.IntSlider(<span class="bu">min</span><span class="op">=</span><span class="dv">0</span>, <span class="bu">max</span><span class="op">=</span><span class="bu">len</span>(images) <span class="op">-</span> <span class="dv">1</span>, step<span class="op">=</span><span class="dv">1</span>, value<span class="op">=</span><span class="dv">0</span>, description<span class="op">=</span><span class="st">"Image 1: "</span>), </span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>    image_num2<span class="op">=</span>widgets.IntSlider(<span class="bu">min</span><span class="op">=</span><span class="dv">0</span>, <span class="bu">max</span><span class="op">=</span><span class="bu">len</span>(images) <span class="op">-</span> <span class="dv">1</span>, step<span class="op">=</span><span class="dv">1</span>, value<span class="op">=</span><span class="dv">1</span>, description<span class="op">=</span><span class="st">"Image 2: "</span>)</span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="ba0b78d3" class="cell page-columns page-full" data-execution_count="18">
+<div class="cell-output cell-output-display column-page-inset-right">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"e7a6ed22bb794c64a2d1b0f35bedd9de","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"0af99f003ede49f3995504d57e4abac1","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display page-columns page-full">
+<div class="page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="index_files/figure-html/cell-19-output-3.png" width="1048" height="542" class="figure-img column-page-inset-right"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The sliders allow us to select and compare different icons. The Chamfer distance between the two images selected above is in this case quite small. You can see how that makes sense as points in one scatterplot are closer, on average, to a nearest point in the other scatterplot.</p>
+</section>
+<section id="computing-the-distance-matrix" class="level2">
+<h2 class="anchored" data-anchor-id="computing-the-distance-matrix">Computing the distance matrix</h2>
+<p>The distance matrix contains the Chamfer distance between each pair of images and is computed using the following code:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize the distance matrix</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>num_sets <span class="op">=</span> <span class="bu">len</span>(np_images_foreground)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>distance_matrix <span class="op">=</span> np.zeros((num_sets, num_sets))</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Populate the distance matrix</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(num_sets):</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(i <span class="op">+</span> <span class="dv">1</span>, num_sets):</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>        distance <span class="op">=</span> chamfer_distance(np_images_foreground[i], np_images_foreground[j])</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>        distance_matrix[i, j] <span class="op">=</span> distance</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>        distance_matrix[j, i] <span class="op">=</span> distance  <span class="co"># Use symmetry</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Computing the Chamfer distance between each pair of images may take a minute or so depending on the speed of your hardware.</p>
+<p>The maximum value in the distance matrix tells us which two images are most dissimilar.</p>
+<div id="ed529a62" class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>start, end <span class="op">=</span> np.unravel_index(np.argmax(distance_matrix), distance_matrix.shape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="c76626f4" class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>plot_image_grid([images[start],images[end]], <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-22-output-1.png" width="168" height="87" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>It’s between these two images that we want to find a Hamiltonian path.</p>
+</section>
+<section id="finding-the-shortest-hamiltonian-path" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="finding-the-shortest-hamiltonian-path">Finding the shortest Hamiltonian path</h2>
+<p>The shortest <a href="https://en.wikipedia.org/wiki/Hamiltonian_path">Hamiltonian path</a> traverses all vertices in a graph exactly once while minimizing the total distance traveled. Here each vertex corresponds to an image, and the edges are weighted based on the Chamfer distance between these images. Such a path should yield a visually pleasing sequence of app icons.</p>
+<p>The following code applies <a href="https://en.wikipedia.org/wiki/Simulated_annealing">simulated annealing</a> to attempt to find the shortest Hamiltonian path in a graph represented by a distance matrix.</p>
+<div id="f8cb198b" class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> total_distance(path, distance_matrix):</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">sum</span>(distance_matrix[path[i], path[i <span class="op">+</span> <span class="dv">1</span>]] <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(path) <span class="op">-</span> <span class="dv">1</span>))</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> shortest_hamiltonian_path(distance_matrix, start, end, initial_temp, cooling_rate, stopping_temp, initial_path<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    current_path <span class="op">=</span> initial_path <span class="kw">or</span> <span class="bu">list</span>(<span class="bu">range</span>(distance_matrix.shape[<span class="dv">0</span>]))</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    current_path.remove(start)</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> start <span class="op">!=</span> end:</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>        current_path.remove(end)</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>    current_path <span class="op">=</span> [start] <span class="op">+</span> current_path <span class="op">+</span> [end]</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(current_path)</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>    current_distance <span class="op">=</span> total_distance(current_path, distance_matrix)</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>    temperature <span class="op">=</span> initial_temp</span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> temperature <span class="op">&gt;</span> stopping_temp:</span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Generate a neighbor by reversing a subtour (excluding start and end)</span></span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>        i, j <span class="op">=</span> <span class="bu">sorted</span>(random.sample(<span class="bu">range</span>(<span class="dv">1</span>, n <span class="op">-</span> <span class="dv">1</span>), <span class="dv">2</span>))</span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>        new_path <span class="op">=</span> current_path[<span class="dv">0</span>:i] <span class="op">+</span> current_path[i:j<span class="op">+</span><span class="dv">1</span>][::<span class="op">-</span><span class="dv">1</span>] <span class="op">+</span> current_path[j<span class="op">+</span><span class="dv">1</span>:]</span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>        new_distance <span class="op">=</span> total_distance(new_path, distance_matrix)</span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Acceptance probability</span></span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> new_distance <span class="op">&lt;</span> current_distance <span class="kw">or</span> random.random() <span class="op">&lt;</span> np.exp((current_distance <span class="op">-</span> new_distance) <span class="op">/</span> temperature):</span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a>            current_path, current_distance <span class="op">=</span> new_path, new_distance</span>
+<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a>        temperature <span class="op">*=</span> cooling_rate</span>
+<span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb22-29"><a href="#cb22-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> current_path, current_distance</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We will use <code>shortest_hamiltonian_path</code> to find a path between the two app icons with the most dissimilar color schemes. This function requires three parameters to control the temperature schedule: initial temperature (<code>initial_temp</code>), cooling rate (<code>cooling_rate</code>), and stopping temperature (<code>stopping_temp</code>). The initial temperature starts high to allow broad exploration of the search space, accepting worse solutions to avoid local minima. The cooling rate gradually reduces the temperature, shifting focus to refining the solution. The process continues until the temperature drops below the stopping temperature, ensuring the algorithm terminates efficiently while aiming for an optimal solution.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>initial_temp <span class="op">=</span> <span class="dv">400000</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>cooling_rate <span class="op">=</span> <span class="fl">0.99995</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>stopping_temp <span class="op">=</span> <span class="fl">1e-8</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>path, distance <span class="op">=</span> shortest_hamiltonian_path(distance_matrix, start, end, initial_temp, cooling_rate, stopping_temp)</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Shortest Hamiltonian path:"</span>, path)</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Distance:"</span>, distance)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="f0885dee" class="cell" data-execution_count="23">
+<div class="cell-output cell-output-stdout">
+<pre><code>Shortest Hamiltonian path: [23, 72, 5, 35, 53, 63, 44, 78, 8, 11, 22, 65, 77, 39, 51, 4, 33, 10, 38, 19, 0, 14, 27, 60, 40, 66, 87, 32, 83, 30, 9, 37, 82, 34, 17, 61, 75, 15, 49, 55, 2, 25, 62, 69, 26, 46, 74, 68, 24, 54, 57, 80, 71, 7, 86, 59, 21, 29, 28, 79, 70, 56, 41, 31, 81, 3, 13, 16, 42, 12, 36, 84, 58, 6, 18, 50, 45, 76, 52, 85, 73, 64, 20, 47, 1, 48, 43, 67]
+Distance: 2201.440737366966</code></pre>
+</div>
+</div>
+<p>Once the function returns a path we can use this to reorder the images into a more visually pleasing sequence.</p>
+<div id="b04eee2a" class="cell" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>sorted_images <span class="op">=</span> [images[i] <span class="cf">for</span> i <span class="kw">in</span> path]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="066654a3" class="cell page-columns page-full" data-execution_count="25">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>plot_image_grid(sorted_images, <span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display page-columns page-full">
+<div class="page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="index_files/figure-html/cell-26-output-1.png" width="1135" height="462" class="figure-img column-page-inset-right"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Doesn’t this look amazing!? Honestly, this belongs in a museum.</p>
+<p>There’s one issue though. This many apps won’t fit on the same home screen and distributing these apps over several screens breaks the visual <em>flow</em>. It just won’t look as good.</p>
+<p>What we want to do is first cluster the apps by color scheme, and following that, choose which of these clusters can be placed on the same home screen. Then we try to find a shortest Hamiltonian path per screen. We’ll use hierarchical clustering to find a good grouping.</p>
+</section>
+<section id="grouping-apps-using-hierarchical-clustering" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="grouping-apps-using-hierarchical-clustering">Grouping apps using hierarchical clustering</h2>
+<p>We can use the previously calculated distance matrix to perform hierarchical clustering. I decided to go with <a href="https://en.wikipedia.org/wiki/Ward%27s_method">Ward’s linkage</a> which tends to create more compact and spherical clusters.</p>
+<div id="b88cc8f6" class="cell" data-execution_count="26">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert the distance matrix to a condensed distance matrix</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="co"># The condensed distance matrix contains the upper triangular part of the distance matrix</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>condensed_distance_matrix <span class="op">=</span> distance_matrix[np.triu_indices_from(distance_matrix, k<span class="op">=</span><span class="dv">1</span>)]</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform hierarchical clustering using the linkage method</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>Z <span class="op">=</span> linkage(condensed_distance_matrix, method<span class="op">=</span><span class="st">'ward'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Ward’s linkage is an agglomerative method which means that it starts with each image as its own cluster and merges pairs based on minimal variance increase. This process forms a hierarchical cluster sequence that can be visualized in a dendrogram.</p>
+<div id="18d047d8" class="cell" data-execution_count="27">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_dendrogram(max_d<span class="op">=</span><span class="dv">0</span>):</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>    fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">18</span>, <span class="dv">6</span>))</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    dendrogram(Z, ax<span class="op">=</span>ax)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    ax.set_title(<span class="st">'Hierarchical Clustering Dendrogram'</span>)</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>    ax.set_ylabel(<span class="st">'Distance'</span>)</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> max_d:</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>        ax.axhline(y<span class="op">=</span>max_d, linestyle<span class="op">=</span><span class="st">'--'</span>, color<span class="op">=</span><span class="st">'grey'</span>)</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>    tick_labels <span class="op">=</span> ax.xaxis.get_ticklabels()</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(images)):</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>        ib <span class="op">=</span> OffsetImage(images[<span class="bu">int</span>(tick_labels[i].get_text())], zoom<span class="op">=</span><span class="fl">.18</span>)</span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>        ib.image.axes <span class="op">=</span> ax</span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>        ab <span class="op">=</span> AnnotationBbox(ib, tick_labels[i].get_position(), frameon<span class="op">=</span><span class="va">False</span>, box_alignment<span class="op">=</span>(<span class="fl">0.5</span>, <span class="fl">1.2</span>))</span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>        ax.add_artist(ab)</span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>    ax.set_xticks([])</span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="1d8d0737" class="cell page-columns page-full" data-execution_count="28">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>plot_dendrogram()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display page-columns page-full">
+<div class="page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="index_files/figure-html/cell-29-output-1.png" width="1425" height="506" class="figure-img column-page"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>As you can tell from the dendrogram shown above, the apps have been clustered based on color palette similarity. By selecting a distance threshold we can determine a suitable set of clusters.</p>
+</section>
+<section id="selecting-clusters-and-ordering-apps" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="selecting-clusters-and-ordering-apps">Selecting clusters and ordering apps</h2>
+<p>The code below allows us to interactively adjust a distance threshold using a slider to determine the number of clusters. We can then press <em>Show clusters</em> to see which images belong to each cluster. Finally, we can select specific clusters and press <em>Find path</em> to find the shortest Hamiltonian path through the icons in these clusters.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="at">@interact</span>(max_d<span class="op">=</span>widgets.IntSlider(<span class="bu">min</span><span class="op">=</span><span class="dv">0</span>, <span class="bu">max</span><span class="op">=</span><span class="bu">int</span>(np.<span class="bu">max</span>(Z)), step<span class="op">=</span><span class="dv">1</span>, value<span class="op">=</span><span class="bu">int</span>(np.<span class="bu">max</span>(Z) <span class="op">/</span> <span class="dv">2</span>), description<span class="op">=</span><span class="st">"Distance: "</span>))</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_dendrogram_with_threshold(max_d):</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    plot_dendrogram(max_d)</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">@interact_manual.options</span>(manual_name<span class="op">=</span><span class="st">"Show clusters"</span>)</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> plot_clusters():</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>        clusters <span class="op">=</span> fcluster(Z, max_d, criterion<span class="op">=</span><span class="st">'distance'</span>)</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> cluster_label <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="bu">max</span>(clusters) <span class="op">+</span> <span class="dv">1</span>):</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>            indices <span class="op">=</span> np.where(clusters <span class="op">==</span> cluster_label)[<span class="dv">0</span>]</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>            plot_image_grid([images[i] <span class="cf">for</span> i <span class="kw">in</span> indices], <span class="dv">25</span>, <span class="ss">f'Cluster </span><span class="sc">{</span>cluster_label<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>        find_path_interact_manual <span class="op">=</span> interact_manual.options(manual_name<span class="op">=</span><span class="st">"Find path"</span>)</span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">@find_path_interact_manual</span>(cluster_labels<span class="op">=</span>widgets.widgets.SelectMultiple(options<span class="op">=</span>[(<span class="ss">f'Cluster </span><span class="sc">{</span>cl<span class="sc">}</span><span class="ss">'</span>, cl) <span class="cf">for</span> cl <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="bu">max</span>(clusters) <span class="op">+</span> <span class="dv">1</span>)], description<span class="op">=</span><span class="st">'Clusters: '</span>))</span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>        <span class="kw">def</span> find_hamiltonian_path(cluster_labels):</span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>            selected_indices <span class="op">=</span> np.where(np.isin(clusters, cluster_labels))[<span class="dv">0</span>]</span>
+<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> selected_indices.size <span class="op">&gt;</span> <span class="dv">0</span>:</span>
+<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a>                distance_submatrix <span class="op">=</span> distance_matrix[np.ix_(selected_indices, selected_indices)]</span>
+<span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a>                max_value <span class="op">=</span> np.<span class="bu">max</span>(distance_submatrix)</span>
+<span id="cb30-20"><a href="#cb30-20" aria-hidden="true" tabindex="-1"></a>                result <span class="op">=</span> np.where(distance_matrix <span class="op">==</span> max_value)</span>
+<span id="cb30-21"><a href="#cb30-21" aria-hidden="true" tabindex="-1"></a>                start, end <span class="op">=</span> result[<span class="dv">0</span>][<span class="dv">0</span>], result[<span class="dv">1</span>][<span class="dv">0</span>]</span>
+<span id="cb30-22"><a href="#cb30-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-23"><a href="#cb30-23" aria-hidden="true" tabindex="-1"></a>                initial_temp <span class="op">=</span> <span class="dv">400000</span></span>
+<span id="cb30-24"><a href="#cb30-24" aria-hidden="true" tabindex="-1"></a>                cooling_rate <span class="op">=</span> <span class="fl">0.99995</span></span>
+<span id="cb30-25"><a href="#cb30-25" aria-hidden="true" tabindex="-1"></a>                stopping_temp <span class="op">=</span> <span class="fl">1e-8</span></span>
+<span id="cb30-26"><a href="#cb30-26" aria-hidden="true" tabindex="-1"></a>                path, _ <span class="op">=</span> shortest_hamiltonian_path(distance_matrix, start, end, initial_temp, cooling_rate, stopping_temp, <span class="bu">list</span>(selected_indices))</span>
+<span id="cb30-27"><a href="#cb30-27" aria-hidden="true" tabindex="-1"></a>                </span>
+<span id="cb30-28"><a href="#cb30-28" aria-hidden="true" tabindex="-1"></a>                sorted_images <span class="op">=</span> [images[i] <span class="cf">for</span> i <span class="kw">in</span> path]</span>
+<span id="cb30-29"><a href="#cb30-29" aria-hidden="true" tabindex="-1"></a>                plot_image_grid(sorted_images, <span class="dv">5</span>)</span>
+<span id="cb30-30"><a href="#cb30-30" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:</span>
+<span id="cb30-31"><a href="#cb30-31" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>(<span class="st">"Select on or more clusters."</span>)        </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="886c917c" class="cell page-columns page-full" data-execution_count="29">
+<div class="cell-output cell-output-display column-page">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"0f89faef2b26408083a1c85b1d4feadb","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+</div>
+<div id="af1fed19" class="cell page-columns page-full" data-execution_count="30">
+<div class="cell-output cell-output-display page-columns page-full">
+<div class="page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="index_files/figure-html/cell-31-output-1.png" width="1425" height="506" class="figure-img column-page"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="9bf5d038" class="cell page-columns page-full" data-execution_count="31">
+<div class="cell-output cell-output-display column-page">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"372321d60a544db1b9038a9c2874eeb7","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+</div>
+<div id="46a259ff" class="cell page-columns page-full" data-execution_count="32">
+<div class="cell-output cell-output-display page-columns page-full">
+<div class="page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="index_files/figure-html/cell-33-output-1.png" width="1210" height="103" class="figure-img column-page"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display page-columns page-full">
+<div class="page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="index_files/figure-html/cell-33-output-2.png" width="1210" height="103" class="figure-img column-page"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display page-columns page-full">
+<div class="page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="index_files/figure-html/cell-33-output-3.png" width="1210" height="97" class="figure-img column-page"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display page-columns page-full">
+<div class="page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="index_files/figure-html/cell-33-output-4.png" width="1210" height="103" class="figure-img column-page"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display page-columns page-full">
+<div class="page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="index_files/figure-html/cell-33-output-5.png" width="1210" height="103" class="figure-img column-page"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display page-columns page-full">
+<div class="page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="index_files/figure-html/cell-33-output-6.png" width="1210" height="103" class="figure-img column-page"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display page-columns page-full">
+<div class="page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="index_files/figure-html/cell-33-output-7.png" width="1210" height="103" class="figure-img column-page"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display page-columns page-full">
+<div class="page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="index_files/figure-html/cell-33-output-8.png" width="1210" height="103" class="figure-img column-page"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="ce212cf4" class="cell page-columns page-full" data-execution_count="33">
+<div class="cell-output cell-output-display column-page">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"ed64f64067064caa9abe96e989a87990","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"808a558db2514a29a6079802d1b6b6e8","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+</div>
+<div id="c29424c2" class="cell page-columns page-full" data-execution_count="34">
+<div class="cell-output cell-output-display page-columns page-full">
+<div class="page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="index_files/figure-html/cell-35-output-1.png" width="391" height="315" class="figure-img column-page"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Here I’ve selected 192 as the threshold. Clusters 1 and 2 contain red, orange, and yellow icons that go well together on the same home screen. We can see that the Hamiltonian path through all icons in these two clusters yields an aesthetically pleasing sequence.</p>
+<p>Cluster 4 and 5 both contain blueish icons and also go well together. Each screen on my phone contains 25 app icons at most so this is something I took into consideration when selecting clusters. Cluster 8 also contains some blue icons but because only 25 apps fit on the same screen I decided to keep them apart. Because they’re a bit darker too I figured they’d go well with cluster 7.</p>
+<p>We can see that cluster 3 contains two green icons that would fit better with the app icons in cluster 6. By sliding the threshold to a slightly lower value, I moved these two green icons into a seperate cluster and then selected all green clusters to be put together on another screen.</p>
+<p>The icons that combine red, green, blue, and yellow (mostly Google apps) are placed on one screen as well.</p>
+</section>
+<section id="the-final-result" class="level2">
+<h2 class="anchored" data-anchor-id="the-final-result">The final result</h2>
+<p>After rearranging all apps, my home screens look simply amazing!</p>
+<p><img src="phone_screen.gif" width="250"></p>
+<p>Beautiful! Wouldn’t you agree?</p>
+</section>
+<section id="prettifying-your-own-phone" class="level2">
+<h2 class="anchored" data-anchor-id="prettifying-your-own-phone">Prettifying your own phone</h2>
+<p>If you want to prettify your own home screens, you can find all the code in the following GitHub gist:</p>
+<p><a target="_blank" href="https://gist.github.com/afvanwoudenberg/a08504a8bbf7aec30897fe106fa115c1"><img src="https://shields.io/badge/-View%20as%20Gist-grey.svg?logo=github&amp;style=flat&amp;logoColor=white&amp;labelColor=black" class="img-fluid" alt="GitHub"></a></p>
+<p>Happy organizing!</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script type="application/vnd.jupyter.widget-state+json">
+{"state":{"03d8036ce3f34c2a9a186576bef9698d":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"05d7bf581bb84a929462d3e6c9985a39":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"ButtonModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"ButtonModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"ButtonView","button_style":"","description":"Show clusters","disabled":false,"icon":"","layout":"IPY_MODEL_b9a55d2514844d52ad902043a8fdba29","style":"IPY_MODEL_0f963ab1ffa24b6eb7f3c6202654b406","tabbable":null,"tooltip":null}},"05e7ea9456254b029b033ab30dd32364":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"07d7fb3875134281be3c324001f0753d":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"IntSliderModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"IntSliderModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"IntSliderView","behavior":"drag-tap","continuous_update":true,"description":"Image 1: ","description_allow_html":false,"disabled":false,"layout":"IPY_MODEL_4c08f97f5d684444a2ad2c6158fa87be","max":87,"min":0,"orientation":"horizontal","readout":true,"readout_format":"d","step":1,"style":"IPY_MODEL_5393d17771bc4f1a97f3bc5b11957f6c","tabbable":null,"tooltip":null,"value":9}},"08f69472f9eb465eb535f96f482f1f04":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"0af99f003ede49f3995504d57e4abac1":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"IntSliderModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"IntSliderModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"IntSliderView","behavior":"drag-tap","continuous_update":true,"description":"Image 2: ","description_allow_html":false,"disabled":false,"layout":"IPY_MODEL_1480eb49fcd14f0e8da58664e417fd31","max":87,"min":0,"orientation":"horizontal","readout":true,"readout_format":"d","step":1,"style":"IPY_MODEL_595fa8a0ba904805a8f477f10374d698","tabbable":null,"tooltip":null,"value":30}},"0c43967608634078a2666ee5281983cf":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"IntSliderModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"IntSliderModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"IntSliderView","behavior":"drag-tap","continuous_update":true,"description":"Image 2: ","description_allow_html":false,"disabled":false,"layout":"IPY_MODEL_4b5ee38fc66949ce9c4b1ed01377fc16","max":87,"min":0,"orientation":"horizontal","readout":true,"readout_format":"d","step":1,"style":"IPY_MODEL_e5a4fd3ae40a4bf0bb2a137cbe2806bb","tabbable":null,"tooltip":null,"value":30}},"0db661f0f543463fb6606ea83bcf1025":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"SliderStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"SliderStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","description_width":"","handle_color":null}},"0f89faef2b26408083a1c85b1d4feadb":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"IntSliderModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"IntSliderModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"IntSliderView","behavior":"drag-tap","continuous_update":true,"description":"Distance: ","description_allow_html":false,"disabled":false,"layout":"IPY_MODEL_c7649e31d97f48398a5a613cb3da98d1","max":957,"min":0,"orientation":"horizontal","readout":true,"readout_format":"d","step":1,"style":"IPY_MODEL_1d55106226954703b467e440609e49e6","tabbable":null,"tooltip":null,"value":192}},"0f963ab1ffa24b6eb7f3c6202654b406":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"ButtonStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"ButtonStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","button_color":null,"font_family":null,"font_size":null,"font_style":null,"font_variant":null,"font_weight":null,"text_color":null,"text_decoration":null}},"1480eb49fcd14f0e8da58664e417fd31":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"18120aa8e9fd42078e1a78052b2be20f":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"DescriptionStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"DescriptionStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","description_width":""}},"1b60236214cf4b3db4e9d22471f6fb7b":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"1d55106226954703b467e440609e49e6":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"SliderStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"SliderStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","description_width":"","handle_color":null}},"1d754d5cab04480aa764c0942568cd40":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"20a3fc3f07da41cf931ad46b42c79d64":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"SelectMultipleModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"SelectMultipleModel","_options_labels":["Cluster 1","Cluster 2","Cluster 3","Cluster 4","Cluster 5","Cluster 6","Cluster 7","Cluster 8"],"_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"SelectMultipleView","description":"Clusters: ","description_allow_html":false,"disabled":false,"index":[0,1],"layout":"IPY_MODEL_ff14e85fe3184efcb2c8e60ea9171732","rows":5,"style":"IPY_MODEL_fbbb7833732949d9a60cda74a49726b8","tabbable":null,"tooltip":null}},"255e73e3062a454ca759b190e3041e76":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"SliderStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"SliderStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","description_width":"","handle_color":null}},"271dbe5008d34a12aabfbd66c586fc78":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"ButtonModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"ButtonModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"ButtonView","button_style":"","description":"Show clusters","disabled":false,"icon":"","layout":"IPY_MODEL_03d8036ce3f34c2a9a186576bef9698d","style":"IPY_MODEL_52f92329894e43d0930871d63b345feb","tabbable":null,"tooltip":null}},"27a5b0156af343f98f08b1c4eade378d":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"SliderStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"SliderStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","description_width":"","handle_color":null}},"2c27b1fc0be64a43a79c6d039d9aca8f":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"ButtonStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"ButtonStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","button_color":null,"font_family":null,"font_size":null,"font_style":null,"font_variant":null,"font_weight":null,"text_color":null,"text_decoration":null}},"2d27f25b8c69437595a2dda4ea637997":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"ButtonStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"ButtonStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","button_color":null,"font_family":null,"font_size":null,"font_style":null,"font_variant":null,"font_weight":null,"text_color":null,"text_decoration":null}},"37045289fa15491998a1e819a4eb98c9":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"372321d60a544db1b9038a9c2874eeb7":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"ButtonModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"ButtonModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"ButtonView","button_style":"","description":"Show clusters","disabled":false,"icon":"","layout":"IPY_MODEL_48ac073371dc4909a211cad940add26b","style":"IPY_MODEL_b4ddd01b5ad6470ea3a647d90e98dd5f","tabbable":null,"tooltip":null}},"3aa69eef1907446c903d75c168fd08e6":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"SliderStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"SliderStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","description_width":"","handle_color":null}},"48ac073371dc4909a211cad940add26b":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"4b5ee38fc66949ce9c4b1ed01377fc16":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"4c08f97f5d684444a2ad2c6158fa87be":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"4d0655cf6b284636a6456ee047355acc":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"ButtonModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"ButtonModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"ButtonView","button_style":"","description":"Find path","disabled":false,"icon":"","layout":"IPY_MODEL_8c0c5551532343b1a687e0de6f8eae29","style":"IPY_MODEL_2d27f25b8c69437595a2dda4ea637997","tabbable":null,"tooltip":null}},"52df25bca06342a083d6db15aed23e53":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"ButtonModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"ButtonModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"ButtonView","button_style":"","description":"Show clusters","disabled":false,"icon":"","layout":"IPY_MODEL_785287338a494062b2b71a2a59cec656","style":"IPY_MODEL_7be6baf8449e423882b524349a74a40f","tabbable":null,"tooltip":null}},"52f92329894e43d0930871d63b345feb":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"ButtonStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"ButtonStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","button_color":null,"font_family":null,"font_size":null,"font_style":null,"font_variant":null,"font_weight":null,"text_color":null,"text_decoration":null}},"5393d17771bc4f1a97f3bc5b11957f6c":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"SliderStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"SliderStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","description_width":"","handle_color":null}},"595fa8a0ba904805a8f477f10374d698":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"SliderStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"SliderStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","description_width":"","handle_color":null}},"5ec4a49580974e93a5dd4c597c9328b1":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"DescriptionStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"DescriptionStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","description_width":""}},"6086c3cb2d8c438aa723243115f9d249":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"IntSliderModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"IntSliderModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"IntSliderView","behavior":"drag-tap","continuous_update":true,"description":"Distance: ","description_allow_html":false,"disabled":false,"layout":"IPY_MODEL_9c044841feca40cb9d547f77e0393e95","max":957,"min":0,"orientation":"horizontal","readout":true,"readout_format":"d","step":1,"style":"IPY_MODEL_ffe5060cb2624b0496aeeba198b161ef","tabbable":null,"tooltip":null,"value":192}},"66d301af2ef145259e3e317f78bd8355":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"IntSliderModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"IntSliderModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"IntSliderView","behavior":"drag-tap","continuous_update":true,"description":"Image 1: ","description_allow_html":false,"disabled":false,"layout":"IPY_MODEL_08f69472f9eb465eb535f96f482f1f04","max":87,"min":0,"orientation":"horizontal","readout":true,"readout_format":"d","step":1,"style":"IPY_MODEL_255e73e3062a454ca759b190e3041e76","tabbable":null,"tooltip":null,"value":9}},"6811bee696ef43a7bf4dd553345d02c4":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"6968f3104adc4cf5837225214a5d9529":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"IntSliderModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"IntSliderModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"IntSliderView","behavior":"drag-tap","continuous_update":true,"description":"Distance: ","description_allow_html":false,"disabled":false,"layout":"IPY_MODEL_a0843a0ffdca4aefbc918ee40f07f2ff","max":957,"min":0,"orientation":"horizontal","readout":true,"readout_format":"d","step":1,"style":"IPY_MODEL_0db661f0f543463fb6606ea83bcf1025","tabbable":null,"tooltip":null,"value":192}},"6dcfddcf12f14a12ac3864804079ddcf":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"6fbb6bfaffc4458092cbf5d86b627f4f":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"73f39c0820a54192ac9687234c6e1ea4":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"SelectMultipleModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"SelectMultipleModel","_options_labels":["Cluster 1","Cluster 2","Cluster 3","Cluster 4","Cluster 5","Cluster 6","Cluster 7","Cluster 8"],"_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"SelectMultipleView","description":"Clusters: ","description_allow_html":false,"disabled":false,"index":[0,1],"layout":"IPY_MODEL_6811bee696ef43a7bf4dd553345d02c4","rows":5,"style":"IPY_MODEL_fd9ffcbbdc50400ea7a2db0553f748db","tabbable":null,"tooltip":null}},"7433ff82b00a4f55ba7c480c22dd344a":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"SliderStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"SliderStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","description_width":"","handle_color":null}},"76fbd061e931445f9425ef9a2760e17f":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"785287338a494062b2b71a2a59cec656":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"7be6baf8449e423882b524349a74a40f":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"ButtonStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"ButtonStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","button_color":null,"font_family":null,"font_size":null,"font_style":null,"font_variant":null,"font_weight":null,"text_color":null,"text_decoration":null}},"7d2e69e86cc44f7584922fa33078fd32":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"SelectMultipleModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"SelectMultipleModel","_options_labels":["Cluster 1","Cluster 2","Cluster 3","Cluster 4","Cluster 5","Cluster 6","Cluster 7","Cluster 8"],"_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"SelectMultipleView","description":"Clusters: ","description_allow_html":false,"disabled":false,"index":[0,1],"layout":"IPY_MODEL_1b60236214cf4b3db4e9d22471f6fb7b","rows":5,"style":"IPY_MODEL_5ec4a49580974e93a5dd4c597c9328b1","tabbable":null,"tooltip":null}},"808a558db2514a29a6079802d1b6b6e8":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"ButtonModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"ButtonModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"ButtonView","button_style":"","description":"Find path","disabled":false,"icon":"","layout":"IPY_MODEL_37045289fa15491998a1e819a4eb98c9","style":"IPY_MODEL_db05aaeaaafc4c558a1efa965e8a2bac","tabbable":null,"tooltip":null}},"8675e3959f81432092fd58717b11a26d":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"ButtonModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"ButtonModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"ButtonView","button_style":"","description":"Find path","disabled":false,"icon":"","layout":"IPY_MODEL_76fbd061e931445f9425ef9a2760e17f","style":"IPY_MODEL_2c27b1fc0be64a43a79c6d039d9aca8f","tabbable":null,"tooltip":null}},"89b12fa158274363a546ffa0b419dad0":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"IntSliderModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"IntSliderModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"IntSliderView","behavior":"drag-tap","continuous_update":true,"description":"Image 2: ","description_allow_html":false,"disabled":false,"layout":"IPY_MODEL_95d1c55d86b7411796df5ae9cc621b25","max":87,"min":0,"orientation":"horizontal","readout":true,"readout_format":"d","step":1,"style":"IPY_MODEL_9e52c76fb6224ab0a794807730f44730","tabbable":null,"tooltip":null,"value":30}},"8c0c5551532343b1a687e0de6f8eae29":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"95d1c55d86b7411796df5ae9cc621b25":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"9c044841feca40cb9d547f77e0393e95":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"9e52c76fb6224ab0a794807730f44730":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"SliderStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"SliderStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","description_width":"","handle_color":null}},"a0843a0ffdca4aefbc918ee40f07f2ff":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"ad2f33de6e2d47e6b898c08d5ee63beb":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"IntSliderModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"IntSliderModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"IntSliderView","behavior":"drag-tap","continuous_update":true,"description":"Image 1: ","description_allow_html":false,"disabled":false,"layout":"IPY_MODEL_6fbb6bfaffc4458092cbf5d86b627f4f","max":87,"min":0,"orientation":"horizontal","readout":true,"readout_format":"d","step":1,"style":"IPY_MODEL_27a5b0156af343f98f08b1c4eade378d","tabbable":null,"tooltip":null,"value":9}},"af520b28ad83456b98ca2b39d1159e77":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"ButtonStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"ButtonStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","button_color":null,"font_family":null,"font_size":null,"font_style":null,"font_variant":null,"font_weight":null,"text_color":null,"text_decoration":null}},"b4ddd01b5ad6470ea3a647d90e98dd5f":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"ButtonStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"ButtonStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","button_color":null,"font_family":null,"font_size":null,"font_style":null,"font_variant":null,"font_weight":null,"text_color":null,"text_decoration":null}},"b9a55d2514844d52ad902043a8fdba29":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"bbe1954de75e47e0b977b64c1c2007a2":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"IntSliderModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"IntSliderModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"IntSliderView","behavior":"drag-tap","continuous_update":true,"description":"Distance: ","description_allow_html":false,"disabled":false,"layout":"IPY_MODEL_ce79f204c8494cf4837f7a498e814221","max":957,"min":0,"orientation":"horizontal","readout":true,"readout_format":"d","step":1,"style":"IPY_MODEL_7433ff82b00a4f55ba7c480c22dd344a","tabbable":null,"tooltip":null,"value":192}},"c7649e31d97f48398a5a613cb3da98d1":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"c7b349e8555d4492b14f41715dea9ef1":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"SliderStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"SliderStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","description_width":"","handle_color":null}},"ce79f204c8494cf4837f7a498e814221":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"db05aaeaaafc4c558a1efa965e8a2bac":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"ButtonStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"ButtonStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","button_color":null,"font_family":null,"font_size":null,"font_style":null,"font_variant":null,"font_weight":null,"text_color":null,"text_decoration":null}},"e5a4fd3ae40a4bf0bb2a137cbe2806bb":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"SliderStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"SliderStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","description_width":"","handle_color":null}},"e7a6ed22bb794c64a2d1b0f35bedd9de":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"IntSliderModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"IntSliderModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"IntSliderView","behavior":"drag-tap","continuous_update":true,"description":"Image 1: ","description_allow_html":false,"disabled":false,"layout":"IPY_MODEL_05e7ea9456254b029b033ab30dd32364","max":87,"min":0,"orientation":"horizontal","readout":true,"readout_format":"d","step":1,"style":"IPY_MODEL_3aa69eef1907446c903d75c168fd08e6","tabbable":null,"tooltip":null,"value":9}},"ed64f64067064caa9abe96e989a87990":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"SelectMultipleModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"SelectMultipleModel","_options_labels":["Cluster 1","Cluster 2","Cluster 3","Cluster 4","Cluster 5","Cluster 6","Cluster 7","Cluster 8"],"_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"SelectMultipleView","description":"Clusters: ","description_allow_html":false,"disabled":false,"index":[0,1],"layout":"IPY_MODEL_f19e2a411be44a9e93825b3cad3657fa","rows":5,"style":"IPY_MODEL_18120aa8e9fd42078e1a78052b2be20f","tabbable":null,"tooltip":null}},"f19e2a411be44a9e93825b3cad3657fa":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"f28f31f90425426eb51de3223675c3e4":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"IntSliderModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"IntSliderModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"IntSliderView","behavior":"drag-tap","continuous_update":true,"description":"Image 2: ","description_allow_html":false,"disabled":false,"layout":"IPY_MODEL_1d754d5cab04480aa764c0942568cd40","max":87,"min":0,"orientation":"horizontal","readout":true,"readout_format":"d","step":1,"style":"IPY_MODEL_c7b349e8555d4492b14f41715dea9ef1","tabbable":null,"tooltip":null,"value":30}},"f2e34abbfe0d491d8cf1f17faa913550":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"ButtonModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"ButtonModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"ButtonView","button_style":"","description":"Find path","disabled":false,"icon":"","layout":"IPY_MODEL_6dcfddcf12f14a12ac3864804079ddcf","style":"IPY_MODEL_af520b28ad83456b98ca2b39d1159e77","tabbable":null,"tooltip":null}},"fbbb7833732949d9a60cda74a49726b8":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"DescriptionStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"DescriptionStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","description_width":""}},"fd9ffcbbdc50400ea7a2db0553f748db":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"DescriptionStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"DescriptionStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","description_width":""}},"ff14e85fe3184efcb2c8e60ea9171732":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"ffe5060cb2624b0496aeeba198b161ef":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"SliderStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"SliderStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","description_width":"","handle_color":null}}},"version_major":2,"version_minor":0}
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/www\.aswinvanwoudenberg\.com");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="afvanwoudenberg/afvanwoudenberg.github.io" data-repo-id="R_kgDOIvCGfg" data-category="General" data-category-id="DIC_kwDOIvCGfs4CWx2r" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark">
+</div> <!-- /content -->
+
+
+
+
+</body></html>

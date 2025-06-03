@@ -64,7 +64,7 @@ Here, every row (8+1+6=15, 3+5+7=15, 4+9+2=15), every column (8+3+4=15, 1+5+9=15
 
 If an ordinary magic square strictly uses consecutive integers from $1$ up to $N^2$ (where N is the side length of the square, e.g., 1 to 9 for a 3×3 square), it is then classified as a **normal magic square**. The 3×3 example provided above is therefor a normal magic square.
 
-A **semimagic square** is a less stringent variation where only the sums of the numbers in each row and each column are equal to the magic constant; the main diagonals do not necessarily sum to this constant. While standard 3×3 examples often turn out to be ordinary, larger semimagic squares can exist where this diagonal property is intentionally absent.
+A **semimagic square** is a less stringent variation where only the sums of the numbers in each row and each column are equal to the magic constant; the main diagonals do not necessarily sum to this constant. 
 
 Let's write some functions to check for these properties:
 

@@ -268,7 +268,7 @@ window.Quarto = {
 <p>Before we go into understanding how to create magic squares containing a picture, let’s further clarify some terms. At the same time, we’ll write code that will help us visualize, understand, and check our magic squares.</p>
 <p>As defined above, a <strong>magic square</strong> is a square grid filled with distinct numbers. It typically contains consecutive integers starting from 1. Its fundamental property is that the sum of the numbers in each row, each column, and both main diagonals is identical. This consistent sum is known as the <strong>magic constant</strong>.</p>
 <p>For instance, consider this 3×3 square:</p>
-<div id="86299381" class="cell" data-execution_count="1">
+<div id="45f32ea2" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>ms3 <span class="op">=</span> np.array([</span>
@@ -278,7 +278,7 @@ window.Quarto = {
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The following code prints a magic square in a more readable format:</p>
-<div id="842fc7f9" class="cell" data-execution_count="2">
+<div id="0e434e54" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.core.display <span class="im">import</span> HTML</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_square(m):</span>
@@ -291,7 +291,7 @@ window.Quarto = {
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    table <span class="op">+=</span> <span class="st">"&lt;/table&gt;"</span></span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    display(HTML(table))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="339ef45a" class="cell" data-execution_count="3">
+<div id="df1d9afa" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>print_square(ms3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <table border="1" cellspacing="0" cellpadding="10"><tbody><tr><td>8</td><td>1</td><td>6</td></tr><tr><td>3</td><td>5</td><td>7</td></tr><tr><td>4</td><td>9</td><td>2</td></tr></tbody></table>
@@ -299,30 +299,30 @@ window.Quarto = {
 </div>
 <p>Here, every row (8+1+6=15, 3+5+7=15, 4+9+2=15), every column (8+3+4=15, 1+5+9=15, 6+7+2=15), and both main diagonals (8+5+2=15, 6+5+4=15) sum to 15 (the magic constant). This type is generally called an <strong>ordinary magic square</strong>.</p>
 <p>If an ordinary magic square strictly uses consecutive integers from <span class="math inline">\(1\)</span> up to <span class="math inline">\(N^2\)</span> (where N is the side length of the square, e.g., 1 to 9 for a 3×3 square), it is then classified as a <strong>normal magic square</strong>. The 3×3 example provided above is therefor a normal magic square.</p>
-<p>A <strong>semimagic square</strong> is a less stringent variation where only the sums of the numbers in each row and each column are equal to the magic constant; the main diagonals do not necessarily sum to this constant. While standard 3×3 examples often turn out to be ordinary, larger semimagic squares can exist where this diagonal property is intentionally absent.</p>
+<p>A <strong>semimagic square</strong> is a less stringent variation where only the sums of the numbers in each row and each column are equal to the magic constant; the main diagonals do not necessarily sum to this constant.</p>
 <p>Let’s write some functions to check for these properties:</p>
-<div id="f2db4da8" class="cell" data-execution_count="4">
+<div id="1269141d" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> is_semimagic(m, c<span class="op">=</span><span class="va">None</span>):</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    row_sums <span class="op">=</span> np.<span class="bu">sum</span>(m, axis<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    col_sums <span class="op">=</span> np.<span class="bu">sum</span>(m, axis<span class="op">=</span><span class="dv">0</span>)</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    mc <span class="op">=</span> row_sums[<span class="dv">0</span>] <span class="cf">if</span> <span class="kw">not</span> c <span class="cf">else</span> c</span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.<span class="bu">all</span>(row_sums <span class="op">==</span> mc) <span class="kw">and</span> np.<span class="bu">all</span>(col_sums <span class="op">==</span> mc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="ed18c900" class="cell" data-execution_count="5">
+<div id="5f2d000f" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> is_magic(m, c<span class="op">=</span><span class="va">None</span>):</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    diag_sum1 <span class="op">=</span> np.<span class="bu">sum</span>(np.diag(m))  <span class="co"># sum of first diagonal  </span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    diag_sum2 <span class="op">=</span> np.<span class="bu">sum</span>(np.diag(np.fliplr(m)))  <span class="co"># sum of second diagonal</span></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    mc <span class="op">=</span> diag_sum1 <span class="cf">if</span> <span class="kw">not</span> c <span class="cf">else</span> c</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> is_semimagic(m, mc) <span class="kw">and</span> diag_sum1 <span class="op">==</span> mc <span class="kw">and</span> diag_sum2 <span class="op">==</span> mc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="f61553fe" class="cell" data-execution_count="6">
+<div id="37b3ba6e" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> is_normal(m):</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> m.shape[<span class="dv">0</span>]</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    unique_values <span class="op">=</span> np.unique(m)</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.<span class="bu">min</span>(unique_values) <span class="op">==</span> <span class="dv">1</span> <span class="kw">and</span> np.<span class="bu">max</span>(unique_values) <span class="op">==</span> n<span class="op">**</span><span class="dv">2</span> <span class="kw">and</span> <span class="bu">len</span>(unique_values) <span class="op">==</span> n<span class="op">**</span><span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>These will come in handy later when we create our own magic squares. For now, let’s verify that our 3×3 example is indeed a normal magic square:</p>
-<div id="ba5b9c89" class="cell" data-execution_count="7">
+<div id="bac5ee79" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>is_magic(ms3) <span class="kw">and</span> is_normal(ms3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
 <pre><code>True</code></pre>
@@ -330,7 +330,7 @@ window.Quarto = {
 </div>
 <p>Moving on to more complex types, a <strong>panmagic square</strong> (also known as a <strong>diabolic</strong> or <strong>pandiagonal magic square</strong>) builds upon the ordinary definition. In addition to the main rows, columns, and diagonals, all <strong>broken diagonals</strong> also sum to the magic constant. A broken diagonal forms by starting at a cell, moving diagonally to an edge, and then wrapping around to continue from the opposite edge.</p>
 <p>Consider the following 4×4 panmagic square, with a magic constant of 34:</p>
-<div id="d11f6c23" class="cell" data-execution_count="8">
+<div id="96ac60a4" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ms4 <span class="op">=</span> np.array([</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    [ <span class="dv">1</span>,  <span class="dv">8</span>, <span class="dv">10</span>, <span class="dv">15</span>],</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">12</span>, <span class="dv">13</span>,  <span class="dv">3</span>,  <span class="dv">6</span>],</span>
@@ -344,7 +344,7 @@ window.Quarto = {
 </div>
 </div>
 <p>Here, not only do rows, columns, and main diagonals sum to 34, but so do diagonals like (12+2+5+15) and (14+8+3+9). Just for fun, let’s write a function to check if a square is panmagic and test it on our example:</p>
-<div id="3f89c533" class="cell" data-execution_count="9">
+<div id="ec96266c" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> is_panmagic(m):</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> m.shape[<span class="dv">0</span>]</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    sums <span class="op">=</span> []</span>
@@ -366,7 +366,7 @@ window.Quarto = {
 <span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>    mc <span class="op">=</span> sums[<span class="dv">0</span>]  <span class="co"># Magic constant from the first sum</span></span>
 <span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.<span class="bu">all</span>(sums <span class="op">==</span> mc) <span class="kw">and</span> is_magic(m, mc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="7ea564ed" class="cell" data-execution_count="10">
+<div id="2a445fee" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>is_panmagic(ms4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
 <pre><code>True</code></pre>
@@ -374,7 +374,7 @@ window.Quarto = {
 </div>
 <p>A property of panmagic squares is that if you move the first column(s) to the end, the resulting square remains panmagic. In the same way, if you move the first row(s) from the top to the bottom, the square also remains panmagic. This property is not true for ordinary magic squares.</p>
 <p>We can demonstrate this property with our 4×4 panmagic square.</p>
-<div id="cc4b225e" class="cell" data-execution_count="11">
+<div id="4de5334b" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>ms4_reordered <span class="op">=</span> np.hstack((ms4[:, <span class="dv">1</span>:], ms4[:, [<span class="dv">0</span>]]))</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>print_square(ms4_reordered)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
@@ -382,7 +382,7 @@ window.Quarto = {
 </div>
 </div>
 <p>After moving the first column to the end, we get a new square that is still panmagic.</p>
-<div id="ef3ed425" class="cell" data-execution_count="12">
+<div id="0e426f14" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>is_panmagic(ms4_reordered)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="12">
 <pre><code>True</code></pre>
@@ -392,11 +392,11 @@ window.Quarto = {
 <section id="exploring-the-structure-of-magic-squares-that-contain-pictures" class="level2">
 <h2 class="anchored" data-anchor-id="exploring-the-structure-of-magic-squares-that-contain-pictures">Exploring the structure of magic squares that contain pictures</h2>
 <p>Let’s look at the structure of the magic square that contains a picture. From the page where I found the Benjamin Franklin example, we can also download the numbers that make up the square as a file. Let’s start by loading <a href="franklin.csv">this file</a> into a NumPy array.</p>
-<div id="5348c44d" class="cell" data-execution_count="13">
+<div id="aafdc2a9" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>franklin <span class="op">=</span> np.genfromtxt(<span class="st">'franklin.csv'</span>, delimiter<span class="op">=</span><span class="st">';'</span>, dtype<span class="op">=</span><span class="bu">int</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The following function plots the magic square as a heatmap, which gives us a visual representation of the numbers in the square.</p>
-<div id="09c8b13e" class="cell" data-execution_count="14">
+<div id="9dce15d0" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_square(m, center_only<span class="op">=</span><span class="va">True</span>, show_values<span class="op">=</span><span class="va">True</span>, figsize<span class="op">=</span>(<span class="dv">4</span>, <span class="dv">4</span>)):</span>
@@ -430,7 +430,7 @@ window.Quarto = {
 <span id="cb17-31"><a href="#cb17-31" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>By default it shows the numbers in the square, and only shows the center 32x32 square in the heatmap.</p>
-<div id="5f0dbf48" class="cell" data-execution_count="15">
+<div id="e8fcaf96" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>plot_square(franklin, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">10</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -441,7 +441,7 @@ window.Quarto = {
 </div>
 </div>
 <p>Let’s verify that this is indeed a magic square by checking the properties using the functions we defined above.</p>
-<div id="336a8916" class="cell" data-execution_count="16">
+<div id="f9b7daad" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>is_magic(franklin) <span class="kw">and</span> is_panmagic(franklin) <span class="kw">and</span> is_normal(franklin)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="16">
 <pre><code>True</code></pre>
@@ -449,21 +449,21 @@ window.Quarto = {
 </div>
 <p>We can see that the square is not only magic, but also panmagic!</p>
 <p>Note that the center 32x32 square isn’t a magic square.</p>
-<div id="61d618ec" class="cell" data-execution_count="17">
+<div id="a6ac0e4f" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>is_magic(franklin[<span class="dv">48</span>:<span class="dv">80</span>, <span class="dv">48</span>:<span class="dv">80</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="17">
 <pre><code>False</code></pre>
 </div>
 </div>
 <p>The numbers in the center square do range from 1 to 1024.</p>
-<div id="2e80229a" class="cell" data-execution_count="18">
+<div id="07093b84" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>is_normal(franklin[<span class="dv">48</span>:<span class="dv">80</span>, <span class="dv">48</span>:<span class="dv">80</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="18">
 <pre><code>True</code></pre>
 </div>
 </div>
 <p>By looking at the entire magic square as a heatmap, we can get a better understanding of how the magic square is structured.</p>
-<div id="09a7d33a" class="cell" data-execution_count="19">
+<div id="770ccb08" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>plot_square(franklin, center_only<span class="op">=</span><span class="va">False</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">10</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -483,7 +483,7 @@ window.Quarto = {
 </div>
 <p>This magic square shows the same picture of Benjamin Franklin, but this time in a 4x4 grid. It made me realize that the magic square that shows the picture of Franklin in the center is actually the same 4x4 grid but scrambled.</p>
 <p>By zooming in on the 4x4 grid, and looking at the ranges of numbers in each subsquare, I found out that these magic squares are actually constructed from the same 4x4 panmagic square we looked at earlier.</p>
-<div id="7f9a3892" class="cell" data-execution_count="20">
+<div id="74a736ff" class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>print_square(ms4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <table border="1" cellspacing="0" cellpadding="10"><tbody><tr><td>1</td><td>8</td><td>10</td><td>15</td></tr><tr><td>12</td><td>13</td><td>3</td><td>6</td></tr><tr><td>7</td><td>2</td><td>16</td><td>9</td></tr><tr><td>14</td><td>11</td><td>5</td><td>4</td></tr></tbody></table>
@@ -496,13 +496,13 @@ window.Quarto = {
 <section id="loading-the-image" class="level3">
 <h3 class="anchored" data-anchor-id="loading-the-image">Loading the image</h3>
 <p>We start by loading the image from disk.</p>
-<div id="0e0783c9" class="cell" data-execution_count="21">
+<div id="e8218e9a" class="cell" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> PIL <span class="im">import</span> Image</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>mario_sprite <span class="op">=</span> Image.<span class="bu">open</span>(<span class="st">'mario.png'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This is what the image looks like in color:</p>
-<div id="89b7a4e9" class="cell" data-execution_count="22">
+<div id="b9dc738b" class="cell" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>plt.imshow(mario_sprite)</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>plt.axis(<span class="st">'off'</span>)</span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -518,12 +518,12 @@ window.Quarto = {
 <section id="converting-the-image-to-grayscale" class="level3">
 <h3 class="anchored" data-anchor-id="converting-the-image-to-grayscale">Converting the image to grayscale</h3>
 <p>In order to embed the image into a magic square, we need to convert it to grayscale. We also want 0 to represent white and 255 to represent black, so we need to invert the colors.</p>
-<div id="988a14e8" class="cell" data-execution_count="23">
+<div id="95e671b8" class="cell" data-execution_count="23">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>mario_grayscale <span class="op">=</span> mario_sprite.convert(<span class="st">'L'</span>)</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>mario_grayscale <span class="op">=</span> <span class="dv">255</span> <span class="op">-</span> np.array(mario_grayscale, dtype<span class="op">=</span><span class="bu">int</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>In greyscale, the image looks like this:</p>
-<div id="06cc1168" class="cell" data-execution_count="24">
+<div id="9c23eeab" class="cell" data-execution_count="24">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>plt.imshow(mario_grayscale, cmap<span class="op">=</span><span class="st">'gray_r'</span>, interpolation<span class="op">=</span><span class="st">'nearest'</span>)</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>plt.axis(<span class="st">'off'</span>)</span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -539,7 +539,7 @@ window.Quarto = {
 <section id="mapping-pixel-values-to-a-range-from-1-to-256" class="level3">
 <h3 class="anchored" data-anchor-id="mapping-pixel-values-to-a-range-from-1-to-256">Mapping pixel values to a range from 1 to 256</h3>
 <p>We need to convert the pixel values to a range from 1 to 256, without duplicate values, so we can use them in a magic square. We can do this by ordering the pixels from light to dark and then give each pixel a new value starting from 1.</p>
-<div id="3759e678" class="cell" data-execution_count="25">
+<div id="d3008045" class="cell" data-execution_count="25">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> relabel_unique(arr):</span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> arr.shape[<span class="dv">0</span>]</span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    flat <span class="op">=</span> arr.flatten()</span>
@@ -552,10 +552,10 @@ window.Quarto = {
 <span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Reshape back to original shape</span></span>
 <span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> relabeled.reshape(arr.shape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="349d60ae" class="cell" data-execution_count="26">
+<div id="5d5fc124" class="cell" data-execution_count="26">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>mario_relabeled <span class="op">=</span> relabel_unique(mario_grayscale)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="1838aa4e" class="cell" data-execution_count="27">
+<div id="7416f628" class="cell" data-execution_count="27">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>plot_square(mario_relabeled, center_only<span class="op">=</span><span class="va">False</span>, show_values<span class="op">=</span><span class="va">True</span>, figsize<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -570,7 +570,7 @@ window.Quarto = {
 <section id="tiling-the-image-into-a-magic-square" class="level3">
 <h3 class="anchored" data-anchor-id="tiling-the-image-into-a-magic-square">Tiling the image into a magic square</h3>
 <p>We can now start composing the actual magic square. Remember that we’ll use the 4x4 panmagic square shown earlier as our base.</p>
-<div id="38bd8c48" class="cell" data-execution_count="28">
+<div id="3f0fa87d" class="cell" data-execution_count="28">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>print_square(ms4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <table border="1" cellspacing="0" cellpadding="10"><tbody><tr><td>1</td><td>8</td><td>10</td><td>15</td></tr><tr><td>12</td><td>13</td><td>3</td><td>6</td></tr><tr><td>7</td><td>2</td><td>16</td><td>9</td></tr><tr><td>14</td><td>11</td><td>5</td><td>4</td></tr></tbody></table>
@@ -579,10 +579,10 @@ window.Quarto = {
 <p>We want to tile copies of the image into a 4x4 grid. The 4x4 panmagic square will tell us the range of numbers that will be used in each of these copies.</p>
 <p>The top left value of the 4x4 panmagic square is 1, so the top left copy of the image in the 4x4 grid of tiles will contain the pixels with values from 1 to 256. The value 2 in the panmagic square indicates that the copy of the image in the third row/second column will contain pixels with values from 257 to 512, and so on.</p>
 <p>The following code takes care of this tiling process.</p>
-<div id="6b15aaa8" class="cell" data-execution_count="29">
+<div id="87ae5453" class="cell" data-execution_count="29">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>mario_tiled <span class="op">=</span> np.kron(ms4 <span class="op">-</span> <span class="dv">1</span>, np.ones(mario_relabeled.shape, dtype<span class="op">=</span><span class="bu">int</span>)) <span class="op">*</span> np.<span class="bu">max</span>(mario_relabeled) <span class="op">+</span> np.tile(mario_relabeled, ms4.shape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="668a8120" class="cell" data-execution_count="30">
+<div id="904f424c" class="cell" data-execution_count="30">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>plot_square(mario_tiled, center_only<span class="op">=</span><span class="va">False</span>, show_values<span class="op">=</span><span class="va">True</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">10</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -597,7 +597,7 @@ window.Quarto = {
 <h3 class="anchored" data-anchor-id="inverting-half-the-tiles">Inverting half the tiles</h3>
 <p>Our magic square is not yet complete. We still need to invert half of the tiles, as we saw in the example with Franklin’s picture.</p>
 <p>The following function replaces each number in the square with its complementary number. The complementary number is defined as <span class="math inline">\(n^2 + 1 - x\)</span> where <span class="math inline">\(x\)</span> is the number in the cell and <span class="math inline">\(n\)</span> is the size of the tile (in this case 16).</p>
-<div id="b8ef3a1c" class="cell" data-execution_count="31">
+<div id="a6c94524" class="cell" data-execution_count="31">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> complement_square(m):</span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>    min_val <span class="op">=</span> np.<span class="bu">min</span>(m)</span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>    max_val <span class="op">=</span> np.<span class="bu">max</span>(m)</span>
@@ -605,7 +605,7 @@ window.Quarto = {
 <span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> comp_sum <span class="op">-</span> m</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The next function applies this transformation to the tiles based on a boolean mask that indicates which tiles to invert.</p>
-<div id="e37533bf" class="cell" data-execution_count="32">
+<div id="eef6b275" class="cell" data-execution_count="32">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> conditional_complement_blocks(bool_mask, arr):</span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>    n_blocks <span class="op">=</span> <span class="dv">4</span></span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>    block_size <span class="op">=</span> arr.shape[<span class="dv">0</span>] <span class="op">//</span> <span class="dv">4</span></span>
@@ -619,11 +619,11 @@ window.Quarto = {
 <span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> out</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We want to invert 2 tiles in each row and column. One easy way to do this is to invert the tiles where the value in the panmagic square is larger than 8.</p>
-<div id="a01b08c5" class="cell" data-execution_count="33">
+<div id="6390be84" class="cell" data-execution_count="33">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>mario16x <span class="op">=</span> conditional_complement_blocks(ms4 <span class="op">&gt;</span> <span class="dv">8</span>, mario_tiled)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s see if we indeed ended up with a magic square.</p>
-<div id="645b399a" class="cell" data-execution_count="34">
+<div id="ef7347d0" class="cell" data-execution_count="34">
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>is_magic(mario16x) <span class="kw">and</span> is_panmagic(mario16x) <span class="kw">and</span> is_normal(mario16x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="34">
 <pre><code>True</code></pre>
@@ -634,7 +634,7 @@ window.Quarto = {
 <section id="plotting-the-tiled-images" class="level3">
 <h3 class="anchored" data-anchor-id="plotting-the-tiled-images">Plotting the tiled images</h3>
 <p>The following function plots the magic square as a heatmap, where each tile is plotted in a different color.</p>
-<div id="3e4926a0" class="cell" data-execution_count="35">
+<div id="4159a581" class="cell" data-execution_count="35">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib.colors <span class="im">import</span> LinearSegmentedColormap</span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.colors <span class="im">as</span> mcolors</span>
 <span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -678,7 +678,7 @@ window.Quarto = {
 <span id="cb42-41"><a href="#cb42-41" aria-hidden="true" tabindex="-1"></a>    plt.axis(<span class="st">'off'</span>)</span>
 <span id="cb42-42"><a href="#cb42-42" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="bd1b6226" class="cell" data-execution_count="36">
+<div id="2d7aaa23" class="cell" data-execution_count="36">
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>plot_square_colored_blocks(mario16x, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">10</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -689,7 +689,7 @@ window.Quarto = {
 </div>
 </div>
 <p>We can save this magic square to a file if we want.</p>
-<div id="676baadb" class="cell" data-execution_count="37">
+<div id="5039d6cc" class="cell" data-execution_count="37">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>np.savetxt(<span class="st">"mario16x.csv"</span>, mario16x, fmt<span class="op">=</span><span class="st">'</span><span class="sc">%d</span><span class="st">'</span>, delimiter<span class="op">=</span><span class="st">";"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
@@ -697,12 +697,12 @@ window.Quarto = {
 <h3 class="anchored" data-anchor-id="centering-the-image">Centering the image</h3>
 <p>As mentioned before, a property of panmagic squares is that moving columns from the left side to the right side, or moving top rows to the bottom, will always yield another panmagic square.</p>
 <p>We can use this property to center the image.</p>
-<div id="83fa8b80" class="cell" data-execution_count="38">
+<div id="04923657" class="cell" data-execution_count="38">
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>d <span class="op">=</span> mario16x.shape[<span class="dv">0</span>] <span class="op">//</span> <span class="dv">8</span> <span class="op">*</span> <span class="dv">5</span></span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>mario_shifted <span class="op">=</span> np.hstack((mario16x[:, d:], mario16x[:, :d]))</span>
 <span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>mario1x <span class="op">=</span> np.vstack((mario_shifted[d:, :], mario_shifted[:d, :]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="3de64f3a" class="cell" data-execution_count="39">
+<div id="bc0e3edb" class="cell" data-execution_count="39">
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>plot_square(mario1x, center_only<span class="op">=</span><span class="va">True</span>, show_values<span class="op">=</span><span class="va">True</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">10</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -713,14 +713,14 @@ window.Quarto = {
 </div>
 </div>
 <p>As expected, the resulting magic square is still panmagic.</p>
-<div id="feaf7600" class="cell" data-execution_count="40">
+<div id="94e2669d" class="cell" data-execution_count="40">
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>is_magic(mario1x) <span class="kw">and</span> is_panmagic(mario1x) <span class="kw">and</span> is_normal(mario1x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="40">
 <pre><code>True</code></pre>
 </div>
 </div>
 <p>Amazing! Now let’s save it to <a href="mario1x.csv">a file</a>.</p>
-<div id="617c12e9" class="cell" data-execution_count="41">
+<div id="d90703b5" class="cell" data-execution_count="41">
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>np.savetxt(<span class="st">"mario1x.csv"</span>, mario1x, fmt<span class="op">=</span><span class="st">'</span><span class="sc">%d</span><span class="st">'</span>, delimiter<span class="op">=</span><span class="st">";"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
@@ -728,7 +728,7 @@ window.Quarto = {
 <section id="all-steps-in-one-function" class="level2">
 <h2 class="anchored" data-anchor-id="all-steps-in-one-function">All steps in one function</h2>
 <p>For convenience, we define a function that combines all steps. The function takes an image file path, resizes it to the provided size, and returns a magic square that contains the image. Centering the image is optional.</p>
-<div id="4bc47418" class="cell" data-execution_count="42">
+<div id="a229d7d8" class="cell" data-execution_count="42">
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_magic_square_from_image(image_path, image_size<span class="op">=</span>(<span class="dv">32</span>, <span class="dv">32</span>), center_image<span class="op">=</span><span class="va">True</span>):</span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Load and process the image</span></span>
 <span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>    sprite <span class="op">=</span> Image.<span class="bu">open</span>(image_path).resize(image_size, Image.LANCZOS)</span>
@@ -821,7 +821,7 @@ window.Quarto = {
 </tr>
 </tbody></table>
 <p>In it, the sum of each row, column, and diagonal is 139. In addition, the sum of any 2x2 box is also 139. As the cells are not consecutive integers starting from 1, this is not a normal magic square. The first row shows his birthdate (22/12/1887).</p>
-<div id="61fbe603" class="cell" data-execution_count="43">
+<div id="59636c02" class="cell" data-execution_count="43">
 <div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>ramanujan1x <span class="op">=</span> create_magic_square_from_image(<span class="st">'ramanujan.jpg'</span>, image_size<span class="op">=</span>(<span class="dv">64</span>, <span class="dv">64</span>), center_image<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>plot_square(ramanujan1x, center_only<span class="op">=</span><span class="va">True</span>, show_values<span class="op">=</span><span class="va">True</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">10</span>))</span>
 <span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>np.savetxt(<span class="st">"ramanujan1x.csv"</span>, ramanujan1x, fmt<span class="op">=</span><span class="st">'</span><span class="sc">%d</span><span class="st">'</span>, delimiter<span class="op">=</span><span class="st">";"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -840,7 +840,7 @@ window.Quarto = {
 <p><img src="conway.jpg" class="img-fluid"></p>
 <p><a href="https://en.wikipedia.org/wiki/John_Horton_Conway">John Conway</a> made contributions to many branches of recreational mathematics. He’s likely best known for inventing the <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">Game of Life</a>.</p>
 <p>He also thought up an interesting method to construct magic squares of order 4n+2, where n is a natural number, which he called the <a href="https://en.wikipedia.org/wiki/Conway%27s_LUX_method_for_magic_squares">Conway’s LUX method</a>.</p>
-<div id="c8ffcc49" class="cell" data-execution_count="44">
+<div id="eef03dcd" class="cell" data-execution_count="44">
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>conway1x <span class="op">=</span> create_magic_square_from_image(<span class="st">'conway.jpg'</span>, image_size<span class="op">=</span>(<span class="dv">64</span>, <span class="dv">64</span>), center_image<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>plot_square(conway1x, center_only<span class="op">=</span><span class="va">True</span>, show_values<span class="op">=</span><span class="va">True</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">10</span>))</span>
 <span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>np.savetxt(<span class="st">"conway1x.csv"</span>, conway1x, fmt<span class="op">=</span><span class="st">'</span><span class="sc">%d</span><span class="st">'</span>, delimiter<span class="op">=</span><span class="st">";"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -917,7 +917,7 @@ window.Quarto = {
 </td>
 </tr>
 </tbody></table>
-<div id="58a747a7" class="cell" data-execution_count="45">
+<div id="415b081e" class="cell" data-execution_count="45">
 <div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>euler16x <span class="op">=</span> create_magic_square_from_image(<span class="st">'euler.png'</span>, image_size<span class="op">=</span>(<span class="dv">32</span>, <span class="dv">32</span>), center_image<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>plot_square_colored_blocks(euler16x, show_values<span class="op">=</span><span class="va">True</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">10</span>))</span>
 <span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>np.savetxt(<span class="st">"euler16x.csv"</span>, euler16x, fmt<span class="op">=</span><span class="st">'</span><span class="sc">%d</span><span class="st">'</span>, delimiter<span class="op">=</span><span class="st">";"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>

@@ -6,6 +6,8 @@ date: "2022-01-04"
 categories: [machine learning, decision trees, games, python, sklearn, programming]
 image: "guess-who.jpg"
 toc: true
+resources:
+    - "*.jpeg"
 ---
 
 In the scikit-learn machine learning library, the `predict` method is used to make predictions on new data with a fitted model. This method expects the input data to have the same number of features as the data that the model was trained on. This makes sense for many models, but not necessarily for decision trees. Since decision trees look at one feature at a time, they may only need a subset of all features to make a prediction. 
@@ -233,7 +235,7 @@ grid.width = "1120"
 
 for i in range(3):
     for j in range(8):
-        grid[i, j] = HTML(value="<img src='https://guesswhocharacters.info/imgs/{}.jpeg' width=130 height=190>".format(str(df.name[i*8+j])))
+        grid[i, j] = HTML(value="<img src='https://www.aswinvanwoudenberg.com/posts/traversing-a-decision-tree-to-win-at-guess-who/{}.jpeg' width=130 height=190>".format(str(df.name[i*8+j])))
 
 label = Label(value="Put the questions and answer here")
 button_yes = Button(description="Yes")

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.31">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -71,14 +71,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../favicon.png" rel="icon" type="image/png">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-08aed7fc4ad4995f89cd2ec7682ca9e3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-c6e40670e56ed545c5e701e5e2d9fb10.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -129,6 +130,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <nav class="navbar navbar-expand " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    </a>
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Aswin van Woudenberg</span>
     </a>
@@ -219,13 +222,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="importing-libraries">Importing libraries</h2>
 <p>We start by importing the necessary modules.</p>
 <div class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> logging</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> logging</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> graphviz</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ipywidgets <span class="im">as</span> widgets</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> logging <span class="im">import</span> StreamHandler</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> functools <span class="im">import</span> wraps, partial</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> functools <span class="im">import</span> wraps, partial</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The standard way of doing logging in Python is by using the <code>logging</code> module, which is part of the Python standard library. This module is quite flexible and allows us to control the log levels, log formatting, log destinations, and more.</p>
 <p>The decorator uses the <code>wraps</code> and <code>partial</code> functions from the <code>functools</code> module. The <code>graphviz</code> module is used to create the call graphs.</p>
@@ -236,7 +239,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>A decorator is essentially a higher-order function that takes a function or class as input and returns a modified version of that function or class.</p>
 <p>The function decorator I created is named <code>fun_logger</code>. Besides the calls and exits of a function, is also logs any exceptions that might occur. In addition, it logs the arguments and return value. It also keeps track of the indentation level for log messages which is incremented and decremented based on the nesting depth of function calls within the decorated functions.</p>
 <div class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fun_logger(func<span class="op">=</span><span class="va">None</span>, <span class="op">*</span>, logging<span class="op">=</span>logging, indent<span class="op">=</span><span class="st">'  '</span>, exit<span class="op">=</span><span class="va">False</span>):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fun_logger(func<span class="op">=</span><span class="va">None</span>, <span class="op">*</span>, logging<span class="op">=</span>logging, indent<span class="op">=</span><span class="st">'  '</span>, exit<span class="op">=</span><span class="va">False</span>):</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> func <span class="kw">is</span> <span class="va">None</span>:</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> partial(fun_logger,logging<span class="op">=</span>logging, indent<span class="op">=</span>indent, exit<span class="op">=</span>exit)</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    </span>
@@ -280,7 +283,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>                <span class="st">'indent_level'</span>: indent_level</span>
 <span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>            })        </span>
 <span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> result</span>
-<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wrapper</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wrapper</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The decorator can be used with or without arguments.</p>
 <p>Like most function decorators it returns a wrapper function that calls the original function while adding additional functionality. In this case the wrapper function does the following:</p>
@@ -299,7 +302,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>A logging handler in the Python logging framework processes log records generated by the application and sends them to the desired output destination. It captures, filters, formats, and routes log records, enabling control over where and how logs are stored or displayed.</p>
 <p>The <code>fun_logger</code> decorator <a href="#the-logging-decorator">introduced above</a> generates log records for every decorated function call. We can print those log records. What we want however, is to turn these log records into a call graph. For this we can create a custom logging handler that processes the log records and produces the graph.</p>
 <div class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> CallGraphHandler(StreamHandler):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> CallGraphHandler(StreamHandler):</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">    A handler class which allows the drawing of call graphs</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span>    </span>
@@ -350,7 +353,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="kw">not</span> current:</span>
 <span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>                current <span class="op">=</span> record.exception.<span class="va">__class__</span>.<span class="va">__name__</span></span>
 <span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>                <span class="va">self</span>.gv.node(current, shape<span class="op">=</span><span class="st">'diamond'</span>, fontcolor<span class="op">=</span><span class="st">'red'</span>, pencolor<span class="op">=</span><span class="st">'red'</span>, labelfontcolor<span class="op">=</span><span class="st">'red'</span>, color<span class="op">=</span><span class="st">'red'</span>)</span>
-<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>                <span class="va">self</span>.gv.edge(<span class="va">self</span>.stack[<span class="op">-</span><span class="dv">1</span>], current, fontcolor<span class="op">=</span><span class="st">'red'</span>, pencolor<span class="op">=</span><span class="st">'red'</span>, labelfontcolor<span class="op">=</span><span class="st">'red'</span>, color<span class="op">=</span><span class="st">'red'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>                <span class="va">self</span>.gv.edge(<span class="va">self</span>.stack[<span class="op">-</span><span class="dv">1</span>], current, fontcolor<span class="op">=</span><span class="st">'red'</span>, pencolor<span class="op">=</span><span class="st">'red'</span>, labelfontcolor<span class="op">=</span><span class="st">'red'</span>, color<span class="op">=</span><span class="st">'red'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>This custom logging handler class does the following:</p>
 <ul>
@@ -364,42 +367,42 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="using-the-decorator-and-logging-handler">Using the decorator and logging handler</h2>
 <p>We firstly create a new object based on the <code>Logger</code> class that we’ll write our log messages to.</p>
 <div class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>logger <span class="op">=</span> logging.getLogger(<span class="va">__name__</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>logger.setLevel(logging.DEBUG)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>logger <span class="op">=</span> logging.getLogger(<span class="va">__name__</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>logger.setLevel(logging.DEBUG)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The log level is set to <code>DEBUG</code>.</p>
 <p>We’ll write logging records to both a <code>StreamHandler</code> and a <code>CallGraphHandler</code>. We’ll initialize the <code>StreamHandler</code> first. This will output the log records to stdout.</p>
 <div class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>stream_handler <span class="op">=</span> logging.StreamHandler()</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>stream_handler <span class="op">=</span> logging.StreamHandler()</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>formatter <span class="op">=</span> logging.Formatter(<span class="st">'</span><span class="sc">%(indent)s%(message)s</span><span class="st">'</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>stream_handler.setFormatter(formatter)</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>logger.addHandler(stream_handler)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>logger.addHandler(stream_handler)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We define a custom log format so that an indentation (<code>%(indent)</code>) is added to show the call depth. If we don’t do this all log messages will be left-aligned. The <code>stream_handler</code> is added to the <code>logger</code> object.</p>
 <p>Next we initialize a <code>CallGraphHandler</code> object and add it to <code>logger</code> object as well.</p>
 <div class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>call_graph_handler <span class="op">=</span> CallGraphHandler(<span class="st">"Call graph"</span>, <span class="st">"An example call trace of a recursive function"</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>logger.addHandler(call_graph_handler)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>call_graph_handler <span class="op">=</span> CallGraphHandler(<span class="st">"Call graph"</span>, <span class="st">"An example call trace of a recursive function"</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>logger.addHandler(call_graph_handler)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <section id="tower-of-hanoi" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="tower-of-hanoi">Tower of Hanoi</h3>
 <p>The <a href="https://en.wikipedia.org/wiki/Tower_of_Hanoi">Tower of Hanoi</a> problem has an elegant recursive solution that breaks down the problem into subproblems and using recursion to solve them. Let’s see what its logging output looks like.</p>
 <div class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="at">@fun_logger</span>(logging<span class="op">=</span>logger)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="at">@fun_logger</span>(logging<span class="op">=</span>logger)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> hanoi(n, source, destination, helper):</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> n<span class="op">==</span><span class="dv">1</span>:</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"Move disk 1 from peg"</span>, source, <span class="st">"to peg"</span>, destination)</span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span></span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    hanoi(n<span class="op">-</span><span class="dv">1</span>, source, helper, destination)</span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Move disk"</span>, n, <span class="st">"from peg"</span>, source, <span class="st">"to peg"</span>, destination)</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    hanoi(n<span class="op">-</span><span class="dv">1</span>, helper, destination, source)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    hanoi(n<span class="op">-</span><span class="dv">1</span>, helper, destination, source)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Note how we have added the decorator and given it our <code>logger</code> object.</p>
 <p>Now we’re ready to call the function. In this case we tell it to produce a solution for four disks.</p>
 <div class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">4</span> <span class="co"># number of disks</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>hanoi(n, <span class="st">'A'</span>, <span class="st">'B'</span>, <span class="st">'C'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">4</span> <span class="co"># number of disks</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>hanoi(n, <span class="st">'A'</span>, <span class="st">'B'</span>, <span class="st">'C'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>function hanoi called with args 4, 'A', 'B', 'C'</code></pre>
 </div>
@@ -468,8 +471,8 @@ Move disk 1 from peg C to peg B</code></pre>
 <h4 class="anchored" data-anchor-id="showing-the-call-graph">Showing the call graph</h4>
 <p>The <code>stream_handler</code> writes directly to stdout. To visualize the call graph we need to get the <a href="https://graphviz.org/doc/info/lang.html">Graphviz DOT</a> string from the <code>call_graph_handler</code> object, create a <code>Graphviz</code> object and display it.</p>
 <div class="cell page-columns page-full" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>graph <span class="op">=</span> graphviz.Source(call_graph_handler.source)</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>graph</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>graph <span class="op">=</span> graphviz.Source(call_graph_handler.source)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>graph</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display page-columns page-full" data-execution_count="9">
 <div class="page-columns page-full">
 <figure class="figure page-columns page-full">
@@ -483,7 +486,7 @@ Move disk 1 from peg C to peg B</code></pre>
 <h4 class="anchored" data-anchor-id="clearing-the-call-graph">Clearing the call graph</h4>
 <p>Once we’ve created our <code>Graphviz</code> object we can clear the Graphviz string in the <code>call_graph_handler</code> object.</p>
 <div class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>call_graph_handler.clear()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>call_graph_handler.clear()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>If we skip this step subsequent function calls will be drawn in the same Graphviz image.</p>
 </section>
@@ -492,15 +495,15 @@ Move disk 1 from peg C to peg B</code></pre>
 <h3 class="anchored" data-anchor-id="fibonacci-sequence">Fibonacci sequence</h3>
 <p>Our next example will be the famous <a href="https://en.wikipedia.org/wiki/Fibonacci_sequence">Fibonacci sequence</a>. The following function will return the nth Fibonacci number.</p>
 <div class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="at">@fun_logger</span>(logging<span class="op">=</span>logger, exit<span class="op">=</span><span class="va">True</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="at">@fun_logger</span>(logging<span class="op">=</span>logger, exit<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fib(n):</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> n <span class="kw">in</span> [<span class="dv">0</span>, <span class="dv">1</span>]:</span>
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> n</span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> fib(n <span class="op">-</span> <span class="dv">1</span>) <span class="op">+</span> fib(n <span class="op">-</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> fib(n <span class="op">-</span> <span class="dv">1</span>) <span class="op">+</span> fib(n <span class="op">-</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Again we add the decorator. Because we’re also interested in the return values of the function we set <code>exit=True</code>. This will cause the decorator to also output logging records when the function exits.</p>
 <div class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>fib(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>fib(<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>function fib called with args 5</code></pre>
 </div>
@@ -600,8 +603,8 @@ Move disk 1 from peg C to peg B</code></pre>
 <h4 class="anchored" data-anchor-id="showing-the-call-graph-1">Showing the call graph</h4>
 <p>Let’s show the call graph.</p>
 <div class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>graph <span class="op">=</span> graphviz.Source(call_graph_handler.source)</span>
-<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>graph</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>graph <span class="op">=</span> graphviz.Source(call_graph_handler.source)</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>graph</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="13">
 <div>
 <figure class="figure">
@@ -616,10 +619,10 @@ Move disk 1 from peg C to peg B</code></pre>
 <h4 class="anchored" data-anchor-id="animating-the-call-graph">Animating the call graph</h4>
 <p>By tracing the arrows, first traversing the left subtree and then the right subtree of each node starting with the root node, we can figure out the call sequence. A somewhat hacky way of animating this call order is taking the <code>Graphviz</code> DOT string and update the colors of the nodes and edges. The nodes and edges in the DOT string we get from the <code>call_graph_handler</code> all have the color black, blue, or red (in case of an exception). We can create ‘frames’ by setting a certain number of colors to lightgray starting from the end of this DOT string. How many colors we set to lightgray depends on the ‘frame’ we’re in.</p>
 <div class="cell" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>dot <span class="op">=</span> call_graph_handler.source</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>dot <span class="op">=</span> call_graph_handler.source</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>frames <span class="op">=</span> dot.count(<span class="st">"color="</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>frames <span class="op">=</span> dot.count(<span class="st">"color="</span>)</span>
 <span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>slider <span class="op">=</span> widgets.IntSlider(</span>
 <span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>    value<span class="op">=</span><span class="dv">0</span>,</span>
@@ -639,12 +642,12 @@ Move disk 1 from peg C to peg B</code></pre>
 <span id="cb62-18"><a href="#cb62-18" aria-hidden="true" tabindex="-1"></a>        display(graph)</span>
 <span id="cb62-19"><a href="#cb62-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb62-20"><a href="#cb62-20" aria-hidden="true" tabindex="-1"></a>slider.observe(on_value_change)</span>
-<span id="cb62-21"><a href="#cb62-21" aria-hidden="true" tabindex="-1"></a>on_value_change(<span class="va">None</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb62-21"><a href="#cb62-21" aria-hidden="true" tabindex="-1"></a>on_value_change(<span class="va">None</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The <code>[::-1]</code> part reverses the DOT string so the regular expression can substitute from the back to the front of the string. Note how in the regular expression <code>yergthgil=roloc</code> is <code>color=lightgrey</code> spelled backwards. We use a slider to set the frame number. We set the stepsize in the slider to 4 because that’s how many colors are updated in each frame.</p>
 <p>I told you it was hacky.</p>
 <div class="cell" data-execution_count="17">
-<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>display(slider, output)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>display(slider, output)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
 {"model_id":"61826b40ffc241da95b47c8d7c89369d","version_major":2,"version_minor":0}
@@ -661,7 +664,7 @@ Move disk 1 from peg C to peg B</code></pre>
 <h4 class="anchored" data-anchor-id="clearing-the-call-graph-1">Clearing the call graph</h4>
 <p>For good practice we clear the call graph again.</p>
 <div class="cell" data-execution_count="18">
-<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>call_graph_handler.clear()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>call_graph_handler.clear()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>If you actually want multiple calls to appear in the same call graph you can skip this step.</p>
 <p>It’s important to note that only functions that are decorated will appear in the graph. Say you have a function <code>foo</code> that calls function <code>bar</code> that calls function <code>baz</code> and you only decorate <code>foo</code>. Only calls to <code>foo</code> will be drawn in the call graph. To include <code>bar</code> and <code>baz</code> you’ll have to decorate them as well.</p>
@@ -731,13 +734,14 @@ Move disk 1 from peg C to peg B</code></pre>
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

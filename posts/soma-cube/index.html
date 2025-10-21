@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.31">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -71,14 +71,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../favicon.png" rel="icon" type="image/png">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-08aed7fc4ad4995f89cd2ec7682ca9e3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-c6e40670e56ed545c5e701e5e2d9fb10.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -129,6 +130,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <nav class="navbar navbar-expand " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    </a>
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Aswin van Woudenberg</span>
     </a>
@@ -231,32 +234,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="importing-libraries">Importing libraries</h2>
 <p>Let’s start by importing some libraries. We’ll use <code>matplotlib</code> to visualize solutions in 3D.</p>
 <div class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.animation <span class="im">as</span> animation</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ipywidgets <span class="im">as</span> widgets</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> HTML</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> math <span class="im">import</span> ceil</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> math <span class="im">import</span> ceil</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="representing-the-pieces" class="level2">
 <h2 class="anchored" data-anchor-id="representing-the-pieces">Representing the pieces</h2>
 <p>We’ll represent each piece as a list of coordinates in 3D space. Each tuple is an (x, y, z) coordinate.</p>
 <div class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> [(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>),(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>),(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>),(<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>)] <span class="co"># blue piece</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> [(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>),(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>),(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>),(<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>)] <span class="co"># blue piece</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> [(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>),(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>),(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>),(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>)] <span class="co"># red piece</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> [(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>),(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>),(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>),(<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">0</span>)] <span class="co"># purple piece</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> [(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>),(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>),(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>),(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>)] <span class="co"># brown piece</span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> [(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>),(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>),(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>),(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>)] <span class="co"># yellow piece</span></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>l <span class="op">=</span> [(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>),(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>),(<span class="dv">2</span>,<span class="dv">0</span>,<span class="dv">0</span>),(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>)] <span class="co"># orange piece</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>v <span class="op">=</span> [(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>),(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>),(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>)] <span class="co"># green piece</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>v <span class="op">=</span> [(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>),(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>),(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>)] <span class="co"># green piece</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The letters <code>z</code>, <code>t</code>, <code>p</code>, <code>b</code>, <code>a</code>, <code>l</code>, and <code>v</code> look (with some imagination) like the pieces.</p>
 <p>Let’s put all pieces and colors in a list so we can access them by index.</p>
 <div class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>pieces <span class="op">=</span> [z, p, t, b, a, l, v]</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> [<span class="st">"blue"</span>, <span class="st">"red"</span>, <span class="st">"purple"</span>, <span class="st">"brown"</span>, <span class="st">"yellow"</span>, <span class="st">"orange"</span>, <span class="st">"green"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>pieces <span class="op">=</span> [z, p, t, b, a, l, v]</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> [<span class="st">"blue"</span>, <span class="st">"red"</span>, <span class="st">"purple"</span>, <span class="st">"brown"</span>, <span class="st">"yellow"</span>, <span class="st">"orange"</span>, <span class="st">"green"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="visualizing-the-pieces-and-solution" class="level2">
@@ -264,7 +267,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Before writing the solver, let’s consider how we can create a 3D visualization of the Soma cube. I’ve chosen to use Matplotlib for its 3D rendering capabilities.</p>
 <p>Matplotlib can draw voxels (3D pixels) which we can use to visualize a single piece, multiple pieces, or even the full solution in 3D. The following function takes a 3D numpy array that represents the voxels and plots them.</p>
 <div class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_solution(colors, ax<span class="op">=</span><span class="va">None</span>):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_solution(colors, ax<span class="op">=</span><span class="va">None</span>):</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> ax:</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>        fig <span class="op">=</span> plt.figure()</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -277,15 +280,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># draw each voxel with a color (each voxel unequal to None)</span></span>
 <span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    voxels <span class="op">=</span> (colors <span class="op">!=</span> <span class="va">None</span>)</span>
 <span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    ax.voxels(voxels, facecolors<span class="op">=</span>colors, edgecolors<span class="op">=</span>colors)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    ax.voxels(voxels, facecolors<span class="op">=</span>colors, edgecolors<span class="op">=</span>colors)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>To use this function we need to call it with a 3D numpy array that represents each voxel.</p>
 <div class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>voxels <span class="op">=</span> np.empty((<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">3</span>), dtype<span class="op">=</span><span class="st">'object'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>voxels <span class="op">=</span> np.empty((<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">3</span>), dtype<span class="op">=</span><span class="st">'object'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Each element in this array is initialized to <code>None</code>.</p>
 <div class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>voxels</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>voxels</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <pre><code>array([[[None, None, None],
         [None, None, None],
@@ -302,14 +305,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Let’s set each element of <code>voxels</code> to a color and call <code>plot_solution</code>. We can set elements seperately, like this:</p>
 <div class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>voxels[<span class="dv">0</span>][<span class="dv">0</span>][<span class="dv">0</span>] <span class="op">=</span> <span class="st">'yellow'</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>voxels[<span class="dv">0</span>][<span class="dv">0</span>][<span class="dv">0</span>] <span class="op">=</span> <span class="st">'yellow'</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>voxels[<span class="dv">1</span>][<span class="dv">0</span>][<span class="dv">0</span>] <span class="op">=</span> <span class="st">'yellow'</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>voxels[<span class="dv">0</span>][<span class="dv">0</span>][<span class="dv">1</span>] <span class="op">=</span> <span class="st">'yellow'</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>voxels[<span class="dv">0</span>][<span class="dv">1</span>][<span class="dv">1</span>] <span class="op">=</span> <span class="st">'yellow'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>voxels[<span class="dv">0</span>][<span class="dv">1</span>][<span class="dv">1</span>] <span class="op">=</span> <span class="st">'yellow'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Or we can set all elements at once.</p>
 <div class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>voxels <span class="op">=</span> np.array([</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>voxels <span class="op">=</span> np.array([</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    [[<span class="st">'yellow'</span>, <span class="st">'yellow'</span>, <span class="st">'orange'</span>],</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>     [<span class="st">'brown'</span>,  <span class="st">'yellow'</span>, <span class="st">'orange'</span>],</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>     [<span class="st">'brown'</span>,  <span class="st">'brown'</span>,  <span class="st">'orange'</span>]],</span>
@@ -319,11 +322,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    [[<span class="st">'purple'</span>, <span class="st">'green'</span>,  <span class="st">'green'</span>],</span>
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>     [<span class="st">'purple'</span>, <span class="st">'purple'</span>, <span class="st">'red'</span>],</span>
 <span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>     [<span class="st">'purple'</span>, <span class="st">'red'</span>,    <span class="st">'red'</span>]]</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>plot_solution(voxels)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>plot_solution(voxels)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -335,16 +338,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>This is the same solution as shown above and one of the 240 possible unique ways of packing the seven Soma pieces into a 3x3x3 cube.</p>
 <p>Let’s see how we can visualize a single piece.</p>
 <div class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_piece(piece, color, ax<span class="op">=</span><span class="va">None</span>):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_piece(piece, color, ax<span class="op">=</span><span class="va">None</span>):</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    max_dim <span class="op">=</span> np.<span class="bu">max</span>([np.<span class="bu">max</span>(piece) <span class="op">+</span> <span class="dv">1</span>, <span class="dv">3</span>])</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    voxels <span class="op">=</span> np.empty((max_dim, max_dim, max_dim), dtype<span class="op">=</span><span class="st">'object'</span>)</span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> x, y, z <span class="kw">in</span> piece:</span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>        voxels[x][y][z] <span class="op">=</span> color</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    plot_solution(voxels, ax)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    plot_solution(voxels, ax)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>plot_piece(z, <span class="st">"blue"</span>)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>plot_piece(z, <span class="st">"blue"</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -358,7 +361,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="animating-a-solution">Animating a solution</h2>
 <p>In the solution above it was impossible to tell how some pieces were positioned. The following function animates the assembly of a solution by adding pieces one by one.</p>
 <div class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> animate_solution(colors):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> animate_solution(colors):</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    w, d, h <span class="op">=</span> colors.shape</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    show_order <span class="op">=</span> []</span>
@@ -387,11 +390,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>    anim <span class="op">=</span> animation.FuncAnimation(fig, update, frames<span class="op">=</span><span class="bu">len</span>(show_order), interval<span class="op">=</span><span class="dv">1000</span>)</span>
 <span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> anim</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> anim</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>anim <span class="op">=</span> animate_solution(voxels)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>HTML(anim.to_jshtml(default_mode<span class="op">=</span><span class="st">'once'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>anim <span class="op">=</span> animate_solution(voxels)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>HTML(anim.to_jshtml(default_mode<span class="op">=</span><span class="st">'once'</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="13">
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
@@ -2400,27 +2403,27 @@ hIoACgAAgFARQAEAABAqAigAAABCRQAFAABAqP5/hBSc6fLpZB0AAAAASUVORK5CYII=\
 <h2 class="anchored" data-anchor-id="rotating-pieces">Rotating pieces</h2>
 <p>We will implement the solver using a simple recursive backtracking algorithm. The solver will try to fit the pieces in their various orientations. For this reason, we define some helper functions to rotate a piece around an axis. I also defined an <code>identity</code> function that just returns the input as is. Its use will become clear later.</p>
 <div class="cell" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>rotate_x <span class="op">=</span> <span class="kw">lambda</span> cubelets: [(x, z, <span class="op">-</span>y) <span class="cf">for</span> (x, y, z) <span class="kw">in</span> cubelets]</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>rotate_x <span class="op">=</span> <span class="kw">lambda</span> cubelets: [(x, z, <span class="op">-</span>y) <span class="cf">for</span> (x, y, z) <span class="kw">in</span> cubelets]</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>rotate_y <span class="op">=</span> <span class="kw">lambda</span> cubelets: [(z, y, <span class="op">-</span>x) <span class="cf">for</span> (x, y, z) <span class="kw">in</span> cubelets]</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>rotate_z <span class="op">=</span> <span class="kw">lambda</span> cubelets: [(<span class="op">-</span>y, x, z) <span class="cf">for</span> (x, y, z) <span class="kw">in</span> cubelets]</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>identity <span class="op">=</span> <span class="kw">lambda</span> cubelets: cubelets</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>identity <span class="op">=</span> <span class="kw">lambda</span> cubelets: cubelets</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>For instance, to rotate piece <code>z</code> around the x-axis we can make use of <code>rotate_x</code>.</p>
 <div class="cell" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>rotate_x(z)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>rotate_x(z)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="15">
 <pre><code>[(0, 0, 0), (1, 0, 0), (1, 0, -1), (2, 0, -1)]</code></pre>
 </div>
 </div>
 <p>We can see that rotating a piece may make some coordinates negative. The following function translates a piece so that all <code>x</code>, <code>y</code>, <code>z</code> coordinates are minimal but positive.</p>
 <div class="cell" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> translate(piece):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> translate(piece):</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    d_x, d_y, d_z <span class="op">=</span> np.<span class="bu">min</span>(np.array(piece), axis<span class="op">=</span><span class="dv">0</span>) <span class="op">*</span> <span class="op">-</span><span class="dv">1</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [(x <span class="op">+</span> d_x, y <span class="op">+</span> d_y, z <span class="op">+</span> d_z) <span class="cf">for</span> (x, y, z) <span class="kw">in</span> piece]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [(x <span class="op">+</span> d_x, y <span class="op">+</span> d_y, z <span class="op">+</span> d_z) <span class="cf">for</span> (x, y, z) <span class="kw">in</span> piece]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Now we can do the same rotation as above but end up with coordinates that are all positive.</p>
 <div class="cell" data-execution_count="17">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>translate(rotate_x(z))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>translate(rotate_x(z))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="17">
 <pre><code>[(0, 0, 1), (1, 0, 1), (1, 0, 0), (2, 0, 0)]</code></pre>
 </div>
@@ -2431,7 +2434,7 @@ hIoACgAAgFARQAEAABAqAigAAABCRQAFAABAqP5/hBSc6fLpZB0AAAAASUVORK5CYII=\
 <h2 class="anchored" data-anchor-id="generating-all-orientations-for-each-piece">Generating all orientations for each piece</h2>
 <p>Using the functions defined above we can generate all orientations for each piece. Several transformations are performed one after another. The <code>identity</code> function just returns the original orientation.</p>
 <div class="cell" data-execution_count="18">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> generate_rotations(piece):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> generate_rotations(piece):</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    orientations <span class="op">=</span> []</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> f_a <span class="kw">in</span> [identity, rotate_x,  rotate_y, rotate_z]:</span>
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> f_b <span class="kw">in</span> [identity, rotate_x,  rotate_y, rotate_z]:</span>
@@ -2444,11 +2447,11 @@ hIoACgAAgFARQAEAABAqAigAAABCRQAFAABAqP5/hBSc6fLpZB0AAAAASUVORK5CYII=\
 <span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>                        <span class="cf">if</span> trans_rot_piece <span class="kw">not</span> <span class="kw">in</span> orientations:</span>
 <span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>                            orientations.append(trans_rot_piece)</span>
 <span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>                        </span>
-<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> orientations</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> orientations</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We can call this function for one piece.</p>
 <div class="cell" data-execution_count="19">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>generate_rotations(z)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>generate_rotations(z)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="19">
 <pre><code>[[(0, 0, 0), (1, 0, 0), (1, 1, 0), (2, 1, 0)],
  [(0, 0, 0), (1, 0, -1), (1, 0, 0), (2, 0, -1)],
@@ -2466,11 +2469,11 @@ hIoACgAAgFARQAEAABAqAigAAABCRQAFAABAqP5/hBSc6fLpZB0AAAAASUVORK5CYII=\
 </div>
 <p>Or we can apply this function to every piece in the <code>pieces</code> list we defined above.</p>
 <div class="cell" data-execution_count="20">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>orientations <span class="op">=</span> <span class="bu">list</span>(<span class="bu">map</span>(generate_rotations, pieces))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>orientations <span class="op">=</span> <span class="bu">list</span>(<span class="bu">map</span>(generate_rotations, pieces))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We can display all orientations for each piece. Note how we apply <code>translate</code> to make sure all coordinates end up in the positive quadrant.</p>
 <div class="cell page-columns page-full" data-execution_count="21">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>cols <span class="op">=</span> <span class="dv">8</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>cols <span class="op">=</span> <span class="dv">8</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>total_number_of_orientations <span class="op">=</span> <span class="bu">sum</span>(<span class="bu">list</span>(<span class="bu">map</span>(<span class="bu">len</span>,orientations)))</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>rows <span class="op">=</span> ceil(total_number_of_orientations <span class="op">/</span> cols)</span>
 <span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>fig, axs <span class="op">=</span> plt.subplots(rows, cols, figsize<span class="op">=</span>(cols<span class="op">*</span><span class="dv">3</span>,rows<span class="op">*</span><span class="dv">3</span>), </span>
@@ -2489,7 +2492,7 @@ hIoACgAAgFARQAEAABAqAigAAABCRQAFAABAqP5/hBSc6fLpZB0AAAAASUVORK5CYII=\
 <span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>    axs[count <span class="op">//</span> cols, count <span class="op">%</span> cols].set_axis_off()</span>
 <span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>    count <span class="op">+=</span> <span class="dv">1</span></span>
 <span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display page-columns page-full">
 <div class="page-columns page-full">
 <figure class="figure page-columns page-full">
@@ -2505,10 +2508,10 @@ hIoACgAAgFARQAEAABAqAigAAABCRQAFAABAqP5/hBSc6fLpZB0AAAAASUVORK5CYII=\
 <p>We’re finally ready to work on the solver for the Soma cube. The solver will take in a list of coordinates (that make up the cube that we want to fill up with pieces) and recursively search for a solution.</p>
 <p>We can generate this list of coordinates using a simple list comprehension.</p>
 <div class="cell" data-execution_count="22">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>cube_coordinates <span class="op">=</span> [(x, y, z) <span class="cf">for</span> x <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3</span>) <span class="cf">for</span> y <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3</span>) <span class="cf">for</span> z <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>cube_coordinates <span class="op">=</span> [(x, y, z) <span class="cf">for</span> x <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3</span>) <span class="cf">for</span> y <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3</span>) <span class="cf">for</span> z <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3</span>)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell" data-execution_count="23">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>cube_coordinates</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>cube_coordinates</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="23">
 <pre><code>[(0, 0, 0),
  (0, 0, 1),
@@ -2542,10 +2545,10 @@ hIoACgAAgFARQAEAABAqAigAAABCRQAFAABAqP5/hBSc6fLpZB0AAAAASUVORK5CYII=\
 <p>The solver will yield the same list but each tuple will have an extra element indicating the color that coordinate will get after all pieces have been placed.</p>
 <p>We’ll use a list of booleans to keep track of which pieces have been placed.</p>
 <div class="cell" data-execution_count="24">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>pieces_used <span class="op">=</span> [<span class="va">False</span>] <span class="op">*</span> <span class="dv">7</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>pieces_used <span class="op">=</span> [<span class="va">False</span>] <span class="op">*</span> <span class="dv">7</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell" data-execution_count="25">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> solve_soma_(solution, i):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> solve_soma_(solution, i):</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> i <span class="op">==</span> <span class="dv">27</span>:</span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">yield</span> solution</span>
 <span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
@@ -2567,15 +2570,15 @@ hIoACgAAgFARQAEAABAqAigAAABCRQAFAABAqP5/hBSc6fLpZB0AAAAASUVORK5CYII=\
 <span id="cb30-20"><a href="#cb30-20" aria-hidden="true" tabindex="-1"></a>                            </span>
 <span id="cb30-21"><a href="#cb30-21" aria-hidden="true" tabindex="-1"></a>                        <span class="co"># continue search</span></span>
 <span id="cb30-22"><a href="#cb30-22" aria-hidden="true" tabindex="-1"></a>                        <span class="cf">yield</span> <span class="cf">from</span> solve_soma_(new_solution, j)</span>
-<span id="cb30-23"><a href="#cb30-23" aria-hidden="true" tabindex="-1"></a>                        pieces_used[piece] <span class="op">=</span> <span class="va">False</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb30-23"><a href="#cb30-23" aria-hidden="true" tabindex="-1"></a>                        pieces_used[piece] <span class="op">=</span> <span class="va">False</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell" data-execution_count="26">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> solve_soma(coordinates):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> solve_soma(coordinates):</span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">global</span> pieces_used</span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    pieces_used <span class="op">=</span> [<span class="va">False</span>] <span class="op">*</span> <span class="dv">7</span></span>
 <span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    solution <span class="op">=</span> <span class="bu">sorted</span>([(x, y, z, <span class="va">None</span>) <span class="cf">for</span> x, y, z <span class="kw">in</span> coordinates])</span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">yield</span> <span class="cf">from</span> solve_soma_(solution, <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">yield</span> <span class="cf">from</span> solve_soma_(solution, <span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>You call the <code>solve_soma</code> function with a list of coordinates representing the space that will be packed with Soma pieces. The actual algorithm is implemented in <code>solve_soma_</code>. The algorithm does the following:</p>
 <ol type="1">
@@ -2591,7 +2594,7 @@ hIoACgAAgFARQAEAABAqAigAAABCRQAFAABAqP5/hBSc6fLpZB0AAAAASUVORK5CYII=\
 <p>The solver is a generator function that yields all solutions one by one. Let’s start by just displaying the first solution it finds.</p>
 <p>The following function finds the first solution given a list of coordinates to fill and plots this solution.</p>
 <div class="cell" data-execution_count="27">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> solve_and_plot_first_solution(coordinates, ax<span class="op">=</span><span class="va">None</span>):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> solve_and_plot_first_solution(coordinates, ax<span class="op">=</span><span class="va">None</span>):</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># instantiate generator</span></span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    gen <span class="op">=</span> solve_soma(coordinates)</span>
 <span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -2606,11 +2609,11 @@ hIoACgAAgFARQAEAABAqAigAAABCRQAFAABAqP5/hBSc6fLpZB0AAAAASUVORK5CYII=\
 <span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> x, y, z, color <span class="kw">in</span> solution:</span>
 <span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>        voxels[x][y][z] <span class="op">=</span> color</span>
 <span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>    plot_solution(voxels, ax)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>    plot_solution(voxels, ax)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell" data-execution_count="28">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>solve_and_plot_first_solution(cube_coordinates)</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>solve_and_plot_first_solution(cube_coordinates)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -2621,7 +2624,7 @@ hIoACgAAgFARQAEAABAqAigAAABCRQAFAABAqP5/hBSc6fLpZB0AAAAASUVORK5CYII=\
 </div>
 <p>We’ll also define a function that finds the first solution and then animates it.</p>
 <div class="cell" data-execution_count="29">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> solve_and_animate_first_solution(coordinates):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> solve_and_animate_first_solution(coordinates):</span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># instantiate generator</span></span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>    gen <span class="op">=</span> solve_soma(coordinates)</span>
 <span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -2637,10 +2640,10 @@ hIoACgAAgFARQAEAABAqAigAAABCRQAFAABAqP5/hBSc6fLpZB0AAAAASUVORK5CYII=\
 <span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>        voxels[x][y][z] <span class="op">=</span> color</span>
 <span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a>    anim <span class="op">=</span> animate_solution(voxels)</span>
-<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a>    display(HTML(anim.to_jshtml(default_mode<span class="op">=</span><span class="st">'once'</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a>    display(HTML(anim.to_jshtml(default_mode<span class="op">=</span><span class="st">'once'</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell" data-execution_count="30">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>solve_and_animate_first_solution(cube_coordinates)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>solve_and_animate_first_solution(cube_coordinates)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
@@ -4875,7 +4878,7 @@ AAAASUVORK5CYII=\
 <p>We called the solver with <code>cube_coordinates</code> that contains the coordinates that make up a cube. Instead of a cube, we can also pass a sorted list of coordinates that make up another shape.</p>
 <p>Let’s look at some examples.</p>
 <div class="cell" data-execution_count="31">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>pyramid_coordinates <span class="op">=</span> <span class="bu">sorted</span>(</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>pyramid_coordinates <span class="op">=</span> <span class="bu">sorted</span>(</span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>    [(x, y, <span class="dv">0</span>) <span class="cf">for</span> x <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">4</span>) <span class="cf">for</span> y <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>)] <span class="op">+</span> </span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>    [(x, y, <span class="dv">0</span>) <span class="cf">for</span> x <span class="kw">in</span> [<span class="dv">0</span>, <span class="dv">4</span>] <span class="cf">for</span> y <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">4</span>)] <span class="op">+</span></span>
 <span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>    [(<span class="dv">2</span>, y, <span class="dv">1</span>) <span class="cf">for</span> y <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">4</span>)] <span class="op">+</span> </span>
@@ -4978,11 +4981,11 @@ AAAASUVORK5CYII=\
 <span id="cb36-101"><a href="#cb36-101" aria-hidden="true" tabindex="-1"></a>    [(x, x <span class="op">-</span> <span class="dv">1</span>, <span class="dv">0</span>) <span class="cf">for</span> x <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">6</span>)] <span class="op">+</span></span>
 <span id="cb36-102"><a href="#cb36-102" aria-hidden="true" tabindex="-1"></a>    [(x, x, z) <span class="cf">for</span> x <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">6</span>) <span class="cf">for</span> z <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">2</span>)] <span class="op">+</span></span>
 <span id="cb36-103"><a href="#cb36-103" aria-hidden="true" tabindex="-1"></a>    [(x, x <span class="op">+</span> <span class="dv">1</span>, z) <span class="cf">for</span> x <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>) <span class="cf">for</span> z <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">2</span>)]</span>
-<span id="cb36-104"><a href="#cb36-104" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb36-104"><a href="#cb36-104" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Let’s place these figures and their names into lists.</p>
 <div class="cell" data-execution_count="32">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>figure_names <span class="op">=</span> [<span class="st">"Cube"</span>, <span class="st">"Pyramid"</span>, <span class="st">"Turtle"</span>, <span class="st">"Tower"</span>, <span class="st">"Bear"</span>, <span class="st">"Tunnel"</span>, <span class="st">"Tub"</span>, <span class="st">"Airplane"</span>, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>figure_names <span class="op">=</span> [<span class="st">"Cube"</span>, <span class="st">"Pyramid"</span>, <span class="st">"Turtle"</span>, <span class="st">"Tower"</span>, <span class="st">"Bear"</span>, <span class="st">"Tunnel"</span>, <span class="st">"Tub"</span>, <span class="st">"Airplane"</span>, </span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Bench"</span>, <span class="st">"Duck"</span>, <span class="st">"Cascade"</span>, <span class="st">"Chair"</span>, <span class="st">"Castle"</span>, <span class="st">"Dog"</span>, <span class="st">"Cross"</span>, <span class="st">"Elephant"</span>,</span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Stairs"</span>, <span class="st">"Snake"</span>, <span class="st">"Skyscraper"</span>, <span class="st">"Wall"</span></span>
 <span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>               ]</span>
@@ -4994,12 +4997,12 @@ AAAASUVORK5CYII=\
 <span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>    castle_coordinates, dog_coordinates, cross_coordinates,</span>
 <span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>    elephant_coordinates, stairs_coordinates, snake_coordinates,</span>
 <span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>    skyscraper_coordinates, wall_coordinates</span>
-<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>You can add more figures if you want. Just make sure that each list contains exactly 27 coordinates.</p>
 <p>We can plot all figures as subplots.</p>
 <div class="cell page-columns page-full" data-execution_count="33">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>cols <span class="op">=</span> <span class="dv">5</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>cols <span class="op">=</span> <span class="dv">5</span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>number_of_figures <span class="op">=</span> <span class="bu">len</span>(figure_coordinates)</span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>rows <span class="op">=</span> ceil(number_of_figures <span class="op">/</span> cols)</span>
 <span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>fig, axs <span class="op">=</span> plt.subplots(rows, cols, figsize<span class="op">=</span>(cols<span class="op">*</span><span class="dv">3</span>,rows<span class="op">*</span><span class="dv">3</span>), </span>
@@ -5017,7 +5020,7 @@ AAAASUVORK5CYII=\
 <span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a>    axs[count <span class="op">//</span> cols, count <span class="op">%</span> cols].set_axis_off()</span>
 <span id="cb38-17"><a href="#cb38-17" aria-hidden="true" tabindex="-1"></a>    count <span class="op">+=</span> <span class="dv">1</span></span>
 <span id="cb38-18"><a href="#cb38-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-19"><a href="#cb38-19" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb38-19"><a href="#cb38-19" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display page-columns page-full">
 <div class="page-columns page-full">
 <figure class="figure page-columns page-full">
@@ -5032,13 +5035,13 @@ AAAASUVORK5CYII=\
 <h2 class="anchored" data-anchor-id="showing-solutions-one-by-one">Showing solutions one by one</h2>
 <p>Most figures can be assembled in more than one way. Using some widgets we can put together a simple GUI that lets us select a figure, solve it and iterate over the solutions.</p>
 <p>We’ll use a dropdown menu, a button, an output widget, and a label widget. The solutions are shown as an animation we can step through.</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>figure_dropdown <span class="op">=</span> widgets.Dropdown(options<span class="op">=</span><span class="bu">zip</span>(figure_names, figure_coordinates), value<span class="op">=</span>cube_coordinates, description<span class="op">=</span><span class="st">"Figure: "</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>figure_dropdown <span class="op">=</span> widgets.Dropdown(options<span class="op">=</span><span class="bu">zip</span>(figure_names, figure_coordinates), value<span class="op">=</span>cube_coordinates, description<span class="op">=</span><span class="st">"Figure: "</span>)</span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>next_button <span class="op">=</span> widgets.Button(description<span class="op">=</span><span class="st">"Next"</span>)</span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>hbox <span class="op">=</span> widgets.HBox([figure_dropdown, next_button])</span>
 <span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>output <span class="op">=</span> widgets.Output()</span>
 <span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>label <span class="op">=</span> widgets.Label()</span>
 <span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>display(hbox, output, label)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>display(hbox, output, label)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell" data-execution_count="34">
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
@@ -7048,10 +7051,10 @@ hIoACgAAgFARQAEAABAqAigAAABCRQAFAABAqP5/hBSc6fLpZB0AAAAASUVORK5CYII=\
 </div>
 </div>
 <p>To keep track of which solution to show next, we declare the following global variables:</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>gen <span class="op">=</span> <span class="va">None</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>solution <span class="op">=</span> <span class="va">None</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>gen <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>solution <span class="op">=</span> <span class="va">None</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The gen is a generator object that generates solutions for a given figure using the <code>solve_soma</code> function. The solution variable stores the next solution to be displayed. It is updated each time the “Next” button is clicked to display the next solution.</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> figure_dropdown_change(change):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> figure_dropdown_change(change):</span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">global</span> gen</span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">global</span> solution</span>
 <span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>    </span>
@@ -7086,9 +7089,9 @@ hIoACgAAgFARQAEAABAqAigAAABCRQAFAABAqP5/hBSc6fLpZB0AAAAASUVORK5CYII=\
 <span id="cb41-33"><a href="#cb41-33" aria-hidden="true" tabindex="-1"></a>        <span class="cf">except</span> <span class="pp">StopIteration</span>:</span>
 <span id="cb41-34"><a href="#cb41-34" aria-hidden="true" tabindex="-1"></a>            label.value <span class="op">=</span> <span class="st">""</span></span>
 <span id="cb41-35"><a href="#cb41-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-36"><a href="#cb41-36" aria-hidden="true" tabindex="-1"></a>figure_dropdown.observe(figure_dropdown_change)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb41-36"><a href="#cb41-36" aria-hidden="true" tabindex="-1"></a>figure_dropdown.observe(figure_dropdown_change)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The <code>figure_dropdown_change</code> function handles changes to the figure dropdown menu. It clears the output widget, displays the first solution, and stores the next solution in the solution variable (if any).</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> on_next_button_clicked(b):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> on_next_button_clicked(b):</span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">global</span> gen</span>
 <span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">global</span> solution</span>
 <span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>    </span>
@@ -7113,7 +7116,7 @@ hIoACgAAgFARQAEAABAqAigAAABCRQAFAABAqP5/hBSc6fLpZB0AAAAASUVORK5CYII=\
 <span id="cb42-23"><a href="#cb42-23" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb42-24"><a href="#cb42-24" aria-hidden="true" tabindex="-1"></a>next_button.on_click(on_next_button_clicked)</span>
 <span id="cb42-25"><a href="#cb42-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-26"><a href="#cb42-26" aria-hidden="true" tabindex="-1"></a>figure_dropdown_change({<span class="st">'type'</span>: <span class="st">'change'</span>, <span class="st">'name'</span>: <span class="st">'value'</span>, <span class="st">'new'</span>: figure_dropdown.value})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb42-26"><a href="#cb42-26" aria-hidden="true" tabindex="-1"></a>figure_dropdown_change({<span class="st">'type'</span>: <span class="st">'change'</span>, <span class="st">'name'</span>: <span class="st">'value'</span>, <span class="st">'new'</span>: figure_dropdown.value})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The <code>on_next_button_clicked</code> function handles clicks on the “Next” button by clearing the output widget, displaying the current solution, and generating the next solution.</p>
 </section>
 <section id="solving-your-own-soma-puzzles" class="level2">
@@ -7180,13 +7183,14 @@ hIoACgAAgFARQAEAABAqAigAAABCRQAFAABAqP5/hBSc6fLpZB0AAAAASUVORK5CYII=\
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

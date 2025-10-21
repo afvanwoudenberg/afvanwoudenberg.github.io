@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.31">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -71,14 +71,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../favicon.png" rel="icon" type="image/png">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-08aed7fc4ad4995f89cd2ec7682ca9e3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-c6e40670e56ed545c5e701e5e2d9fb10.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -125,6 +126,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <nav class="navbar navbar-expand " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    </a>
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Aswin van Woudenberg</span>
     </a>
@@ -222,16 +225,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="setting-it-up" class="level3">
 <h3 class="anchored" data-anchor-id="setting-it-up">Setting it up</h3>
 <p>Setting this up is a breeze. First, install and run Shell in a Box. Then, make sure you’ve got access to a standard server environment by running <code>unminimize</code>.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>apt install shellinabox <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>apt install shellinabox <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>nohup shellinaboxd <span class="op">--</span>disable<span class="op">-</span>ssl <span class="op">--</span>no<span class="op">-</span>beep <span class="op">--</span>port<span class="op">=</span><span class="dv">8000</span> <span class="op">--</span>css <span class="op">/</span>etc<span class="op">/</span>shellinabox<span class="op">/</span>options<span class="op">-</span>enabled<span class="op">/</span><span class="dv">00</span><span class="er">_White</span>\ On\ Black.css <span class="op">-</span>s <span class="st">"/:root:root:/root:/bin/bash -c bash -i"</span> <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null <span class="op">&amp;</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>yes <span class="op">|</span> <span class="op">/</span>usr<span class="op">/</span>local<span class="op">/</span>sbin<span class="op">/</span>unminimize <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>yes <span class="op">|</span> <span class="op">/</span>usr<span class="op">/</span>local<span class="op">/</span>sbin<span class="op">/</span>unminimize <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Running <code>unminimize</code> is optional and could be done at a later time as well. Some things, like <code>man</code> pages, won’t work on a <em>minimized</em> system. For this reason, I like to run it right away for full functionality.</p>
 </section>
 <section id="opening-a-terminal-in-an-iframe" class="level3">
 <h3 class="anchored" data-anchor-id="opening-a-terminal-in-an-iframe">Opening a terminal in an iframe</h3>
 <p>To access the terminal within the notebook, run the following code.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> google.colab.output <span class="im">import</span> serve_kernel_port_as_iframe</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>serve_kernel_port_as_iframe(<span class="dv">8000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> google.colab.output <span class="im">import</span> serve_kernel_port_as_iframe</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>serve_kernel_port_as_iframe(<span class="dv">8000</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>It’ll open up a terminal right within the cell’s output.</p>
 <p><img src="colab-terminal-iframe.png" class="img-fluid"></p>
 <p>The <code>serve_kernel_port_as_iframe</code> function lets you customize the dimensions of the iframe by providing arguments like <code>width</code> and <code>height</code>.</p>
@@ -239,8 +242,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="opening-a-terminal-in-a-seperate-tab" class="level3">
 <h3 class="anchored" data-anchor-id="opening-a-terminal-in-a-seperate-tab">Opening a terminal in a seperate tab</h3>
 <p>If you prefer a separate tab for your terminal, run the following code snippet:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> google.colab.output <span class="im">import</span> serve_kernel_port_as_window</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>serve_kernel_port_as_window(<span class="dv">8000</span>, anchor_text <span class="op">=</span> <span class="st">"Open a terminal"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> google.colab.output <span class="im">import</span> serve_kernel_port_as_window</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>serve_kernel_port_as_window(<span class="dv">8000</span>, anchor_text <span class="op">=</span> <span class="st">"Open a terminal"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>It’ll give you a link to click.</p>
 <p><img src="colab-terminal-link.png" class="img-fluid"></p>
 <p>Clicking this link will open a terminal in a new browser window.</p>
@@ -317,13 +320,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

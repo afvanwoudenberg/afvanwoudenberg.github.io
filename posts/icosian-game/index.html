@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.31">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -71,14 +71,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../favicon.png" rel="icon" type="image/png">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-08aed7fc4ad4995f89cd2ec7682ca9e3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-c6e40670e56ed545c5e701e5e2d9fb10.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -125,6 +126,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <nav class="navbar navbar-expand " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    </a>
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Aswin van Woudenberg</span>
     </a>
@@ -227,7 +230,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-with-filename-file">
 <pre><strong>icosian.pl</strong></pre>
 </div>
-<div class="sourceCode" id="cb1" data-filename="icosian.pl"><pre class="sourceCode prolog code-with-copy"><code class="sourceCode prolog"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">% A Prolog solver for the Icosian game</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-filename="icosian.pl"><pre class="sourceCode prolog code-with-copy"><code class="sourceCode prolog"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">% A Prolog solver for the Icosian game</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">% https://en.wikipedia.org/wiki/Icosian_game</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>icosian_puzzle_edges([</span>
@@ -302,7 +305,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a>solve_icosian_puzzle <span class="kw">:-</span></span>
 <span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a>    icosian_puzzle_edges(<span class="dt">Adj</span>)<span class="kw">,</span> </span>
 <span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a>    hamiltonian_cycle(<span class="dt">Adj</span><span class="kw">,</span><span class="dt">Tour</span>)<span class="kw">,</span> </span>
-<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a>    print_icosian_solution(<span class="dt">Tour</span>)<span class="kw">.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a>    print_icosian_solution(<span class="dt">Tour</span>)<span class="kw">.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The <code>icosian_puzzle_edges/1</code> predicate defines the graph by specifying a list of edges between vertices. This list is used by the <code>connected/3</code> predicate which checks whether there is an edge between two vertices.</p>
 <p>The <code>hamiltonian_cycle/2</code> predicate defines the main algorithm for finding a Hamiltonian cycle on the graph, given a starting vertex. After determining the number of vertices in the graph, it recursively tries to find a cycle that visits each vertex exactly once.</p>
@@ -314,7 +317,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>To use this program, open the <code>icosian.pl</code> file in your preferred Prolog interpreter (I always use <a href="https://www.swi-prolog.org/">SWI-Prolog</a>). Entering <code>solve_icosian_puzzle.</code> and pressing ; repeatedly will yield possible solutions.</p>
 <p><img src="icosian.gif" class="img-fluid"></p>
 <p>Suppose you want to explore how the cycle that starts with the vertices Q, R, S, N, P could be continued, you would enter:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode prolog code-with-copy"><code class="sourceCode prolog"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>icosian_puzzle_edges(<span class="dt">Adj</span>)<span class="kw">,</span> <span class="dt">Tour</span> <span class="kw">=</span> [q,r,s,n,p<span class="fu">|</span><span class="dt">Rest</span>]<span class="kw">,</span> hamiltonian_cycle(<span class="dt">Adj</span><span class="kw">,</span><span class="dt">Tour</span>)<span class="kw">,</span> print_icosian_solution(<span class="dt">Tour</span>)<span class="kw">.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode prolog code-with-copy"><code class="sourceCode prolog"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>icosian_puzzle_edges(<span class="dt">Adj</span>)<span class="kw">,</span> <span class="dt">Tour</span> <span class="kw">=</span> [q,r,s,n,p<span class="fu">|</span><span class="dt">Rest</span>]<span class="kw">,</span> hamiltonian_cycle(<span class="dt">Adj</span><span class="kw">,</span><span class="dt">Tour</span>)<span class="kw">,</span> print_icosian_solution(<span class="dt">Tour</span>)<span class="kw">.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This game might remind you of the <a href="https://en.wikipedia.org/wiki/Travelling_salesman_problem">Travelling Salesman Problem</a> (TSP). Finding a Hamiltonian cycle can be considered a special case of the TSP, namely, one where each pair of vertices with an edge between them has distance 1, while vertex pairs without an edge between them are separated by a distance of infinity.</p>
 
 
@@ -372,13 +375,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.31">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -71,14 +71,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../favicon.png" rel="icon" type="image/png">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-08aed7fc4ad4995f89cd2ec7682ca9e3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-c6e40670e56ed545c5e701e5e2d9fb10.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -125,6 +126,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <nav class="navbar navbar-expand " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    </a>
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Aswin van Woudenberg</span>
     </a>
@@ -227,7 +230,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="getting-the-word-list" class="level2">
 <h2 class="anchored" data-anchor-id="getting-the-word-list">Getting the word list</h2>
 <p>I started by getting the word list from Weaver’s JavaScript source code. It currently consists of 4029 four-letter words. I put this word list in my Prolog source code as follows:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode prolog code-with-copy"><code class="sourceCode prolog"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>words([aahs, aals, abas, abba, abbe, abed, abet, able, ably<span class="fu">|</span>...])<span class="kw">.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode prolog code-with-copy"><code class="sourceCode prolog"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>words([aahs, aals, abas, abba, abbe, abed, abet, able, ably<span class="fu">|</span>...])<span class="kw">.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>In Weaver’s source code I also found a five-letter word list, but it doesn’t seem to be used. If you want to include five-letter words as well, you can just extend the list. Of course you can’t weave from a four to a five-letter word or vice versa.</p>
 </section>
 <section id="specifying-a-graph-structure" class="level2">
@@ -238,319 +241,319 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div>
 <p></p><figure class="figure"><p></p>
 <div>
-<svg width="672" height="480" viewbox="0.00 0.00 1010.00 688.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 684)">
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-684 1006,-684 1006,4 -4,4"></polygon>
+<svg width="672" height="480" viewbox="0.00 0.00 1220.00 750.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 746)">
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-746 1216,-746 1216,4 -4,4"></polygon>
 <!-- PORT -->
 <g id="node1" class="node">
 <title>PORT</title>
-<ellipse fill="lightblue" stroke="black" cx="181.69" cy="-372.92" rx="35.94" ry="35.94"></ellipse>
-<text text-anchor="middle" x="181.69" y="-368.72" font-family="Times,serif" font-size="14.00">PORT</text>
+<ellipse fill="lightblue" stroke="black" cx="196.43" cy="-411.04" rx="35.94" ry="35.94"></ellipse>
+<text text-anchor="middle" x="196.43" y="-406.84" font-family="Times,serif" font-size="14.00">PORT</text>
 </g>
 <!-- SORT -->
 <g id="node2" class="node">
 <title>SORT</title>
-<ellipse fill="lightblue" stroke="black" cx="156.24" cy="-202.27" rx="35.94" ry="35.94"></ellipse>
-<text text-anchor="middle" x="156.24" y="-198.07" font-family="Times,serif" font-size="14.00">SORT</text>
+<ellipse fill="lightblue" stroke="black" cx="182.54" cy="-230.65" rx="35.94" ry="35.94"></ellipse>
+<text text-anchor="middle" x="182.54" y="-226.45" font-family="Times,serif" font-size="14.00">SORT</text>
 </g>
 <!-- PORT&#45;&#45;SORT -->
 <g id="edge1" class="edge">
 <title>PORT--SORT</title>
-<path fill="none" stroke="black" d="M176.42,-337.56C172.06,-308.37 165.92,-267.13 161.55,-237.87"></path>
+<path fill="none" stroke="black" d="M193.69,-375.4C191.26,-343.88 187.74,-298.12 185.31,-266.53"></path>
 </g>
 <!-- MORT -->
 <g id="node3" class="node">
 <title>MORT</title>
-<ellipse fill="lightblue" stroke="black" cx="39.23" cy="-303.91" rx="38.87" ry="38.87"></ellipse>
-<text text-anchor="middle" x="39.23" y="-299.71" font-family="Times,serif" font-size="14.00">MORT</text>
+<ellipse fill="lightblue" stroke="black" cx="39.24" cy="-333.54" rx="38.87" ry="38.87"></ellipse>
+<text text-anchor="middle" x="39.24" y="-329.34" font-family="Times,serif" font-size="14.00">MORT</text>
 </g>
 <!-- PORT&#45;&#45;MORT -->
 <g id="edge2" class="edge">
 <title>PORT--MORT</title>
-<path fill="none" stroke="black" d="M149.36,-357.26C127.03,-346.45 97.35,-332.07 74.42,-320.96"></path>
+<path fill="none" stroke="black" d="M164.24,-395.17C138.11,-382.29 101.3,-364.14 74.4,-350.87"></path>
 </g>
 <!-- BORT -->
 <g id="node4" class="node">
 <title>BORT</title>
-<ellipse fill="lightblue" stroke="black" cx="127.41" cy="-285.08" rx="36.58" ry="36.58"></ellipse>
-<text text-anchor="middle" x="127.41" y="-280.88" font-family="Times,serif" font-size="14.00">BORT</text>
+<ellipse fill="lightblue" stroke="black" cx="128.57" cy="-318.45" rx="36.58" ry="36.58"></ellipse>
+<text text-anchor="middle" x="128.57" y="-314.25" font-family="Times,serif" font-size="14.00">BORT</text>
 </g>
 <!-- PORT&#45;&#45;BORT -->
 <g id="edge3" class="edge">
 <title>PORT--BORT</title>
-<path fill="none" stroke="black" d="M162.7,-342.2C157.57,-333.89 152,-324.88 146.84,-316.53"></path>
+<path fill="none" stroke="black" d="M175.15,-382C167.29,-371.29 158.39,-359.14 150.48,-348.35"></path>
 </g>
 <!-- FORT -->
 <g id="node5" class="node">
 <title>FORT</title>
-<ellipse fill="lightblue" stroke="black" cx="286.11" cy="-262.07" rx="35.94" ry="35.94"></ellipse>
-<text text-anchor="middle" x="286.11" y="-257.87" font-family="Times,serif" font-size="14.00">FORT</text>
+<ellipse fill="lightblue" stroke="black" cx="311.81" cy="-300.33" rx="35.94" ry="35.94"></ellipse>
+<text text-anchor="middle" x="311.81" y="-296.13" font-family="Times,serif" font-size="14.00">FORT</text>
 </g>
 <!-- PORT&#45;&#45;FORT -->
 <g id="edge4" class="edge">
 <title>PORT--FORT</title>
-<path fill="none" stroke="black" d="M206.44,-346.65C223.08,-328.98 244.94,-305.78 261.54,-288.15"></path>
+<path fill="none" stroke="black" d="M222.33,-386.2C241.33,-367.96 267.02,-343.31 286.01,-325.09"></path>
 </g>
 <!-- SORT&#45;&#45;MORT -->
 <g id="edge5" class="edge">
 <title>SORT--MORT</title>
-<path fill="none" stroke="black" d="M129.1,-225.84C111.01,-241.56 87.23,-262.21 68.68,-278.33"></path>
+<path fill="none" stroke="black" d="M153.2,-251.72C129.29,-268.89 95.59,-293.09 71.04,-310.71"></path>
 </g>
 <!-- SORT&#45;&#45;BORT -->
 <g id="edge6" class="edge">
 <title>SORT--BORT</title>
-<path fill="none" stroke="black" d="M144.35,-236.43C142.77,-240.97 141.14,-245.64 139.55,-250.19"></path>
+<path fill="none" stroke="black" d="M163.67,-261.36C158.56,-269.67 153.02,-278.67 147.89,-287.02"></path>
 </g>
 <!-- SORT&#45;&#45;FORT -->
 <g id="edge7" class="edge">
 <title>SORT--FORT</title>
-<path fill="none" stroke="black" d="M189.02,-217.36C208.7,-226.42 233.67,-237.92 253.35,-246.98"></path>
+<path fill="none" stroke="black" d="M214.17,-247.7C234.2,-258.49 260.01,-272.41 280.07,-283.22"></path>
 </g>
 <!-- SORD -->
 <g id="node6" class="node">
 <title>SORD</title>
-<ellipse fill="lightblue" stroke="black" cx="292.2" cy="-163.36" rx="36.59" ry="36.59"></ellipse>
-<text text-anchor="middle" x="292.2" y="-159.16" font-family="Times,serif" font-size="14.00">SORD</text>
+<ellipse fill="lightblue" stroke="black" cx="325.35" cy="-159.13" rx="36.59" ry="36.59"></ellipse>
+<text text-anchor="middle" x="325.35" y="-154.93" font-family="Times,serif" font-size="14.00">SORD</text>
 </g>
 <!-- SORT&#45;&#45;SORD -->
 <g id="edge8" class="edge">
 <title>SORT--SORD</title>
-<path fill="none" stroke="black" d="M190.9,-192.35C211.04,-186.59 236.37,-179.34 256.65,-173.53"></path>
+<path fill="none" stroke="black" d="M214.59,-214.6C237.78,-202.99 269.03,-187.34 292.42,-175.62"></path>
 </g>
 <!-- MORT&#45;&#45;BORT -->
 <g id="edge9" class="edge">
 <title>MORT--BORT</title>
-<path fill="none" stroke="black" d="M77.39,-295.76C82.05,-294.77 86.79,-293.76 91.41,-292.77"></path>
+<path fill="none" stroke="black" d="M77.64,-327.05C82.47,-326.24 87.39,-325.41 92.18,-324.6"></path>
 </g>
 <!-- BORT&#45;&#45;FORT -->
 <g id="edge10" class="edge">
 <title>BORT--FORT</title>
-<path fill="none" stroke="black" d="M164.22,-279.74C190.22,-275.97 224.88,-270.95 250.6,-267.22"></path>
+<path fill="none" stroke="black" d="M165.21,-314.83C197.49,-311.64 244.2,-307.02 276.17,-303.85"></path>
 </g>
 <!-- CORD -->
 <g id="node7" class="node">
 <title>CORD</title>
-<ellipse fill="lightblue" stroke="black" cx="404.74" cy="-38.82" rx="37.73" ry="37.73"></ellipse>
-<text text-anchor="middle" x="404.74" y="-34.62" font-family="Times,serif" font-size="14.00">CORD</text>
+<ellipse fill="lightblue" stroke="black" cx="460.71" cy="-41.23" rx="37.73" ry="37.73"></ellipse>
+<text text-anchor="middle" x="460.71" y="-37.03" font-family="Times,serif" font-size="14.00">CORD</text>
 </g>
 <!-- SORD&#45;&#45;CORD -->
 <g id="edge11" class="edge">
 <title>SORD--CORD</title>
-<path fill="none" stroke="black" d="M316.9,-136.03C335.4,-115.55 360.64,-87.62 379.32,-66.95"></path>
+<path fill="none" stroke="black" d="M353.4,-134.7C376.32,-114.74 408.6,-86.61 431.76,-66.44"></path>
 </g>
 <!-- FORD -->
 <g id="node8" class="node">
 <title>FORD</title>
-<ellipse fill="lightblue" stroke="black" cx="431.73" cy="-184.63" rx="36.59" ry="36.59"></ellipse>
-<text text-anchor="middle" x="431.73" y="-180.43" font-family="Times,serif" font-size="14.00">FORD</text>
+<ellipse fill="lightblue" stroke="black" cx="493.22" cy="-204.3" rx="36.59" ry="36.59"></ellipse>
+<text text-anchor="middle" x="493.22" y="-200.1" font-family="Times,serif" font-size="14.00">FORD</text>
 </g>
 <!-- SORD&#45;&#45;FORD -->
 <g id="edge12" class="edge">
 <title>SORD--FORD</title>
-<path fill="none" stroke="black" d="M328.86,-168.95C349.37,-172.08 374.85,-175.96 395.31,-179.08"></path>
+<path fill="none" stroke="black" d="M360.95,-168.71C389.44,-176.38 429.2,-187.08 457.67,-194.74"></path>
 </g>
 <!-- LORD -->
 <g id="node9" class="node">
 <title>LORD</title>
-<ellipse fill="lightblue" stroke="black" cx="318.16" cy="-62.81" rx="37.15" ry="37.15"></ellipse>
-<text text-anchor="middle" x="318.16" y="-58.61" font-family="Times,serif" font-size="14.00">LORD</text>
+<ellipse fill="lightblue" stroke="black" cx="370.49" cy="-63.68" rx="37.15" ry="37.15"></ellipse>
+<text text-anchor="middle" x="370.49" y="-59.48" font-family="Times,serif" font-size="14.00">LORD</text>
 </g>
 <!-- SORD&#45;&#45;LORD -->
 <g id="edge13" class="edge">
 <title>SORD--LORD</title>
-<path fill="none" stroke="black" d="M301.42,-127.63C303.81,-118.37 306.39,-108.39 308.79,-99.11"></path>
+<path fill="none" stroke="black" d="M341.14,-125.75C345.46,-116.61 350.15,-106.7 354.48,-97.53"></path>
 </g>
 <!-- CORD&#45;&#45;FORD -->
 <g id="edge15" class="edge">
 <title>CORD--FORD</title>
-<path fill="none" stroke="black" d="M411.69,-76.37C415.78,-98.48 420.93,-126.31 424.99,-148.22"></path>
+<path fill="none" stroke="black" d="M468.17,-78.64C473.53,-105.53 480.72,-141.59 486.02,-168.19"></path>
 </g>
 <!-- CORD&#45;&#45;LORD -->
 <g id="edge14" class="edge">
 <title>CORD--LORD</title>
-<path fill="none" stroke="black" d="M368.02,-48.99C363.5,-50.24 358.89,-51.52 354.38,-52.77"></path>
+<path fill="none" stroke="black" d="M423.75,-50.42C418.2,-51.81 412.49,-53.23 406.95,-54.61"></path>
 </g>
 <!-- FORD&#45;&#45;FORT -->
 <g id="edge17" class="edge">
 <title>FORD--FORT</title>
-<path fill="none" stroke="black" d="M399.05,-202.01C374.73,-214.94 341.73,-232.49 317.68,-245.28"></path>
+<path fill="none" stroke="black" d="M460.37,-221.69C427.19,-239.26 376.27,-266.21 343.51,-283.55"></path>
 </g>
 <!-- FORD&#45;&#45;LORD -->
 <g id="edge16" class="edge">
 <title>FORD--LORD</title>
-<path fill="none" stroke="black" d="M406.52,-157.59C387.83,-137.55 362.45,-110.32 343.68,-90.19"></path>
+<path fill="none" stroke="black" d="M468.97,-176.52C447.6,-152.03 416.59,-116.51 395.11,-91.89"></path>
 </g>
 <!-- FOLD -->
 <g id="node10" class="node">
 <title>FOLD</title>
-<ellipse fill="lightblue" stroke="black" cx="583.65" cy="-147.43" rx="36.01" ry="36.01"></ellipse>
-<text text-anchor="middle" x="583.65" y="-143.23" font-family="Times,serif" font-size="14.00">FOLD</text>
+<ellipse fill="lightblue" stroke="black" cx="661.27" cy="-169.32" rx="36.01" ry="36.01"></ellipse>
+<text text-anchor="middle" x="661.27" y="-165.12" font-family="Times,serif" font-size="14.00">FOLD</text>
 </g>
 <!-- FORD&#45;&#45;FOLD -->
 <g id="edge18" class="edge">
 <title>FORD--FOLD</title>
-<path fill="none" stroke="black" d="M467.73,-175.81C492.13,-169.84 524.2,-161.98 548.43,-156.05"></path>
+<path fill="none" stroke="black" d="M529.27,-196.8C557.72,-190.88 597.21,-182.66 625.57,-176.76"></path>
 </g>
 <!-- FARD -->
 <g id="node11" class="node">
 <title>FARD</title>
-<ellipse fill="lightblue" stroke="black" cx="514.42" cy="-37.21" rx="36.59" ry="36.59"></ellipse>
-<text text-anchor="middle" x="514.42" y="-33.01" font-family="Times,serif" font-size="14.00">FARD</text>
+<ellipse fill="lightblue" stroke="black" cx="573.67" cy="-36.44" rx="36.59" ry="36.59"></ellipse>
+<text text-anchor="middle" x="573.67" y="-32.24" font-family="Times,serif" font-size="14.00">FARD</text>
 </g>
 <!-- FORD&#45;&#45;FARD -->
 <g id="edge19" class="edge">
 <title>FORD--FARD</title>
-<path fill="none" stroke="black" d="M449.88,-152.28C463.66,-127.7 482.54,-94.05 496.31,-69.49"></path>
+<path fill="none" stroke="black" d="M509.31,-170.74C523.39,-141.36 543.72,-98.93 557.75,-69.66"></path>
 </g>
 <!-- FOND -->
 <g id="node12" class="node">
 <title>FOND</title>
-<ellipse fill="lightblue" stroke="black" cx="585.93" cy="-303.59" rx="37.16" ry="37.16"></ellipse>
-<text text-anchor="middle" x="585.93" y="-299.39" font-family="Times,serif" font-size="14.00">FOND</text>
+<ellipse fill="lightblue" stroke="black" cx="706.62" cy="-328.99" rx="37.16" ry="37.16"></ellipse>
+<text text-anchor="middle" x="706.62" y="-324.79" font-family="Times,serif" font-size="14.00">FOND</text>
 </g>
 <!-- FORD&#45;&#45;FOND -->
 <g id="edge20" class="edge">
 <title>FORD--FOND</title>
-<path fill="none" stroke="black" d="M461.1,-207.29C488.36,-228.32 528.75,-259.48 556.15,-280.61"></path>
+<path fill="none" stroke="black" d="M525.17,-222.97C565.28,-246.41 633.72,-286.4 674.1,-309.99"></path>
 </g>
 <!-- FOLD&#45;&#45;FOND -->
 <g id="edge21" class="edge">
 <title>FOLD--FOND</title>
-<path fill="none" stroke="black" d="M584.19,-184.04C584.55,-208.74 585.02,-241.24 585.39,-266.12"></path>
+<path fill="none" stroke="black" d="M671.23,-204.36C678.68,-230.62 688.85,-266.43 696.38,-292.92"></path>
 </g>
 <!-- BOND -->
 <g id="node13" class="node">
 <title>BOND</title>
-<ellipse fill="lightblue" stroke="black" cx="743.07" cy="-255.21" rx="38.3" ry="38.3"></ellipse>
-<text text-anchor="middle" x="743.07" y="-251.01" font-family="Times,serif" font-size="14.00">BOND</text>
+<ellipse fill="lightblue" stroke="black" cx="875.46" cy="-271.45" rx="38.3" ry="38.3"></ellipse>
+<text text-anchor="middle" x="875.46" y="-267.25" font-family="Times,serif" font-size="14.00">BOND</text>
 </g>
 <!-- FOND&#45;&#45;BOND -->
 <g id="edge22" class="edge">
 <title>FOND--BOND</title>
-<path fill="none" stroke="black" d="M621.98,-292.49C647.26,-284.7 680.95,-274.33 706.37,-266.51"></path>
+<path fill="none" stroke="black" d="M742.02,-316.92C770.45,-307.24 810.23,-293.68 838.95,-283.89"></path>
 </g>
 <!-- FIND -->
 <g id="node14" class="node">
 <title>FIND</title>
-<ellipse fill="lightblue" stroke="black" cx="699.87" cy="-430.75" rx="33.64" ry="33.64"></ellipse>
-<text text-anchor="middle" x="699.87" y="-426.55" font-family="Times,serif" font-size="14.00">FIND</text>
+<ellipse fill="lightblue" stroke="black" cx="875.89" cy="-463.75" rx="33.64" ry="33.64"></ellipse>
+<text text-anchor="middle" x="875.89" y="-459.55" font-family="Times,serif" font-size="14.00">FIND</text>
 </g>
 <!-- FOND&#45;&#45;FIND -->
 <g id="edge23" class="edge">
 <title>FOND--FIND</title>
-<path fill="none" stroke="black" d="M610.94,-331.49C630.72,-353.57 658.11,-384.14 677.24,-405.5"></path>
+<path fill="none" stroke="black" d="M736.1,-352.46C768.12,-377.95 818.78,-418.28 849.52,-442.76"></path>
 </g>
 <!-- FEND -->
 <g id="node15" class="node">
 <title>FEND</title>
-<ellipse fill="lightblue" stroke="black" cx="555.13" cy="-456.08" rx="36.01" ry="36.01"></ellipse>
-<text text-anchor="middle" x="555.13" y="-451.88" font-family="Times,serif" font-size="14.00">FEND</text>
+<ellipse fill="lightblue" stroke="black" cx="719.63" cy="-493.96" rx="36.01" ry="36.01"></ellipse>
+<text text-anchor="middle" x="719.63" y="-489.76" font-family="Times,serif" font-size="14.00">FEND</text>
 </g>
 <!-- FOND&#45;&#45;FEND -->
 <g id="edge24" class="edge">
 <title>FOND--FEND</title>
-<path fill="none" stroke="black" d="M578.48,-340.5C573.58,-364.74 567.21,-396.29 562.36,-420.29"></path>
+<path fill="none" stroke="black" d="M709.57,-366.42C711.73,-393.8 714.64,-430.74 716.78,-457.81"></path>
 </g>
 <!-- BIND -->
 <g id="node16" class="node">
 <title>BIND</title>
-<ellipse fill="lightblue" stroke="black" cx="851" cy="-373.87" rx="34.78" ry="34.78"></ellipse>
-<text text-anchor="middle" x="851" y="-369.67" font-family="Times,serif" font-size="14.00">BIND</text>
+<ellipse fill="lightblue" stroke="black" cx="996.94" cy="-377.96" rx="34.78" ry="34.78"></ellipse>
+<text text-anchor="middle" x="996.94" y="-373.76" font-family="Times,serif" font-size="14.00">BIND</text>
 </g>
 <!-- BOND&#45;&#45;BIND -->
 <g id="edge25" class="edge">
 <title>BOND--BIND</title>
-<path fill="none" stroke="black" d="M768.92,-283.63C786.76,-303.24 810.28,-329.1 827.57,-348.11"></path>
+<path fill="none" stroke="black" d="M904.56,-296.96C924.64,-314.56 951.11,-337.77 970.57,-354.83"></path>
 </g>
 <!-- FIND&#45;&#45;BIND -->
 <g id="edge27" class="edge">
 <title>FIND--BIND</title>
-<path fill="none" stroke="black" d="M731.55,-418.83C757.08,-409.22 792.85,-395.76 818.58,-386.07"></path>
+<path fill="none" stroke="black" d="M903.36,-444.28C922.75,-430.54 948.67,-412.16 968.32,-398.24"></path>
 </g>
 <!-- KIND -->
 <g id="node17" class="node">
 <title>KIND</title>
-<ellipse fill="lightblue" stroke="black" cx="837.71" cy="-498.21" rx="35.35" ry="35.35"></ellipse>
-<text text-anchor="middle" x="837.71" y="-494.01" font-family="Times,serif" font-size="14.00">KIND</text>
+<ellipse fill="lightblue" stroke="black" cx="1026.91" cy="-556.21" rx="35.35" ry="35.35"></ellipse>
+<text text-anchor="middle" x="1026.91" y="-552.01" font-family="Times,serif" font-size="14.00">KIND</text>
 </g>
 <!-- FIND&#45;&#45;KIND -->
 <g id="edge28" class="edge">
 <title>FIND--KIND</title>
-<path fill="none" stroke="black" d="M730.12,-445.56C752.63,-456.57 783.27,-471.57 806.1,-482.74"></path>
+<path fill="none" stroke="black" d="M904.65,-481.36C931.01,-497.49 969.9,-521.3 996.7,-537.71"></path>
 </g>
 <!-- FINE -->
 <g id="node18" class="node">
 <title>FINE</title>
-<ellipse fill="lightblue" stroke="black" cx="732.03" cy="-581.88" rx="32.49" ry="32.49"></ellipse>
-<text text-anchor="middle" x="732.03" y="-577.68" font-family="Times,serif" font-size="14.00">FINE</text>
+<ellipse fill="lightblue" stroke="black" cx="924.07" cy="-626.54" rx="32.49" ry="32.49"></ellipse>
+<text text-anchor="middle" x="924.07" y="-622.34" font-family="Times,serif" font-size="14.00">FINE</text>
 </g>
 <!-- FIND&#45;&#45;FINE -->
 <g id="edge29" class="edge">
 <title>FIND--FINE</title>
-<path fill="none" stroke="black" d="M706.93,-463.92C712.38,-489.55 719.88,-524.8 725.26,-550.08"></path>
+<path fill="none" stroke="black" d="M885.52,-496.3C894.04,-525.06 906.37,-566.74 914.78,-595.15"></path>
 </g>
 <!-- HIND -->
 <g id="node19" class="node">
 <title>HIND</title>
-<ellipse fill="lightblue" stroke="black" cx="765.49" cy="-351.13" rx="35.35" ry="35.35"></ellipse>
-<text text-anchor="middle" x="765.49" y="-346.93" font-family="Times,serif" font-size="14.00">HIND</text>
+<ellipse fill="lightblue" stroke="black" cx="1043.76" cy="-462.15" rx="35.35" ry="35.35"></ellipse>
+<text text-anchor="middle" x="1043.76" y="-457.95" font-family="Times,serif" font-size="14.00">HIND</text>
 </g>
 <!-- FIND&#45;&#45;HIND -->
 <g id="edge30" class="edge">
 <title>FIND--HIND</title>
-<path fill="none" stroke="black" d="M721.36,-404.68C728.31,-396.24 736.04,-386.87 743.06,-378.35"></path>
+<path fill="none" stroke="black" d="M909.86,-463.42C938.5,-463.15 979.36,-462.76 1008.39,-462.48"></path>
 </g>
 <!-- FEND&#45;&#45;FIND -->
 <g id="edge26" class="edge">
 <title>FEND--FIND</title>
-<path fill="none" stroke="black" d="M590.91,-449.82C614.02,-445.78 643.87,-440.55 666.49,-436.59"></path>
+<path fill="none" stroke="black" d="M755.48,-487.03C781.79,-481.94 817.25,-475.09 842.87,-470.13"></path>
 </g>
 <!-- BIND&#45;&#45;KIND -->
 <g id="edge31" class="edge">
 <title>BIND--KIND</title>
-<path fill="none" stroke="black" d="M847.3,-408.51C845.48,-425.46 843.31,-445.85 841.48,-462.9"></path>
+<path fill="none" stroke="black" d="M1002.72,-412.33C1007.99,-443.69 1015.75,-489.82 1021.05,-521.33"></path>
 </g>
 <!-- BIND&#45;&#45;HIND -->
 <g id="edge32" class="edge">
 <title>BIND--HIND</title>
-<path fill="none" stroke="black" d="M817.2,-364.88C811.42,-363.34 805.4,-361.74 799.6,-360.2"></path>
+<path fill="none" stroke="black" d="M1013.84,-408.35C1017.98,-415.79 1022.41,-423.76 1026.57,-431.23"></path>
 </g>
 <!-- KIND&#45;&#45;HIND -->
 <g id="edge33" class="edge">
 <title>KIND--HIND</title>
-<path fill="none" stroke="black" d="M822.04,-466.3C809.89,-441.54 793.12,-407.4 781.01,-382.73"></path>
+<path fill="none" stroke="black" d="M1033.14,-521.45C1034.56,-513.49 1036.08,-505.04 1037.5,-497.07"></path>
 </g>
 <!-- KINE -->
 <g id="node20" class="node">
 <title>KINE</title>
-<ellipse fill="lightblue" stroke="black" cx="853.73" cy="-645.84" rx="34.2" ry="34.2"></ellipse>
-<text text-anchor="middle" x="853.73" y="-641.64" font-family="Times,serif" font-size="14.00">KINE</text>
+<ellipse fill="lightblue" stroke="black" cx="1053.51" cy="-707.72" rx="34.2" ry="34.2"></ellipse>
+<text text-anchor="middle" x="1053.51" y="-703.52" font-family="Times,serif" font-size="14.00">KINE</text>
 </g>
 <!-- KIND&#45;&#45;KINE -->
 <g id="edge34" class="edge">
 <title>KIND--KINE</title>
-<path fill="none" stroke="black" d="M841.51,-533.2C844.09,-556.99 847.48,-588.3 850.04,-611.87"></path>
+<path fill="none" stroke="black" d="M1033.01,-590.97C1037.38,-615.87 1043.24,-649.22 1047.57,-673.9"></path>
 </g>
 <!-- KINA -->
 <g id="node21" class="node">
 <title>KINA</title>
-<ellipse fill="lightblue" stroke="black" cx="966.86" cy="-574.1" rx="35.35" ry="35.35"></ellipse>
-<text text-anchor="middle" x="966.86" y="-569.9" font-family="Times,serif" font-size="14.00">KINA</text>
+<ellipse fill="lightblue" stroke="black" cx="1177.02" cy="-636.94" rx="35.35" ry="35.35"></ellipse>
+<text text-anchor="middle" x="1177.02" y="-632.74" font-family="Times,serif" font-size="14.00">KINA</text>
 </g>
 <!-- KIND&#45;&#45;KINA -->
 <g id="edge35" class="edge">
 <title>KIND--KINA</title>
-<path fill="none" stroke="black" d="M868.32,-516.2C888.9,-528.29 915.93,-544.17 936.47,-556.24"></path>
+<path fill="none" stroke="black" d="M1058.01,-572.93C1083.78,-586.79 1120.21,-606.39 1145.96,-620.24"></path>
 </g>
 <!-- FINE&#45;&#45;KINE -->
 <g id="edge36" class="edge">
 <title>FINE--KINE</title>
-<path fill="none" stroke="black" d="M760.87,-597.04C779.7,-606.94 804.26,-619.84 823.39,-629.9"></path>
+<path fill="none" stroke="black" d="M951.84,-643.96C973.23,-657.37 1002.73,-675.87 1024.44,-689.49"></path>
 </g>
 <!-- KINE&#45;&#45;KINA -->
 <g id="edge37" class="edge">
 <title>KINE--KINA</title>
-<path fill="none" stroke="black" d="M882.57,-627.55C899.19,-617.01 920.07,-603.77 936.88,-593.1"></path>
+<path fill="none" stroke="black" d="M1083.41,-690.59C1102.4,-679.71 1126.92,-665.65 1146.11,-654.66"></path>
 </g>
 </g>
 </svg>
@@ -565,319 +568,319 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div>
 <p></p><figure class="figure"><p></p>
 <div>
-<svg width="672" height="480" viewbox="0.00 0.00 1135.00 728.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 724)">
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-724 1131,-724 1131,4 -4,4"></polygon>
+<svg width="672" height="480" viewbox="0.00 0.00 1155.00 722.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 718)">
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-718 1151,-718 1151,4 -4,4"></polygon>
 <!-- PORT -->
 <g id="node1" class="node">
 <title>PORT</title>
-<ellipse fill="lightblue" stroke="black" cx="188.34" cy="-410.48" rx="35.94" ry="35.94"></ellipse>
-<text text-anchor="middle" x="188.34" y="-406.28" font-family="Times,serif" font-size="14.00">PORT</text>
+<ellipse fill="lightblue" stroke="black" cx="192.52" cy="-397.49" rx="35.94" ry="35.94"></ellipse>
+<text text-anchor="middle" x="192.52" y="-393.29" font-family="Times,serif" font-size="14.00">PORT</text>
 </g>
 <!-- SORT -->
 <g id="node2" class="node">
 <title>SORT</title>
-<ellipse fill="lightgreen" stroke="black" stroke-width="5" cx="171.85" cy="-242.17" rx="35.94" ry="35.94"></ellipse>
-<text text-anchor="middle" x="171.85" y="-237.97" font-family="Times,serif" font-size="14.00">SORT</text>
+<ellipse fill="lightgreen" stroke="black" stroke-width="5" cx="173.05" cy="-228.75" rx="35.94" ry="35.94"></ellipse>
+<text text-anchor="middle" x="173.05" y="-224.55" font-family="Times,serif" font-size="14.00">SORT</text>
 </g>
 <!-- PORT&#45;&#45;SORT -->
 <g id="edge1" class="edge">
 <title>PORT--SORT</title>
-<path fill="none" stroke="black" d="M184.84,-374.79C182.04,-346.22 178.14,-306.36 175.34,-277.81"></path>
+<path fill="none" stroke="black" d="M188.39,-361.7C185.09,-333.07 180.48,-293.11 177.18,-264.48"></path>
 </g>
 <!-- MORT -->
 <g id="node3" class="node">
 <title>MORT</title>
-<ellipse fill="lightblue" stroke="black" cx="39.15" cy="-346.31" rx="38.87" ry="38.87"></ellipse>
-<text text-anchor="middle" x="39.15" y="-342.11" font-family="Times,serif" font-size="14.00">MORT</text>
+<ellipse fill="lightblue" stroke="black" cx="38.83" cy="-330.61" rx="38.87" ry="38.87"></ellipse>
+<text text-anchor="middle" x="38.83" y="-326.41" font-family="Times,serif" font-size="14.00">MORT</text>
 </g>
 <!-- PORT&#45;&#45;MORT -->
 <g id="edge2" class="edge">
 <title>PORT--MORT</title>
-<path fill="none" stroke="black" d="M155.23,-396.24C131.45,-386.01 99.42,-372.24 75.03,-361.74"></path>
+<path fill="none" stroke="black" d="M159.55,-383.14C134.59,-372.28 100.34,-357.37 74.7,-346.22"></path>
 </g>
 <!-- BORT -->
 <g id="node4" class="node">
 <title>BORT</title>
-<ellipse fill="lightblue" stroke="black" cx="123.43" cy="-325.45" rx="36.58" ry="36.58"></ellipse>
-<text text-anchor="middle" x="123.43" y="-321.25" font-family="Times,serif" font-size="14.00">BORT</text>
+<ellipse fill="lightblue" stroke="black" cx="131.13" cy="-310.12" rx="36.58" ry="36.58"></ellipse>
+<text text-anchor="middle" x="131.13" y="-305.92" font-family="Times,serif" font-size="14.00">BORT</text>
 </g>
 <!-- PORT&#45;&#45;BORT -->
 <g id="edge3" class="edge">
 <title>PORT--BORT</title>
-<path fill="none" stroke="black" d="M166.37,-381.69C159.75,-373.02 152.47,-363.49 145.83,-354.79"></path>
+<path fill="none" stroke="black" d="M171.74,-367.91C165.47,-359 158.6,-349.21 152.31,-340.26"></path>
 </g>
 <!-- FORT -->
 <g id="node5" class="node">
 <title>FORT</title>
-<ellipse fill="lightblue" stroke="black" cx="303.2" cy="-285.27" rx="35.94" ry="35.94"></ellipse>
-<text text-anchor="middle" x="303.2" y="-281.07" font-family="Times,serif" font-size="14.00">FORT</text>
+<ellipse fill="lightblue" stroke="black" cx="301.58" cy="-276.87" rx="35.94" ry="35.94"></ellipse>
+<text text-anchor="middle" x="301.58" y="-272.67" font-family="Times,serif" font-size="14.00">FORT</text>
 </g>
 <!-- PORT&#45;&#45;FORT -->
 <g id="edge4" class="edge">
 <title>PORT--FORT</title>
-<path fill="none" stroke="black" d="M212.7,-383.93C232.19,-362.68 259.39,-333.03 278.87,-311.79"></path>
+<path fill="none" stroke="black" d="M216.72,-370.72C234.8,-350.73 259.38,-323.53 277.44,-303.56"></path>
 </g>
 <!-- SORT&#45;&#45;MORT -->
 <g id="edge5" class="edge">
 <title>SORT--MORT</title>
-<path fill="none" stroke="black" d="M143.71,-264.26C122.1,-281.21 92.29,-304.6 70.03,-322.07"></path>
+<path fill="none" stroke="black" d="M144.59,-250.35C122.74,-266.94 92.59,-289.81 70.07,-306.9"></path>
 </g>
 <!-- SORT&#45;&#45;BORT -->
 <g id="edge6" class="edge">
 <title>SORT--BORT</title>
-<path fill="none" stroke="black" d="M153.82,-273.18C149.95,-279.84 145.85,-286.89 141.96,-293.58"></path>
+<path fill="none" stroke="black" d="M156.49,-260.91C153.69,-266.33 150.79,-271.96 147.99,-277.39"></path>
 </g>
 <!-- SORT&#45;&#45;FORT -->
 <g id="edge7" class="edge">
 <title>SORT--FORT</title>
-<path fill="none" stroke="black" d="M206.02,-253.38C225.48,-259.77 249.77,-267.74 269.2,-274.12"></path>
+<path fill="none" stroke="black" d="M206.82,-241.39C225.71,-248.46 249.18,-257.25 268.04,-264.31"></path>
 </g>
 <!-- SORD -->
 <g id="node6" class="node">
 <title>SORD</title>
-<ellipse fill="lightgreen" stroke="black" cx="313.23" cy="-152.6" rx="36.59" ry="36.59"></ellipse>
-<text text-anchor="middle" x="313.23" y="-148.4" font-family="Times,serif" font-size="14.00">SORD</text>
+<ellipse fill="lightgreen" stroke="black" cx="316.1" cy="-147" rx="36.59" ry="36.59"></ellipse>
+<text text-anchor="middle" x="316.1" y="-142.8" font-family="Times,serif" font-size="14.00">SORD</text>
 </g>
 <!-- SORT&#45;&#45;SORD -->
 <g id="edge8" class="edge">
 <title>SORT--SORD</title>
-<path fill="none" stroke="black" stroke-width="5" d="M202.18,-222.95C225.71,-208.05 258.21,-187.45 281.97,-172.4"></path>
+<path fill="none" stroke="black" stroke-width="5" d="M204.09,-211.01C227.76,-197.49 260.24,-178.92 284.13,-165.27"></path>
 </g>
 <!-- MORT&#45;&#45;BORT -->
 <g id="edge9" class="edge">
 <title>MORT--BORT</title>
-<path fill="none" stroke="black" d="M77.34,-336.85C80.74,-336.01 84.17,-335.16 87.55,-334.33"></path>
+<path fill="none" stroke="black" d="M76.91,-322.15C82.87,-320.83 89.01,-319.47 94.93,-318.15"></path>
 </g>
 <!-- BORT&#45;&#45;FORT -->
 <g id="edge10" class="edge">
 <title>BORT--FORT</title>
-<path fill="none" stroke="black" d="M159.38,-317.41C191.04,-310.34 236.87,-300.1 268.23,-293.09"></path>
+<path fill="none" stroke="black" d="M167.28,-303.06C196.5,-297.36 237.39,-289.39 266.36,-283.74"></path>
 </g>
 <!-- CORD -->
 <g id="node7" class="node">
 <title>CORD</title>
-<ellipse fill="lightblue" stroke="black" cx="438.1" cy="-39.66" rx="37.73" ry="37.73"></ellipse>
-<text text-anchor="middle" x="438.1" y="-35.46" font-family="Times,serif" font-size="14.00">CORD</text>
+<ellipse fill="lightblue" stroke="black" cx="446.25" cy="-38.18" rx="37.73" ry="37.73"></ellipse>
+<text text-anchor="middle" x="446.25" y="-33.98" font-family="Times,serif" font-size="14.00">CORD</text>
 </g>
 <!-- SORD&#45;&#45;CORD -->
 <g id="edge11" class="edge">
 <title>SORD--CORD</title>
-<path fill="none" stroke="black" d="M340.63,-127.81C361.17,-109.24 389.17,-83.91 409.89,-65.17"></path>
+<path fill="none" stroke="black" d="M344.34,-123.39C365.87,-105.38 395.42,-80.67 417.16,-62.5"></path>
 </g>
 <!-- FORD -->
 <g id="node8" class="node">
 <title>FORD</title>
-<ellipse fill="lightgreen" stroke="black" cx="470.96" cy="-194.92" rx="36.59" ry="36.59"></ellipse>
-<text text-anchor="middle" x="470.96" y="-190.72" font-family="Times,serif" font-size="14.00">FORD</text>
+<ellipse fill="lightgreen" stroke="black" cx="476.15" cy="-195.08" rx="36.59" ry="36.59"></ellipse>
+<text text-anchor="middle" x="476.15" y="-190.88" font-family="Times,serif" font-size="14.00">FORD</text>
 </g>
 <!-- SORD&#45;&#45;FORD -->
 <g id="edge12" class="edge">
 <title>SORD--FORD</title>
-<path fill="none" stroke="black" stroke-width="5" d="M349.02,-162.2C374.84,-169.13 409.53,-178.43 435.31,-185.35"></path>
+<path fill="none" stroke="black" stroke-width="5" d="M351.62,-157.67C378.14,-165.64 414.23,-176.48 440.73,-184.44"></path>
 </g>
 <!-- LORD -->
 <g id="node9" class="node">
 <title>LORD</title>
-<ellipse fill="lightblue" stroke="black" cx="351.75" cy="-66.65" rx="37.15" ry="37.15"></ellipse>
-<text text-anchor="middle" x="351.75" y="-62.45" font-family="Times,serif" font-size="14.00">LORD</text>
+<ellipse fill="lightblue" stroke="black" cx="363" cy="-58.79" rx="37.15" ry="37.15"></ellipse>
+<text text-anchor="middle" x="363" y="-54.59" font-family="Times,serif" font-size="14.00">LORD</text>
 </g>
 <!-- SORD&#45;&#45;LORD -->
 <g id="edge13" class="edge">
 <title>SORD--LORD</title>
-<path fill="none" stroke="black" d="M328.45,-118.63C331.06,-112.81 333.77,-106.76 336.38,-100.94"></path>
+<path fill="none" stroke="black" d="M333.43,-114.4C337.34,-107.04 341.5,-99.22 345.43,-91.84"></path>
 </g>
 <!-- CORD&#45;&#45;FORD -->
 <g id="edge15" class="edge">
 <title>CORD--FORD</title>
-<path fill="none" stroke="black" d="M445.97,-76.85C451.23,-101.7 458.11,-134.22 463.32,-158.83"></path>
+<path fill="none" stroke="black" d="M453.41,-75.76C458.21,-100.96 464.5,-133.98 469.25,-158.89"></path>
 </g>
 <!-- CORD&#45;&#45;LORD -->
 <g id="edge14" class="edge">
 <title>CORD--LORD</title>
-<path fill="none" stroke="black" d="M401.73,-51.03C397.03,-52.5 392.21,-54 387.52,-55.47"></path>
+<path fill="none" stroke="black" d="M409.01,-47.4C405.8,-48.19 402.56,-48.99 399.37,-49.78"></path>
 </g>
 <!-- FORD&#45;&#45;FORT -->
 <g id="edge17" class="edge">
 <title>FORD--FORT</title>
-<path fill="none" stroke="black" d="M438.22,-212.55C408.27,-228.68 364.27,-252.38 334.72,-268.29"></path>
+<path fill="none" stroke="black" d="M442.49,-210.85C411.18,-225.52 364.84,-247.23 333.95,-261.7"></path>
 </g>
 <!-- FORD&#45;&#45;LORD -->
 <g id="edge16" class="edge">
 <title>FORD--LORD</title>
-<path fill="none" stroke="black" d="M445.68,-167.72C425.58,-146.1 397.59,-115.98 377.4,-94.26"></path>
+<path fill="none" stroke="black" d="M452.43,-166.51C433.25,-143.4 406.36,-111.01 387.08,-87.79"></path>
 </g>
 <!-- FOLD -->
 <g id="node10" class="node">
 <title>FOLD</title>
-<ellipse fill="lightblue" stroke="black" cx="623.87" cy="-158.94" rx="36.01" ry="36.01"></ellipse>
-<text text-anchor="middle" x="623.87" y="-154.74" font-family="Times,serif" font-size="14.00">FOLD</text>
+<ellipse fill="lightblue" stroke="black" cx="628.72" cy="-160.9" rx="36.01" ry="36.01"></ellipse>
+<text text-anchor="middle" x="628.72" y="-156.7" font-family="Times,serif" font-size="14.00">FOLD</text>
 </g>
 <!-- FORD&#45;&#45;FOLD -->
 <g id="edge18" class="edge">
 <title>FORD--FOLD</title>
-<path fill="none" stroke="black" d="M506.81,-186.48C531.44,-180.69 563.99,-173.03 588.51,-167.26"></path>
+<path fill="none" stroke="black" d="M512.31,-186.98C536.72,-181.51 568.79,-174.33 593.09,-168.88"></path>
 </g>
 <!-- FARD -->
 <g id="node11" class="node">
 <title>FARD</title>
-<ellipse fill="lightblue" stroke="black" cx="537.65" cy="-36.7" rx="36.59" ry="36.59"></ellipse>
-<text text-anchor="middle" x="537.65" y="-32.5" font-family="Times,serif" font-size="14.00">FARD</text>
+<ellipse fill="lightblue" stroke="black" cx="544.98" cy="-37.6" rx="36.59" ry="36.59"></ellipse>
+<text text-anchor="middle" x="544.98" y="-33.4" font-family="Times,serif" font-size="14.00">FARD</text>
 </g>
 <!-- FORD&#45;&#45;FARD -->
 <g id="edge19" class="edge">
 <title>FORD--FARD</title>
-<path fill="none" stroke="black" d="M485.27,-160.98C496.48,-134.37 512.02,-97.52 523.25,-70.86"></path>
+<path fill="none" stroke="black" d="M490.92,-161.3C502.53,-134.73 518.63,-97.88 530.24,-71.33"></path>
 </g>
 <!-- FOND -->
 <g id="node12" class="node">
 <title>FOND</title>
-<ellipse fill="lightgreen" stroke="black" cx="662.77" cy="-305.93" rx="37.16" ry="37.16"></ellipse>
-<text text-anchor="middle" x="662.77" y="-301.73" font-family="Times,serif" font-size="14.00">FOND</text>
+<ellipse fill="lightgreen" stroke="black" cx="670.95" cy="-305.8" rx="37.16" ry="37.16"></ellipse>
+<text text-anchor="middle" x="670.95" y="-301.6" font-family="Times,serif" font-size="14.00">FOND</text>
 </g>
 <!-- FORD&#45;&#45;FOND -->
 <g id="edge20" class="edge">
 <title>FORD--FOND</title>
-<path fill="none" stroke="black" stroke-width="5" d="M503.07,-213.5C538.37,-233.93 594.77,-266.57 630.24,-287.1"></path>
+<path fill="none" stroke="black" stroke-width="5" d="M508.32,-213.36C544.3,-233.82 602.27,-266.76 638.41,-287.3"></path>
 </g>
 <!-- FOLD&#45;&#45;FOND -->
 <g id="edge21" class="edge">
 <title>FOLD--FOND</title>
-<path fill="none" stroke="black" d="M633.19,-194.15C639.23,-216.99 647.09,-246.69 653.19,-269.73"></path>
+<path fill="none" stroke="black" d="M638.94,-195.98C645.46,-218.34 653.88,-247.24 660.45,-269.78"></path>
 </g>
 <!-- BOND -->
 <g id="node13" class="node">
 <title>BOND</title>
-<ellipse fill="lightblue" stroke="black" cx="828.53" cy="-273.28" rx="38.3" ry="38.3"></ellipse>
-<text text-anchor="middle" x="828.53" y="-269.08" font-family="Times,serif" font-size="14.00">BOND</text>
+<ellipse fill="lightblue" stroke="black" cx="837.32" cy="-274.31" rx="38.3" ry="38.3"></ellipse>
+<text text-anchor="middle" x="837.32" y="-270.11" font-family="Times,serif" font-size="14.00">BOND</text>
 </g>
 <!-- FOND&#45;&#45;BOND -->
 <g id="edge22" class="edge">
 <title>FOND--BOND</title>
-<path fill="none" stroke="black" d="M699.56,-298.68C726.64,-293.35 763.36,-286.12 790.69,-280.73"></path>
+<path fill="none" stroke="black" d="M707.87,-298.81C735.06,-293.66 771.91,-286.69 799.35,-281.5"></path>
 </g>
 <!-- FIND -->
 <g id="node14" class="node">
 <title>FIND</title>
-<ellipse fill="lightgreen" stroke="black" cx="816.44" cy="-435.14" rx="33.64" ry="33.64"></ellipse>
-<text text-anchor="middle" x="816.44" y="-430.94" font-family="Times,serif" font-size="14.00">FIND</text>
+<ellipse fill="lightgreen" stroke="black" cx="829.92" cy="-433.79" rx="33.64" ry="33.64"></ellipse>
+<text text-anchor="middle" x="829.92" y="-429.59" font-family="Times,serif" font-size="14.00">FIND</text>
 </g>
 <!-- FOND&#45;&#45;FIND -->
 <g id="edge23" class="edge">
 <title>FOND--FIND</title>
-<path fill="none" stroke="black" stroke-width="5" d="M691.67,-330.23C720.19,-354.21 763.37,-390.52 790.73,-413.52"></path>
+<path fill="none" stroke="black" stroke-width="5" d="M700.1,-329.27C729.68,-353.09 775.06,-389.62 803.58,-412.59"></path>
 </g>
 <!-- FEND -->
 <g id="node15" class="node">
 <title>FEND</title>
-<ellipse fill="lightblue" stroke="black" cx="680.12" cy="-455.91" rx="36.01" ry="36.01"></ellipse>
-<text text-anchor="middle" x="680.12" y="-451.71" font-family="Times,serif" font-size="14.00">FEND</text>
+<ellipse fill="lightblue" stroke="black" cx="692.35" cy="-455.73" rx="36.01" ry="36.01"></ellipse>
+<text text-anchor="middle" x="692.35" y="-451.53" font-family="Times,serif" font-size="14.00">FEND</text>
 </g>
 <!-- FOND&#45;&#45;FEND -->
 <g id="edge24" class="edge">
 <title>FOND--FEND</title>
-<path fill="none" stroke="black" d="M667.1,-343.39C669.8,-366.73 673.26,-396.6 675.93,-419.7"></path>
+<path fill="none" stroke="black" d="M676.24,-342.86C679.58,-366.27 683.88,-396.38 687.19,-419.61"></path>
 </g>
 <!-- BIND -->
 <g id="node16" class="node">
 <title>BIND</title>
-<ellipse fill="lightblue" stroke="black" cx="939.59" cy="-378.53" rx="34.78" ry="34.78"></ellipse>
-<text text-anchor="middle" x="939.59" y="-374.33" font-family="Times,serif" font-size="14.00">BIND</text>
+<ellipse fill="lightblue" stroke="black" cx="954.27" cy="-373.93" rx="34.78" ry="34.78"></ellipse>
+<text text-anchor="middle" x="954.27" y="-369.73" font-family="Times,serif" font-size="14.00">BIND</text>
 </g>
 <!-- BOND&#45;&#45;BIND -->
 <g id="edge25" class="edge">
 <title>BOND--BIND</title>
-<path fill="none" stroke="black" d="M856.55,-299.84C874.29,-316.65 897.03,-338.2 914.23,-354.5"></path>
+<path fill="none" stroke="black" d="M866.83,-299.45C885.51,-315.36 909.46,-335.76 927.57,-351.19"></path>
 </g>
 <!-- FIND&#45;&#45;BIND -->
 <g id="edge27" class="edge">
 <title>FIND--BIND</title>
-<path fill="none" stroke="black" d="M847.2,-421C865.72,-412.49 889.26,-401.67 907.94,-393.08"></path>
+<path fill="none" stroke="black" d="M860.34,-419.15C879.32,-410.01 903.7,-398.27 922.87,-389.05"></path>
 </g>
 <!-- KIND -->
 <g id="node17" class="node">
 <title>KIND</title>
-<ellipse fill="lightgreen" stroke="black" stroke-width="5" cx="961.42" cy="-541.2" rx="35.35" ry="35.35"></ellipse>
-<text text-anchor="middle" x="961.42" y="-537" font-family="Times,serif" font-size="14.00">KIND</text>
+<ellipse fill="lightgreen" stroke="black" stroke-width="5" cx="977.8" cy="-535.3" rx="35.35" ry="35.35"></ellipse>
+<text text-anchor="middle" x="977.8" y="-531.1" font-family="Times,serif" font-size="14.00">KIND</text>
 </g>
 <!-- FIND&#45;&#45;KIND -->
 <g id="edge28" class="edge">
 <title>FIND--KIND</title>
-<path fill="none" stroke="black" stroke-width="5" d="M843.71,-455.09C869.14,-473.69 906.92,-501.33 932.78,-520.25"></path>
+<path fill="none" stroke="black" stroke-width="5" d="M857.73,-452.88C883.67,-470.69 922.22,-497.14 948.59,-515.25"></path>
 </g>
 <!-- FINE -->
 <g id="node18" class="node">
 <title>FINE</title>
-<ellipse fill="lightblue" stroke="black" cx="866.32" cy="-598.01" rx="32.49" ry="32.49"></ellipse>
-<text text-anchor="middle" x="866.32" y="-593.81" font-family="Times,serif" font-size="14.00">FINE</text>
+<ellipse fill="lightblue" stroke="black" cx="882.83" cy="-594.6" rx="32.49" ry="32.49"></ellipse>
+<text text-anchor="middle" x="882.83" y="-590.4" font-family="Times,serif" font-size="14.00">FINE</text>
 </g>
 <!-- FIND&#45;&#45;FINE -->
 <g id="edge29" class="edge">
 <title>FIND--FINE</title>
-<path fill="none" stroke="black" d="M826.3,-467.32C835.13,-496.15 848,-538.17 856.74,-566.73"></path>
+<path fill="none" stroke="black" d="M840.5,-465.94C849.85,-494.36 863.4,-535.53 872.63,-563.6"></path>
 </g>
 <!-- HIND -->
 <g id="node19" class="node">
 <title>HIND</title>
-<ellipse fill="lightblue" stroke="black" cx="990.9" cy="-461.27" rx="35.35" ry="35.35"></ellipse>
-<text text-anchor="middle" x="990.9" y="-457.07" font-family="Times,serif" font-size="14.00">HIND</text>
+<ellipse fill="lightblue" stroke="black" cx="1004.21" cy="-452.79" rx="35.35" ry="35.35"></ellipse>
+<text text-anchor="middle" x="1004.21" y="-448.59" font-family="Times,serif" font-size="14.00">HIND</text>
 </g>
 <!-- FIND&#45;&#45;HIND -->
 <g id="edge30" class="edge">
 <title>FIND--HIND</title>
-<path fill="none" stroke="black" d="M849.67,-440.11C880.12,-444.68 925.04,-451.41 956.01,-456.04"></path>
+<path fill="none" stroke="black" d="M863.52,-437.45C893.89,-440.76 938.42,-445.62 969.22,-448.97"></path>
 </g>
 <!-- FEND&#45;&#45;FIND -->
 <g id="edge26" class="edge">
 <title>FEND--FIND</title>
-<path fill="none" stroke="black" d="M716.29,-450.4C736.96,-447.25 762.7,-443.33 782.91,-440.25"></path>
+<path fill="none" stroke="black" d="M728.49,-449.96C749.51,-446.61 775.82,-442.42 796.37,-439.14"></path>
 </g>
 <!-- BIND&#45;&#45;KIND -->
 <g id="edge31" class="edge">
 <title>BIND--KIND</title>
-<path fill="none" stroke="black" d="M944.22,-413.03C947.9,-440.45 953.02,-478.64 956.72,-506.19"></path>
+<path fill="none" stroke="black" d="M959.32,-408.55C963.28,-435.69 968.76,-473.27 972.72,-500.46"></path>
 </g>
 <!-- BIND&#45;&#45;HIND -->
 <g id="edge32" class="edge">
 <title>BIND--HIND</title>
-<path fill="none" stroke="black" d="M958.11,-408.4C962.7,-415.81 967.63,-423.75 972.23,-431.17"></path>
+<path fill="none" stroke="black" d="M972.87,-403.3C976.92,-409.69 981.21,-416.46 985.27,-422.87"></path>
 </g>
 <!-- KIND&#45;&#45;HIND -->
 <g id="edge33" class="edge">
 <title>KIND--HIND</title>
-<path fill="none" stroke="black" d="M973.75,-507.77C975.39,-503.32 977.07,-498.76 978.71,-494.32"></path>
+<path fill="none" stroke="black" d="M988.54,-501.74C990.17,-496.65 991.85,-491.4 993.48,-486.32"></path>
 </g>
 <!-- KINE -->
 <g id="node20" class="node">
 <title>KINE</title>
-<ellipse fill="lightblue" stroke="black" cx="973.55" cy="-685.94" rx="34.2" ry="34.2"></ellipse>
-<text text-anchor="middle" x="973.55" y="-681.74" font-family="Times,serif" font-size="14.00">KINE</text>
+<ellipse fill="lightblue" stroke="black" cx="993.25" cy="-679.59" rx="34.2" ry="34.2"></ellipse>
+<text text-anchor="middle" x="993.25" y="-675.39" font-family="Times,serif" font-size="14.00">KINE</text>
 </g>
 <!-- KIND&#45;&#45;KINE -->
 <g id="edge34" class="edge">
 <title>KIND--KINE</title>
-<path fill="none" stroke="black" d="M964.38,-576.61C966.31,-599.54 968.8,-629.24 970.69,-651.9"></path>
+<path fill="none" stroke="black" d="M981.58,-570.6C984.03,-593.46 987.2,-623.07 989.62,-645.65"></path>
 </g>
 <!-- KINA -->
 <g id="node21" class="node">
 <title>KINA</title>
-<ellipse fill="lightblue" stroke="black" cx="1091.43" cy="-633.28" rx="35.35" ry="35.35"></ellipse>
-<text text-anchor="middle" x="1091.43" y="-629.08" font-family="Times,serif" font-size="14.00">KINA</text>
+<ellipse fill="lightblue" stroke="black" cx="1111.45" cy="-628.32" rx="35.35" ry="35.35"></ellipse>
+<text text-anchor="middle" x="1111.45" y="-624.12" font-family="Times,serif" font-size="14.00">KINA</text>
 </g>
 <!-- KIND&#45;&#45;KINA -->
 <g id="edge35" class="edge">
 <title>KIND--KINA</title>
-<path fill="none" stroke="black" d="M990.27,-561.64C1011.82,-576.9 1041.13,-597.66 1062.66,-612.9"></path>
+<path fill="none" stroke="black" d="M1006.8,-555.49C1029.22,-571.09 1060.1,-592.58 1082.51,-608.18"></path>
 </g>
 <!-- FINE&#45;&#45;KINE -->
 <g id="edge36" class="edge">
 <title>FINE--KINE</title>
-<path fill="none" stroke="black" d="M891.46,-618.62C908.17,-632.33 930.09,-650.3 947.07,-664.23"></path>
+<path fill="none" stroke="black" d="M908.72,-614.53C925.93,-627.78 948.5,-645.14 965.99,-658.6"></path>
 </g>
 <!-- KINE&#45;&#45;KINA -->
 <g id="edge37" class="edge">
 <title>KINE--KINA</title>
-<path fill="none" stroke="black" d="M1004.83,-671.97C1021.61,-664.47 1042.25,-655.25 1059.18,-647.69"></path>
+<path fill="none" stroke="black" d="M1024.62,-665.99C1041.44,-658.69 1062.14,-649.71 1079.11,-642.35"></path>
 </g>
 </g>
 </svg>
@@ -888,7 +891,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Here we marked the shortest path between the words <em>sort</em> and <em>kind</em>, which is the answer to the puzzle we saw <a href="#so-what-is-weaver">above</a>.</p>
 <p>I defined the following predicates that specify the connectivity of the graph.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode prolog code-with-copy"><code class="sourceCode prolog"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">% Helper predicates</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode prolog code-with-copy"><code class="sourceCode prolog"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">% Helper predicates</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>count_different_elements([]<span class="kw">,</span> []<span class="kw">,</span> <span class="dv">0</span>)<span class="kw">.</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>count_different_elements([<span class="dt">X</span><span class="fu">|</span><span class="dt">Xs</span>]<span class="kw">,</span> [<span class="dt">Y</span><span class="fu">|</span><span class="dt">Ys</span>]<span class="kw">,</span> <span class="dt">N</span>) <span class="kw">:-</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">X</span> <span class="kw">\=</span> <span class="dt">Y</span><span class="kw">,</span></span>
@@ -906,12 +909,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>s(<span class="dt">N</span><span class="kw">,</span> <span class="dt">M</span><span class="kw">,</span> <span class="dv">1</span>) <span class="kw">:-</span></span>
 <span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    words(<span class="dt">Words</span>)<span class="kw">,</span></span>
 <span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    member(<span class="dt">M</span><span class="kw">,</span><span class="dt">Words</span>)<span class="kw">,</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    count_different_characters(<span class="dt">N</span><span class="kw">,</span> <span class="dt">M</span><span class="kw">,</span> <span class="dv">1</span>)<span class="kw">.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    count_different_characters(<span class="dt">N</span><span class="kw">,</span> <span class="dt">M</span><span class="kw">,</span> <span class="dv">1</span>)<span class="kw">.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The predicates <code>count_different_elements/3</code> and <code>count_different_characters/3</code> are helper predicates that handle the counting of different characters between two words. They are used to determine the cost or distance between two words in terms of the number of character differences.</p>
 <p>The <code>s/3</code> predicate defines a <em>successor</em> relation between words. It establishes that a successor word M is connected to an initial word N if they have exactly one different character. We assume all transitions have a cost of 1.</p>
 <p>One question that might arise is whether the full graph that contains all words is a connected graph. In other words, if there is always a path between two arbitrary nodes.</p>
 <p>Let’s find out how many (if any) words are not connected to any other word by entering the following query:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode prolog code-with-copy"><code class="sourceCode prolog"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>words(<span class="dt">W</span>)<span class="kw">,</span> bagof(<span class="dt">M</span><span class="kw">,</span>(member(<span class="dt">M</span><span class="kw">,</span><span class="dt">W</span>)<span class="kw">,</span> not(s(<span class="dt">M</span><span class="kw">,</span><span class="dt">_</span><span class="kw">,</span><span class="dt">_</span>)))<span class="kw">,</span><span class="dt">Bag</span>)<span class="kw">,</span> length(<span class="dt">Bag</span><span class="kw">,</span><span class="dt">L</span>)<span class="kw">.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode prolog code-with-copy"><code class="sourceCode prolog"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>words(<span class="dt">W</span>)<span class="kw">,</span> bagof(<span class="dt">M</span><span class="kw">,</span>(member(<span class="dt">M</span><span class="kw">,</span><span class="dt">W</span>)<span class="kw">,</span> not(s(<span class="dt">M</span><span class="kw">,</span><span class="dt">_</span><span class="kw">,</span><span class="dt">_</span>)))<span class="kw">,</span><span class="dt">Bag</span>)<span class="kw">,</span> length(<span class="dt">Bag</span><span class="kw">,</span><span class="dt">L</span>)<span class="kw">.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>W = [aahs, aals, abas, abba, abbe, abed, abet, able, ably|...],
 Bag = [abri, adze, ahoy, amok, ankh, aqua, arak, asci, auld|...],
 L = 62.</code></pre>
@@ -965,7 +968,7 @@ L = 62.</code></pre>
 <h2 class="anchored" data-anchor-id="the-a-search-algorithm">The A* search algorithm</h2>
 <p>The <a href="https://en.wikipedia.org/wiki/A*_search_algorithm">A* algorithm</a> is a popular pathfinding algorithm used for finding the shortest path between a start node and a goal node in a weighted graph. It uses a combination of the actual cost (path cost from the start node) and the heuristic cost (estimated cost from the current node to the goal) to guide the search towards the goal while exploring the graph efficiently.</p>
 <p>Because this algorithm works on weighted graphs only, we set the weight of all edges equal to 1. You can find many implementations of A* for a variety of programming languages online. I adapted one <a href="https://www.cs.toronto.edu/~sheila/384/w14/Assignments/A1/astarCC.pl">from here</a> for use in the solver.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode prolog code-with-copy"><code class="sourceCode prolog"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">% A* with cycle checking</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode prolog code-with-copy"><code class="sourceCode prolog"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">% A* with cycle checking</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>a_star(<span class="dt">Start</span><span class="kw">,</span> <span class="dt">Answer</span>) <span class="kw">:-</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    h(<span class="dt">Start</span><span class="kw">,</span> <span class="dt">H</span>)<span class="kw">,</span> <span class="kw">!,</span></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    a_star([[(<span class="dv">0</span><span class="kw">,</span> <span class="dt">H</span>), <span class="dt">Start</span>]]<span class="kw">,</span> []<span class="kw">,</span> <span class="dt">Answer</span><span class="kw">,</span> <span class="dv">0</span>)<span class="kw">.</span></span>
@@ -1031,31 +1034,31 @@ L = 62.</code></pre>
 <span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a>    <span class="dt">X</span> <span class="dt">is</span> <span class="dt">G1</span> <span class="dt">+</span> <span class="dt">H1</span><span class="kw">,</span> <span class="dt">Y</span> <span class="dt">is</span> <span class="dt">G2</span> <span class="dt">+</span> <span class="dt">H2</span><span class="kw">,</span> <span class="dt">X</span> <span class="dt">=&lt;</span> <span class="dt">Y</span><span class="kw">,</span> <span class="kw">!.</span></span>
 <span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a>greater_f_value([(<span class="dt">G1</span><span class="kw">,</span><span class="dt">H1</span>) <span class="fu">|</span> <span class="dt">_</span>]<span class="kw">,</span> [(<span class="dt">G2</span><span class="kw">,</span> <span class="dt">H2</span>) <span class="fu">|</span> <span class="dt">_</span>]) <span class="kw">:-</span></span>
-<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a>    <span class="dt">X</span> <span class="dt">is</span> <span class="dt">G1</span> <span class="dt">+</span> <span class="dt">H1</span><span class="kw">,</span> <span class="dt">Y</span> <span class="dt">is</span> <span class="dt">G2</span> <span class="dt">+</span> <span class="dt">H2</span><span class="kw">,</span> <span class="dt">X</span> <span class="dt">&gt;</span> <span class="dt">Y</span><span class="kw">,</span> <span class="kw">!.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a>    <span class="dt">X</span> <span class="dt">is</span> <span class="dt">G1</span> <span class="dt">+</span> <span class="dt">H1</span><span class="kw">,</span> <span class="dt">Y</span> <span class="dt">is</span> <span class="dt">G2</span> <span class="dt">+</span> <span class="dt">H2</span><span class="kw">,</span> <span class="dt">X</span> <span class="dt">&gt;</span> <span class="dt">Y</span><span class="kw">,</span> <span class="kw">!.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>It assumes a successor predicate <code>s/3</code> that we’ve defined above. Furthermore, it expects a predicate <code>h/2</code> that defines a heuristic to guide the search and a <code>goal/1</code> predicate that gets satisfied once the search has reached the final node.</p>
 <p>The heuristic I used is the number of letters that are different from the target word. The closer we are to the final node, the more letters are expected to be correct.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode prolog code-with-copy"><code class="sourceCode prolog"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">% The heuristic</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode prolog code-with-copy"><code class="sourceCode prolog"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">% The heuristic</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>h(<span class="dt">N</span><span class="kw">,</span> <span class="dt">H</span>) <span class="kw">:-</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    goal(<span class="dt">M</span>)<span class="kw">,</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    count_different_characters(<span class="dt">N</span><span class="kw">,</span> <span class="dt">M</span><span class="kw">,</span> <span class="dt">H</span>)<span class="kw">.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    count_different_characters(<span class="dt">N</span><span class="kw">,</span> <span class="dt">M</span><span class="kw">,</span> <span class="dt">H</span>)<span class="kw">.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The A* search algorithm is guarenteed to find the shortest path if the heuristic we choose is <em>admissible</em>. A heuristic is said to be <em>admissible</em> if it never overestimates the cost of reaching the goal. In our case we know it never overestimates the cost, because if <em>n</em> letters are different from the target word, we need at least <em>n</em> more steps.</p>
 <p>The <code>goal/1</code> predicate is dynamically added to the Prolog database before we commence our search. The <code>weaver/3</code> predicate is the top-level predicate that you call when you want to solve a puzzle.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode prolog code-with-copy"><code class="sourceCode prolog"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">:-</span> <span class="kw">dynamic</span> goal<span class="fu">/</span><span class="dv">1</span><span class="kw">.</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode prolog code-with-copy"><code class="sourceCode prolog"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">:-</span> <span class="kw">dynamic</span> goal<span class="fu">/</span><span class="dv">1</span><span class="kw">.</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>weaver(<span class="dt">Start</span><span class="kw">,</span> <span class="dt">Goal</span><span class="kw">,</span> <span class="dt">Solution</span>) <span class="kw">:-</span></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">retractall</span>(goal(<span class="dt">_</span>))<span class="kw">,</span></span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    assert(goal(<span class="dt">Goal</span>))<span class="kw">,</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    a_star(<span class="dt">Start</span><span class="kw">,</span> <span class="dt">Solution</span>)<span class="kw">.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    a_star(<span class="dt">Start</span><span class="kw">,</span> <span class="dt">Solution</span>)<span class="kw">.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>You can find a copy of this code as a GitHub gist <a href="https://gist.github.com/afvanwoudenberg/9bc4db382a477098574278fc06641cc4">here</a>.</p>
 </section>
 <section id="running-the-solver" class="level2">
 <h2 class="anchored" data-anchor-id="running-the-solver">Running the solver</h2>
 <p>To run the solver, you first start the Prolog interpreter (I use <a href="https://www.swi-prolog.org/">SWI-Prolog</a>) by opening up a terminal and typing:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">swipl</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">swipl</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This will start the Prolog interpreter. You can then load the solver by typing:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode prolog code-with-copy"><code class="sourceCode prolog"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>[weaver]<span class="kw">.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode prolog code-with-copy"><code class="sourceCode prolog"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>[weaver]<span class="kw">.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This loads the <code>weaver.pl</code> file. To solve a word ladder going from <em>sort</em> to <em>kind</em>, you’d enter:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode prolog code-with-copy"><code class="sourceCode prolog"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>weaver(sort<span class="kw">,</span> kind<span class="kw">,</span> <span class="dt">Solution</span>)<span class="kw">.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode prolog code-with-copy"><code class="sourceCode prolog"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>weaver(sort<span class="kw">,</span> kind<span class="kw">,</span> <span class="dt">Solution</span>)<span class="kw">.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>Solution = [sort, sord, ford, fond, find, kind].</code></pre>
 <p>There you have it! No more emotional distress over not being able to solve word ladders.</p>
 
@@ -1114,13 +1117,14 @@ L = 62.</code></pre>
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

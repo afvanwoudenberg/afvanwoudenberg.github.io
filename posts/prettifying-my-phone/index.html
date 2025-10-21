@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.31">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -71,14 +71,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../favicon.png" rel="icon" type="image/png">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-08aed7fc4ad4995f89cd2ec7682ca9e3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-c6e40670e56ed545c5e701e5e2d9fb10.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -132,7 +133,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -158,6 +159,8 @@ window.Quarto = {
     <nav class="navbar navbar-expand " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    </a>
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Aswin van Woudenberg</span>
     </a>
@@ -270,7 +273,7 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="importing-libraries">Importing libraries</h2>
 <p>We’ll start by importing some dependencies.</p>
 <div id="8967d598" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> glob</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
@@ -282,7 +285,7 @@ window.Quarto = {
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ipywidgets <span class="im">import</span> interact, interact_manual</span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.cluster.hierarchy <span class="im">import</span> linkage, dendrogram, fcluster</span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib.offsetbox <span class="im">import</span> OffsetImage, AnnotationBbox</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mpl_toolkits.mplot3d <span class="im">import</span> Axes3D</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mpl_toolkits.mplot3d <span class="im">import</span> Axes3D</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="getting-the-icons" class="level2">
@@ -293,14 +296,14 @@ window.Quarto = {
 <p>Apk Analyzer saves the icon files as JPEGs, which don’t support transparency. As can be seen in the image above, this will cause each icon to have a black background. We’ll need to remove this programmatically later.</p>
 <p>The following code finds all JPEG files in the <code>app_icons</code> folder and saves their names to a list.</p>
 <div id="a6b3660f" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>files <span class="op">=</span> glob.glob(<span class="st">"app_icons/*.jpeg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>files <span class="op">=</span> glob.glob(<span class="st">"app_icons/*.jpeg"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="loading-all-images-and-removing-the-background" class="level2">
 <h2 class="anchored" data-anchor-id="loading-all-images-and-removing-the-background">Loading all images and removing the background</h2>
 <p>Now that we have a list of file names, we can load the images. As mentioned above, we’ll need to remove the black background. To do this, we’ll create a mask that can be applied to each image. The following functions will handle creating and applying this mask to each image.</p>
 <div id="d6e7be5f" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_mask(size):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_mask(size):</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create a mask image with a transparent (black) background</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    mask <span class="op">=</span> Image.new(<span class="st">"L"</span>, size, <span class="dv">0</span>)</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -311,31 +314,31 @@ window.Quarto = {
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    draw <span class="op">=</span> ImageDraw.Draw(mask)</span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    draw.rounded_rectangle([(margin, margin), (size[<span class="dv">0</span>] <span class="op">-</span> margin, size[<span class="dv">1</span>] <span class="op">-</span> margin)], radius<span class="op">=</span>radius, fill<span class="op">=</span><span class="dv">255</span>)</span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> mask</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> mask</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="ab650e10" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> apply_mask(image, mask):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> apply_mask(image, mask):</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create a white background image</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    white_bg <span class="op">=</span> Image.new(<span class="st">"RGBA"</span>, image.size, (<span class="dv">255</span>, <span class="dv">255</span>, <span class="dv">255</span>, <span class="dv">255</span>))</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Composite the images using the mask</span></span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> Image.composite(image, white_bg, mask)</span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> result.convert(<span class="st">"RGB"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> result.convert(<span class="st">"RGB"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="b61a1e5d" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> remove_background(image):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> remove_background(image):</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    mask <span class="op">=</span> create_mask(image.size)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> apply_mask(image, mask)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> apply_mask(image, mask)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We’ll resize each image to 64x64 to ensure they all have the same size.</p>
 <div id="5614ead1" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>size <span class="op">=</span> (<span class="dv">64</span>, <span class="dv">64</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>size <span class="op">=</span> (<span class="dv">64</span>, <span class="dv">64</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The mask that is applied to each image looks like this:</p>
 <div id="ff1ffb06" class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>mask <span class="op">=</span> create_mask((<span class="dv">265</span>,<span class="dv">265</span>)).resize(size)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>mask</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>mask <span class="op">=</span> create_mask((<span class="dv">265</span>,<span class="dv">265</span>)).resize(size)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>mask</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="110">
 <div>
 <figure class="figure">
@@ -346,14 +349,14 @@ window.Quarto = {
 </div>
 <p>Next, let’s load all images and remove their backgrounds.</p>
 <div id="e255cd59" class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>images <span class="op">=</span> [remove_background(Image.<span class="bu">open</span>(f)).resize(size) <span class="cf">for</span> f <span class="kw">in</span> files]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>images <span class="op">=</span> [remove_background(Image.<span class="bu">open</span>(f)).resize(size) <span class="cf">for</span> f <span class="kw">in</span> files]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="plotting-all-images-in-a-grid" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="plotting-all-images-in-a-grid">Plotting all images in a grid</h2>
 <p>The helper function below will display all the images in a grid.</p>
 <div id="a4b840df" class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_image_grid(images, ncols<span class="op">=</span><span class="va">None</span>, title<span class="op">=</span><span class="st">''</span>):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_image_grid(images, ncols<span class="op">=</span><span class="va">None</span>, title<span class="op">=</span><span class="st">''</span>):</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    ncols <span class="op">=</span> ncols <span class="kw">or</span> <span class="bu">int</span>(np.sqrt(<span class="bu">len</span>(images)))</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    nrows, ncols <span class="op">=</span> (<span class="bu">len</span>(images) <span class="op">+</span> ncols <span class="op">-</span> <span class="dv">1</span>) <span class="op">//</span> ncols, ncols</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    imgs <span class="op">=</span> images <span class="op">+</span> [<span class="va">None</span>] <span class="op">*</span> (nrows <span class="op">*</span> ncols <span class="op">-</span> <span class="bu">len</span>(images))</span>
@@ -363,11 +366,11 @@ window.Quarto = {
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> img, ax <span class="kw">in</span> <span class="bu">zip</span>(imgs, axes.flatten()): </span>
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> img <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
 <span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>            ax.imshow(img)</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>        ax.axis(<span class="st">'off'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>        ax.axis(<span class="st">'off'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Let’s call this function to display our loaded images.</p>
 <div id="6b784d4f" class="cell page-columns page-full" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>plot_image_grid(images, <span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>plot_image_grid(images, <span class="dv">15</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display page-columns page-full">
 <div class="page-columns page-full">
 <figure class="figure page-columns page-full">
@@ -394,12 +397,12 @@ window.Quarto = {
 <p>N.B.: You might see variations of this distance metric. When used as a loss function the Euclidian distances are generally squared. This makes the resulting function smooth and differentiable which is useful in gradient-based optimization algorithms. This isn’t needed in our situation.</p>
 <p>The following function calculates the Chamfer distance. It was taken <a href="https://medium.com/@sim30217/chamfer-distance-4207955e8612">from here</a>. It uses <code>KDTree</code> for efficient nearest neighbor searches.</p>
 <div id="aaf27ec4" class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> chamfer_distance(a, b):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> chamfer_distance(a, b):</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    tree <span class="op">=</span> KDTree(b)</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    dist_a <span class="op">=</span> tree.query(a)[<span class="dv">0</span>]</span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    tree <span class="op">=</span> KDTree(a)</span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    dist_b <span class="op">=</span> tree.query(b)[<span class="dv">0</span>]</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.mean(dist_a) <span class="op">+</span> np.mean(dist_b)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.mean(dist_a) <span class="op">+</span> np.mean(dist_b)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="computing-the-chamfer-distance-between-two-images" class="level2">
@@ -407,7 +410,7 @@ window.Quarto = {
 <p>Let’s explore a bit more visually how the Chamfer distance is used to quantify the dissimilarity between the color palettes of two images.</p>
 <p>As an example we’ll compute the Chamfer distance between the first two images we have loaded.</p>
 <div id="bb53d2ef" class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>plot_image_grid([images[<span class="dv">0</span>],images[<span class="dv">1</span>]], <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>plot_image_grid([images[<span class="dv">0</span>],images[<span class="dv">1</span>]], <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -418,7 +421,7 @@ window.Quarto = {
 </div>
 <p>The following function creates a 3D scatterplot to visualize the RGB values of an image’s pixels. In this plot, the x-axis, y-axis, and z-axis represent the red, green, and blue color values, respectively. Each point in the scatterplot corresponds to a pixel, and its position is determined by the pixel’s RGB values.</p>
 <div id="0f8c40cd" class="cell" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_image_colors(image, ax<span class="op">=</span><span class="va">None</span>, title<span class="op">=</span><span class="st">''</span>):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_image_colors(image, ax<span class="op">=</span><span class="va">None</span>, title<span class="op">=</span><span class="st">''</span>):</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    boolean_mask <span class="op">=</span> np.array(mask).astype(<span class="bu">bool</span>).flatten()</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> np.array(image).reshape((<span class="dv">64</span><span class="op">*</span><span class="dv">64</span>, <span class="op">-</span><span class="dv">1</span>))[boolean_mask]</span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -444,11 +447,11 @@ window.Quarto = {
 <span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Add inset axis for the image</span></span>
 <span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>    inset_ax <span class="op">=</span> fig.add_axes([ax.get_position().x0, ax.get_position().y1 <span class="op">-</span> <span class="fl">0.15</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span>])</span>
 <span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>    inset_ax.imshow(image)</span>
-<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>    inset_ax.axis(<span class="st">'off'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>    inset_ax.axis(<span class="st">'off'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>If we plot the colors of the first image, we get the following:</p>
 <div id="aebf5ad5" class="cell" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>plot_image_colors(images[<span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>plot_image_colors(images[<span class="dv">0</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -459,7 +462,7 @@ window.Quarto = {
 </div>
 <p>Now let’s do the same for the second image:</p>
 <div id="0cdc2214" class="cell" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>plot_image_colors(images[<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>plot_image_colors(images[<span class="dv">1</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -470,13 +473,13 @@ window.Quarto = {
 </div>
 <p>As you can see, in this case, the points in one scatterplot are, on average, quite far from the nearest point in the other scatterplot. Calculating the Chamfer distance between the two sets of points gives us a relatively high value.</p>
 <div id="708e1a57" class="cell" data-execution_count="17">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a boolean mask</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a boolean mask</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>boolean_mask <span class="op">=</span> np.array(mask).astype(<span class="bu">bool</span>).flatten()</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># The number of pixels</span></span>
 <span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>num_pixels <span class="op">=</span> math.prod(size)</span>
 <span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>chamfer_distance(np.array(images[<span class="dv">0</span>]).reshape((num_pixels, <span class="op">-</span><span class="dv">1</span>))[boolean_mask], np.array(images[<span class="dv">1</span>]).reshape((num_pixels, <span class="op">-</span><span class="dv">1</span>))[boolean_mask])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>chamfer_distance(np.array(images[<span class="dv">0</span>]).reshape((num_pixels, <span class="op">-</span><span class="dv">1</span>))[boolean_mask], np.array(images[<span class="dv">1</span>]).reshape((num_pixels, <span class="op">-</span><span class="dv">1</span>))[boolean_mask])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="119">
 <pre><code>226.8853693815226</code></pre>
 </div>
@@ -486,7 +489,7 @@ window.Quarto = {
 <section id="comparing-images-pairwise" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="comparing-images-pairwise">Comparing images pairwise</h2>
 <p>The code below allows us to interactively compare pairs of images side-by-side.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>np_images_foreground <span class="op">=</span> [np.array(image).reshape((num_pixels, <span class="op">-</span><span class="dv">1</span>))[boolean_mask] <span class="cf">for</span> image <span class="kw">in</span> images]</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>np_images_foreground <span class="op">=</span> [np.array(image).reshape((num_pixels, <span class="op">-</span><span class="dv">1</span>))[boolean_mask] <span class="cf">for</span> image <span class="kw">in</span> images]</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_images_colors_side_by_side(image_num1, image_num2):</span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    image1 <span class="op">=</span> images[image_num1]</span>
@@ -509,7 +512,7 @@ window.Quarto = {
 <span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> interact(plot_images_colors_side_by_side, </span>
 <span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>    image_num1<span class="op">=</span>widgets.IntSlider(<span class="bu">min</span><span class="op">=</span><span class="dv">0</span>, <span class="bu">max</span><span class="op">=</span><span class="bu">len</span>(images) <span class="op">-</span> <span class="dv">1</span>, step<span class="op">=</span><span class="dv">1</span>, value<span class="op">=</span><span class="dv">0</span>, description<span class="op">=</span><span class="st">"Image 1: "</span>), </span>
 <span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>    image_num2<span class="op">=</span>widgets.IntSlider(<span class="bu">min</span><span class="op">=</span><span class="dv">0</span>, <span class="bu">max</span><span class="op">=</span><span class="bu">len</span>(images) <span class="op">-</span> <span class="dv">1</span>, step<span class="op">=</span><span class="dv">1</span>, value<span class="op">=</span><span class="dv">1</span>, description<span class="op">=</span><span class="st">"Image 2: "</span>)</span>
-<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div id="ba0b78d3" class="cell page-columns page-full" data-execution_count="18">
 <div class="cell-output cell-output-display column-page-inset-right">
 <script type="application/vnd.jupyter.widget-view+json">
@@ -534,7 +537,7 @@ window.Quarto = {
 <section id="computing-the-distance-matrix" class="level2">
 <h2 class="anchored" data-anchor-id="computing-the-distance-matrix">Computing the distance matrix</h2>
 <p>The distance matrix contains the Chamfer distance between each pair of images and is computed using the following code:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize the distance matrix</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize the distance matrix</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>num_sets <span class="op">=</span> <span class="bu">len</span>(np_images_foreground)</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>distance_matrix <span class="op">=</span> np.zeros((num_sets, num_sets))</span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -543,14 +546,14 @@ window.Quarto = {
 <span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(i <span class="op">+</span> <span class="dv">1</span>, num_sets):</span>
 <span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>        distance <span class="op">=</span> chamfer_distance(np_images_foreground[i], np_images_foreground[j])</span>
 <span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>        distance_matrix[i, j] <span class="op">=</span> distance</span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>        distance_matrix[j, i] <span class="op">=</span> distance  <span class="co"># Use symmetry</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>        distance_matrix[j, i] <span class="op">=</span> distance  <span class="co"># Use symmetry</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Computing the Chamfer distance between each pair of images may take a minute or so depending on the speed of your hardware.</p>
 <p>The maximum value in the distance matrix tells us which two images are most dissimilar.</p>
 <div id="ed529a62" class="cell" data-execution_count="20">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>start, end <span class="op">=</span> np.unravel_index(np.argmax(distance_matrix), distance_matrix.shape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>start, end <span class="op">=</span> np.unravel_index(np.argmax(distance_matrix), distance_matrix.shape)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="c76626f4" class="cell" data-execution_count="21">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>plot_image_grid([images[start],images[end]], <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>plot_image_grid([images[start],images[end]], <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -566,7 +569,7 @@ window.Quarto = {
 <p>The shortest <a href="https://en.wikipedia.org/wiki/Hamiltonian_path">Hamiltonian path</a> traverses all vertices in a graph exactly once while minimizing the total distance traveled. Here each vertex corresponds to an image, and the edges are weighted based on the Chamfer distance between these images. Such a path should yield a visually pleasing sequence of app icons.</p>
 <p>The following code applies <a href="https://en.wikipedia.org/wiki/Simulated_annealing">simulated annealing</a> to attempt to find the shortest Hamiltonian path in a graph represented by a distance matrix.</p>
 <div id="f8cb198b" class="cell" data-execution_count="22">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> total_distance(path, distance_matrix):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> total_distance(path, distance_matrix):</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">sum</span>(distance_matrix[path[i], path[i <span class="op">+</span> <span class="dv">1</span>]] <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(path) <span class="op">-</span> <span class="dv">1</span>))</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> shortest_hamiltonian_path(distance_matrix, start, end, initial_temp, cooling_rate, stopping_temp, initial_path<span class="op">=</span><span class="va">None</span>):</span>
@@ -594,16 +597,16 @@ window.Quarto = {
 <span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a>        </span>
 <span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a>        temperature <span class="op">*=</span> cooling_rate</span>
 <span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb22-29"><a href="#cb22-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> current_path, current_distance</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb22-29"><a href="#cb22-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> current_path, current_distance</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We will use <code>shortest_hamiltonian_path</code> to find a path between the two app icons with the most dissimilar color schemes. This function requires three parameters to control the temperature schedule: initial temperature (<code>initial_temp</code>), cooling rate (<code>cooling_rate</code>), and stopping temperature (<code>stopping_temp</code>). The initial temperature starts high to allow broad exploration of the search space, accepting worse solutions to avoid local minima. The cooling rate gradually reduces the temperature, shifting focus to refining the solution. The process continues until the temperature drops below the stopping temperature, ensuring the algorithm terminates efficiently while aiming for an optimal solution.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>initial_temp <span class="op">=</span> <span class="dv">400000</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>initial_temp <span class="op">=</span> <span class="dv">400000</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>cooling_rate <span class="op">=</span> <span class="fl">0.99995</span></span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>stopping_temp <span class="op">=</span> <span class="fl">1e-8</span></span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>path, distance <span class="op">=</span> shortest_hamiltonian_path(distance_matrix, start, end, initial_temp, cooling_rate, stopping_temp)</span>
 <span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Shortest Hamiltonian path:"</span>, path)</span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Distance:"</span>, distance)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Distance:"</span>, distance)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div id="f0885dee" class="cell" data-execution_count="23">
 <div class="cell-output cell-output-stdout">
 <pre><code>Shortest Hamiltonian path: [23, 72, 5, 35, 53, 63, 44, 78, 8, 11, 22, 65, 77, 39, 51, 4, 33, 10, 38, 19, 0, 14, 27, 60, 40, 66, 87, 32, 83, 30, 9, 37, 82, 34, 17, 61, 75, 15, 49, 55, 2, 25, 62, 69, 26, 46, 74, 68, 24, 54, 57, 80, 71, 7, 86, 59, 21, 29, 28, 79, 70, 56, 41, 31, 81, 3, 13, 16, 42, 12, 36, 84, 58, 6, 18, 50, 45, 76, 52, 85, 73, 64, 20, 47, 1, 48, 43, 67]
@@ -612,10 +615,10 @@ Distance: 2201.440737366966</code></pre>
 </div>
 <p>Once the function returns a path we can use this to reorder the images into a more visually pleasing sequence.</p>
 <div id="b04eee2a" class="cell" data-execution_count="24">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>sorted_images <span class="op">=</span> [images[i] <span class="cf">for</span> i <span class="kw">in</span> path]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>sorted_images <span class="op">=</span> [images[i] <span class="cf">for</span> i <span class="kw">in</span> path]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="066654a3" class="cell page-columns page-full" data-execution_count="25">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>plot_image_grid(sorted_images, <span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>plot_image_grid(sorted_images, <span class="dv">15</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display page-columns page-full">
 <div class="page-columns page-full">
 <figure class="figure page-columns page-full">
@@ -632,16 +635,16 @@ Distance: 2201.440737366966</code></pre>
 <h2 class="anchored" data-anchor-id="grouping-apps-using-hierarchical-clustering">Grouping apps using hierarchical clustering</h2>
 <p>We can use the previously calculated distance matrix to perform hierarchical clustering. I decided to go with <a href="https://en.wikipedia.org/wiki/Ward%27s_method">Ward’s linkage</a> which tends to create more compact and spherical clusters.</p>
 <div id="b88cc8f6" class="cell" data-execution_count="26">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert the distance matrix to a condensed distance matrix</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert the distance matrix to a condensed distance matrix</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="co"># The condensed distance matrix contains the upper triangular part of the distance matrix</span></span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>condensed_distance_matrix <span class="op">=</span> distance_matrix[np.triu_indices_from(distance_matrix, k<span class="op">=</span><span class="dv">1</span>)]</span>
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform hierarchical clustering using the linkage method</span></span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>Z <span class="op">=</span> linkage(condensed_distance_matrix, method<span class="op">=</span><span class="st">'ward'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>Z <span class="op">=</span> linkage(condensed_distance_matrix, method<span class="op">=</span><span class="st">'ward'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Ward’s linkage is an agglomerative method which means that it starts with each image as its own cluster and merges pairs based on minimal variance increase. This process forms a hierarchical cluster sequence that can be visualized in a dendrogram.</p>
 <div id="18d047d8" class="cell" data-execution_count="27">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_dendrogram(max_d<span class="op">=</span><span class="dv">0</span>):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_dendrogram(max_d<span class="op">=</span><span class="dv">0</span>):</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>    fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">18</span>, <span class="dv">6</span>))</span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    dendrogram(Z, ax<span class="op">=</span>ax)</span>
 <span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    ax.set_title(<span class="st">'Hierarchical Clustering Dendrogram'</span>)</span>
@@ -658,10 +661,10 @@ Distance: 2201.440737366966</code></pre>
 <span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>        ax.add_artist(ab)</span>
 <span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>    ax.set_xticks([])</span>
 <span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="1d8d0737" class="cell page-columns page-full" data-execution_count="28">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>plot_dendrogram()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>plot_dendrogram()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display page-columns page-full">
 <div class="page-columns page-full">
 <figure class="figure page-columns page-full">
@@ -675,7 +678,7 @@ Distance: 2201.440737366966</code></pre>
 <section id="selecting-clusters-and-ordering-apps" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="selecting-clusters-and-ordering-apps">Selecting clusters and ordering apps</h2>
 <p>The code below allows us to interactively adjust a distance threshold using a slider to determine the number of clusters. We can then press <em>Show clusters</em> to see which images belong to each cluster. Finally, we can select specific clusters and press <em>Find path</em> to find the shortest Hamiltonian path through the icons in these clusters.</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="at">@interact</span>(max_d<span class="op">=</span>widgets.IntSlider(<span class="bu">min</span><span class="op">=</span><span class="dv">0</span>, <span class="bu">max</span><span class="op">=</span><span class="bu">int</span>(np.<span class="bu">max</span>(Z)), step<span class="op">=</span><span class="dv">1</span>, value<span class="op">=</span><span class="bu">int</span>(np.<span class="bu">max</span>(Z) <span class="op">/</span> <span class="dv">2</span>), description<span class="op">=</span><span class="st">"Distance: "</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="at">@interact</span>(max_d<span class="op">=</span>widgets.IntSlider(<span class="bu">min</span><span class="op">=</span><span class="dv">0</span>, <span class="bu">max</span><span class="op">=</span><span class="bu">int</span>(np.<span class="bu">max</span>(Z)), step<span class="op">=</span><span class="dv">1</span>, value<span class="op">=</span><span class="bu">int</span>(np.<span class="bu">max</span>(Z) <span class="op">/</span> <span class="dv">2</span>), description<span class="op">=</span><span class="st">"Distance: "</span>))</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_dendrogram_with_threshold(max_d):</span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    plot_dendrogram(max_d)</span>
 <span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -705,7 +708,7 @@ Distance: 2201.440737366966</code></pre>
 <span id="cb30-28"><a href="#cb30-28" aria-hidden="true" tabindex="-1"></a>                sorted_images <span class="op">=</span> [images[i] <span class="cf">for</span> i <span class="kw">in</span> path]</span>
 <span id="cb30-29"><a href="#cb30-29" aria-hidden="true" tabindex="-1"></a>                plot_image_grid(sorted_images, <span class="dv">5</span>)</span>
 <span id="cb30-30"><a href="#cb30-30" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:</span>
-<span id="cb30-31"><a href="#cb30-31" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>(<span class="st">"Select on or more clusters."</span>)        </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb30-31"><a href="#cb30-31" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>(<span class="st">"Select on or more clusters."</span>)        </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div id="886c917c" class="cell page-columns page-full" data-execution_count="29">
 <div class="cell-output cell-output-display column-page">
 <script type="application/vnd.jupyter.widget-view+json">
@@ -883,13 +886,14 @@ Distance: 2201.440737366966</code></pre>
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

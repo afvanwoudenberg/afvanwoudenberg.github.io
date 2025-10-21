@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.31">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -71,14 +71,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../favicon.png" rel="icon" type="image/png">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-08aed7fc4ad4995f89cd2ec7682ca9e3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-c6e40670e56ed545c5e701e5e2d9fb10.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -132,7 +133,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -158,6 +159,8 @@ window.Quarto = {
     <nav class="navbar navbar-expand " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    </a>
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Aswin van Woudenberg</span>
     </a>
@@ -297,14 +300,14 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="importing-libraries">Importing libraries</h2>
 <p>We’re now ready to implement Mozart’s musical dice game using Python. Let’s start by importing the necessary modules:</p>
 <div class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib.colors <span class="im">import</span> ListedColormap</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib.colors <span class="im">import</span> ListedColormap</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> display</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ipywidgets <span class="im">as</span> widgets</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> mido</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Note how we import the aforementioned <code>mido</code> module.</p>
 </section>
@@ -312,7 +315,7 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="reference-chart-and-dice-rolls">Reference chart and dice rolls</h2>
 <p>The two part reference chart is represented by a 11x16 numpy array. The numbers in the array indicate the music fragment to be played for each combination of dice rolls.</p>
 <div class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>number_table <span class="op">=</span> np.array([</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>number_table <span class="op">=</span> np.array([</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    [ <span class="dv">96</span>,  <span class="dv">22</span>, <span class="dv">141</span>,  <span class="dv">41</span>, <span class="dv">105</span>, <span class="dv">122</span>,  <span class="dv">11</span>,  <span class="dv">30</span>,  <span class="dv">70</span>, <span class="dv">121</span>,  <span class="dv">26</span>,   <span class="dv">9</span>, <span class="dv">112</span>,  <span class="dv">49</span>, <span class="dv">109</span>,  <span class="dv">14</span>],</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    [ <span class="dv">32</span>,   <span class="dv">6</span>, <span class="dv">128</span>,  <span class="dv">63</span>, <span class="dv">146</span>,  <span class="dv">46</span>, <span class="dv">134</span>,  <span class="dv">81</span>, <span class="dv">117</span>,  <span class="dv">39</span>, <span class="dv">126</span>,  <span class="dv">56</span>, <span class="dv">174</span>,  <span class="dv">18</span>, <span class="dv">116</span>,  <span class="dv">83</span>],</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    [ <span class="dv">69</span>,  <span class="dv">95</span>, <span class="dv">158</span>,  <span class="dv">13</span>, <span class="dv">153</span>,  <span class="dv">55</span>, <span class="dv">110</span>,  <span class="dv">24</span>,  <span class="dv">66</span>, <span class="dv">139</span>,  <span class="dv">15</span>, <span class="dv">132</span>,  <span class="dv">73</span>,  <span class="dv">58</span>, <span class="dv">145</span>,  <span class="dv">79</span>],</span>
@@ -324,11 +327,11 @@ window.Quarto = {
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    [ <span class="dv">98</span>, <span class="dv">142</span>,  <span class="dv">42</span>, <span class="dv">156</span>,  <span class="dv">75</span>, <span class="dv">129</span>,  <span class="dv">62</span>, <span class="dv">123</span>,  <span class="dv">65</span>,  <span class="dv">77</span>,  <span class="dv">19</span>,  <span class="dv">82</span>, <span class="dv">137</span>,  <span class="dv">38</span>, <span class="dv">149</span>,   <span class="dv">8</span>],</span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    [  <span class="dv">3</span>,  <span class="dv">87</span>, <span class="dv">165</span>,  <span class="dv">61</span>, <span class="dv">135</span>,  <span class="dv">47</span>, <span class="dv">147</span>,  <span class="dv">33</span>, <span class="dv">102</span>,   <span class="dv">4</span>,  <span class="dv">31</span>, <span class="dv">164</span>, <span class="dv">144</span>,  <span class="dv">59</span>, <span class="dv">173</span>,  <span class="dv">78</span>],</span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    [ <span class="dv">54</span>, <span class="dv">130</span>,  <span class="dv">10</span>, <span class="dv">103</span>,  <span class="dv">28</span>,  <span class="dv">37</span>, <span class="dv">106</span>,   <span class="dv">5</span>,  <span class="dv">35</span>,  <span class="dv">20</span>, <span class="dv">108</span>,  <span class="dv">92</span>,  <span class="dv">12</span>, <span class="dv">124</span>,  <span class="dv">44</span>, <span class="dv">131</span>]</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Let’s now define a function that displays the reference chart and dice rolls.</p>
 <div class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_number_table(number_table, dice_rolls<span class="op">=</span><span class="va">None</span>):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_number_table(number_table, dice_rolls<span class="op">=</span><span class="va">None</span>):</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    highlight <span class="op">=</span> np.zeros((<span class="dv">11</span>, <span class="dv">16</span>))</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> dice_rolls <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        row_indices <span class="op">=</span> dice_rolls <span class="op">-</span> <span class="dv">2</span></span>
@@ -346,16 +349,16 @@ window.Quarto = {
 <span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    plt.yticks(<span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">0</span>,<span class="dv">11</span>)), <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">2</span>, <span class="dv">13</span>)))</span>
 <span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    plt.xlabel(<span class="st">"Measure"</span>)</span>
 <span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    plt.ylabel(<span class="st">"Dice roll"</span>)</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>This function takes two parameters: the reference chart and the dice rolls. If the dice rolls are not provided, the reference chart is displayed without highlighting any cells.</p>
 <p>Before calling this function, let’s simulate rolling two dice 16 times. We do that using the following code:</p>
 <div class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Throw two dice 16 times</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>dice_rolls <span class="op">=</span> np.<span class="bu">sum</span>(np.random.randint(<span class="dv">1</span>, <span class="dv">7</span>, size<span class="op">=</span>(<span class="dv">2</span>, <span class="dv">16</span>)), axis<span class="op">=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Throw two dice 16 times</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>dice_rolls <span class="op">=</span> np.<span class="bu">sum</span>(np.random.randint(<span class="dv">1</span>, <span class="dv">7</span>, size<span class="op">=</span>(<span class="dv">2</span>, <span class="dv">16</span>)), axis<span class="op">=</span><span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>You might be wondering why we don’t simply write:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>dice_rolls <span class="op">=</span> np.random.randint(<span class="dv">2</span>, <span class="dv">13</span>, size<span class="op">=</span>(<span class="dv">1</span>, <span class="dv">16</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>dice_rolls <span class="op">=</span> np.random.randint(<span class="dv">2</span>, <span class="dv">13</span>, size<span class="op">=</span>(<span class="dv">1</span>, <span class="dv">16</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The reason is that this would result in values being drawn from a <a href="https://en.wikipedia.org/wiki/Discrete_uniform_distribution">discrete uniform distribution</a>. The sum of a roll of two dice however isn’t uniformly distributed. The probability distribution of the sum of two dice is instead given by:</p>
 <p><span class="math display">\[p(x) = \begin{cases}
   \frac{x - 1}{36} &amp; \text{if $x \in \{2, 3, 4, 5, 6, 7\}$}\\
@@ -366,7 +369,7 @@ window.Quarto = {
 <p>This may be called a discrete <a href="https://en.wikipedia.org/wiki/Triangular_distribution">triangular distribution</a>. It’s perfectly fine to draw from either distribution, but the triangular distribution is more akin to rolling actual dice.</p>
 <p>Let’s now display the reference chart and the dice rolls.</p>
 <div class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>plot_number_table(number_table, dice_rolls)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>plot_number_table(number_table, dice_rolls)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -380,37 +383,37 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="music-fragments">Music fragments</h2>
 <p>I used <a href="https://musescore.org/en">MuseScore</a> to digitize all music fragments into <a href="musikalisches_wuerfelspiel.mid">one MIDI file</a>. Each fragment consists of one measure, except fragments 30, 81, 24, 100, 107, 91, 127, 94, 123, 33, and 5. They contain a second variation which has been put into a separate measure immediately following the measure that contain the first variation. This gives us a total of 187 measures. Let’s now read in this MIDI file.</p>
 <div class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>midi_file <span class="op">=</span> mido.MidiFile(<span class="st">'musikalisches_wuerfelspiel.mid'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>midi_file <span class="op">=</span> mido.MidiFile(<span class="st">'musikalisches_wuerfelspiel.mid'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>As described above, a MIDI file consists of MIDI messages. The following function extracts the MIDI messages between two time stamps. It is used to extract the MIDI messages corresponding to a single measure. There are different kinds of messages, but we are only interested in the note_on and note_off messages.</p>
 <div class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_fragment(midi_file, time_start, time_end):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_fragment(midi_file, time_start, time_end):</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    proc_time <span class="op">=</span> <span class="fl">0.0</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> msg <span class="kw">in</span> midi_file:</span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> <span class="bu">isinstance</span>(msg, mido.MetaMessage) <span class="kw">and</span> msg.<span class="bu">type</span> <span class="op">!=</span> <span class="st">'control_change'</span>:</span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>            proc_time <span class="op">+=</span> msg.time</span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> proc_time <span class="op">&gt;=</span> time_start <span class="kw">and</span> proc_time <span class="op">&lt;=</span> time_end:</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>                <span class="cf">yield</span> msg                </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>                <span class="cf">yield</span> msg                </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We use MIDI control change messages to initialize the receiving instrument or DAW. The following function extracts them from our MIDI file.</p>
 <div class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_control_change_messages(midi_file):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_control_change_messages(midi_file):</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> msg <span class="kw">in</span> midi_file:</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> <span class="bu">isinstance</span>(msg, mido.MetaMessage) <span class="kw">and</span> msg.<span class="bu">type</span> <span class="op">==</span> <span class="st">'control_change'</span>:</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>            <span class="cf">yield</span> msg</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>            <span class="cf">yield</span> msg</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The following helper function returns the index of the measure that contains a given fragment. Because some fragments are split into two measures (the ones with a variation, the 8th dice roll), the fragments that come after these all shift one up.</p>
 <div class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_measure_index(number_table, number):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_measure_index(number_table, number):</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    eighth_column <span class="op">=</span> number_table[:, <span class="dv">7</span>]  <span class="co"># 7 represents the 8th column</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    count <span class="op">=</span> np.<span class="bu">sum</span>(eighth_column <span class="op">&lt;</span> number)</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> number <span class="op">+</span> count</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> number <span class="op">+</span> count</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The following function first generates the control change messages, and then the MIDI messages for the fragments corresponding to each dice roll.</p>
 <p>It starts by calculating the duration of one measure and uses this to determine the time stamps for the start and end of each measure. It then extracts the MIDI messages for each fragment and yields them.</p>
 <div class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_dice_roll_fragments(midi_file, number_table, dice_rolls):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_dice_roll_fragments(midi_file, number_table, dice_rolls):</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    measure_duration <span class="op">=</span> <span class="bu">sum</span>([msg.time <span class="cf">for</span> msg <span class="kw">in</span> midi_file <span class="cf">if</span> <span class="kw">not</span> <span class="bu">isinstance</span>(msg, mido.MetaMessage)]) <span class="op">/</span> (number_table.shape[<span class="dv">0</span>] <span class="op">*</span> (number_table.shape[<span class="dv">1</span>]<span class="op">+</span><span class="dv">1</span>))</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    measures <span class="op">=</span> number_table[dice_rolls <span class="op">-</span> <span class="dv">2</span>, np.arange(<span class="dv">16</span>)]</span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -422,11 +425,11 @@ window.Quarto = {
 <span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>            <span class="cf">yield</span> <span class="cf">from</span> get_fragment(midi_file, measure_duration <span class="op">*</span> (index<span class="op">-</span><span class="dv">1</span>), measure_duration <span class="op">*</span> index)</span>
 <span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">8</span>, <span class="dv">16</span>):</span>
 <span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>        index <span class="op">=</span> get_measure_index(number_table, measures[j])</span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">yield</span> <span class="cf">from</span> get_fragment(midi_file, measure_duration <span class="op">*</span> (index<span class="op">-</span><span class="dv">1</span>), measure_duration <span class="op">*</span> index)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">yield</span> <span class="cf">from</span> get_fragment(midi_file, measure_duration <span class="op">*</span> (index<span class="op">-</span><span class="dv">1</span>), measure_duration <span class="op">*</span> index)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The next function calculates the time stamps for the start of each MIDI message. It then waits until the current time is equal to or greater than the time stamp for the next MIDI message before yielding it. We use this function to play the MIDI messages at the correct speed to a MIDI output port.</p>
 <div class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> play_dice_roll_fragments(midi_file, number_table, dice_rolls):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> play_dice_roll_fragments(midi_file, number_table, dice_rolls):</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># generate all MIDI messages in advance</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    messages <span class="op">=</span> <span class="bu">list</span>(get_dice_roll_fragments(midi_file, number_table, dice_rolls))</span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    </span>
@@ -442,13 +445,13 @@ window.Quarto = {
 <span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> duration_to_next_event <span class="op">&gt;</span> <span class="fl">0.0</span>:</span>
 <span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>            time.sleep(duration_to_next_event)</span>
 <span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">yield</span> msg</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">yield</span> msg</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="building-a-gui" class="level2">
 <h2 class="anchored" data-anchor-id="building-a-gui">Building a GUI</h2>
 <p>Finally, we can create a simple GUI that allows us to generate compositions and send the MIDI messages to a DAW or MIDI instrument.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>output_dropdown <span class="op">=</span> widgets.Dropdown(</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>output_dropdown <span class="op">=</span> widgets.Dropdown(</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    options<span class="op">=</span>np.unique(mido.get_output_names()),</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    description<span class="op">=</span><span class="st">'MIDI output:'</span>,</span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    disabled<span class="op">=</span><span class="va">False</span>,</span>
@@ -460,10 +463,10 @@ window.Quarto = {
 <span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>output <span class="op">=</span> widgets.Output()</span>
 <span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>hbox <span class="op">=</span> widgets.HBox([randomize_button, play_button])</span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>vbox <span class="op">=</span> widgets.VBox([output_dropdown, hbox, output])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>vbox <span class="op">=</span> widgets.VBox([output_dropdown, hbox, output])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>One button is to roll the dice and the other is to play the composition. The output is a plot of the dice rolls. We use a dropdown to select which MIDI output port to use.</p>
 <div class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> randomize_button_clicked(b<span class="op">=</span><span class="va">None</span>):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> randomize_button_clicked(b<span class="op">=</span><span class="va">None</span>):</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">global</span> dice_rolls</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    dice_rolls <span class="op">=</span> np.<span class="bu">sum</span>(np.random.randint(<span class="dv">1</span>, <span class="dv">7</span>, size<span class="op">=</span>(<span class="dv">2</span>, <span class="dv">16</span>)), axis<span class="op">=</span><span class="dv">0</span>)</span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> output:</span>
@@ -478,12 +481,12 @@ window.Quarto = {
 <span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> msg <span class="kw">in</span> play_dice_roll_fragments(midi_file, number_table, dice_rolls):</span>
 <span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>        midi_output.send(msg)</span>
 <span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>play_button.on_click(play_button_clicked)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>play_button.on_click(play_button_clicked)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Finally we display the GUI.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>randomize_button_clicked()</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>randomize_button_clicked()</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>display(vbox)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>display(vbox)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell" data-execution_count="14">
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
@@ -584,13 +587,14 @@ window.Quarto = {
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

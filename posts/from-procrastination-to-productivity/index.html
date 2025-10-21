@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.31">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -71,14 +71,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../favicon.png" rel="icon" type="image/png">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-08aed7fc4ad4995f89cd2ec7682ca9e3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-c6e40670e56ed545c5e701e5e2d9fb10.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -129,6 +130,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <nav class="navbar navbar-expand " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    </a>
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Aswin van Woudenberg</span>
     </a>
@@ -237,7 +240,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="importing-libraries">Importing libraries</h2>
 <p>We’ll start by importing <code>sqlite3</code>, <code>pandas</code>, <code>matplotlib</code> and some other packages.</p>
 <div class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sqlite3</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> datetime</span>
@@ -256,27 +259,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> urllib.parse <span class="im">import</span> urlparse</span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> wordcloud <span class="im">import</span> WordCloud</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ipywidgets <span class="im">import</span> interact</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ipywidgets <span class="im">import</span> interact</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="reading-database-tables" class="level2">
 <h2 class="anchored" data-anchor-id="reading-database-tables">Reading database tables</h2>
 <p>On Linux, the Chrome history database is stored in the <code>~/.config/google-chrome/Default/History</code> file. If you’re on a different OS, or are using multiple profiles, you will have to update this path.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>db_path <span class="op">=</span> os.path.expanduser(<span class="st">"~/.config/google-chrome/Default/History"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>db_path <span class="op">=</span> os.path.expanduser(<span class="st">"~/.config/google-chrome/Default/History"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>We connect to this database using the <code>sqlite3</code> driver. To open this file read-only, immutable needs to be set to 1. This not only prevents accidental changes, but also allows reading the database file when it’s locked by the Chrome browser.</p>
 <div class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>con <span class="op">=</span> sqlite3.<span class="ex">connect</span>(<span class="ss">f"file:</span><span class="sc">{</span>db_path<span class="sc">}</span><span class="ss">?immutable=1"</span>, uri<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>con <span class="op">=</span> sqlite3.<span class="ex">connect</span>(<span class="ss">f"file:</span><span class="sc">{</span>db_path<span class="sc">}</span><span class="ss">?immutable=1"</span>, uri<span class="op">=</span><span class="va">True</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Let’s look at what tables are stored in this database file.</p>
 <div class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>(pd.read_sql_query(<span class="st">"SELECT name FROM sqlite_master WHERE type='table';"</span>, con)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>(pd.read_sql_query(<span class="st">"SELECT name FROM sqlite_master WHERE type='table';"</span>, con)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    .sort_values(<span class="st">'name'</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    .style.hide(axis<span class="op">=</span><span class="st">'index'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    .style.hide(axis<span class="op">=</span><span class="st">'index'</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="38">
 <style type="text/css">
 </style>
 
-<table id="T_b80b7" class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<table id="T_b80b7" class="caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
 <th id="T_b80b7_level0_col0" class="col_heading level0 col0" data-quarto-table-cell-role="th">name</th>
@@ -346,14 +349,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>We’ll read in tables using Pandas and explore their contents. There are quite a few tables, but I’ll only focus on a few of them.</p>
 <div class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>downloads <span class="op">=</span> pd.read_sql_query(<span class="st">"SELECT * FROM downloads;"</span>, con)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>downloads <span class="op">=</span> pd.read_sql_query(<span class="st">"SELECT * FROM downloads;"</span>, con)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>keyword_search_terms <span class="op">=</span> pd.read_sql_query(<span class="st">"SELECT * FROM keyword_search_terms;"</span>, con)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>urls <span class="op">=</span> pd.read_sql_query(<span class="st">"SELECT * FROM urls;"</span>, con)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>visits <span class="op">=</span> pd.read_sql_query(<span class="st">"SELECT * FROM visits;"</span>, con)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>visits <span class="op">=</span> pd.read_sql_query(<span class="st">"SELECT * FROM visits;"</span>, con)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>After reading in the data we can close the database connection.</p>
 <div class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>con.close()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>con.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>There’s a limit to how much history is saved to these tables. We won’t be able to go years back unless we periodically backup the database. I won’t do that in this post though.</p>
 </section>
@@ -362,7 +365,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>A browser session often starts with a (Google) search. Let’s visualize what common search terms I am using. I’ll do this using a word cloud.</p>
 <p>The Chrome history database contains a <code>keyword_search_terms</code> table that records keywords that have been entered into search boxes. It has the following structure:</p>
 <div class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>keyword_search_terms.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>keyword_search_terms.info()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
 RangeIndex: 4832 entries, 0 to 4831
@@ -379,7 +382,7 @@ memory usage: 151.1+ KB</code></pre>
 </div>
 <p>The <code>url_id</code> is a foreign key that links to records in the <code>urls</code> table. The <code>urls</code> table has the following structure:</p>
 <div class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>urls.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>urls.info()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
 RangeIndex: 11645 entries, 0 to 11644
@@ -399,14 +402,14 @@ memory usage: 637.0+ KB</code></pre>
 </div>
 <p>The <code>urls</code> table contains the actual URL and some other attributes. We could join the <code>keyword_search_terms</code> and <code>urls</code> tables using SQL, but here I’ll use Pandas’ <code>merge</code> method instead.</p>
 <div class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>keyword_search_terms_urls <span class="op">=</span> pd.merge(left<span class="op">=</span>keyword_search_terms, right<span class="op">=</span>urls, left_on<span class="op">=</span><span class="st">'url_id'</span>, right_on<span class="op">=</span><span class="st">'id'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>keyword_search_terms_urls <span class="op">=</span> pd.merge(left<span class="op">=</span>keyword_search_terms, right<span class="op">=</span>urls, left_on<span class="op">=</span><span class="st">'url_id'</span>, right_on<span class="op">=</span><span class="st">'id'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>I want to be able to visualize what search terms I use per search box seperately. So I want to see which keywords I entered on Google, which ones I entered on YouTube, which ones on Bing, etc. I order to do this I’ll extract the network location from the URL. This becomes a new column in the dataframe called <code>netloc</code>.</p>
 <div class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>keyword_search_terms_urls[<span class="st">'netloc'</span>] <span class="op">=</span> keyword_search_terms_urls.url.<span class="bu">map</span>(<span class="kw">lambda</span> r: urlparse(r).netloc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>keyword_search_terms_urls[<span class="st">'netloc'</span>] <span class="op">=</span> keyword_search_terms_urls.url.<span class="bu">map</span>(<span class="kw">lambda</span> r: urlparse(r).netloc)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>I’ll use an dropdown widget to select the website I searched on and plot the word cloud.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="at">@interact</span>(netloc<span class="op">=</span>widgets.Dropdown(options<span class="op">=</span>keyword_search_terms_urls.netloc.unique(), description<span class="op">=</span><span class="st">'Website:'</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="at">@interact</span>(netloc<span class="op">=</span>widgets.Dropdown(options<span class="op">=</span>keyword_search_terms_urls.netloc.unique(), description<span class="op">=</span><span class="st">'Website:'</span>))</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> search_wordcloud(netloc):</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Join all keywords into one lengthy string</span></span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    keywords <span class="op">=</span> <span class="st">' '</span>.join(keyword_search_terms_urls.query(<span class="st">'netloc == @netloc'</span>).normalized_term)</span>
@@ -418,7 +421,7 @@ memory usage: 637.0+ KB</code></pre>
 <span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    wordcloud <span class="op">=</span> WordCloud(background_color<span class="op">=</span><span class="st">"white"</span>, width<span class="op">=</span>width, height<span class="op">=</span>height).generate_from_text(keywords)</span>
 <span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    ax.set_title(netloc)</span>
 <span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    ax.imshow(wordcloud, interpolation<span class="op">=</span><span class="st">'bilinear'</span>, aspect<span class="op">=</span><span class="st">'auto'</span>)</span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell page-columns page-full" data-execution_count="11">
 <div class="cell-output cell-output-display column-screen-inset-right">
 <script type="application/vnd.jupyter.widget-view+json">
@@ -442,7 +445,7 @@ memory usage: 637.0+ KB</code></pre>
 <h3 class="anchored" data-anchor-id="most-visited-websites-by-time-spent">Most visited websites by time spent</h3>
 <p>The <code>visits</code> table has the following structure:</p>
 <div class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>visits.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>visits.info()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
 RangeIndex: 23181 entries, 0 to 23180
@@ -470,41 +473,41 @@ memory usage: 2.7+ MB</code></pre>
 </div>
 <p>The <code>visit_duration</code> holds how much time is spent on a specific URL in microseconds. The <code>url</code> column is a foreign key that again points to the <code>urls</code> table which contains the actual URL. Let’s join the two tables together.</p>
 <div class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>visits_urls <span class="op">=</span> pd.merge(left<span class="op">=</span>visits, right<span class="op">=</span>urls, left_on<span class="op">=</span><span class="st">'url'</span>, right_on<span class="op">=</span><span class="st">'id'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>visits_urls <span class="op">=</span> pd.merge(left<span class="op">=</span>visits, right<span class="op">=</span>urls, left_on<span class="op">=</span><span class="st">'url'</span>, right_on<span class="op">=</span><span class="st">'id'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Columns with duplicate names get appended with <code>_x</code> or <code>_y</code>. Because we end up with a <code>url_x</code> and an <code>id_y</code> column that both refer to the same value we can drop one of them.</p>
 <div class="cell" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>visits_urls <span class="op">=</span> visits_urls.drop(labels<span class="op">=</span><span class="st">'url_x'</span>, axis<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>visits_urls <span class="op">=</span> visits_urls.drop(labels<span class="op">=</span><span class="st">'url_x'</span>, axis<span class="op">=</span><span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We rename some columns to make it clear what attribute they represent.</p>
 <div class="cell" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>visits_urls <span class="op">=</span> visits_urls.rename(columns<span class="op">=</span>{<span class="st">'id_x'</span>: <span class="st">'visit_id'</span>, <span class="st">'id_y'</span>: <span class="st">'url_id'</span>, <span class="st">'url_y'</span>: <span class="st">'url'</span>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>visits_urls <span class="op">=</span> visits_urls.rename(columns<span class="op">=</span>{<span class="st">'id_x'</span>: <span class="st">'visit_id'</span>, <span class="st">'id_y'</span>: <span class="st">'url_id'</span>, <span class="st">'url_y'</span>: <span class="st">'url'</span>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We want to group by network location so we need to get this from the URL again like we did above.</p>
 <div class="cell" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>visits_urls[<span class="st">'netloc'</span>] <span class="op">=</span> visits_urls.url.<span class="bu">map</span>(<span class="kw">lambda</span> r: urlparse(r).netloc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>visits_urls[<span class="st">'netloc'</span>] <span class="op">=</span> visits_urls.url.<span class="bu">map</span>(<span class="kw">lambda</span> r: urlparse(r).netloc)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>I want to be able to filter by date range. We can use the <code>visit_time</code> column for that. This column contains WebKit/Chrome timestamps which we need to convert to human-readable date &amp; Unix time. This timestamp format is used in web browsers such as Apple Safari (WebKit), Google Chrome and Opera (Chromium/Blink). It uses a 64-bit value for microseconds since Jan 1, 1601 00:00 UTC. I use a helper function to take care of the conversion.</p>
 <div class="cell" data-execution_count="17">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> date_from_webkit(webkit_timestamp):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> date_from_webkit(webkit_timestamp):</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    epoch_start <span class="op">=</span> datetime.datetime(<span class="dv">1601</span>,<span class="dv">1</span>,<span class="dv">1</span>)</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    delta <span class="op">=</span> datetime.timedelta(microseconds<span class="op">=</span><span class="bu">int</span>(webkit_timestamp))</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> epoch_start <span class="op">+</span> delta</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> epoch_start <span class="op">+</span> delta</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell" data-execution_count="18">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>visits_urls[<span class="st">'visit_time_dt'</span>] <span class="op">=</span> pd.to_datetime(visits_urls.visit_time.<span class="bu">map</span>(date_from_webkit), utc<span class="op">=</span><span class="va">True</span>).dt.tz_convert(tzlocal.get_localzone().key)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>visits_urls[<span class="st">'visit_time_dt'</span>] <span class="op">=</span> pd.to_datetime(visits_urls.visit_time.<span class="bu">map</span>(date_from_webkit), utc<span class="op">=</span><span class="va">True</span>).dt.tz_convert(tzlocal.get_localzone().key)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>I use a slider to select a date range and on each update the bar chart will redraw.</p>
 <div class="cell" data-execution_count="19">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>start_date <span class="op">=</span> visits_urls[<span class="st">'visit_time_dt'</span>].<span class="bu">min</span>().date()</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>start_date <span class="op">=</span> visits_urls[<span class="st">'visit_time_dt'</span>].<span class="bu">min</span>().date()</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>end_date <span class="op">=</span> visits_urls[<span class="st">'visit_time_dt'</span>].<span class="bu">max</span>().date()</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>dates <span class="op">=</span> pd.date_range(start_date, end_date, freq<span class="op">=</span><span class="st">'D'</span>)</span>
 <span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>date_options <span class="op">=</span> [(date.strftime(<span class="st">'</span><span class="sc">%d</span><span class="st"> %b %Y'</span>), date) <span class="cf">for</span> date <span class="kw">in</span> dates]</span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>index <span class="op">=</span> (<span class="dv">0</span>, <span class="bu">len</span>(date_options)<span class="op">-</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>index <span class="op">=</span> (<span class="dv">0</span>, <span class="bu">len</span>(date_options)<span class="op">-</span><span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="at">@interact</span>(date_range<span class="op">=</span>widgets.SelectionRangeSlider(options<span class="op">=</span>date_options, index<span class="op">=</span>index, description<span class="op">=</span><span class="st">'Date range:'</span>, orientation<span class="op">=</span><span class="st">'horizontal'</span>, layout<span class="op">=</span>{<span class="st">'width'</span>: <span class="st">'500px'</span>}))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="at">@interact</span>(date_range<span class="op">=</span>widgets.SelectionRangeSlider(options<span class="op">=</span>date_options, index<span class="op">=</span>index, description<span class="op">=</span><span class="st">'Date range:'</span>, orientation<span class="op">=</span><span class="st">'horizontal'</span>, layout<span class="op">=</span>{<span class="st">'width'</span>: <span class="st">'500px'</span>}))</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_time_spent(date_range):</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">8</span>))</span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -524,7 +527,7 @@ memory usage: 2.7+ MB</code></pre>
 <span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>    ax.xaxis.set_major_locator(FixedLocator(ticks_loc))</span>
 <span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>    ax.set_xticklabels([<span class="st">"</span><span class="sc">{}</span><span class="st"> </span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(pd.to_timedelta(x, unit<span class="op">=</span><span class="st">'us'</span>).components._asdict()[unit], unit) <span class="cf">for</span> x <span class="kw">in</span> ticks_loc])</span>
 <span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell page-columns page-full" data-execution_count="20">
 <div class="cell-output cell-output-display column-screen-inset-right">
 <script type="application/vnd.jupyter.widget-view+json">
@@ -544,7 +547,7 @@ memory usage: 2.7+ MB</code></pre>
 <section id="most-visited-websites-by-frequency" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="most-visited-websites-by-frequency">Most visited websites by frequency</h3>
 <p>Now let’s produce a similar graph but this time based on how frequently I visit certain websites. I’ll use a slider again to be able to select date ranges.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="at">@interact</span>(date_range<span class="op">=</span>widgets.SelectionRangeSlider(options<span class="op">=</span>date_options, index<span class="op">=</span>index, description<span class="op">=</span><span class="st">'Date range:'</span>, orientation<span class="op">=</span><span class="st">'horizontal'</span>, layout<span class="op">=</span>{<span class="st">'width'</span>: <span class="st">'500px'</span>}))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="at">@interact</span>(date_range<span class="op">=</span>widgets.SelectionRangeSlider(options<span class="op">=</span>date_options, index<span class="op">=</span>index, description<span class="op">=</span><span class="st">'Date range:'</span>, orientation<span class="op">=</span><span class="st">'horizontal'</span>, layout<span class="op">=</span>{<span class="st">'width'</span>: <span class="st">'500px'</span>}))</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_frequency(date_range):</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">8</span>))</span>
 <span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -555,7 +558,7 @@ memory usage: 2.7+ MB</code></pre>
 <span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>    (visits_urls.query(<span class="st">"visit_time_dt &gt;= @start_dt and visit_time_dt &lt; @end_dt"</span>)</span>
 <span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>         .groupby(<span class="st">'netloc'</span>).size().sort_values().tail(<span class="dv">20</span>)</span>
 <span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>         .plot(kind<span class="op">=</span><span class="st">'barh'</span>, ax<span class="op">=</span>ax, ylabel<span class="op">=</span><span class="st">''</span>, title<span class="op">=</span><span class="st">"Top 20 most frequently visited websites"</span>))</span>
-<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell page-columns page-full" data-execution_count="21">
 <div class="cell-output cell-output-display column-screen-inset-right">
 <script type="application/vnd.jupyter.widget-view+json">
@@ -581,11 +584,11 @@ memory usage: 2.7+ MB</code></pre>
 <h2 class="anchored" data-anchor-id="youtube-videos">YouTube videos</h2>
 <p>I seem to visit YouTube a lot both in frequency and time. What kind of stuff am I watching though? I’ll use a date picker to select a date and use a dropdown box to select if I want to see the YouTube videos or shorts I watched that day. I’ll make the links clickable.</p>
 <div class="cell" data-execution_count="22">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> make_clickable(url, name):</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">'&lt;a href="</span><span class="sc">{}</span><span class="st">" rel="noopener noreferrer" target="_blank"&gt;</span><span class="sc">{}</span><span class="st">&lt;/a&gt;'</span>.<span class="bu">format</span>(url, name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> make_clickable(url, name):</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">'&lt;a href="</span><span class="sc">{}</span><span class="st">" rel="noopener noreferrer" target="_blank"&gt;</span><span class="sc">{}</span><span class="st">&lt;/a&gt;'</span>.<span class="bu">format</span>(url, name)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell page-columns page-full" data-execution_count="23">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="at">@interact</span>(date<span class="op">=</span>widgets.DatePicker(description<span class="op">=</span><span class="st">'Date: '</span>, disabled<span class="op">=</span><span class="va">False</span>, value<span class="op">=</span>end_date), </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="at">@interact</span>(date<span class="op">=</span>widgets.DatePicker(description<span class="op">=</span><span class="st">'Date: '</span>, disabled<span class="op">=</span><span class="va">False</span>, value<span class="op">=</span>end_date), </span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>          content_type<span class="op">=</span>widgets.Dropdown(</span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>              options<span class="op">=</span>[(<span class="st">"Videos"</span>, <span class="st">"youtube.com/watch"</span>), </span>
 <span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>                       (<span class="st">"Shorts"</span>, <span class="st">"youtube.com/shorts"</span>)], </span>
@@ -600,7 +603,7 @@ memory usage: 2.7+ MB</code></pre>
 <span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> df.size:</span>
 <span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>        display(df[[<span class="st">'YouTube video'</span>]].style.hide(axis<span class="op">=</span><span class="st">'index'</span>))</span>
 <span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"No YouTube URLs found for this type of content."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"No YouTube URLs found for this type of content."</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display column-screen-inset-right">
 <script type="application/vnd.jupyter.widget-view+json">
 {"model_id":"3f57c2ff95894dfab5beac85892da4ad","version_major":2,"version_minor":0}
@@ -613,12 +616,12 @@ memory usage: 2.7+ MB</code></pre>
 <h2 class="anchored" data-anchor-id="when-am-i-most-active">When am I most active?</h2>
 <p>Let’s see around what time I am most active online. I use Pandas conditional formatting to hightlight my most active hours each day of the week. A dropdown box is used to select the week.</p>
 <div class="cell" data-execution_count="24">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>dates <span class="op">=</span> pd.date_range(start_date, end_date, freq<span class="op">=</span><span class="st">'W-MON'</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>dates <span class="op">=</span> pd.date_range(start_date, end_date, freq<span class="op">=</span><span class="st">'W-MON'</span>)</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>options <span class="op">=</span> [(<span class="st">"</span><span class="sc">{}</span><span class="st"> - </span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(date.strftime(<span class="st">'</span><span class="sc">%d</span><span class="st"> %b %Y'</span>), (date <span class="op">+</span> pd.Timedelta(days<span class="op">=</span><span class="dv">7</span>)).strftime(<span class="st">'</span><span class="sc">%d</span><span class="st"> %b %Y'</span>)), (date, date <span class="op">+</span> pd.Timedelta(days<span class="op">=</span><span class="dv">7</span>))) <span class="cf">for</span> date <span class="kw">in</span> dates]</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>options.insert(<span class="dv">0</span>, (<span class="st">'All weeks'</span>, (pd.to_datetime(start_date), pd.to_datetime(end_date))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>options.insert(<span class="dv">0</span>, (<span class="st">'All weeks'</span>, (pd.to_datetime(start_date), pd.to_datetime(end_date))))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell page-columns page-full" data-execution_count="25">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="at">@interact</span>(date_range<span class="op">=</span>widgets.Dropdown(options<span class="op">=</span>options, description<span class="op">=</span><span class="st">'Week:'</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="at">@interact</span>(date_range<span class="op">=</span>widgets.Dropdown(options<span class="op">=</span>options, description<span class="op">=</span><span class="st">'Week:'</span>))</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_activity(date_range):</span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    tz <span class="op">=</span> tzlocal.get_localzone().key</span>
 <span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    start_dt <span class="op">=</span> pd.to_datetime(date_range[<span class="dv">0</span>]).tz_localize(tz)</span>
@@ -636,7 +639,7 @@ memory usage: 2.7+ MB</code></pre>
 <span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>        .rename(columns<span class="op">=</span><span class="kw">lambda</span> y: <span class="bu">str</span>(y <span class="cf">if</span> y <span class="cf">else</span> <span class="dv">12</span>) <span class="op">+</span> <span class="st">" am"</span> <span class="cf">if</span> y <span class="op">&lt;</span> <span class="dv">12</span> <span class="cf">else</span> <span class="bu">str</span>(y <span class="cf">if</span> y<span class="op">==</span><span class="dv">12</span> <span class="cf">else</span> y<span class="op">-</span><span class="dv">12</span>) <span class="op">+</span> <span class="st">" pm"</span>)</span>
 <span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>        .style.<span class="bu">format</span>(na_rep<span class="op">=</span><span class="dv">0</span>, precision<span class="op">=</span><span class="dv">0</span>).background_gradient(cmap<span class="op">=</span><span class="st">'Blues'</span>, vmin<span class="op">=</span><span class="dv">0</span>, vmax<span class="op">=</span>vmax)</span>
 <span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>        .applymap(<span class="kw">lambda</span> x: <span class="st">'background-color: white; color: black;'</span> <span class="cf">if</span> pd.isnull(x) <span class="kw">or</span> x<span class="op">==</span><span class="dv">0</span> <span class="cf">else</span> <span class="st">''</span>)</span>
-<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display column-screen-inset-right">
 <script type="application/vnd.jupyter.widget-view+json">
 {"model_id":"3f2cf3e16186423d8cbf3a4ab5920b83","version_major":2,"version_minor":0}
@@ -649,7 +652,7 @@ memory usage: 2.7+ MB</code></pre>
 <h2 class="anchored" data-anchor-id="downloads">Downloads</h2>
 <p>Finally I wanted to look at my downloads and see if I could learn anything from that. Let’s look at the <code>downloads</code> table:</p>
 <div class="cell" data-execution_count="26">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>downloads.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>downloads.info()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
 RangeIndex: 86 entries, 0 to 85
@@ -690,23 +693,23 @@ memory usage: 18.9+ KB</code></pre>
 </div>
 <p>There are a few WebKit/Chrome timestamps that we need to convert to datetime format.</p>
 <div class="cell" data-execution_count="27">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>downloads[<span class="st">'start_time_dt'</span>] <span class="op">=</span> pd.to_datetime(downloads.start_time.<span class="bu">map</span>(date_from_webkit), utc<span class="op">=</span><span class="va">True</span>).dt.tz_convert(tzlocal.get_localzone().key)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>downloads[<span class="st">'start_time_dt'</span>] <span class="op">=</span> pd.to_datetime(downloads.start_time.<span class="bu">map</span>(date_from_webkit), utc<span class="op">=</span><span class="va">True</span>).dt.tz_convert(tzlocal.get_localzone().key)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell" data-execution_count="28">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>downloads.loc[downloads.end_time <span class="op">&gt;</span> <span class="dv">0</span>, <span class="st">"end_time_dt"</span>] <span class="op">=</span> (pd.to_datetime(downloads.loc[downloads.end_time <span class="op">&gt;</span> <span class="dv">0</span>, <span class="st">"end_time"</span>]</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>downloads.loc[downloads.end_time <span class="op">&gt;</span> <span class="dv">0</span>, <span class="st">"end_time_dt"</span>] <span class="op">=</span> (pd.to_datetime(downloads.loc[downloads.end_time <span class="op">&gt;</span> <span class="dv">0</span>, <span class="st">"end_time"</span>]</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">map</span>(date_from_webkit), utc<span class="op">=</span><span class="va">True</span>).dt.tz_convert(tzlocal.get_localzone().key)</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell" data-execution_count="29">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>downloads.loc[downloads.last_access_time <span class="op">&gt;</span> <span class="dv">0</span>, <span class="st">"last_access_time_dt"</span>] <span class="op">=</span> (pd.to_datetime(downloads.loc[downloads.last_access_time <span class="op">&gt;</span> <span class="dv">0</span>, <span class="st">"last_access_time"</span>]</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>downloads.loc[downloads.last_access_time <span class="op">&gt;</span> <span class="dv">0</span>, <span class="st">"last_access_time_dt"</span>] <span class="op">=</span> (pd.to_datetime(downloads.loc[downloads.last_access_time <span class="op">&gt;</span> <span class="dv">0</span>, <span class="st">"last_access_time"</span>]</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">map</span>(date_from_webkit), utc<span class="op">=</span><span class="va">True</span>).dt.tz_convert(tzlocal.get_localzone().key)</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <section id="downloads-per-month" class="level3">
 <h3 class="anchored" data-anchor-id="downloads-per-month">Downloads per month</h3>
 <p>Let’s first look at how many GB of data I download each month.</p>
 <div class="cell" data-execution_count="30">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>xticks <span class="op">=</span> [<span class="st">"</span><span class="sc">{}</span><span class="st">, </span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(y, m) <span class="cf">for</span> y, _, m <span class="kw">in</span> downloads.groupby([downloads.start_time_dt.dt.year, downloads.start_time_dt.dt.month, downloads.start_time_dt.dt.month_name()]).size().index]</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>xticks <span class="op">=</span> [<span class="st">"</span><span class="sc">{}</span><span class="st">, </span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(y, m) <span class="cf">for</span> y, _, m <span class="kw">in</span> downloads.groupby([downloads.start_time_dt.dt.year, downloads.start_time_dt.dt.month, downloads.start_time_dt.dt.month_name()]).size().index]</span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> downloads.groupby([downloads.start_time_dt.dt.year, downloads.start_time_dt.dt.month]).received_bytes.<span class="bu">sum</span>().plot(kind<span class="op">=</span><span class="st">'bar'</span>, xlabel<span class="op">=</span><span class="st">''</span>, title<span class="op">=</span><span class="st">"Downloads in GB by month"</span>)</span>
 <span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>ax.set_xticklabels(xticks)</span>
@@ -715,7 +718,7 @@ memory usage: 18.9+ KB</code></pre>
 <span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>ax.yaxis.set_major_locator(FixedLocator(ticks_loc))</span>
 <span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>ax.set_yticklabels([<span class="st">'</span><span class="sc">{:,.0f}</span><span class="st">GB'</span>.<span class="bu">format</span>(x<span class="op">/</span><span class="fl">1e9</span>) <span class="cf">for</span> x <span class="kw">in</span> ticks_loc])</span>
 <span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -730,13 +733,13 @@ memory usage: 18.9+ KB</code></pre>
 <h3 class="anchored" data-anchor-id="downloads-by-file-type">Downloads by file type</h3>
 <p>Let’s see what kind of files I download most by looking at its extension.</p>
 <div class="cell page-columns page-full" data-execution_count="31">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">8</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">8</span>))</span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>(downloads.target_path.<span class="bu">apply</span>(<span class="kw">lambda</span> p: Path(p).suffix.lower())</span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>    .replace(<span class="st">''</span>, np.nan).dropna()</span>
 <span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>    .value_counts().sort_values()</span>
 <span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>    .plot(kind<span class="op">=</span><span class="st">'barh'</span>, ax<span class="op">=</span>ax, ylabel<span class="op">=</span><span class="st">''</span>, title<span class="op">=</span><span class="st">"Most downloaded file types"</span>))</span>
 <span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>ax.xaxis.set_major_locator(MaxNLocator(integer<span class="op">=</span><span class="va">True</span>))</span>
-<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display page-columns page-full">
 <div class="page-columns page-full">
 <figure class="figure page-columns page-full">
@@ -751,19 +754,19 @@ memory usage: 18.9+ KB</code></pre>
 <h3 class="anchored" data-anchor-id="where-i-download-most-files-from">Where I download most files from</h3>
 <p>Let’s look at the top 10 websites I download most files from. I start by extracting the network location from the <code>tab_url</code> attribute which contains the URL that provided the download link.</p>
 <div class="cell" data-execution_count="32">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>downloads[<span class="st">'netloc'</span>] <span class="op">=</span> downloads.tab_url.<span class="bu">map</span>(<span class="kw">lambda</span> r: urlparse(r).netloc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>downloads[<span class="st">'netloc'</span>] <span class="op">=</span> downloads.tab_url.<span class="bu">map</span>(<span class="kw">lambda</span> r: urlparse(r).netloc)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell" data-execution_count="34">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>(downloads.query(<span class="st">'netloc.str.len() &gt; 0'</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>(downloads.query(<span class="st">'netloc.str.len() &gt; 0'</span>)</span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>    .groupby(<span class="st">'netloc'</span>).size().sort_values(ascending<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>    .to_frame().head(<span class="dv">10</span>).reset_index().rename({<span class="dv">0</span>: <span class="st">'count'</span>}, axis<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    .style.hide(axis<span class="op">=</span><span class="st">'index'</span>)</span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="68">
 <style type="text/css">
 </style>
 
-<table id="T_18a9d" class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<table id="T_18a9d" class="caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
 <th id="T_18a9d_level0_col0" class="col_heading level0 col0" data-quarto-table-cell-role="th">netloc</th>
@@ -900,13 +903,14 @@ memory usage: 18.9+ KB</code></pre>
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

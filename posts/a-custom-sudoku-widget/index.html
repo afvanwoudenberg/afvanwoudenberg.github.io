@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.31">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -71,14 +71,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../favicon.png" rel="icon" type="image/png">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-08aed7fc4ad4995f89cd2ec7682ca9e3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-c6e40670e56ed545c5e701e5e2d9fb10.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -129,6 +130,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <nav class="navbar navbar-expand " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    </a>
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Aswin van Woudenberg</span>
     </a>
@@ -744,7 +747,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="the-python-back-end">The Python back-end</h3>
 <p>The following code defines a Python class named <code>Sudoku</code> that extends the <code>DOMWidget</code> class from the <code>ipywidgets</code> library.</p>
 <div class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> traitlets <span class="im">import</span> Unicode, Bool, Int, List, validate, observe, TraitError, All</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> traitlets <span class="im">import</span> Unicode, Bool, Int, List, validate, observe, TraitError, All</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ipywidgets <span class="im">import</span> DOMWidget, register</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> copy</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -786,7 +789,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__setitem__</span>(<span class="va">self</span>,index,val):</span>
 <span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>        vals <span class="op">=</span> <span class="va">self</span>.value</span>
 <span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>        vals[index] <span class="op">=</span> val</span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>._value <span class="op">=</span> vals</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>._value <span class="op">=</span> vals</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>This Sudoku class has the following attributes:</p>
 <ul>
@@ -802,7 +805,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="the-javascript-front-end">The JavaScript front-end</h3>
 <p>The front-end contains a bit more code.</p>
 <div class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>javascript</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>javascript</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>require.undef(<span class="st">'sudoku_widget'</span>)<span class="op">;</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>define(<span class="st">'sudoku_widget'</span>, [<span class="st">"@jupyter-widgets/base"</span>], function(widgets) {</span>
@@ -915,7 +918,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-111"><a href="#cb2-111" aria-hidden="true" tabindex="-1"></a>        SudokuView: SudokuView</span>
 <span id="cb2-112"><a href="#cb2-112" aria-hidden="true" tabindex="-1"></a>    }</span>
 <span id="cb2-113"><a href="#cb2-113" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb2-114"><a href="#cb2-114" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-114"><a href="#cb2-114" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <script type="application/javascript">
 require.undef('sudoku_widget');
@@ -1044,7 +1047,7 @@ define('sudoku_widget', ["@jupyter-widgets/base"], function(widgets) {
 <h2 class="anchored" data-anchor-id="how-to-use-this-widget">How to use this widget</h2>
 <p>Once we have executed these two cells, we’re good to use our widget.</p>
 <div class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ipywidgets <span class="im">as</span> widgets</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ipywidgets <span class="im">as</span> widgets</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>puzzle <span class="op">=</span> [</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>,<span class="dv">8</span>,<span class="dv">5</span>, <span class="dv">0</span>,<span class="dv">6</span>,<span class="dv">1</span>, <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,</span>
@@ -1063,7 +1066,7 @@ define('sudoku_widget', ["@jupyter-widgets/base"], function(widgets) {
 <span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>sudoku <span class="op">=</span> Sudoku(value<span class="op">=</span>puzzle, fixed<span class="op">=</span>fixed_digits, disabled<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>display(sudoku)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>display(sudoku)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
 {"model_id":"8074f1c150e34803af141aa2c5b3a713","version_major":2,"version_minor":0}
@@ -1073,13 +1076,13 @@ define('sudoku_widget', ["@jupyter-widgets/base"], function(widgets) {
 <p>The widget accepts three parameters: <code>value</code>, <code>fixed</code> and <code>disabled</code>. The parameter <code>value</code> is a list of digits. A digit of 0 means empty. The parameter <code>fixed</code> is a list of boolean values, where <code>True</code> means a digit can’t be edited and will be printed in bold. The boolean <code>disabled</code> indicates whether a user can edit digits.</p>
 <p>One can read the values in a grid like this:</p>
 <div class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sudoku.value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sudoku.value)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[0, 8, 5, 0, 6, 1, 0, 0, 0, 9, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 0, 8, 0, 4, 0, 0, 0, 0, 0, 0, 2, 7, 0, 0, 0, 9, 0, 5, 0, 0, 0, 0, 0, 0, 3, 0, 8, 0, 0, 0, 0, 0, 0, 5, 8, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 1, 0, 6, 0, 0, 0, 0, 0, 0, 0, 4]</code></pre>
 </div>
 </div>
 <p>Running the next cell would show the solution by updating the widget.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>solution <span class="op">=</span> [</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>solution <span class="op">=</span> [</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="dv">3</span>,<span class="dv">8</span>,<span class="dv">5</span>, <span class="dv">9</span>,<span class="dv">6</span>,<span class="dv">1</span>, <span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">7</span>,</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="dv">9</span>,<span class="dv">2</span>,<span class="dv">4</span>, <span class="dv">8</span>,<span class="dv">7</span>,<span class="dv">3</span>, <span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">6</span>,</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span>,<span class="dv">6</span>,<span class="dv">7</span>, <span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">2</span>, <span class="dv">3</span>,<span class="dv">9</span>,<span class="dv">8</span>,</span>
@@ -1092,7 +1095,7 @@ define('sudoku_widget', ["@jupyter-widgets/base"], function(widgets) {
 <span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="dv">8</span>,<span class="dv">3</span>,<span class="dv">9</span>, <span class="dv">7</span>,<span class="dv">2</span>,<span class="dv">4</span>, <span class="dv">6</span>,<span class="dv">1</span>,<span class="dv">5</span>,</span>
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="dv">6</span>,<span class="dv">5</span>,<span class="dv">2</span>, <span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">9</span>, <span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">4</span>]</span>
 <span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>sudoku.value <span class="op">=</span> solution</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>sudoku.value <span class="op">=</span> solution</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="creating-a-sudoku-solver" class="level2">
 <h2 class="anchored" data-anchor-id="creating-a-sudoku-solver">Creating a Sudoku solver</h2>
@@ -1101,7 +1104,7 @@ define('sudoku_widget', ["@jupyter-widgets/base"], function(widgets) {
 <h3 class="anchored" data-anchor-id="building-the-user-interface">Building the user interface</h3>
 <p>First, let’s tackle the easy part: creating the user interface for our Sudoku solver. We’ll use the Sudoku widget along with some other widgets to make it easy for the user to select from pre-made puzzles or enter their own.</p>
 <div class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>puzzle1 <span class="op">=</span> [</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>puzzle1 <span class="op">=</span> [</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>,<span class="dv">8</span>,<span class="dv">5</span>, <span class="dv">0</span>,<span class="dv">6</span>,<span class="dv">1</span>, <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="dv">9</span>,<span class="dv">0</span>,<span class="dv">4</span>, <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>, <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>, <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">2</span>, <span class="dv">3</span>,<span class="dv">0</span>,<span class="dv">8</span>,</span>
@@ -1157,7 +1160,7 @@ define('sudoku_widget', ["@jupyter-widgets/base"], function(widgets) {
 <span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a>vbox <span class="op">=</span> widgets.VBox([example_dropdown, solve_button, next_button])</span>
 <span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a>hbox <span class="op">=</span> widgets.HBox([sudoku, vbox])</span>
-<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a>label <span class="op">=</span> widgets.Label()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a>label <span class="op">=</span> widgets.Label()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The <code>Sudoku</code> widget displays a Sudoku board.</p>
 <p>There is also a <code>Dropdown</code> widget for selecting pre-made puzzles or an empty board, and two <code>Button</code> widgets for solving the puzzle and showing the next solution (if there are multiple solutions).</p>
@@ -1167,7 +1170,7 @@ define('sudoku_widget', ["@jupyter-widgets/base"], function(widgets) {
 <h3 class="anchored" data-anchor-id="writing-the-event-handlers">Writing the event handlers</h3>
 <p>The widgets are not functional on their own; we need to write code to make them responsive to user input.</p>
 <div class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># global variables</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># global variables</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>gen <span class="op">=</span> <span class="va">None</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>solution <span class="op">=</span> <span class="va">None</span></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -1220,7 +1223,7 @@ define('sudoku_widget', ["@jupyter-widgets/base"], function(widgets) {
 <span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a>        label.value <span class="op">=</span> <span class="st">""</span></span>
 <span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a>        next_button.layout.display <span class="op">=</span> <span class="st">'none'</span></span>
 <span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a>next_button.on_click(on_next_button_clicked)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a>next_button.on_click(on_next_button_clicked)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The <code>on_example_dropdown_change</code> function is called when the user selects an example puzzle from a dropdown menu, and it sets up the Sudoku grid with the selected puzzle and clears any previous solutions.</p>
 <p>The <code>on_solve_button_clicked</code> function is called when the user clicks a button to solve the puzzle, and it generates a Sudoku solver object and attempts to find a solution to the puzzle. If a solution is found, it updates the Sudoku grid with the solution and enables a button to find the next solution if there are multiple solutions. If no solution is found, it displays an error message.</p>
@@ -1231,7 +1234,7 @@ define('sudoku_widget', ["@jupyter-widgets/base"], function(widgets) {
 <h3 class="anchored" data-anchor-id="the-solver">The solver</h3>
 <p>We can easily solve puzzles using backtracking. The <code>solve_sudoku</code> function utilizes recursion to generate solutions. It is called by the <code>on_solve_button_clicked</code> function above.</p>
 <div class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> solve_sudoku(puzzle, index<span class="op">=</span><span class="dv">0</span>):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> solve_sudoku(puzzle, index<span class="op">=</span><span class="dv">0</span>):</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> index <span class="op">==</span> <span class="dv">81</span>:</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Solution found</span></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">yield</span> puzzle</span>
@@ -1244,12 +1247,12 @@ define('sudoku_widget', ["@jupyter-widgets/base"], function(widgets) {
 <span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>            puzzle[index] <span class="op">=</span> v</span>
 <span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> is_valid_square(puzzle, index):</span>
 <span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>                <span class="cf">yield</span> <span class="cf">from</span> solve_sudoku(puzzle, index <span class="op">+</span> <span class="dv">1</span>)</span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>            puzzle[index] <span class="op">=</span> <span class="dv">0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>            puzzle[index] <span class="op">=</span> <span class="dv">0</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The <code>solve_sudoku</code> function takes in a puzzle parameter which is a list of length 81, representing the 9x9 Sudoku grid with empty squares represented as 0s. The function yields solutions as they are found.</p>
 <p>The following functions are used to check the constraints.</p>
 <div class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_column(puzzle, k):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_column(puzzle, k):</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    column <span class="op">=</span> []</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">9</span>):</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>        column.append(puzzle[i<span class="op">*</span><span class="dv">9</span> <span class="op">+</span> k])</span>
@@ -1276,7 +1279,7 @@ define('sudoku_widget', ["@jupyter-widgets/base"], function(widgets) {
 <span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>    r <span class="op">=</span> <span class="bu">int</span>(i <span class="op">/</span> <span class="dv">9</span>)</span>
 <span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>    b <span class="op">=</span> <span class="bu">int</span>(r <span class="op">/</span> <span class="dv">3</span>) <span class="op">*</span> <span class="dv">3</span> <span class="op">+</span> <span class="bu">int</span>(k <span class="op">/</span> <span class="dv">3</span>)</span>
 <span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> is_valid(get_row(puzzle, r)) <span class="kw">and</span> is_valid(get_column(puzzle, k)) <span class="kw">and</span> is_valid(get_block(puzzle, b))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> is_valid(get_row(puzzle, r)) <span class="kw">and</span> is_valid(get_column(puzzle, k)) <span class="kw">and</span> is_valid(get_block(puzzle, b))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The <code>get_column</code>, <code>get_row</code>, and <code>get_block</code> functions are used to retrieve the values in the columns, rows, and 3x3 blocks that a given index belongs to.</p>
 <p>The <code>is_valid</code> function checks if a list of values contains duplicate values. It returns <code>True</code> if the list contains no duplicates (excluding 0s) and <code>False</code> otherwise.</p>
@@ -1286,7 +1289,7 @@ define('sudoku_widget', ["@jupyter-widgets/base"], function(widgets) {
 <h3 class="anchored" data-anchor-id="displaying-the-user-interface">Displaying the user interface</h3>
 <p>It’s time to show the user interface.</p>
 <div class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>display(hbox, label)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>display(hbox, label)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
 {"model_id":"7a0ef03efb1f40c6ac7a52ec0c9f3b25","version_major":2,"version_minor":0}
@@ -1364,13 +1367,14 @@ define('sudoku_widget', ["@jupyter-widgets/base"], function(widgets) {
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

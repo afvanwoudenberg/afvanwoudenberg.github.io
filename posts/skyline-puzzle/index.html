@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.31">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -71,14 +71,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../favicon.png" rel="icon" type="image/png">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-08aed7fc4ad4995f89cd2ec7682ca9e3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-c6e40670e56ed545c5e701e5e2d9fb10.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -125,6 +126,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <nav class="navbar navbar-expand " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    </a>
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Aswin van Woudenberg</span>
     </a>
@@ -213,7 +216,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-with-filename-file">
 <pre><strong>skyline.pl</strong></pre>
 </div>
-<div class="sourceCode" id="cb1" data-filename="skyline.pl"><pre class="sourceCode prolog code-with-copy"><code class="sourceCode prolog"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">% A Prolog solver for the Skyline puzzle</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-filename="skyline.pl"><pre class="sourceCode prolog code-with-copy"><code class="sourceCode prolog"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">% A Prolog solver for the Skyline puzzle</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">% http://www.constantin-jean-clau.de/</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>print_solution(<span class="dt">X</span><span class="kw">,</span><span class="dt">Y</span>) <span class="kw">:-</span> solve(<span class="dt">X</span><span class="kw">,</span><span class="dt">Y</span><span class="kw">,</span><span class="dt">Sol</span>)<span class="kw">,</span> print_board(<span class="dt">Sol</span>)<span class="kw">.</span></span>
@@ -310,7 +313,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a>piece(i<span class="kw">,</span>[(<span class="dv">0</span><span class="kw">,</span><span class="dv">0</span>),(<span class="fu">-</span><span class="dv">2</span><span class="kw">,</span><span class="dv">1</span>),(<span class="fu">-</span><span class="dv">1</span><span class="kw">,</span><span class="dv">1</span>),(<span class="dv">0</span><span class="kw">,</span><span class="dv">1</span>),(<span class="fu">-</span><span class="dv">2</span><span class="kw">,</span><span class="dv">2</span>),(<span class="fu">-</span><span class="dv">1</span><span class="kw">,</span><span class="dv">2</span>),(<span class="dv">0</span><span class="kw">,</span><span class="dv">2</span>),(<span class="fu">-</span><span class="dv">1</span><span class="kw">,</span><span class="dv">3</span>)])<span class="kw">.</span></span>
 <span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a>piece(i<span class="kw">,</span>[(<span class="dv">0</span><span class="kw">,</span><span class="dv">0</span>),(<span class="dv">1</span><span class="kw">,</span><span class="dv">0</span>),(<span class="fu">-</span><span class="dv">1</span><span class="kw">,</span><span class="dv">1</span>),(<span class="dv">0</span><span class="kw">,</span><span class="dv">1</span>),(<span class="dv">1</span><span class="kw">,</span><span class="dv">1</span>),(<span class="dv">0</span><span class="kw">,</span><span class="dv">2</span>),(<span class="dv">1</span><span class="kw">,</span><span class="dv">2</span>),(<span class="dv">2</span><span class="kw">,</span><span class="dv">2</span>)])<span class="kw">.</span></span>
 <span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a>piece(i<span class="kw">,</span>[(<span class="dv">0</span><span class="kw">,</span><span class="dv">0</span>),(<span class="fu">-</span><span class="dv">1</span><span class="kw">,</span><span class="dv">1</span>),(<span class="dv">0</span><span class="kw">,</span><span class="dv">1</span>),(<span class="dv">1</span><span class="kw">,</span><span class="dv">1</span>),(<span class="fu">-</span><span class="dv">1</span><span class="kw">,</span><span class="dv">2</span>),(<span class="dv">0</span><span class="kw">,</span><span class="dv">2</span>),(<span class="dv">1</span><span class="kw">,</span><span class="dv">2</span>),(<span class="fu">-</span><span class="dv">1</span><span class="kw">,</span><span class="dv">3</span>)])<span class="kw">.</span></span>
-<span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a>piece(i<span class="kw">,</span>[(<span class="dv">0</span><span class="kw">,</span><span class="dv">0</span>),(<span class="dv">1</span><span class="kw">,</span><span class="dv">0</span>),(<span class="dv">2</span><span class="kw">,</span><span class="dv">0</span>),(<span class="dv">1</span><span class="kw">,</span><span class="dv">1</span>),(<span class="dv">2</span><span class="kw">,</span><span class="dv">1</span>),(<span class="dv">3</span><span class="kw">,</span><span class="dv">1</span>),(<span class="dv">1</span><span class="kw">,</span><span class="dv">2</span>),(<span class="dv">2</span><span class="kw">,</span><span class="dv">2</span>)])<span class="kw">.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a>piece(i<span class="kw">,</span>[(<span class="dv">0</span><span class="kw">,</span><span class="dv">0</span>),(<span class="dv">1</span><span class="kw">,</span><span class="dv">0</span>),(<span class="dv">2</span><span class="kw">,</span><span class="dv">0</span>),(<span class="dv">1</span><span class="kw">,</span><span class="dv">1</span>),(<span class="dv">2</span><span class="kw">,</span><span class="dv">1</span>),(<span class="dv">3</span><span class="kw">,</span><span class="dv">1</span>),(<span class="dv">1</span><span class="kw">,</span><span class="dv">2</span>),(<span class="dv">2</span><span class="kw">,</span><span class="dv">2</span>)])<span class="kw">.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>You can find a copy of this code as a GitHub gist <a href="https://gist.github.com/afvanwoudenberg/d1f2c1721df7762c665af9252e72f1bb">here</a>.</p>
 <p>The <code>solve/3</code> predicate is the main predicate that solves the puzzle. It takes as input the X and Y coordinates of the empty cell on the board and returns a solution, which is a list of <code>pos(X,Y,P)</code> terms representing the placement of the pieces on the board. The <code>solve/4</code> predicate is a helper predicate that recursively places the pieces on the board.</p>
@@ -320,7 +323,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="how-to-use-this-solver" class="level2">
 <h2 class="anchored" data-anchor-id="how-to-use-this-solver">How to use this solver</h2>
 <p>To use this program, open the <code>skyline.pl</code> file in your preferred Prolog interpreter (I personally prefer <a href="https://www.swi-prolog.org/">SWI-Prolog</a>). To find find a solution for when the metal rod is in position (4, 4), simply type the following:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode prolog code-with-copy"><code class="sourceCode prolog"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>print_solution(<span class="dv">4</span><span class="kw">,</span><span class="dv">4</span>)<span class="kw">.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode prolog code-with-copy"><code class="sourceCode prolog"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>print_solution(<span class="dv">4</span><span class="kw">,</span><span class="dv">4</span>)<span class="kw">.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>+-------+
 |ggeeeeh|
 |gggdehh|
@@ -334,7 +337,7 @@ true</code></pre>
 <p>The helper predicate <code>print_solution/2</code> calls the <code>solve/3</code> to solve and <code>print_board/1</code> to display the solution.</p>
 <p>You can press ; to find alternative solutions.</p>
 <p>If you want to see all solutions for a given rod position, you can type:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode prolog code-with-copy"><code class="sourceCode prolog"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>findall(<span class="dt">_</span><span class="kw">,</span>print_solution(<span class="dv">4</span><span class="kw">,</span><span class="dv">4</span>)<span class="kw">,</span><span class="dt">_</span>)<span class="kw">.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode prolog code-with-copy"><code class="sourceCode prolog"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>findall(<span class="dt">_</span><span class="kw">,</span>print_solution(<span class="dv">4</span><span class="kw">,</span><span class="dv">4</span>)<span class="kw">,</span><span class="dt">_</span>)<span class="kw">.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 
 </section>
@@ -391,13 +394,14 @@ true</code></pre>
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

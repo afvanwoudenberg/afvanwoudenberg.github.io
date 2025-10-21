@@ -238,7 +238,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="importing-libraries" class="level2">
 <h2 class="anchored" data-anchor-id="importing-libraries">Importing libraries</h2>
 <p>We are going to need the following dependencies.</p>
-<div id="5574f66a" class="cell" data-execution_count="1">
+<div id="a37ff2fd" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> PIL <span class="im">import</span> Image</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib.offsetbox <span class="im">import</span> OffsetImage, AnnotationBbox</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> wordcloud <span class="im">import</span> WordCloud</span>
@@ -256,7 +256,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="loading-the-json" class="level2">
 <h2 class="anchored" data-anchor-id="loading-the-json">Loading the JSON</h2>
 <p>We start our analysis by loading the JSON file produced by the scraper. Each entry contains a statement plus per‑party responses. We’ll reshape it into a dataframe where each row is one issue and columns hold party positions and their explanation texts.</p>
-<div id="21462de3" class="cell" data-execution_count="2">
+<div id="508a98ba" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">'tweedekamer2025.json'</span>, <span class="st">'r'</span>, encoding<span class="op">=</span><span class="st">'utf-8'</span>) <span class="im">as</span> f:</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> json.load(f)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -307,9 +307,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="a-quick-peek-at-the-data">A quick peek at the data</h2>
 <p>Before diving into visualizations let’s sanity‑check what we have so far:</p>
 <p>Let’s look at the first few rows.</p>
-<div id="a1d80a47" class="cell page-columns page-full" data-execution_count="3">
+<div id="9769828a" class="cell page-columns page-full" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df_final.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display column-screen-inset" data-execution_count="123">
+<div class="cell-output cell-output-display column-screen-inset" data-execution_count="3">
 <div>
 
 
@@ -470,7 +470,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Each row equals one statement (issue) from Stemwijzer. For every party we have two columns: one categorical position (<code>_position</code>) and one short text explanation (<code>_explanation</code>).</p>
 <p>We should have 30 issues for 24 parties.</p>
-<div id="4065f176" class="cell" data-execution_count="4">
+<div id="0d7224bf" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>num_parties <span class="op">=</span> <span class="bu">len</span>([col <span class="cf">for</span> col <span class="kw">in</span> df_position.columns <span class="cf">if</span> col.endswith(<span class="st">'_position'</span>)])</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>num_issues <span class="op">=</span> df_position.shape[<span class="dv">0</span>]</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -486,7 +486,7 @@ Number of issues: 30</code></pre>
 <h2 class="anchored" data-anchor-id="what-do-the-various-parties-think-about-each-issue">What do the various parties think about each issue?</h2>
 <p>We’ll plot a bar chart per statement showing counts of parties that agree, disagree, or stay neutral.</p>
 <p>We add logos to each bar so we can see which party thinks what.</p>
-<div id="4b41e60c" class="cell" data-execution_count="5">
+<div id="46402bdb" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># List of parties in the order they appear in the image</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>parties <span class="op">=</span> [</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'PVV'</span>, <span class="st">'GroenLinks-PvdA'</span>, <span class="st">'VVD'</span>, <span class="st">'NSC'</span>, <span class="st">'D66'</span>, <span class="st">'BBB'</span>, <span class="st">'CDA'</span>, </span>
@@ -514,7 +514,7 @@ Number of issues: 30</code></pre>
 <span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>    party_logos[parties[i]] <span class="op">=</span> logo</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Next we create a bar chart for each of the 30 issues.</p>
-<div id="642ec387" class="cell page-columns page-full" data-execution_count="6">
+<div id="276c7ac3" class="cell page-columns page-full" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get all party position columns</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>position_cols <span class="op">=</span> [col <span class="cf">for</span> col <span class="kw">in</span> df_position.columns <span class="cf">if</span> col.endswith(<span class="st">'_position'</span>)]</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -624,7 +624,7 @@ Number of issues: 30</code></pre>
 <h2 class="anchored" data-anchor-id="what-reasons-do-parties-give-when-they-explain-their-positions">What reasons do parties give when they explain their positions?</h2>
 <p>To get an idea of what some reasons are for agreeing or disagreeing with a statement I’ll plot a word cloud for each issue. In word clouds the size of a word indicates how frequently this word is used.</p>
 <p>We remove stopwords to make sure the word clouds aren’t crowded with irrelevant words.</p>
-<div id="003057e8" class="cell" data-execution_count="7">
+<div id="9a7c3052" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ensure NLTK stopwords are downloaded and get Dutch stopwords</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>nltk.download(<span class="st">'stopwords'</span>)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>dutch_stopwords <span class="op">=</span> <span class="bu">set</span>(stopwords.words(<span class="st">'dutch'</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -634,7 +634,7 @@ Number of issues: 30</code></pre>
 </div>
 </div>
 <p>I’m color coding the words as follows: A word is shown in green if it’s more frequently used among agreeing parties and in red if disagreeing parties use this word more.</p>
-<div id="d65f56ae" class="cell" data-execution_count="8">
+<div id="f908bf84" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> generate_color_func(agree_words, disagree_words):</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Generate a color function based on word frequencies in agree/disagree groups"""</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> color_func(word, <span class="op">**</span>kwargs):</span>
@@ -676,7 +676,7 @@ Number of issues: 30</code></pre>
 <span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>                         <span class="kw">and</span> <span class="bu">len</span>(word) <span class="op">&gt;</span> <span class="dv">2</span>])</span>
 <span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> Counter(words)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="5292735d" class="cell page-columns page-full" data-execution_count="9">
+<div id="115cbd91" class="cell page-columns page-full" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create word clouds for each issue</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">6</span>, <span class="dv">5</span>, figsize<span class="op">=</span>(<span class="dv">18</span>, <span class="dv">23</span>))</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>axes <span class="op">=</span> axes.flatten()</span>
@@ -746,7 +746,7 @@ Number of issues: 30</code></pre>
 <section id="how-similarly-do-parties-answer-across-all-30-statements" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="how-similarly-do-parties-answer-across-all-30-statements">How similarly do parties answer across all 30 statements?</h2>
 <p>For each pair we compute the % of statements where both gave the same response (agree, disagree, or neutral).</p>
-<div id="b976f555" class="cell" data-execution_count="10">
+<div id="b721566b" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the raw positions (without encoding)</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>df_positions <span class="op">=</span> df_position[position_cols]</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -783,7 +783,7 @@ Number of issues: 30</code></pre>
 <span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a>agreement_matrix <span class="op">=</span> agreement_matrix.<span class="bu">round</span>(<span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We use a heatmap to visualize the result.</p>
-<div id="ae67b6e1" class="cell page-columns page-full" data-execution_count="11">
+<div id="9ac6d1f4" class="cell page-columns page-full" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">15</span>))</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>im <span class="op">=</span> plt.imshow(agreement_matrix, cmap<span class="op">=</span><span class="st">'RdYlBu'</span>, vmin<span class="op">=</span><span class="dv">0</span>, vmax<span class="op">=</span><span class="dv">100</span>)</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>plt.colorbar(im, fraction<span class="op">=</span><span class="fl">0.046</span>, pad<span class="op">=</span><span class="fl">0.04</span>, label<span class="op">=</span><span class="st">'Agreement %'</span>)</span>
@@ -812,7 +812,7 @@ Number of issues: 30</code></pre>
 <section id="what-parties-are-the-most-and-the-least-in-agreement-with-each-other" class="level2">
 <h2 class="anchored" data-anchor-id="what-parties-are-the-most-and-the-least-in-agreement-with-each-other">What parties are the most and the least in agreement with each other?</h2>
 <p>Ignoring the 100% self-agreement, what are the highest and lowest agreement pairs?</p>
-<div id="19df1ba0" class="cell" data-execution_count="12">
+<div id="1d15c1f8" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>min_agreement <span class="op">=</span> agreement_matrix.values.<span class="bu">min</span>()</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the second largest unique agreement value</span></span>
@@ -830,7 +830,7 @@ Maximal agreement percentage: 93.3%</code></pre>
 </div>
 </div>
 <p>These are the parties with highest agreement levels:</p>
-<div id="58dafe58" class="cell" data-execution_count="13">
+<div id="66d1e865" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find all party pairs with the second largest agreement</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>second_max_pairs <span class="op">=</span> []</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(party_names)):</span>
@@ -845,7 +845,7 @@ Maximal agreement percentage: 93.3%</code></pre>
 </div>
 </div>
 <p>The parties with the lowest agreement levels are:</p>
-<div id="b3e5ade9" class="cell" data-execution_count="14">
+<div id="905bffbe" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find party pairs for min_agreement</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>party_pairs <span class="op">=</span> []</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(party_names)):</span>
@@ -866,7 +866,7 @@ PVV 💔 Volt: 13.3%</code></pre>
 <section id="squeezing-30-issues-into-2d-using-t-sne" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="squeezing-30-issues-into-2d-using-t-sne">Squeezing 30 issues into 2D using t-SNE</h2>
 <p>By encoding <em>Eens</em> (agree) as 1, <em>Oneens</em> (disagree) as -1, and <em>Geen van beide</em> (neutral) as 0, we transform each party’s stance into a quantifiable, 30-dimensional vector.</p>
-<div id="dfef994d" class="cell" data-execution_count="15">
+<div id="589811cd" class="cell" data-execution_count="15">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">'future.no_silent_downcasting'</span>, <span class="va">True</span>)</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create encoded dataframe by mapping positions to numerical values</span></span>
@@ -887,7 +887,7 @@ PVV 💔 Volt: 13.3%</code></pre>
 <p>We can now project the parties into 2D using <strong>t-SNE</strong> (t-distributed Stochastic Neighbor Embedding).</p>
 <p>The idea behind t-SNE is that local neighborhoods are reserved by making sure that points close together in original space stay close in 2D.</p>
 <p>Let’s run it to see if clusters emerge.</p>
-<div id="e8165c9c" class="cell page-columns page-full" data-execution_count="16">
+<div id="5f3bb925" class="cell page-columns page-full" data-execution_count="16">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare the encoded party positions</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> df_encoded.values</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -934,7 +934,7 @@ PVV 💔 Volt: 13.3%</code></pre>
 <section id="doing-a-principal-component-analysis-pca" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="doing-a-principal-component-analysis-pca">Doing a Principal Component Analysis (PCA)</h2>
 <p><strong>PCA</strong> (Principal Component Analysis) finds orthogonal axes capturing maximal variance. In contrast to t-SNE, axes <em>do</em> have somewhat interpretable meanings. Early components might capture broad ideological splits. Let’s see if this is the case.</p>
-<div id="eda403c6" class="cell page-columns page-full" data-execution_count="17">
+<div id="4158545f" class="cell page-columns page-full" data-execution_count="17">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare the encoded party positions (already created in cell 13)</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> df_encoded.values</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -978,7 +978,7 @@ PVV 💔 Volt: 13.3%</code></pre>
 <section id="how-much-variance-do-components-capture" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="how-much-variance-do-components-capture">How much variance do components capture?</h2>
 <p>The scree plot below shows how much variance is explained by each principal component (PC).</p>
-<div id="5e19f8cd" class="cell page-columns page-full" data-execution_count="18">
+<div id="7b0f79bb" class="cell page-columns page-full" data-execution_count="18">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit PCA with all possible components (up to number of parties)</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>pca_full <span class="op">=</span> PCA(n_components<span class="op">=</span><span class="bu">len</span>(position_cols), random_state<span class="op">=</span><span class="dv">42</span>)</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> df_encoded.values</span>
@@ -1017,7 +1017,7 @@ PVV 💔 Volt: 13.3%</code></pre>
 <section id="interpreting-the-axes" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="interpreting-the-axes">Interpreting the axes</h2>
 <p>Let’s look at the loading scores of the first two PCs.</p>
-<div id="763dcceb" class="cell page-columns page-full" data-execution_count="19">
+<div id="565f0e21" class="cell page-columns page-full" data-execution_count="19">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get PCA loadings (components) for each issue on each factor</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Create DataFrame with loadings scaled by explained variance</span></span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>loadings <span class="op">=</span> pd.DataFrame(</span>
@@ -1066,7 +1066,7 @@ PVV 💔 Volt: 13.3%</code></pre>
 </div>
 <p>Strong loadings tell us which statements “pull” most on a component and can help us discover underlying ideological factors.</p>
 <p>Let’s look at the five strongest <em>absolute</em> loadings of PC1 and PC2.</p>
-<div id="2fae1a50" class="cell" data-execution_count="20">
+<div id="ba65342c" class="cell" data-execution_count="20">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get absolute loadings for PC1 and PC2</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>pc1_loadings <span class="op">=</span> loadings[<span class="st">'PC1'</span>].<span class="bu">abs</span>()</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>pc2_loadings <span class="op">=</span> loadings[<span class="st">'PC2'</span>].<span class="bu">abs</span>()</span>
@@ -1099,7 +1099,7 @@ Top 5 most important themes for PC2:
 </div>
 </div>
 <p>PC1 loads strongly on issues like immigration, environmental rules, and cultural liberalism. In the past, “left” and “right” mainly referred to views on how much the state should intervene in the market. Today, though, these terms also seem to cover social and cultural topics like immigration, religion, and the environment. So I would say that PC1 does indeed reflect a <em>Left-Right</em> divide, however not the classic economic one.</p>
-<p>PC2 loads primarily on issues involving social regulation, moral permissiveness, and authority (e.g., restrictions on social media use, sex work, and protest). I would therefor interpret it as an <em>Libertarian-Authoritarian</em> dimension, reflecting preferences for state control and traditional morality versus individual freedom and permissiveness.</p>
+<p>PC2 loads primarily on issues involving social regulation, moral permissiveness, and authority (e.g., restrictions on social media use, sex work, and protest). I would therefor interpret it as an <em>Libertarian-Authoritarian</em> dimension, reflecting preferences for individual freedom and permissiveness versus state control and traditional morality.</p>
 </section>
 <section id="some-final-remarks" class="level2">
 <h2 class="anchored" data-anchor-id="some-final-remarks">Some final remarks</h2>

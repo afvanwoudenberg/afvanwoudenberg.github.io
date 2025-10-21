@@ -703,7 +703,7 @@ for theme in top5_pc2.index:
 
 PC1 loads strongly on issues like immigration, environmental rules, and cultural liberalism. In the past, "left" and "right" mainly referred to views on how much the state should intervene in the market. Today, though, these terms also seem to cover social and cultural topics like immigration, religion, and the environment. So I would say that PC1 does indeed reflect a _Left-Right_ divide, however not the classic economic one.
 
-PC2 loads primarily on issues involving social regulation, moral permissiveness, and authority (e.g., restrictions on social media use, sex work, and protest). I would therefor interpret it as an _Libertarian-Authoritarian_ dimension, reflecting preferences for state control and traditional morality versus individual freedom and permissiveness.
+PC2 loads primarily on issues involving social regulation, moral permissiveness, and authority (e.g., restrictions on social media use, sex work, and protest). I would therefor interpret it as an _Libertarian-Authoritarian_ dimension, reflecting preferences for individual freedom and permissiveness versus state control and traditional morality.
 
 ## Some final remarks
 

@@ -202,7 +202,7 @@ AND (
 
 Let's go over this query step by step.
 
-Firstly, you need to know that a CTE (Common Table Expression) actually is. It's simply a temporary, named result set in SQL that you can reference within a single query. It is often used to simplify complex queries or enable recursion. 
+Firstly, you need to know what a CTE (Common Table Expression) actually is. It's simply a temporary, named result set in SQL that you can reference within a single query. It is often used to simplify complex queries or enable recursion. 
 
 A CTE is said to be recursive, if it references itself.
 

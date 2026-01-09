@@ -9,8 +9,19 @@
 <link>https://www.aswinvanwoudenberg.com/</link>
 <atom:link href="https://www.aswinvanwoudenberg.com/index.xml" rel="self" type="application/rss+xml"/>
 <description>A blog on machine learning and coding</description>
-<generator>quarto-1.8.25</generator>
-<lastBuildDate>Tue, 21 Oct 2025 00:00:00 GMT</lastBuildDate>
+<generator>quarto-1.8.26</generator>
+<lastBuildDate>Fri, 09 Jan 2026 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Solving Takuzu Puzzles with SQL</title>
+  <dc:creator>Aswin van Woudenberg</dc:creator>
+  <link>https://www.aswinvanwoudenberg.com/posts/solving-takuzu-puzzles-with-sql/</link>
+  <description><![CDATA[ How to use recursive CTEs to solve Takuzu (a.k.a. Binary) puzzles. ]]></description>
+  <category>programming</category>
+  <category>sql</category>
+  <category>puzzles</category>
+  <guid>https://www.aswinvanwoudenberg.com/posts/solving-takuzu-puzzles-with-sql/</guid>
+  <pubDate>Fri, 09 Jan 2026 00:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Exploring Dutch Party Positions</title>
   <dc:creator>Aswin van Woudenberg</dc:creator>
@@ -236,21 +247,6 @@
   <category>decision trees</category>
   <guid>https://www.aswinvanwoudenberg.com/posts/draining-the-fun-out-of-wordle/</guid>
   <pubDate>Mon, 21 Feb 2022 00:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>Traversing a Decision Tree to Win at Guess Who?</title>
-  <dc:creator>Aswin van Woudenberg</dc:creator>
-  <link>https://www.aswinvanwoudenberg.com/posts/traversing-a-decision-tree-to-win-at-guess-who/</link>
-  <description><![CDATA[ How to construct and traverse a decision tree and use it for playing Guess Who? ]]></description>
-  <category>machine learning</category>
-  <category>decision trees</category>
-  <category>games</category>
-  <category>python</category>
-  <category>sklearn</category>
-  <category>programming</category>
-  <guid>https://www.aswinvanwoudenberg.com/posts/traversing-a-decision-tree-to-win-at-guess-who/</guid>
-  <pubDate>Tue, 04 Jan 2022 00:00:00 GMT</pubDate>
-  <media:content url="https://www.aswinvanwoudenberg.com/posts/traversing-a-decision-tree-to-win-at-guess-who/guess-who.jpg" medium="image" type="image/jpeg"/>
 </item>
 </channel>
 </rss>

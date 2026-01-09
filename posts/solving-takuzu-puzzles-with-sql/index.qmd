@@ -1,0 +1,258 @@
+---
+title: "Solving Takuzu Puzzles with SQL"
+description: "How to use recursive CTEs to solve Takuzu (a.k.a. Binary) puzzles."
+author: "Aswin van Woudenberg"
+date: "2026-01-09"
+categories: [programming, sql, puzzles]
+toc: true
+---
+
+The [SQLite documentation on CTEs](https://www.sqlite.org/draft/lang_with.html) has some pretty interesting examples on what you can do with recursive CTEs in SQL. One particular example that caught my eye shows how to solve Sudoku puzzles using a single SQL query. To better understand how it worked I decided to write a solver for Takuzu puzzles using the same approach.
+
+## What's a Takuzu puzzle?
+
+[Takuzu](https://en.wikipedia.org/wiki/Takuzu) puzzles, also known as Binary puzzles, consist of an even-sized grid of cells (e.g. 6×6, 8×8, 12×12). Each cell must contain either a 0 or a 1.
+
+Just as with Sudoku, you start with a partially filled grid and have to fill in the missing values. A valid solution must satisfy three rules:
+
+1. No row or column may contain three consecutive identical values
+2. Every row and every column must contain exactly the same number of 0s and 1s.
+3. No two rows may be identical, and no two columns may be identical.
+
+A well designed puzzle has exactly one valid solution.
+
+Here's an example:
+
+<style>
+  table td {
+    border: 1px solid #000;
+    width: 2em;
+    height: 2em;
+  }
+</style>
+
+<table style="
+  border-collapse: collapse;
+  text-align: center;
+">
+  <tbody>
+    <tr>
+      <td></td><td></td><td></td><td></td><td><b>0</b></td><td><b>0</b></td><td></td><td><b>0</b></td><td></td><td></td><td></td><td></td>
+    </tr>
+    <tr>
+      <td><b>1</b></td><td></td><td></td><td></td><td></td><td><b>0</b></td><td></td><td></td><td></td><td></td><td><b>1</b></td><td><b>1</b></td>
+    </tr>
+    <tr>
+      <td></td><td><b>1</b></td><td></td><td></td><td></td><td></td><td></td><td></td><td><b>0</b></td><td><b>0</b></td><td></td><td></td>
+    </tr>
+    <tr>
+      <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+    </tr>
+    <tr>
+      <td></td><td><b>0</b></td><td><b>0</b></td><td></td><td></td><td></td><td><b>1</b></td><td></td><td></td><td></td><td></td><td></td>
+    </tr>
+    <tr>
+      <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><b>0</b></td><td></td><td></td><td><b>0</b></td><td></td>
+    </tr>
+    <tr>
+      <td></td><td><b>1</b></td><td></td><td><b>1</b></td><td><b>1</b></td><td></td><td></td><td></td><td><b>1</b></td><td></td><td></td><td></td>
+    </tr>
+    <tr>
+      <td><b>0</b></td><td></td><td></td><td></td><td></td><td></td><td></td><td><b>0</b></td><td></td><td></td><td></td><td></td>
+    </tr>
+    <tr>
+      <td></td><td></td><td><b>1</b></td><td></td><td></td><td><b>1</b></td><td></td><td></td><td></td><td></td><td></td><td></td>
+    </tr>
+    <tr>
+      <td></td><td><b>0</b></td><td></td><td></td><td><b>0</b></td><td></td><td></td><td></td><td></td><td><b>0</b></td><td></td><td></td>
+    </tr>
+    <tr>
+      <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><b>0</b></td><td><b>1</b></td><td></td><td><b>1</b></td><td></td>
+    </tr>
+    <tr>
+      <td></td><td></td><td></td><td><b>1</b></td><td></td><td></td><td></td><td><b>0</b></td><td></td><td></td><td><b>1</b></td><td></td>
+    </tr>
+  </tbody>
+</table>
+
+Its (unique) solution looks like this:
+
+<table style="
+  border-collapse: collapse;
+  text-align: center;
+">
+  <tbody>
+    <tr>
+      <td>1</td><td>0</td><td>1</td><td>1</td><td><b>0</b></td><td><b>0</b></td><td>1</td><td><b>0</b></td><td>1</td><td>1</td><td>0</td><td>0</td>
+    </tr>
+    <tr>
+      <td><b>1</b></td><td>0</td><td>0</td><td>1</td><td>1</td><td><b>0</b></td><td>0</td><td>1</td><td>0</td><td>0</td><td><b>1</b></td><td><b>1</b></td>
+    </tr>
+    <tr>
+      <td>0</td><td><b>1</b></td><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td><td><b>0</b></td><td><b>0</b></td><td>1</td><td>1</td>
+    </tr>
+    <tr>
+      <td>0</td><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td>
+    </tr>
+    <tr>
+      <td>1</td><td><b>0</b></td><td><b>0</b></td><td>1</td><td>1</td><td>0</td><td><b>1</b></td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td>
+    </tr>
+    <tr>
+      <td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td><b>0</b></td><td>1</td><td>1</td><td><b>0</b></td><td>1</td>
+    </tr>
+    <tr>
+      <td>0</td><td><b>1</b></td><td>0</td><td><b>1</b></td><td><b>1</b></td><td>0</td><td>0</td><td>1</td><td><b>1</b></td><td>0</td><td>0</td><td>1</td>
+    </tr>
+    <tr>
+      <td><b>0</b></td><td>1</td><td>1</td><td>0</td><td>1</td><td>0</td><td>1</td><td><b>0</b></td><td>0</td><td>1</td><td>1</td><td>0</td>
+    </tr>
+    <tr>
+      <td>1</td><td>0</td><td><b>1</b></td><td>0</td><td>0</td><td><b>1</b></td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>1</td>
+    </tr>
+    <tr>
+      <td>1</td><td><b>0</b></td><td>0</td><td>1</td><td><b>0</b></td><td>1</td><td>0</td><td>1</td><td>1</td><td><b>0</b></td><td>0</td><td>1</td>
+    </tr>
+    <tr>
+      <td>0</td><td>1</td><td>1</td><td>0</td><td>1</td><td>0</td><td>1</td><td><b>0</b></td><td><b>1</b></td><td>0</td><td><b>1</b></td><td>0</td>
+    </tr>
+    <tr>
+      <td>0</td><td>1</td><td>0</td><td><b>1</b></td><td>0</td><td>1</td><td>1</td><td><b>0</b></td><td>0</td><td>1</td><td><b>1</b></td><td>0</td>
+    </tr>
+  </tbody>
+</table>
+
+## The solver in SQL
+
+This is the code I came up with:
+
+```{.sql}
+WITH RECURSIVE
+  input(puz) AS (
+    VALUES ('....00.0....' ||
+            '1....0....11' ||
+            '.1......00..' ||
+            '............' ||
+            '.00...1.....' ||
+            '.......0..0.' ||
+            '.1.11...1...' ||
+            '0......0....' ||
+            '..1..1......' || 
+            '.0..0....0..' ||
+            '.......01.1.' ||
+            '...1...0..1.')
+  ),
+  side_len(n) AS (
+    SELECT CAST(sqrt(length(puz)) AS INT) FROM input
+  ),
+  bits(b) AS (
+    VALUES ('0'), ('1')
+  ),
+  idx(i) AS (
+    SELECT 0
+    UNION ALL 
+    SELECT i + 1 FROM idx, side_len WHERE i + 1 < n
+  ),
+  x(s, ind) AS (
+    SELECT puz, instr(puz, '.') FROM input
+    UNION ALL
+    SELECT
+      substr(s,1,ind-1) || b || substr(s,ind+1),
+      instr(substr(s,1,ind-1) || b || substr(s,ind+1), '.')
+    FROM x, bits, side_len
+    WHERE ind > 0
+      -- No row may contain three consecutive identical values
+      AND substr(substr(s,1,ind-1) || b || substr(s,ind+1), ((ind-1)/n)*n + 1, n) NOT LIKE '%' || b || b || b || '%'
+      -- No column may contain three consecutive identical values
+      AND NOT EXISTS (
+        SELECT 1
+        FROM idx i
+        WHERE i <= n-3
+          AND substr(substr(s,1,ind-1) || b || substr(s,ind+1), i*n + ((ind-1)%n) + 1, 1) = b
+          AND substr(substr(s,1,ind-1) || b || substr(s,ind+1), (i+1)*n + ((ind-1)%n) + 1, 1) = b
+          AND substr(substr(s,1,ind-1) || b || substr(s,ind+1), (i+2)*n + ((ind-1)%n) + 1, 1) = b
+      )
+      -- Every row must contain exactly the same number of 0s and 1s.
+      AND (
+        SELECT count(*)
+        FROM idx i
+        WHERE substr(substr(s,1,ind-1) || b || substr(s,ind+1), ((ind-1)/n)*n + i + 1, 1) = b
+      ) <= n/2
+      -- Every column must contain exactly the same number of 0s and 1s.
+      AND (
+        SELECT count(*)
+        FROM idx i
+        WHERE substr(substr(s,1,ind-1) || b || substr(s,ind+1), i*n + ((ind-1)%n) + 1, 1) = b
+      ) <= n/2
+  )
+SELECT x.s
+FROM x, side_len
+WHERE ind = 0
+-- No two rows may be identical.
+AND (SELECT count(*) = count(DISTINCT substr(x.s, i*n + 1, n)) FROM idx i)
+-- No two columns may be identical.
+AND (
+  SELECT count(*) = count(DISTINCT 
+    (SELECT group_concat(substr(x.s, r.i*n + c.i + 1, 1), '') FROM idx r)
+  ) 
+  FROM idx c
+);
+```
+
+## Understanding the query
+
+Let's go over this query step by step.
+
+Firstly, you need to know that a CTE (Common Table Expression) actually is. It's simply a temporary, named result set in SQL that you can reference within a single query. It is often used to simplify complex queries or enable recursion. 
+
+A CTE is said to be recursive, if it references itself.
+
+The query contains a few CTEs, both recursive, and ordinary. CTEs are defined after the `WITH` keyword. When you want to use recursive CTEs you also need to add the keyword `RECURSIVE`.
+
+Now you understand the first line of the query.
+
+Let's go over each CTE one by one and explain what they do.
+
+The `input` CTE defines the input Takuzu puzzle. The puzzle is represented as a single string, with `.` for empty cells and `0` or `1` for known values.
+
+We could codify a puzzle as one long string, but for readability I have used the `||` concatenation opererator to show each row on a separate line.
+
+The `side_len` simply calculates the side length by taking the square root of the length of the puzzle.
+
+The `bits` CTE defines the possible values for each cell.
+
+The first recursive CTE is `idx`. It produces the sequence of integers 0 to n-1, and that single sequence is then reused everywhere we need to 'loop' over rows or columns. Note how the first `SELECT 0` is the base case, and the second recursive `SELECT` refers to the CTE itself and runs repeatedly while the number produced (`i + 1`) is smaller than the length of a side (`n` in `side_len`).
+
+The bulk of work of solving the puzzle is done by the recursive CTE `x(s, ind)`. An entry in `x` means that the string `s` represents a valid Takuzu puzzle up to this point (it does not violate the first two Takuzu rules), and that the first unknown cell is at position `ind`, or `ind = 0` if all cells have been filled in. The goal of the recursion is to compute entries in `x` with `ind = 0`, which correspond to complete solutions.
+
+The solver works by adding new entries to the recursive table `x`. For each prior entry, the recursive part tries to fill the first empty position with both possible values (0 and 1). A candidate string is only kept if it satisfies the first two of the three aforementioned Takuzu rules. The complicated looking `WHERE` clause checks for these rules. They prune the search space by discarding any candidate string that would immediately violate Takuzu rules, so that the recursion only continues with valid partial solutions.
+
+The final answer is found by selecting entries where `ind = 0`, that is, puzzles that have no remaining empty cells, and entries where there are no duplicate rows and columns (the third rule). The check for this third rule is kept outside the CTE `x` because we can only check for duplicate rows and columns once all cells are filled. 
+
+If the original puzzle has a unique solution, the query will return a single string representing that solution. If there are multiple solutions, the query will return all of them. If the puzzle is unsolvable, no rows will be returned.
+
+## Running the solver
+
+You can run this query as follows from the command-line:
+
+```{.bash}
+sqlite3 < takuzu.sql
+```
+
+The output will be the solved puzzle as a single string.
+
+`
+101100101100100110010011010011010011011001101100100110110010101001001101010110011001011010100110101001010101100101011001011010101010010101100110
+`
+
+Most modern database engines support recursive CTEs but the syntax might be slightly different. Getting it to run on anything other than SQLite may need some tweaking.
+
+## Some words about efficiency
+
+This is definitely not a fast solver and I wouldn't recommend using SQL for something like this. It's interesting though. 
+
+It's also good to understand what's happening under the hood. How we write recursive CTEs might remind you of how we write [depth-first search](https://en.wikipedia.org/wiki/Depth-first_search) (DFS) backtracking algorithms. In DFS a stack (explicitly or implicitly via recursive function calling) is used to keep track of candidate solutions. However, when we inspect the [SQLite source code](https://github.com/sqlite/sqlite/blob/aef151ada79199f5d796950821d42f45d26fd3da/src/select.c#L2654-L2660) we can read in the comments that when recursive CTEs are executed, new entries are added via a (FIFO) queue. This, in effect, makes us do [breadth-first search](https://en.wikipedia.org/wiki/Breadth-first_search) (BFS) instead. For the problem we're tackling here BFS is exploring many unnecessary shallow candidate solutions. DFS would have been a faster option. 
+
+You may find the query as a gist here:
+
+<a target="_blank" href="https://gist.github.com/afvanwoudenberg/e4ba53cc3eed64f4e56a70d558e3bdbd">![GitHub](https://shields.io/badge/-View%20as%20Gist-grey.svg?logo=github&style=flat&logoColor=white&labelColor=black)</a>
+

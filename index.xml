@@ -9,8 +9,19 @@
 <link>https://www.aswinvanwoudenberg.com/</link>
 <atom:link href="https://www.aswinvanwoudenberg.com/index.xml" rel="self" type="application/rss+xml"/>
 <description>A blog on machine learning and coding</description>
-<generator>quarto-1.8.26</generator>
-<lastBuildDate>Fri, 09 Jan 2026 00:00:00 GMT</lastBuildDate>
+<generator>quarto-1.8.27</generator>
+<lastBuildDate>Sat, 17 Jan 2026 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>The Wolf, Goat, and Cabbage Puzzle</title>
+  <dc:creator>Aswin van Woudenberg</dc:creator>
+  <link>https://www.aswinvanwoudenberg.com/posts/the-wolf-goat-and-cabbage-problem/</link>
+  <description><![CDATA[ Some more SQL shenanigans. ]]></description>
+  <category>programming</category>
+  <category>sql</category>
+  <category>puzzles</category>
+  <guid>https://www.aswinvanwoudenberg.com/posts/the-wolf-goat-and-cabbage-problem/</guid>
+  <pubDate>Sat, 17 Jan 2026 00:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Solving Takuzu Puzzles with SQL</title>
   <dc:creator>Aswin van Woudenberg</dc:creator>
@@ -234,19 +245,6 @@
   <category>opencv</category>
   <guid>https://www.aswinvanwoudenberg.com/posts/from-baby-face-to-neanderthal/</guid>
   <pubDate>Thu, 28 Jul 2022 00:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>Draining the Fun Out of Wordle</title>
-  <dc:creator>Aswin van Woudenberg</dc:creator>
-  <link>https://www.aswinvanwoudenberg.com/posts/draining-the-fun-out-of-wordle/</link>
-  <description><![CDATA[ How to generate a decision tree for solving Wordle games and save our civilization. ]]></description>
-  <category>programming</category>
-  <category>python</category>
-  <category>sklearn</category>
-  <category>puzzles</category>
-  <category>decision trees</category>
-  <guid>https://www.aswinvanwoudenberg.com/posts/draining-the-fun-out-of-wordle/</guid>
-  <pubDate>Mon, 21 Feb 2022 00:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>
